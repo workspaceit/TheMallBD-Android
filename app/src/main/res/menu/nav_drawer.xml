@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_home_id"
+            android:checked="false"
+            android:icon="@drawable/nd_home"
+            android:title="@string/nav_item_home" />
+
+        <item
+            android:id="@+id/nav_my_mallbd_id"
+            android:checked="false"
+            android:icon="@drawable/nd_my_mallbd"
+            android:title="@string/nav_item_my_mallbd" />
+
+        <item
+            android:id="@+id/nav_cart_id"
+            android:checked="false"
+            android:icon="@drawable/nd_cart"
+            android:title="@string/nav_item_cart" />
+
+        <item
+            android:id="@+id/nav_wishlist_id"
+            android:checked="false"
+            android:icon="@drawable/nd_wishlist"
+            android:title="@string/nav_item_wishlist" />
+
+
+        <item
+            android:id="@+id/nav_favorite_id"
+            android:checked="false"
+            android:icon="@drawable/nd_favorite"
+            android:title="@string/nav_item_favorite" />
+        <item
+            android:id="@+id/nav_settings_id"
+            android:checked="false"
+            android:icon="@drawable/nd_settings"
+            android:title="@string/nav_item_settings" />
+        <item
+            android:id="@+id/nav_app_id"
+            android:checked="false"
+            android:icon="@drawable/nd_app"
+            android:title="@string/nav_item_app_feedback" />
+        <item
+            android:id="@+id/nav_help_id"
+            android:checked="false"
+            android:icon="@drawable/nd_help"
+            android:title="@string/nav_item_help_center" />
+        <item
+            android:id="@+id/nav_about_id"
+            android:checked="false"
+            android:icon="@drawable/nd_people"
+            android:title="@string/nav_item_about_us" />
+
+    </group>
+</menu>
