@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="190dp"
-    android:background="#FF0481"
+    android:background="@drawable/nav_header_image"
     android:orientation="vertical"
     >
 
@@ -21,11 +21,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Rajib Hossen"
         android:textSize="14sp"
         android:textColor="#FFF"
         android:textStyle="bold"
-        android:gravity="left"
+        android:gravity="start"
         android:paddingBottom="4dp"
         android:id="@+id/username_in_navigation"
         android:layout_above="@+id/email_in_navigation"
@@ -35,9 +34,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hossen.rajib@gmail.com"
         android:id="@+id/email_in_navigation"
-        android:gravity="left"
+        android:gravity="start"
         android:layout_marginBottom="8dp"
         android:textSize="14sp"
         android:textColor="#fff"

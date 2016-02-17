@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,11 +18,12 @@ import android.widget.Toast;
 
 import com.workspaceit.themallbd.R;
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private boolean isLogin = true;
 
     private TextView userNameTextView,emailTextView;
     @Override
@@ -46,6 +48,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         initializeNavigationView();
+
+        //customization in header view of navigation drawer
+        customizationOfHeaderView();
 
     }
 
@@ -75,6 +80,38 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         //calling sync state is necessary or else your hamburger icon wont show up
         actionBarDrawerToggle.syncState();
+    }
+
+    public void customizationOfHeaderView(){
+
+        View header = navigationView.getHeaderView(0);
+
+        userNameTextView = (TextView) header.findViewById(R.id.username_in_navigation);
+        emailTextView = (TextView) header.findViewById(R.id.email_in_navigation);
+
+        if (isLogin) {
+            userNameTextView.setText("MI Rafi");
+            emailTextView.setText("mi_rafi@gmail.com");
+
+            userNameTextView.setOnClickListener(null);
+            emailTextView.setOnClickListener(null);
+        }
+        else {
+            userNameTextView.setText("Login");
+            emailTextView.setText("Register");
+            userNameTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getBaseContext(),"Calling login", Toast.LENGTH_LONG).show();
+                }
+            });
+            emailTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getBaseContext(),"Calling registration", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     @Override
@@ -146,5 +183,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v==emailTextView)
+        {
+            Toast.makeText(getApplicationContext(), "Registration Activity", Toast.LENGTH_SHORT).show();
+        }
     }
 }

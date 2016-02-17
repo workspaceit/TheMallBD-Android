@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_home_id"
@@ -33,6 +35,8 @@
             android:checked="false"
             android:icon="@drawable/nd_favorite"
             android:title="@string/nav_item_favorite" />
+    </group>
+    <group android:id="@+id/group2" android:checkableBehavior="single">
         <item
             android:id="@+id/nav_settings_id"
             android:checked="false"

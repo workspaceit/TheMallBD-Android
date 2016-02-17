@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="120dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content">
 
         <ImageView
@@ -23,7 +23,8 @@
             android:textSize="@dimen/material_text_caption"
             android:id="@+id/tv_productName_gv"
             android:layout_gravity="center"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textAlignment="center" />
 
         <TextView
             android:layout_width="match_parent"
@@ -31,7 +32,8 @@
             android:id="@+id/tv_productPrice_gv"
             android:textSize="@dimen/material_text_caption"
             android:singleLine="true"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:textAlignment="center" />
     </LinearLayout>
 
 </LinearLayout>
