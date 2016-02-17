@@ -1,16 +1,12 @@
 package com.workspaceit.themallbd.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import com.workspaceit.themallbd.MainActivity;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.dataModel.Products;
 
-import java.util.ArrayList;
+public class ProductDetailsActivity extends BaseActivity {
 
-public class ProductDetailsActivity extends AppCompatActivity {
 
     private static int position;
     private static int arrayListIndicator = 0;
@@ -31,6 +27,6 @@ public class ProductDetailsActivity extends AppCompatActivity {
             products = MainActivity.allProductsForGridViewList.get(position);
 
 
-        Toast.makeText(this, products.title+products.prices.get(0).retailPrice,Toast.LENGTH_LONG).show();
+       // Toast.makeText(this, products.title+products.prices.get(0).retailPrice,Toast.LENGTH_LONG).show();
     }
 }

@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.workspaceit.themallbd.MainActivity;
+import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.ProductService;
 import com.workspaceit.themallbd.utility.Utility;

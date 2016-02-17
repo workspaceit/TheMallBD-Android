@@ -9,8 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.workspaceit.themallbd.MainActivity;
-
 /**
  * Created by rajib on 2/15/16.
  */

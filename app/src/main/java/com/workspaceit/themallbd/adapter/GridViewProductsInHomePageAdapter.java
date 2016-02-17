@@ -13,7 +13,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.workspaceit.themallbd.MainActivity;
+import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.R;
 
 /**
@@ -85,12 +85,12 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
 
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.custom_horizontal_product_list,null);
+            convertView = layoutInflater.inflate(R.layout.custom_grid_view_item,null);
             viewHolder = new ViewHolder();
 
-            viewHolder.productImage = (ImageView) convertView.findViewById(R.id.iv_productImage_hl);
-            viewHolder.productName = (TextView) convertView.findViewById(R.id.tv_productName_hl);
-            viewHolder.priceView = (TextView) convertView.findViewById(R.id.tv_productPrice_hl);
+            viewHolder.productImage = (ImageView) convertView.findViewById(R.id.iv_productImage_gv);
+            viewHolder.productName = (TextView) convertView.findViewById(R.id.tv_productName_gv);
+            viewHolder.priceView = (TextView) convertView.findViewById(R.id.tv_productPrice_gv);
 
             convertView.setTag(viewHolder);
         } else {

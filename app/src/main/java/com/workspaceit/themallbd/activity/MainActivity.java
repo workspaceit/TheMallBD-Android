@@ -1,27 +1,22 @@
-package com.workspaceit.themallbd;
+package com.workspaceit.themallbd.activity;
 
 import android.content.Intent;
-import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Display;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.workspaceit.themallbd.activity.ProductDetailsActivity;
+import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.GridViewProductsInHomePageAdapter;
 import com.workspaceit.themallbd.adapter.HorizontalRVAFeaturedProductsAdapter;
 import com.workspaceit.themallbd.adapter.HorizontalRecyclerViewAdapter;
@@ -29,7 +24,6 @@ import com.workspaceit.themallbd.asynctask.GetAllProductForGridViewAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetFeaturedProductsAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetNewProductsAsyncTask;
 import com.workspaceit.themallbd.dataModel.Products;
-import com.workspaceit.themallbd.fragment.ContentFragment;
 import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.DividerItemDecoration;
 import com.workspaceit.themallbd.utility.ExpandableHeightGridView;
@@ -37,20 +31,19 @@ import com.workspaceit.themallbd.utility.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AbsListView.OnScrollListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener,
+        AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
     private SliderLayout sliderShow;
     private ExpandableHeightGridView gridViewForAllProducts;
-
-    //navigationview variables
-    private Toolbar toolbar;
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
 
     //  Adapters
     public HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter;
     public HorizontalRVAFeaturedProductsAdapter horizontalRVAFeaturedProductsAdapter;
     public GridViewProductsInHomePageAdapter gridViewProductsInHomePageAdapter;
+
+    //TextViews
+    private TextView userNameTextView,emailTextView;
 
     //recycler view variables for horizontal scrolling
     public RecyclerView newProductHorizontalListRV,featuredProductHorizontalListRV;
@@ -83,19 +76,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-       // getSupportActionBar().setIcon(R.drawable.logo);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.action_bar_gradient));
-        }
         mInternetConnection  = new InternetConnection(this);
 
         initialize();
         initializeSlider();
+
+
 
     }
 
@@ -119,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initializeGridViewForAllProductsSection();
 
         //Initializing NavigationView
-        initializeNavigationView();
+     //   initializeNavigationView();
     }
 
     private void initializeNewProductHorizontalSection(){
@@ -204,6 +191,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initializeGridViewForAllProductsSection(){
 
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+
         this.gridViewForAllProducts = (ExpandableHeightGridView) findViewById(R.id.gridView_all_Product);
         this.gridViewForAllProducts.setExpanded(true);
         this.gridViewForAllProducts.setOnItemClickListener(this);
@@ -219,34 +210,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String.valueOf(limitForProductsInGridView));
         }
     }
-
-    private void initializeNavigationView(){
-        navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
-                drawerLayout,toolbar,R.string.openDrawer, R.string.closeDrawer){
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as
-                // we dont want anything to happen so we leave this blank
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as
-                // we dont want anything to happen so we leave this blank
-                super.onDrawerOpened(drawerView);
-            }
-        };
-        //Setting the actionbarToggle to drawer layout
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-
-        //calling sync state is necessay or else your hamburger icon wont show up
-        actionBarDrawerToggle.syncState();
-    }
-
 
     public void initializeSlider()
     {
@@ -398,79 +361,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         }
-    }
-
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
-        //Checking if the item is in checked state or not, if not make it in checked state
-        if(menuItem.isChecked()) menuItem.setChecked(false);
-        else menuItem.setChecked(true);
-
-        //Closing drawer on item click
-        drawerLayout.closeDrawers();
-
-        //Check to see which item was being clicked and perform appropriate action
-        switch (menuItem.getItemId()){
-
-
-            //Replacing the main content with ContentFragment Which is our Inbox View;
-            case R.id.nav_home_id:
-                Toast.makeText(getApplicationContext(),"home Selected",Toast.LENGTH_SHORT).show();
-                return true;
-
-            // For rest of the options we just show a toast on click
-
-            case R.id.nav_cart_id:
-                Toast.makeText(getApplicationContext(),"cart Selected",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.nav_about_id:
-                Toast.makeText(getApplicationContext(),"about Selected",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.nav_app_id:
-                Toast.makeText(getApplicationContext(),"app feedback Selected",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.nav_favorite_id:
-                Toast.makeText(getApplicationContext(),"favorite Mail Selected",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.nav_help_id:
-                Toast.makeText(getApplicationContext(),"help Selected",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.nav_my_mallbd_id:
-                Toast.makeText(getApplicationContext(),"my mall bd Selected",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.nav_settings_id:
-                Toast.makeText(getApplicationContext(),"settings Selected",Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.nav_wishlist_id:
-                Toast.makeText(getApplicationContext(),"wishlist Selected",Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                Toast.makeText(getApplicationContext(),"Somethings Wrong",Toast.LENGTH_SHORT).show();
-                return true;
-
-        }
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 }

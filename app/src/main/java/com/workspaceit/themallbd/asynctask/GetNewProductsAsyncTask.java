@@ -2,10 +2,9 @@ package com.workspaceit.themallbd.asynctask;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
-import com.workspaceit.themallbd.MainActivity;
+import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.ProductService;
 import com.workspaceit.themallbd.utility.Utility;

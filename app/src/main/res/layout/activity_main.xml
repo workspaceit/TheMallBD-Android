@@ -7,308 +7,316 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/container_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         />
 
     <ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout  android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/mainLayout"
-    android:background="#DCE0E1"
-    tools:context="com.workspaceit.themallbd.MainActivity">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayoutMainSlider">
-
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/slider"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:id="@+id/linearLayoutMainCategory"
-        android:background="#FFFFFF"
-        android:orientation="horizontal">
-
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:padding="10dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="55dp"
-                android:id="@+id/imageView_babyCare"
-                android:contentDescription="Baby Care Image"
-                android:layout_gravity="center"
-                android:src="@drawable/baby" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/baby_care"
-                android:id="@+id/tv_home_cat_baby"
-                android:layout_gravity="center"
-                android:singleLine="true"
-                android:textSize="@dimen/material_text_button" />
-
-        </LinearLayout>
-
-        <View
-            android:orientation="horizontal"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#DCE0E1"/>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="55dp"
-                android:id="@+id/iv_home_women"
-                android:layout_gravity="center"
-                android:src="@drawable/women" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/women_category"
-                android:id="@+id/tv_home_women"
-                android:layout_gravity="center"
-                android:textSize="@dimen/material_text_button" />
-        </LinearLayout>
-        <View
-            android:orientation="horizontal"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#DCE0E1"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="55dp"
-                android:id="@+id/iv_home_men"
-                android:layout_gravity="center"
-                android:src="@drawable/men" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/men_category"
-                android:id="@+id/tv_home_men"
-                android:layout_gravity="center"
-                android:textSize="@dimen/material_text_button" />
-        </LinearLayout>
-        <View
-            android:orientation="horizontal"
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="#DCE0E1"/>
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="10dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="55dp"
-                android:contentDescription="@string/all_category"
-                android:id="@+id/iv_home_all"
-                android:layout_gravity="center"
-                android:src="@drawable/list"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/all_category"
-                android:id="@+id/tv_home_all"
-                android:singleLine="true"
-                android:textSize="@dimen/material_text_button"
-                android:layout_gravity="center" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="30dp"
-            android:background="@drawable/rectangle"
-            android:layout_weight="0.85">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/new_product"
-                android:textSize="@dimen/material_text_menu"
-                android:id="@+id/tv_home_newProducts"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="5dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1.15"></LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF">
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="175dp" android:id="@+id/rv_horizontal">
-        </android.support.v7.widget.RecyclerView>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp" >
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="30dp"
-            android:background="@drawable/rectangle"
-            android:layout_weight="0.85" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/featured_products"
-                android:textSize="@dimen/material_text_menu"
-                android:id="@+id/textView"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="5dp"
-                android:singleLine="true" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1.15" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF">
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="175dp"
-            android:id="@+id/rv_featured_horizontalProducts" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp" >
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="30dp"
-            android:background="@drawable/rectangle"
-            android:layout_weight="0.85" >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/products"
-                android:textSize="@dimen/material_text_menu"
-                android:id="@+id/textView2"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:textColor="#FFFFFF"
-                android:layout_marginTop="5dp"
-                android:singleLine="true" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dip"
-            android:layout_height="match_parent"
-            android:layout_weight="1.15" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent">
-
-        <com.workspaceit.themallbd.utility.ExpandableHeightGridView
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <LinearLayout  android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/gridView_all_Product"
-            android:numColumns="auto_fit"
+            android:orientation="vertical"
+            android:id="@+id/mainLayout"
+            android:background="#DCE0E1"
+            tools:context=".activity.MainActivity">
+
+            <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayoutMainSlider">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                />
+        </LinearLayout>
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/linearLayoutMainCategory"
             android:background="#FFFFFF"
-            android:verticalSpacing="1dp"
-            android:paddingLeft="1dip"
-            android:paddingTop="1dip"
-            android:horizontalSpacing="1dp"
-            android:columnWidth="150dp"/>
-    </LinearLayout>
+            android:orientation="horizontal">
 
 
-</LinearLayout>
-</ScrollView>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:padding="10dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/imageView_babyCare"
+                    android:contentDescription="Baby Care Image"
+                    android:layout_gravity="center"
+                    android:src="@drawable/baby" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/baby_care"
+                    android:id="@+id/tv_home_cat_baby"
+                    android:layout_gravity="center"
+                    android:singleLine="true"
+                    android:textSize="@dimen/material_text_button" />
+
+            </LinearLayout>
+
+            <View
+                android:orientation="horizontal"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#DCE0E1"/>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/iv_home_women"
+                    android:layout_gravity="center"
+                    android:src="@drawable/women" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/women_category"
+                    android:id="@+id/tv_home_women"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/material_text_button" />
+            </LinearLayout>
+            <View
+                android:orientation="horizontal"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#DCE0E1"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/iv_home_men"
+                    android:layout_gravity="center"
+                    android:src="@drawable/men" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/men_category"
+                    android:id="@+id/tv_home_men"
+                    android:layout_gravity="center"
+                    android:textSize="@dimen/material_text_button" />
+            </LinearLayout>
+            <View
+                android:orientation="horizontal"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#DCE0E1"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="10dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="55dp"
+                    android:contentDescription="@string/all_category"
+                    android:id="@+id/iv_home_all"
+                    android:layout_gravity="center"
+                    android:src="@drawable/list"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/all_category"
+                    android:id="@+id/tv_home_all"
+                    android:singleLine="true"
+                    android:textSize="@dimen/material_text_button"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+            <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="30dp"
+                android:background="@drawable/rectangle"
+                android:layout_weight="0.85">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/new_product"
+                    android:textSize="@dimen/material_text_menu"
+                    android:id="@+id/tv_home_newProducts"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1.15"></LinearLayout>
+        </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="175dp" android:id="@+id/rv_horizontal">
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+            <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="30dp"
+                android:background="@drawable/rectangle"
+                android:layout_weight="0.85" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/featured_products"
+                    android:textSize="@dimen/material_text_menu"
+                    android:id="@+id/textView"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1.15" />
+        </LinearLayout>
+
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="175dp"
+                android:id="@+id/rv_featured_horizontalProducts" />
+        </LinearLayout>
+
+            <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="30dp"
+                android:background="@drawable/rectangle"
+                android:layout_weight="0.85" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/products"
+                    android:textSize="@dimen/material_text_menu"
+                    android:id="@+id/textView2"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_marginTop="5dp"
+                    android:singleLine="true" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_weight="1.15" />
+        </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent">
+
+                <com.workspaceit.themallbd.utility.ExpandableHeightGridView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/gridView_all_Product"
+                    android:numColumns="auto_fit"
+                    android:background="#e5e5e5"
+                    android:verticalSpacing="1dp"
+                    android:paddingStart="5dip"
+                    android:paddingLeft="5dip"
+                    android:paddingRight="1dip"
+                    android:paddingTop="1dip"
+                    android:horizontalSpacing="1dp"
+                    android:columnWidth="170dp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
@@ -316,7 +324,6 @@
         android:layout_width="wrap_content"
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:menu="@menu/nav_drawer"
-        />
+        app:menu="@menu/nav_drawer" />
 
 </android.support.v4.widget.DrawerLayout>

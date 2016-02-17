@@ -14,7 +14,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.workspaceit.themallbd.MainActivity;
+import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.dataModel.Products;
 
