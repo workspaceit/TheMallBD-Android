@@ -1,39 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="160dp"
     android:layout_height="wrap_content"
-    android:background="#fff"
+    android:orientation="vertical"
+    android:background="@drawable/border"
     android:padding="16dp">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:id="@+id/iv_productImage_gv"
-            android:contentDescription="@string/new_product"
-            android:layout_gravity="center" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/iv_productImage_gv"
+        android:contentDescription="@string/new_product"
+        android:layout_gravity="center" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/material_text_caption"
-            android:id="@+id/tv_productName_gv"
-            android:layout_gravity="center"
-            android:singleLine="true"
-            android:textAlignment="center" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/material_text_caption"
+        android:id="@+id/tv_productName_gv"
+        android:layout_gravity="center"
+        android:singleLine="true"
+        android:textAlignment="center" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tv_productPrice_gv"
-            android:textSize="@dimen/material_text_caption"
-            android:singleLine="true"
-            android:layout_gravity="center"
-            android:textAlignment="center" />
-    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productPrice_gv"
+        android:textSize="@dimen/material_text_caption"
+        android:singleLine="true"
+        android:layout_gravity="center"
+        android:textAlignment="center" />
 
 </LinearLayout>
