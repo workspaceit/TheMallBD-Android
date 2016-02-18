@@ -28,7 +28,6 @@ public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
     private int state;
     private int screenWidth;
 
-    ImageLoader imageLoader;
     DisplayImageOptions displayImageOptions;
     public HorizontalListViewOfProductsAdapter(MainActivity mainActivity,int width) {
         this.mainActivity = mainActivity;
@@ -42,17 +41,6 @@ public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .resetViewBeforeLoading(true)
                 .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mainActivity)
-                .defaultDisplayImageOptions(displayImageOptions)
-                .threadPriority(Thread.MAX_PRIORITY)
-                .threadPoolSize(5)
-                .memoryCache(new WeakMemoryCache())
-                .denyCacheImageMultipleSizesInMemory()
-                .build();
-
-        imageLoader = ImageLoader.getInstance();
-        imageLoader.init(config);
 
 
     }
@@ -99,7 +87,7 @@ public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
         }
         try {
             if (MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name != null) {
-                imageLoader.displayImage(IMAGE_URL+MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name, viewHolder.productImage);
+                ImageLoader.getInstance().displayImage(IMAGE_URL+MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name, viewHolder.productImage);
             } else {
                 viewHolder.productImage.setImageResource(R.drawable.cart);
             }

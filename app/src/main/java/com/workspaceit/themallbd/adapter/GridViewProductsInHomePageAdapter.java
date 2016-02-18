@@ -26,34 +26,11 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private int state;
 
-    ImageLoader imageLoader;
-    DisplayImageOptions displayImageOptions;
 
     public GridViewProductsInHomePageAdapter(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
 
         this.layoutInflater = mainActivity.getLayoutInflater();
-
-        displayImageOptions =  new DisplayImageOptions.Builder()
-                .cacheOnDisc(true)
-                .cacheInMemory(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .resetViewBeforeLoading(true)
-                .build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mainActivity)
-                .defaultDisplayImageOptions(displayImageOptions)
-                .threadPriority(Thread.MAX_PRIORITY)
-                .threadPoolSize(5)
-                .memoryCache(new WeakMemoryCache())
-                .denyCacheImageMultipleSizesInMemory()
-                .build();
-
-        imageLoader = ImageLoader.getInstance();
-        imageLoader.init(config);
-
-
     }
 
     public class ViewHolder {
@@ -98,7 +75,11 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
         }
         try {
             if (MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name != null) {
-                imageLoader.displayImage(IMAGE_URL+MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name, viewHolder.productImage);
+                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
+                ImageLoader.getInstance().init(config);
+                ImageLoader.getInstance().displayImage(
+                        IMAGE_URL + MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name,
+                        viewHolder.productImage);
             } else {
                 viewHolder.productImage.setImageResource(R.drawable.cart);
             }

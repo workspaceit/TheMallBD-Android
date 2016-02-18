@@ -16,9 +16,12 @@
          />
 
     <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout  android:layout_width="match_parent"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/mainLayout"
@@ -26,28 +29,30 @@
             tools:context=".activity.MainActivity">
 
             <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-            <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/linearLayoutMainSlider">
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
 
-            <com.daimajia.slider.library.SliderLayout
-                android:id="@+id/slider"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayoutMainSlider">
+
+                    <com.daimajia.slider.library.SliderLayout
+                        android:id="@+id/slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp" />
+
+            </LinearLayout>
+
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:id="@+id/linearLayoutMainCategory"
-            android:background="#FFFFFF"
-            android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:id="@+id/linearLayoutMainCategory"
+                android:background="@drawable/category_gradient"
+                android:orientation="horizontal">
 
 
-            <LinearLayout
+                <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dip"
                 android:padding="10dp"
@@ -74,13 +79,13 @@
 
             </LinearLayout>
 
-            <View
+                <View
                 android:orientation="horizontal"
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
                 android:background="#DCE0E1"/>
 
-            <LinearLayout
+                <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
@@ -103,12 +108,12 @@
                     android:layout_gravity="center"
                     android:textSize="@dimen/material_text_button" />
             </LinearLayout>
-            <View
+                <View
                 android:orientation="horizontal"
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
                 android:background="#DCE0E1"/>
-            <LinearLayout
+                <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
@@ -131,12 +136,12 @@
                     android:layout_gravity="center"
                     android:textSize="@dimen/material_text_button" />
             </LinearLayout>
-            <View
+                <View
                 android:orientation="horizontal"
                 android:layout_width="2dp"
                 android:layout_height="match_parent"
                 android:background="#DCE0E1"/>
-            <LinearLayout
+                <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dip"
                 android:layout_height="match_parent"
@@ -163,42 +168,36 @@
                     android:layout_gravity="center" />
             </LinearLayout>
 
-        </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dip"
-                android:layout_height="30dp"
-                android:background="@drawable/rectangle"
-                android:layout_weight="0.85">
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#FFFFFF">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
+                    android:layout_gravity="center_vertical"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/new_product"
-                    android:textSize="@dimen/material_text_menu"
+                    android:textSize="@dimen/material_text_subhead"
                     android:id="@+id/tv_home_newProducts"
+                    android:textAllCaps="true"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginTop="5dp" />
-            </LinearLayout>
+                    android:textColor="#4D4D4D"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textStyle="bold" />
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1.15"></LinearLayout>
-        </LinearLayout>
+            </LinearLayout>
+            <View
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#DCE0E1"/>
 
             <LinearLayout
             android:layout_width="match_parent"
@@ -296,20 +295,20 @@
         </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent">
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent">
 
-                <com.workspaceit.themallbd.utility.ExpandableHeightGridView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/gridView_all_Product"
-                    android:numColumns="auto_fit"
-                    android:background="#e5e5e5"
-                    android:verticalSpacing="1dp"
-                    android:horizontalSpacing="1dp"
-                    android:columnWidth="170dp"/>
-            </LinearLayout>
+                    <com.workspaceit.themallbd.utility.ExpandableHeightGridView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/gridView_all_Product"
+                        android:numColumns="auto_fit"
+                        android:background="#e5e5e5"
+                        android:verticalSpacing="1dp"
+                        android:horizontalSpacing="1dp"
+                        android:columnWidth="170dp"/>
+                </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

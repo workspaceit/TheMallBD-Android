@@ -187,9 +187,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onClick(View v) {
-        if (v==emailTextView)
-        {
-            Toast.makeText(getApplicationContext(), "Registration Activity", Toast.LENGTH_SHORT).show();
-        }
+
     }
 }

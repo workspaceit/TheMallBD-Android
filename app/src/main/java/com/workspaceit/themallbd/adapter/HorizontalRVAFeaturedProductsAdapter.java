@@ -30,30 +30,11 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<H
     private static  String IMAGE_URL = "http://192.168.1.19/mallbdweb/public/product_images/";
     private MainActivity mainActivity;
 
-    ImageLoader imageLoader;
-    DisplayImageOptions displayImageOptions;
-
     // Pass in the contact array into the constructor
     public HorizontalRVAFeaturedProductsAdapter(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
-        displayImageOptions =  new DisplayImageOptions.Builder()
-                .cacheOnDisc(true)
-                .cacheInMemory(true)
-                .bitmapConfig(Bitmap.Config.RGB_565)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .resetViewBeforeLoading(true)
-                .build();
 
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mainActivity)
-                .defaultDisplayImageOptions(displayImageOptions)
-                .threadPriority(Thread.MAX_PRIORITY)
-                .threadPoolSize(5)
-                .memoryCache(new WeakMemoryCache())
-                .denyCacheImageMultipleSizesInMemory()
-                .build();
 
-        imageLoader = ImageLoader.getInstance();
-        imageLoader.init(config);
     }
 
     @Override
@@ -79,7 +60,11 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<H
         else
             viewHolder.priceTextView.setText("no prices");
         if (MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name != null) {
-            imageLoader.displayImage(IMAGE_URL+MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name, viewHolder.imageView);
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
+            ImageLoader.getInstance().init(config);
+            ImageLoader.getInstance().displayImage(
+                    IMAGE_URL + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
+                    viewHolder.imageView);
         } else {
             viewHolder.imageView.setImageResource(R.drawable.cart);
         }
