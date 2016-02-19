@@ -22,7 +22,7 @@ import com.workspaceit.themallbd.R;
 public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
 
     //private static  String IMAGE_URL = "http://cabguardpro.com/";
-    private static  String IMAGE_URL = "http://192.168.1.19/mallbdweb/public/product_images/";
+    private static  String IMAGE_URL = "http://192.168.1.11/mallbdweb/public/product_images/";
     private MainActivity mainActivity;
     private LayoutInflater layoutInflater;
     private int state;

@@ -3,6 +3,7 @@ package com.workspaceit.themallbd.activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -35,7 +36,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
 
     private SliderLayout sliderShow;
-    private ExpandableHeightGridView gridViewForAllProducts;
 
     //  Adapters
     public HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter;
@@ -81,8 +81,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         initialize();
         initializeSlider();
-
-
 
     }
 
@@ -195,13 +193,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
         float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-        this.gridViewForAllProducts = (ExpandableHeightGridView) findViewById(R.id.gridView_all_Product);
-        this.gridViewForAllProducts.setExpanded(true);
-        this.gridViewForAllProducts.setOnItemClickListener(this);
-        this.gridViewForAllProducts.setOnScrollListener(this);
+        ExpandableHeightGridView gridViewForAllProducts = (ExpandableHeightGridView) findViewById(R.id.gridView_all_Product);
+        gridViewForAllProducts.setExpanded(true);
+        gridViewForAllProducts.setOnItemClickListener(this);
+        gridViewForAllProducts.setOnScrollListener(this);
 
         this.gridViewProductsInHomePageAdapter = new GridViewProductsInHomePageAdapter(this);
-        this.gridViewForAllProducts.setAdapter(gridViewProductsInHomePageAdapter);
+        gridViewForAllProducts.setAdapter(gridViewProductsInHomePageAdapter);
 
         if (mInternetConnection.isConnectingToInternet())
         {
@@ -311,10 +309,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         Toast.makeText(this, "No Data", Toast.LENGTH_LONG).show();
     }
 
+
     @Override
     protected void onStop() {
         sliderShow.stopAutoCycle();
         super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override

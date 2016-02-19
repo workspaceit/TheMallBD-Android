@@ -17,19 +17,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.workspaceit.themallbd.R;
+import com.workspaceit.themallbd.utility.SessionManager;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
-    private boolean isLogin = true;
+    private SessionManager sessionManager;
 
     private TextView userNameTextView,emailTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        sessionManager = new SessionManager(getApplicationContext());
 
     }
 
@@ -50,7 +52,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         initializeNavigationView();
 
         //customization in header view of navigation drawer
-        customizationOfHeaderView();
+       // customizationOfHeaderView();
 
     }
 
@@ -72,7 +74,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as
                 // we dont want anything to happen so we leave this blank
+                customizationOfHeaderView();
                 super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerSlide(View arg0, float arg1) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int arg0) {
+
             }
         };
         //Setting the actionbarToggle to drawer layout
@@ -89,9 +102,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         userNameTextView = (TextView) header.findViewById(R.id.username_in_navigation);
         emailTextView = (TextView) header.findViewById(R.id.email_in_navigation);
 
-        if (isLogin) {
-            userNameTextView.setText("MI Rafi");
-            emailTextView.setText("mi_rafi@gmail.com");
+        if (sessionManager.checkLogin()) {
+            userNameTextView.setText(sessionManager.getFullName());
+            emailTextView.setText(sessionManager.getEmail());
 
             userNameTextView.setOnClickListener(null);
             emailTextView.setOnClickListener(null);
@@ -102,13 +115,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             userNameTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getBaseContext(),"Calling login", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
                 }
             });
             emailTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getBaseContext(),"Calling registration", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -126,7 +141,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Intent intent;
         //Check to see which item was being clicked and perform appropriate action
         switch (menuItem.getItemId()) {
-
 
             //Replacing the main content with ContentFragment Which is our Inbox View;
             case R.id.nav_home_id:
@@ -179,6 +193,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.action_logout)
+        {
+            sessionManager.logoutUser();
             return true;
         }
 

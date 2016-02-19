@@ -32,7 +32,7 @@ import java.util.Map;
 public class BaseMallBDService {
 
     // private String baseURL = "http://27.147.149.178:9030/mallbdweb/public/index.php/";//local
-     private String baseURL = "http://192.168.1.19/mallbdweb/public/index.php/";//local
+     private String baseURL = "http://192.168.1.11/mallbdweb/public/index.php/";//local
    // private String baseURL = "http://cabguardpro.com/";//server
     public static int shop_id = 1;
 

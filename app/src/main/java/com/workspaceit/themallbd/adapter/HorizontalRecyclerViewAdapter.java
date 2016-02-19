@@ -27,7 +27,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
 
     private List<Products> productsList;
 
-    private static  String IMAGE_URL = "http://192.168.1.19/mallbdweb/public/product_images/";
+    private static  String IMAGE_URL = "http://192.168.1.11/mallbdweb/public/product_images/";
     private MainActivity mainActivity;
 
     DisplayImageOptions displayImageOptions;

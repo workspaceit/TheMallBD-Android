@@ -1,0 +1,57 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.workspaceit.themallbd.fragment.LoginFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:weightSum="1">
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:id="@+id/login_email"
+            android:drawableLeft="@drawable/email"
+            android:drawableStart="@drawable/email"
+            android:drawablePadding="10dp"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:hint="Email Address"
+            android:textColorHint="#7F7F7F"
+            android:textColor="#7F7F7F" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:drawableLeft="@drawable/pass"
+            android:drawableStart="@drawable/pass"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="10dp"
+            android:id="@+id/login_password"
+            android:hint="Password"
+            android:textColor="#7F7F7F"
+            android:textColorHint="#7F7F7F"
+            android:textAlignment="center" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textSize="@dimen/material_text_button"
+            android:layout_marginTop="20dp"
+            android:id="@+id/login_button"
+            android:background="#D94254"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+</FrameLayout>
