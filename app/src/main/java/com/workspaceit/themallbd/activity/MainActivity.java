@@ -3,6 +3,7 @@ package com.workspaceit.themallbd.activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -333,11 +334,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(MainActivity.this,ProductDetailsActivity.class);
-        intent.putExtra("position",position);
-        intent.putExtra("productArray", 3);
-        startActivity(intent);
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, ProductDetailsActivity.class);
+                intent.putExtra("position", position);
+                intent.putExtra("productArray", 3);
+                startActivity(intent);
+            }
+        }, 3000);
     }
 
     @Override

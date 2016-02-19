@@ -61,11 +61,17 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
         else
             viewHolder.priceTextView.setText("no prices");
         if (MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name != null) {
-            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
-            ImageLoader.getInstance().init(config);
-            ImageLoader.getInstance().displayImage(
+            if (ImageLoader.getInstance().isInited())
+                ImageLoader.getInstance().displayImage(
                     IMAGE_URL + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
                     viewHolder.imageView);
+            else {
+                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
+                ImageLoader.getInstance().init(config);
+                ImageLoader.getInstance().displayImage(
+                        IMAGE_URL + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
+                        viewHolder.imageView);
+            }
         } else {
             viewHolder.imageView.setImageResource(R.drawable.cart);
         }

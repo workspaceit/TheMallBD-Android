@@ -75,8 +75,8 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
         }
         try {
             if (MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name != null) {
-                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
-                ImageLoader.getInstance().init(config);
+            //    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
+            //    ImageLoader.getInstance().init(config);
                 ImageLoader.getInstance().displayImage(
                         IMAGE_URL + MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name,
                         viewHolder.productImage);

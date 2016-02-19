@@ -60,8 +60,8 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<H
         else
             viewHolder.priceTextView.setText("no prices");
         if (MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name != null) {
-            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
-            ImageLoader.getInstance().init(config);
+           // ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
+          //  ImageLoader.getInstance().init(config);
             ImageLoader.getInstance().displayImage(
                     IMAGE_URL + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
                     viewHolder.imageView);

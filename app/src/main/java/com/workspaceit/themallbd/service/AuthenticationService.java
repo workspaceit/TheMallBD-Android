@@ -15,6 +15,7 @@ import java.util.Collections;
 /**
  * Created by rajib on 2/19/16.
  */
+
 public class AuthenticationService extends BaseMallBDService {
     private ResponseStat responseStat;
     private AppCredential appCredential;
@@ -54,5 +55,12 @@ public class AuthenticationService extends BaseMallBDService {
         }
 
         return  false;
+    }
+
+    public boolean loginWithAccessToken(String accesstoken)
+    {
+        this.responseStat = new ResponseStat();
+        this.appCredential = new AppCredential();
+        return  true;
     }
 }
