@@ -31,8 +31,8 @@ import java.util.Map;
  */
 public class BaseMallBDService {
 
-    // private String baseURL = "http://27.147.149.178:9030/mallbdweb/public/index.php/";//local
-     private String baseURL = "http://192.168.1.11/mallbdweb/public/index.php/";//local
+     private String baseURL = "http://27.147.149.178:9030/mallbdweb/public/index.php/";//rafi vai server
+    // private String baseURL = "http://192.168.1.11/mallbdweb/public/index.php/";//local
    // private String baseURL = "http://cabguardpro.com/";//server
     public static int shop_id = 1;
 
@@ -69,6 +69,7 @@ public class BaseMallBDService {
         try {
 
             if (method.endsWith("GET")) {
+                System.out.println(baseURL+this.controller);
                 URL url = new URL(baseURL+this.controller);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -85,7 +86,7 @@ public class BaseMallBDService {
                 }
             }
             else if (method.equalsIgnoreCase("POST")) {
-
+                System.out.println(baseURL+this.controller);
                 URL obj = new URL(baseURL+this.controller);
                 HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
                 connection.setRequestMethod(method);

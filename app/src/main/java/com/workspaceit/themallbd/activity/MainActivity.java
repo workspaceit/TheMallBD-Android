@@ -260,7 +260,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         userScrolled = false;
         noMoreItem = true;
-        Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No Data for new products", Toast.LENGTH_SHORT).show();
     }
 
     public void setFeaturedProductsList(ArrayList<Products> productList) {
@@ -283,7 +283,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public void setFeaturedProductListError() {
         userScrolled = false;
         noMoreItem = true;
-        Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No Data for featured products", Toast.LENGTH_SHORT).show();
     }
 
     public void setAllProductList(ArrayList<Products> productsList){
@@ -307,7 +307,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public void setAllProductsListError(){
         userScrolledInGridView = false;
         noMoreItemInGridView = true;
-        Toast.makeText(this, "No Data", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "No Data for all products", Toast.LENGTH_LONG).show();
     }
 
 
@@ -365,6 +365,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             if(lastlastitem != lastInScreen){
                 lastlastitem = lastInScreen;
                 //  if (Utility.current_number < Utility.total) {
+                //TODO onscroll load more data
                 if (mInternetConnection.isConnectingToInternet()) {
                     // search.offset = Utility.page_number;
                     offsetForAllProductsInGridView += 1 ;

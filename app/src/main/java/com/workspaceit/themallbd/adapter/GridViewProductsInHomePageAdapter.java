@@ -15,16 +15,18 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.R;
+import com.workspaceit.themallbd.utility.Utility;
 
 /**
  * Created by rajib on 2/15/16.
  */
 public class GridViewProductsInHomePageAdapter extends BaseAdapter {
     //private static  String IMAGE_URL = "http://cabguardpro.com/";
-    private static  String IMAGE_URL = "http://192.168.1.11/mallbdweb/public/product_images/";
     private MainActivity mainActivity;
     private LayoutInflater layoutInflater;
     private int state;
+
+    private static String productUrl = "/product/large/";
 
 
     public GridViewProductsInHomePageAdapter(MainActivity mainActivity) {
@@ -74,14 +76,16 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         try {
-            if (MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name != null) {
+            int size = MainActivity.allProductsForGridViewList.get(position).pictures.size();
+            if (size>=1) {
             //    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
             //    ImageLoader.getInstance().init(config);
                 ImageLoader.getInstance().displayImage(
-                        IMAGE_URL + MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name,
+                        Utility.IMAGE_URL + productUrl +
+                                MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name,
                         viewHolder.productImage);
             } else {
-                viewHolder.productImage.setImageResource(R.drawable.cart);
+                viewHolder.productImage.setImageResource(R.drawable.image_not_found);
             }
             viewHolder.productName.setText(MainActivity.allProductsForGridViewList.get(position).title);
             if (MainActivity.allProductsForGridViewList.get(position).prices.size()>0)

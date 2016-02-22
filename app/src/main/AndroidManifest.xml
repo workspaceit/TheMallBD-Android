@@ -30,7 +30,8 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".activity.BaseActivityWithoutDrawer"></activity>
     </application>
 
 </manifest>

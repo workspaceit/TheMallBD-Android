@@ -15,14 +15,15 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.R;
+import com.workspaceit.themallbd.utility.Utility;
 
 /**
  * Created by rajib on 2/15/16.
  */
 public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
 
-    //private static  String IMAGE_URL = "http://cabguardpro.com/";
-    private static  String IMAGE_URL = "http://192.168.1.11/mallbdweb/public/product_images/";
+    private static String productUrl = "/product/large/";
+
     private MainActivity mainActivity;
     private LayoutInflater layoutInflater;
     private int state;
@@ -87,7 +88,7 @@ public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
         }
         try {
             if (MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name != null) {
-                ImageLoader.getInstance().displayImage(IMAGE_URL+MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name, viewHolder.productImage);
+                ImageLoader.getInstance().displayImage(Utility.IMAGE_URL + productUrl+MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name, viewHolder.productImage);
             } else {
                 viewHolder.productImage.setImageResource(R.drawable.cart);
             }

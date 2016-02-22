@@ -147,8 +147,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(getApplicationContext(),MainActivity.class);
                 break;
             case R.id.nav_cart_id:
-                intent = new Intent(getApplicationContext(),ProductDetailsActivity.class);
-                break;
+                Toast.makeText(getApplicationContext(), "Cart Selected", Toast.LENGTH_SHORT).show();
+                return true;
             case R.id.nav_about_id:
                 Toast.makeText(getApplicationContext(), "about Selected", Toast.LENGTH_SHORT).show();
                 return true;
@@ -177,6 +177,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         return true;
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
