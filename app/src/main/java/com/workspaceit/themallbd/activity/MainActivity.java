@@ -13,6 +13,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     //TextViews
     private TextView userNameTextView,emailTextView;
+
+    //Imageview
+    private ImageView categoryWomenView;
 
     //recycler view variables for horizontal scrolling
     public RecyclerView newProductHorizontalListRV,featuredProductHorizontalListRV;
@@ -106,6 +110,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         //Initializing NavigationView
      //   initializeNavigationView();
+
+        this.categoryWomenView = (ImageView) findViewById(R.id.iv_home_women);
+        this.categoryWomenView.setOnClickListener(this);
     }
 
     private void initializeNewProductHorizontalSection(){
@@ -330,6 +337,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
+
+        if (v==categoryWomenView)
+        {
+            Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+            intent.putExtra("parent_id",9);
+            startActivity(intent);
+        }
 
     }
 

@@ -31,7 +31,8 @@
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.BaseActivityWithoutDrawer"></activity>
+        <activity android:name=".activity.BaseActivityWithoutDrawer" />
+        <activity android:name=".activity.CategoryActivity"></activity>
     </application>
 
 </manifest>

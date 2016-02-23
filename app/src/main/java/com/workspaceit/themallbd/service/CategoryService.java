@@ -1,0 +1,56 @@
+package com.workspaceit.themallbd.service;
+
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.workspaceit.themallbd.dataModel.Category;
+import com.workspaceit.themallbd.dataModel.Products;
+import com.workspaceit.themallbd.dataModel.ResponseStat;
+import com.workspaceit.themallbd.utility.Utility;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+/**
+ * Created by rajib on 2/23/16.
+ */
+public class CategoryService extends BaseMallBDService {
+
+    private ResponseStat responseStat;
+
+    public ArrayList<Category> getChildCategoryByParentId(String parentId){
+        ArrayList<Category> newCategoryArraylist = new ArrayList<>();
+        this.responseStat = new ResponseStat();
+
+        this.setController("api/category/childs/show");
+        this.setParams("shop_id", "1");
+        this.setParams("parent_id",parentId);
+
+        String resp = this.getData("POST");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+            if (this.responseStat.status)
+            {
+                Log.i("Check", "true");
+                Category[] categories = gson.fromJson(jsonObject.get("responseData"),Category[].class);
+                Collections.addAll(newCategoryArraylist, categories);
+                return newCategoryArraylist;
+            }
+            else {
+                Utility.responseStat = this.responseStat;
+                return newCategoryArraylist;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return newCategoryArraylist;
+    }
+}
