@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.google.gson.Gson;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.GridViewProductsInHomePageAdapter;
 import com.workspaceit.themallbd.adapter.HorizontalRVAFeaturedProductsAdapter;
@@ -32,10 +34,11 @@ import com.workspaceit.themallbd.utility.DividerItemDecoration;
 import com.workspaceit.themallbd.utility.ExpandableHeightGridView;
 import com.workspaceit.themallbd.utility.RecyclerItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener,
-        AdapterView.OnItemClickListener, AbsListView.OnScrollListener {
+        AdapterView.OnItemClickListener, AbsListView.OnScrollListener,Serializable {
 
     private SliderLayout sliderShow;
 
@@ -48,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private TextView userNameTextView,emailTextView;
 
     //Imageview
-    private ImageView categoryWomenView;
+    private ImageView categoryWomenView,categoryBabyView,categoryMenView,categoryAllView;
 
     //recycler view variables for horizontal scrolling
     public RecyclerView newProductHorizontalListRV,featuredProductHorizontalListRV;
@@ -108,11 +111,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         //initializing gridview for all products
         initializeGridViewForAllProductsSection();
 
-        //Initializing NavigationView
-     //   initializeNavigationView();
 
         this.categoryWomenView = (ImageView) findViewById(R.id.iv_home_women);
         this.categoryWomenView.setOnClickListener(this);
+
+        this.categoryBabyView = (ImageView) findViewById(R.id.imageView_babyCare);
+        this.categoryBabyView.setOnClickListener(this);
+
+        this.categoryMenView = (ImageView) findViewById(R.id.iv_home_men);
+        this.categoryMenView.setOnClickListener(this);
+
+        this.categoryAllView = (ImageView) findViewById(R.id.iv_home_all);
+        this.categoryAllView.setOnClickListener(this);
     }
 
     private void initializeNewProductHorizontalSection(){
@@ -344,6 +354,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             intent.putExtra("parent_id",9);
             startActivity(intent);
         }
+        if (v==categoryBabyView)
+        {
+            Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+            intent.putExtra("parent_id",8);
+            startActivity(intent);
+        }
+        if (v==categoryMenView)
+        {
+            Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+            intent.putExtra("parent_id",10);
+            startActivity(intent);
+        }
+        if (v==categoryAllView)
+        {
+            Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+            intent.putExtra("parent_id",0);
+            startActivity(intent);
+        }
+
 
     }
 

@@ -1,5 +1,6 @@
 package com.workspaceit.themallbd.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.CategoryInGridViewAdapter;
 import com.workspaceit.themallbd.asynctask.GetSubCategoryOfParentsAsyncTask;
@@ -18,13 +20,16 @@ import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.RecyclerItemClickListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class CategoryActivity extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener {
+public class CategoryActivity extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener,Serializable {
 
     private InternetConnection mInternetConnection;
 
     private CategoryInGridViewAdapter categoryInGridViewAdapter;
+
+    private  GridView gridCategories;
 
     public static ArrayList<Category> newCategoryArrayList;
 
@@ -36,28 +41,24 @@ public class CategoryActivity extends BaseActivityWithoutDrawer implements Adapt
         mInternetConnection = new InternetConnection(this);
 
         parentId = getIntent().getIntExtra("parent_id", -1);
-        initialize();
-
-
-    }
-
-    private void initialize() {
 
         CategoryActivity.newCategoryArrayList = new ArrayList<>();
 
-        GridView gridCategories = (GridView) findViewById(R.id.gridView_category);
+        gridCategories = (GridView) findViewById(R.id.gridView_category);
         gridCategories.setOnItemClickListener(this);
 
         this.categoryInGridViewAdapter = new CategoryInGridViewAdapter(this);
         gridCategories.setAdapter(categoryInGridViewAdapter);
 
+        initialize();
+
+    }
+
+    private void initialize() {
         if (mInternetConnection.isConnectingToInternet())
         {
             CategoryActivity.newCategoryArrayList.clear();
-            if (parentId>0)
-                new GetSubCategoryOfParentsAsyncTask(this).execute(String.valueOf(parentId));
-            else
-                new GetSubCategoryOfParentsAsyncTask(this).execute(String.valueOf(9));
+            new GetSubCategoryOfParentsAsyncTask(this).execute(String.valueOf(parentId));
         }
     }
 
@@ -84,6 +85,6 @@ public class CategoryActivity extends BaseActivityWithoutDrawer implements Adapt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        
+
     }
 }

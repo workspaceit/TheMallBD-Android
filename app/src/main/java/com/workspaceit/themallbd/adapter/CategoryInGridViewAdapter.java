@@ -74,7 +74,8 @@ public class CategoryInGridViewAdapter extends BaseAdapter {
         }
         try {
             String icon = CategoryActivity.newCategoryArrayList.get(position).icon;
-            if (icon != null) {
+            int size = icon.length();
+            if (size>0) {
                     //    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
                     //    ImageLoader.getInstance().init(config);
                     ImageLoader.getInstance().displayImage(

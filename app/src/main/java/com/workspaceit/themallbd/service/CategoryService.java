@@ -24,9 +24,16 @@ public class CategoryService extends BaseMallBDService {
         ArrayList<Category> newCategoryArraylist = new ArrayList<>();
         this.responseStat = new ResponseStat();
 
-        this.setController("api/category/childs/show");
         this.setParams("shop_id", "1");
-        this.setParams("parent_id",parentId);
+
+        if (parentId.equals("0"))
+        {
+            this.setController("api/category/parents/show");
+        }
+        else {
+            this.setController("api/category/childs/show");
+            this.setParams("parent_id",parentId);
+        }
 
         String resp = this.getData("POST");
         System.out.println(resp);
