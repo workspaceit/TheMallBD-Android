@@ -28,7 +28,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
 
     private List<Products> productsList;
 
-    private static String productUrl = "/product/large/";
+    private static String productUrl = "product/large/";
     private MainActivity mainActivity;
 
     DisplayImageOptions displayImageOptions;

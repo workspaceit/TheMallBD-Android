@@ -1,10 +1,13 @@
 package com.workspaceit.themallbd.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +36,7 @@ import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.DividerItemDecoration;
 import com.workspaceit.themallbd.utility.ExpandableHeightGridView;
 import com.workspaceit.themallbd.utility.RecyclerItemClickListener;
+import com.workspaceit.themallbd.utility.Utility;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -52,6 +56,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     //Imageview
     private ImageView categoryWomenView,categoryBabyView,categoryMenView,categoryAllView;
+
+    private FloatingActionButton cartFabButton;
 
     //recycler view variables for horizontal scrolling
     public RecyclerView newProductHorizontalListRV,featuredProductHorizontalListRV;
@@ -89,7 +95,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         initialize();
         initializeSlider();
-
     }
 
     public void initialize()
@@ -123,6 +128,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         this.categoryAllView = (ImageView) findViewById(R.id.iv_home_all);
         this.categoryAllView.setOnClickListener(this);
+
+        cartFabButton = (FloatingActionButton) findViewById(R.id.cart_fab_button);
+        cartFabButton.setOnClickListener(this);
+
+        if (Utility.shoppingCart.shoppingCartCell.size()>0)
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                cartFabButton.setImageDrawable(getResources().getDrawable(R.drawable.new_cart_c, this.getTheme()));
+            } else {
+                cartFabButton.setImageDrawable(getResources().getDrawable(R.drawable.new_cart_c));
+            }
+        }
     }
 
     private void initializeNewProductHorizontalSection(){
@@ -368,9 +385,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
         if (v==categoryAllView)
         {
-            Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-            intent.putExtra("parent_id",0);
+            Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
             startActivity(intent);
+        }
+        if (v==cartFabButton)
+        {
+            Toast.makeText(this,"jfksjfskfjsdnx",Toast.LENGTH_SHORT).show();
         }
 
 

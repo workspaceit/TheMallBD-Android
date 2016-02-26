@@ -28,7 +28,7 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<H
 
     private List<Products> productsList;
 
-    private static String productUrl = "/product/large/";
+    private static String productUrl = "product/large/";
     private MainActivity mainActivity;
 
     // Pass in the contact array into the constructor

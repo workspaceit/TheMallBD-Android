@@ -11,6 +11,7 @@ public class Category {
     public String title;
     public Shop shop;
     public String icon;
+    public String banner;
     public String metaTitle;
     public String metaDescription;
     public String createdOn;
@@ -24,6 +25,7 @@ public class Category {
         this.metaTitle = "";
         this.metaDescription = "";
         this.createdOn = "";
+        this.banner = "";
         this.childrens = new ArrayList<>();
     }
 }

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.workspaceit.themallbd.activity.CategoryActivity;
+import com.workspaceit.themallbd.activity.CategoryListViewActivity;
 import com.workspaceit.themallbd.dataModel.Category;
 import com.workspaceit.themallbd.service.CategoryService;
 import com.workspaceit.themallbd.utility.Utility;
@@ -12,14 +13,13 @@ import com.workspaceit.themallbd.utility.Utility;
 import java.util.ArrayList;
 
 /**
- * Created by rajib on 2/23/16.
+ * Created by rajib on 2/26/16.
  */
-public class GetSubCategoryOfParentsAsyncTask extends AsyncTask<String, String, ArrayList<Category>> {
-
-    private CategoryActivity mContext;
+public class CategoryInListViewAsyncTask extends AsyncTask<String,String,ArrayList<Category>> {
+    private CategoryListViewActivity mContext;
     private ProgressDialog mProgressDialog;
 
-    public GetSubCategoryOfParentsAsyncTask(CategoryActivity categoryActivity) {
+    public CategoryInListViewAsyncTask(CategoryListViewActivity categoryActivity) {
         this.mContext = categoryActivity;
     }
 
@@ -35,10 +35,9 @@ public class GetSubCategoryOfParentsAsyncTask extends AsyncTask<String, String, 
     @Override
     protected ArrayList<Category> doInBackground(String... params) {
 
-        String parentId = params[0];
         CategoryService categoryService = new CategoryService();
 
-        return categoryService.getChildCategoryByParentId(parentId);
+        return categoryService.getParentsCategories();
     }
 
     @Override

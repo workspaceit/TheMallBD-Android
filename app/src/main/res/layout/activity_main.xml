@@ -15,346 +15,362 @@
         android:layout_height="match_parent"
          />
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/mainLayout"
-            android:background="#F6F6F6"
-            tools:context=".activity.MainActivity">
-            <include
-                android:id="@+id/toolbar"
-                layout="@layout/toolbar" />
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:background="#8C1C1E">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/search_in_home"
-                    android:background="@drawable/rounded_edittext"
-                    android:layout_margin="10dp"
-                    android:drawableEnd="@drawable/search"
-                    android:drawableRight="@drawable/search"
-                    android:drawablePadding="10dp"
-                    android:hint="Search"
-                    android:textColor="#000000"
-                    android:textColorHint="#000000"
-                    android:paddingLeft="15dp"
-                    android:paddingStart="15dp"
-                    android:paddingRight="10dp"
-                    android:textSize="@dimen/material_text_body1" />
-            </LinearLayout>
-
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/linearLayoutMainSlider">
+                android:orientation="vertical"
+                android:id="@+id/mainLayout"
+                android:background="#F6F6F6"
+                tools:context=".activity.MainActivity">
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/toolbar" />
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:background="#8C1C1E">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/search_in_home"
+                        android:background="@drawable/rounded_edittext"
+                        android:layout_margin="10dp"
+                        android:drawableEnd="@drawable/search"
+                        android:drawableRight="@drawable/search"
+                        android:drawablePadding="10dp"
+                        android:hint="Search"
+                        android:textColor="#000000"
+                        android:textColorHint="#000000"
+                        android:paddingLeft="15dp"
+                        android:paddingStart="15dp"
+                        android:paddingRight="10dp"
+                        android:textSize="@dimen/material_text_body1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linearLayoutMainSlider">
 
                     <com.daimajia.slider.library.SliderLayout
                         android:id="@+id/slider"
                         android:layout_width="match_parent"
                         android:layout_height="200dp" />
 
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:id="@+id/linearLayoutMainCategory"
-                android:background="@drawable/category_gradient"
-                android:orientation="horizontal">
-
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dip"
-                    android:padding="10dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="46dp"
-                        android:layout_height="45dp"
-                        android:id="@+id/imageView_babyCare"
-                        android:contentDescription="@string/baby_care"
-                        android:layout_gravity="center"
-                        android:src="@drawable/category_baby" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/baby_care"
-                        android:id="@+id/tv_home_cat_baby"
-                        android:layout_gravity="center"
-                        android:singleLine="true"
-                        android:textSize="@dimen/material_text_caption" />
-
                 </LinearLayout>
-
-                <View
-                    android:orientation="horizontal"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#c3c3c3"/>
-
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="46dp"
-                        android:layout_height="45dp"
-                        android:id="@+id/iv_home_women"
-                        android:layout_gravity="center"
-                        android:src="@drawable/category_women" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/women_category"
-                        android:id="@+id/tv_home_women"
-                        android:layout_gravity="center"
-                        android:textSize="@dimen/material_text_caption" />
-                </LinearLayout>
-
-                <View
-                    android:orientation="horizontal"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#c3c3c3"/>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="46dp"
-                        android:layout_height="45dp"
-                        android:id="@+id/iv_home_men"
-                        android:layout_gravity="center"
-                        android:src="@drawable/category_menmen" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/men_category"
-                        android:id="@+id/tv_home_men"
-                        android:layout_gravity="center"
-                        android:textSize="@dimen/material_text_caption" />
-                </LinearLayout>
-
-                <View
-                    android:orientation="horizontal"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="#c3c3c3"/>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:layout_width="46dp"
-                        android:layout_height="45dp"
-                        android:contentDescription="@string/all_category"
-                        android:id="@+id/iv_home_all"
-                        android:layout_gravity="center"
-                        android:src="@drawable/category_all"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/all_category"
-                        android:id="@+id/tv_home_all"
-                        android:singleLine="true"
-                        android:textSize="@dimen/material_text_caption"
-                        android:layout_gravity="center" />
-                </LinearLayout>
-
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#FFFFFF">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/new_product"
-                    android:textSize="@dimen/material_text_subhead"
-                    android:id="@+id/tv_home_newProducts"
-                    android:textAllCaps="true"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#4D4D4D"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-            <View
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#c3c3c3"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF">
-
-                <android.support.v7.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="175dp" android:id="@+id/rv_horizontal">
-                </android.support.v7.widget.RecyclerView>
+                    android:layout_height="80dp"
+                    android:id="@+id/linearLayoutMainCategory"
+                    android:background="@drawable/category_gradient"
+                    android:orientation="horizontal">
 
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="200dp">
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dip"
+                        android:padding="10dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:layout_width="46dp"
+                            android:layout_height="45dp"
+                            android:id="@+id/imageView_babyCare"
+                            android:contentDescription="@string/baby_care"
+                            android:layout_gravity="center"
+                            android:src="@drawable/category_baby" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/baby_care"
+                            android:id="@+id/tv_home_cat_baby"
+                            android:layout_gravity="center"
+                            android:singleLine="true"
+                            android:textSize="@dimen/material_text_caption" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#c3c3c3"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="46dp"
+                            android:layout_height="45dp"
+                            android:id="@+id/iv_home_women"
+                            android:layout_gravity="center"
+                            android:src="@drawable/category_women" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/women_category"
+                            android:id="@+id/tv_home_women"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/material_text_caption" />
+                    </LinearLayout>
+
+                    <View
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#c3c3c3"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="46dp"
+                            android:layout_height="45dp"
+                            android:id="@+id/iv_home_men"
+                            android:layout_gravity="center"
+                            android:src="@drawable/category_menmen" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/men_category"
+                            android:id="@+id/tv_home_men"
+                            android:layout_gravity="center"
+                            android:textSize="@dimen/material_text_caption" />
+                    </LinearLayout>
+
+                    <View
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="#c3c3c3"/>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dip"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="46dp"
+                            android:layout_height="45dp"
+                            android:contentDescription="@string/all_category"
+                            android:id="@+id/iv_home_all"
+                            android:layout_gravity="center"
+                            android:src="@drawable/category_all"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/all_category"
+                            android:id="@+id/tv_home_all"
+                            android:singleLine="true"
+                            android:textSize="@dimen/material_text_caption"
+                            android:layout_gravity="center" />
+                    </LinearLayout>
+
+                </LinearLayout>
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:background="#A31C1F"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:background="#FFFFFF">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="sale"
-                        android:textSize="@dimen/material_text_headline"
-                        android:id="@+id/tv_home_sale"
+                        android:text="@string/new_product"
+                        android:textSize="@dimen/material_text_subhead"
+                        android:id="@+id/tv_home_newProducts"
                         android:textAllCaps="true"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:textColor="#FFFFFF"
+                        android:textColor="#4D4D4D"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:textStyle="bold"  />
+                        android:textStyle="bold" />
                 </LinearLayout>
+                <View
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#c3c3c3"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF">
 
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="175dp" android:id="@+id/rv_horizontal">
+                    </android.support.v7.widget.RecyclerView>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:background="#A31C1F"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="sale"
+                            android:textSize="@dimen/material_text_headline"
+                            android:id="@+id/tv_home_sale"
+                            android:textAllCaps="true"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:textColor="#FFFFFF"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:textStyle="bold"  />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/banner"/>
+
+                    </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp">
+                    android:layout_height="50dp"
+                    android:background="#FFFFFF">
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/banner"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/featured_products"
+                        android:textSize="@dimen/material_text_subhead"
+                        android:id="@+id/tv_home_featuredProducts"
+                        android:textAllCaps="true"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#4D4D4D"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#FFFFFF">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/featured_products"
-                    android:textSize="@dimen/material_text_subhead"
-                    android:id="@+id/tv_home_featuredProducts"
-                    android:textAllCaps="true"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#4D4D4D"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-            <View
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#c3c3c3"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF">
-
-                <android.support.v7.widget.RecyclerView
+                <View
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
-                    android:id="@+id/rv_featured_horizontalProducts" />
-            </LinearLayout>
-            <View
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#c3c3c3"/>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#FFFFFF">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="#c3c3c3"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/products"
-                    android:textSize="@dimen/material_text_subhead"
-                    android:id="@+id/tv_home_products"
-                    android:textAllCaps="true"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:textColor="#4D4D4D"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:textStyle="bold" />
+                    android:background="#FFFFFF">
 
-            </LinearLayout>
-            <View
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="#c3c3c3"/>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent"
-                android:background="#FFFFFF">
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="175dp"
+                        android:id="@+id/rv_featured_horizontalProducts" />
+                </LinearLayout>
+                <View
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="#c3c3c3"/>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="#FFFFFF">
 
-                <com.workspaceit.themallbd.utility.ExpandableHeightGridView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/gridView_all_Product"
-                    android:numColumns="auto_fit"
-                    android:verticalSpacing="5dp"
-                    android:horizontalSpacing="5dp"
-                    android:layout_marginTop="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:columnWidth="170dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="@string/products"
+                        android:textSize="@dimen/material_text_subhead"
+                        android:id="@+id/tv_home_products"
+                        android:textAllCaps="true"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#4D4D4D"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+                <View
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#c3c3c3"/>
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:background="#FFFFFF">
+
+                    <com.workspaceit.themallbd.utility.ExpandableHeightGridView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/gridView_all_Product"
+                        android:numColumns="auto_fit"
+                        android:verticalSpacing="5dp"
+                        android:horizontalSpacing="5dp"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:columnWidth="170dp"/>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:backgroundTint="#E71E62"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/cart_fab_button"
+            android:src="@drawable/new_cart"/>
+    </RelativeLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"

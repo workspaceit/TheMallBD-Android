@@ -22,7 +22,7 @@ import com.workspaceit.themallbd.utility.Utility;
  */
 public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
 
-    private static String productUrl = "/product/large/";
+    private static String productUrl = "product/large/";
 
     private MainActivity mainActivity;
     private LayoutInflater layoutInflater;
@@ -42,7 +42,6 @@ public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
                 .imageScaleType(ImageScaleType.EXACTLY)
                 .resetViewBeforeLoading(true)
                 .build();
-
 
     }
 

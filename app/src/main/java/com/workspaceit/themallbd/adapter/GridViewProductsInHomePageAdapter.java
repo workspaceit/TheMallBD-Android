@@ -1,6 +1,8 @@
 package com.workspaceit.themallbd.adapter;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +28,7 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private int state;
 
-    private static String productUrl = "/product/large/";
+    private static String productUrl = "product/large/";
 
 
     public GridViewProductsInHomePageAdapter(MainActivity mainActivity) {
@@ -85,7 +87,14 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
                                 MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name,
                         viewHolder.productImage);
             } else {
-                viewHolder.productImage.setImageResource(R.drawable.image_not_found);
+                BitmapFactory.Options ourOptions=new BitmapFactory.Options();
+                ourOptions.inDither=false;
+                ourOptions.inPurgeable=true;
+                ourOptions.inInputShareable=true;
+                ourOptions.inTempStorage=new byte[32 * 1024];
+                Bitmap bm = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.image_not_found, ourOptions);
+               // viewHolder.productImage.setImageResource(R.drawable.image_not_found);
+                viewHolder.productImage.setImageBitmap(bm);
             }
             viewHolder.productName.setText(MainActivity.allProductsForGridViewList.get(position).title);
             if (MainActivity.allProductsForGridViewList.get(position).prices.size()>0)

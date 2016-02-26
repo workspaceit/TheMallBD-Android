@@ -60,4 +60,39 @@ public class CategoryService extends BaseMallBDService {
         }
         return newCategoryArraylist;
     }
+
+    public ArrayList<Category> getParentsCategories(){
+
+        ArrayList<Category> newCategoryArraylist = new ArrayList<>();
+        this.responseStat = new ResponseStat();
+
+        this.setParams("shop_id", "1");
+        this.setController("api/category/parents/show");
+
+        String resp = this.getData("POST");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+            if (this.responseStat.status)
+            {
+                Log.i("Check", "true");
+                Category[] categories = gson.fromJson(jsonObject.get("responseData"),Category[].class);
+                Collections.addAll(newCategoryArraylist, categories);
+                return newCategoryArraylist;
+            }
+            else {
+                Utility.responseStat = this.responseStat;
+                return newCategoryArraylist;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return newCategoryArraylist;
+
+    }
 }
