@@ -33,7 +33,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.BaseActivityWithoutDrawer" />
         <activity android:name=".activity.CategoryActivity" />
-        <activity android:name=".activity.CategoryListViewActivity"></activity>
+        <activity android:name=".activity.CategoryListViewActivity" />
+        <activity android:name=".activity.CategoryInExpandableListViewActivity"></activity>
     </application>
 
 </manifest>

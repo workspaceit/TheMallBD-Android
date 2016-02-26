@@ -3,19 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.workspaceit.themallbd.activity.CategoryListViewActivity">
+    tools:context="com.workspaceit.themallbd.activity.CategoryInExpandableListViewActivity">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <ListView
+    <ExpandableListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="5sp"
-        android:id="@+id/category_parents">
+        android:id="@+id/category_expandable_list_view">
 
-    </ListView>
+    </ExpandableListView>
 
 </LinearLayout>
