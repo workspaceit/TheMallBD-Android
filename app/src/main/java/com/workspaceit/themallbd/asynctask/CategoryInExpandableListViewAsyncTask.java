@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.workspaceit.themallbd.activity.CategoryActivity;
+import com.workspaceit.themallbd.activity.CategoryInExpandableListViewActivity;
 import com.workspaceit.themallbd.activity.CategoryListViewActivity;
 import com.workspaceit.themallbd.dataModel.Category;
 import com.workspaceit.themallbd.service.CategoryService;
@@ -13,13 +13,13 @@ import com.workspaceit.themallbd.utility.Utility;
 import java.util.ArrayList;
 
 /**
- * Created by rajib on 2/26/16.
+ * Created by rajib on 2/29/16.
  */
-public class CategoryInListViewAsyncTask extends AsyncTask<String,String,ArrayList<Category>> {
-    private CategoryListViewActivity mContext;
+public class CategoryInExpandableListViewAsyncTask extends AsyncTask<String,String,ArrayList<Category>> {
+    private CategoryInExpandableListViewActivity mContext;
     private ProgressDialog mProgressDialog;
 
-    public CategoryInListViewAsyncTask(CategoryListViewActivity categoryActivity) {
+    public CategoryInExpandableListViewAsyncTask(CategoryInExpandableListViewActivity categoryActivity) {
         this.mContext = categoryActivity;
     }
 

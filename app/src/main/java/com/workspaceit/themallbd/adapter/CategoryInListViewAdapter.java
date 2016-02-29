@@ -75,7 +75,7 @@ public class CategoryInListViewAdapter extends BaseAdapter {
 
         try {
             String icon = this.categoryArrayList.get(position).banner;
-            int size = icon.length();
+            int size = icon!=null? icon.length(): 0;
             if (size>0) {
                 //    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
                 //    ImageLoader.getInstance().init(config);

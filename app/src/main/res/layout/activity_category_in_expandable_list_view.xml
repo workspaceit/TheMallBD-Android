@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
     tools:context="com.workspaceit.themallbd.activity.CategoryInExpandableListViewActivity">
 
     <include
@@ -11,7 +13,8 @@
 
     <ExpandableListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
+        android:groupIndicator="@drawable/custom_indicator"
         android:id="@+id/category_expandable_list_view">
 
     </ExpandableListView>

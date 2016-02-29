@@ -1,5 +1,7 @@
 package com.workspaceit.themallbd.activity;
 
+import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +30,10 @@ public class CategoryListViewActivity extends BaseActivityWithoutDrawer implemen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_list_view);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Categories");
+
         mInternetConnection = new InternetConnection(this);
 
         categoryParentsListView = (ListView) findViewById(R.id.category_parents);
@@ -48,7 +54,10 @@ public class CategoryListViewActivity extends BaseActivityWithoutDrawer implemen
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent intent = new Intent(this,CategoryInExpandableListViewActivity.class);
+        intent.putExtra("position",position);
+        intent.putExtra("title",this.parentCategoryArrayList.get(position).title);
+        startActivity(intent);
     }
 
     public void setNewCategoryArrayList(ArrayList<Category> categoryList)

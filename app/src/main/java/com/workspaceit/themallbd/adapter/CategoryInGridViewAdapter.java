@@ -39,7 +39,6 @@ public class CategoryInGridViewAdapter extends BaseAdapter {
 
         public ImageView imageView;
         public TextView nameTextView;
-
     }
 
     @Override
