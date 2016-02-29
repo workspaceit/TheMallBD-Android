@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -118,6 +119,15 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
         }
 
         viewHolder.categoryTitle.setText(children.title);
+
+       /* if(children.childrens.size() > 0 ) {
+           // ExpandableListView elv = new ExpandableListView(this.activity);
+         //   elv.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT,  AbsListView.LayoutParams.WRAP_CONTENT));
+        //    elv.setAdapter(new CatAdapter(this, children.childrens));
+            TextView textView = new TextView(this.activity);
+            textView.setText("adas");
+                    ((ViewGroup) convertView).addView(textView);
+        }*/
 
         return convertView;
 

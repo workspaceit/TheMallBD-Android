@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="55dp"
     android:background="#F6F2F2"
@@ -16,4 +16,4 @@
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingStart="?android:attr/expandableListPreferredChildPaddingLeft"/>
 
-</RelativeLayout>
+</LinearLayout>
