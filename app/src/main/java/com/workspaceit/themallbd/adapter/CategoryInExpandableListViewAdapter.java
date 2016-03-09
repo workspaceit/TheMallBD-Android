@@ -13,6 +13,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.activity.CategoryInExpandableListViewActivity;
@@ -104,8 +105,8 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                              View convertView, ViewGroup parent) {
-         Category children = (Category) getChild(groupPosition, childPosition);
-        ChildViewHolder viewHolder = null;
+        Category children = (Category) getChild(groupPosition, childPosition);
+ /*        ChildViewHolder viewHolder = null;
 
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.category_child_items_in_group, null);
@@ -120,22 +121,112 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
 
         viewHolder.categoryTitle.setText(children.title);
 
-       /* if(children.childrens.size() > 0 ) {
-           // ExpandableListView elv = new ExpandableListView(this.activity);
-         //   elv.setLayoutParams(new AbsListView.LayoutParams(AbsListView.LayoutParams.WRAP_CONTENT,  AbsListView.LayoutParams.WRAP_CONTENT));
-        //    elv.setAdapter(new CatAdapter(this, children.childrens));
-            TextView textView = new TextView(this.activity);
-            textView.setText("adas");
-                    ((ViewGroup) convertView).addView(textView);
-        }*/
-
-        return convertView;
+        return convertView;*/
+        SecondLevelExpandableListView secondLevelELV = new SecondLevelExpandableListView(activity);
+        secondLevelELV.setAdapter(new SecondLevelAdapter(activity,children));
+        secondLevelELV.setGroupIndicator(null);
+        return secondLevelELV;
 
     }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public class SecondLevelExpandableListView extends ExpandableListView {
+
+        public SecondLevelExpandableListView(Context context) {
+            super(context);
+        }
+
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            //999999 is a size in pixels. ExpandableListView requires a maximum height in order to do measurement calculations.
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(999999, MeasureSpec.AT_MOST);
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
+
+    public class SecondLevelAdapter extends BaseExpandableListAdapter {
+
+        private Context context;
+        private Category childrens;
+
+        public SecondLevelAdapter(Context context,Category children) {
+            this.context = context;
+            this.childrens = children;
+        }
+
+        @Override
+        public Object getGroup(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public int getGroupCount() {
+            return 1;
+        }
+
+        @Override
+        public long getGroupId(int groupPosition) {
+            return groupPosition;
+        }
+
+        @Override
+        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.category_child_items_in_group, null);
+                TextView text = (TextView) convertView.findViewById(R.id.lblListItem);
+                text.setText(childrens.title);
+            }
+            return convertView;
+        }
+
+        @Override
+        public Object getChild(int groupPosition, int childPosition) {
+            return childrens.childrens.get(childPosition);
+        }
+
+        @Override
+        public long getChildId(int groupPosition, int childPosition) {
+            return childrens.childrens.get(childPosition).id;
+        }
+
+        @Override
+        public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+            TextView  text = null;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.category_child_of_child_items, null);
+                text = (TextView) convertView.findViewById(R.id.child_of_child);
+                text.setText(childrens.childrens.get(childPosition).title);
+            }
+            if (text != null) {
+                text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(activity,getChildId(groupPosition,childPosition)+"",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+            return convertView;
+        }
+
+        @Override
+        public int getChildrenCount(int groupPosition) {
+            return childrens.childrens.size();
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public boolean isChildSelectable(int groupPosition, int childPosition) {
+            return true;
+        }
     }
 
 

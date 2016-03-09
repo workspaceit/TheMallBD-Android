@@ -20,7 +20,7 @@ import com.workspaceit.themallbd.utility.Utility;
 
 import java.util.ArrayList;
 
-public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener {
+public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener, ExpandableListView.OnChildClickListener {
 
     private ExpandableListView expandableListView;
     private ArrayList<Category> parentsWithChildrenArrayList;
@@ -35,7 +35,7 @@ public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_in_expandable_list_view);
 
-        position = getIntent().getIntExtra("position",-1);
+        position = getIntent().getIntExtra("position", -1);
         title = getIntent().getStringExtra("title");
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
@@ -44,7 +44,7 @@ public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDra
         mInternetConnection = new InternetConnection(this);
 
         expandableListView = (ExpandableListView) findViewById(R.id.category_expandable_list_view);
-        expandableListView.setOnItemClickListener(this);
+      //  expandableListView.setOnItemClickListener(this);
 
         this.parentsWithChildrenArrayList = new ArrayList<>();
 
@@ -60,7 +60,7 @@ public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDra
         //
         expandableListView.expandGroup(position);
 
-        expandableListView.setOnItemClickListener(this);
+        expandableListView.setOnChildClickListener(this);
 
 
     }
@@ -90,6 +90,7 @@ public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDra
         Toast.makeText(this, "No Data for new category", Toast.LENGTH_SHORT).show();
     }
 
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -112,5 +113,11 @@ public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDra
         } else {
             expandableListView.setIndicatorBoundsRelative(width-GetPixelFromDips(35), width-GetPixelFromDips(5));
         }
+    }
+
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+        Toast.makeText(this,"asdda",Toast.LENGTH_LONG).show();
+        return false;
     }
 }
