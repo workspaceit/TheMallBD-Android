@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.workspaceit.themallbd.activity.ProductFromCategoryActivity">
 
     <include
@@ -12,7 +11,8 @@
         layout="@layout/toolbar" />
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/product_category_listView">
 
     </ListView>
 

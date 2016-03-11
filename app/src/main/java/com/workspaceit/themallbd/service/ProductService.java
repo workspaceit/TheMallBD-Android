@@ -61,4 +61,40 @@ public class ProductService extends BaseMallBDService {
         return this.newProductsArrayList;
 
     }
+
+    public ArrayList<Products> getCategoryWiseProducts(String offset,String limit,String categoryId) {
+
+        ResponseStat responseStat;
+        responseStat = new ResponseStat();
+        ArrayList<Products> categoryWiseProducts = new ArrayList<>();
+
+        this.setController("api/product/category");
+        this.setParams("offset", offset);
+        this.setParams("limit", limit);
+        this.setParams("shop_id", String.valueOf(shop_id));
+        this.setParams("category_id",categoryId);
+
+        String resp = this.getData("POST");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"), responseStat.getClass());
+            if (this.responseStat.status) {
+
+                Log.i("Check", "true");
+                Products[] products = gson.fromJson(jsonObject.get("responseData"), Products[].class);
+                Collections.addAll(this.newProductsArrayList, products);
+                return categoryWiseProducts;
+            } else {
+                Utility.responseStat = responseStat;
+                return categoryWiseProducts;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return categoryWiseProducts;
+    }
 }
