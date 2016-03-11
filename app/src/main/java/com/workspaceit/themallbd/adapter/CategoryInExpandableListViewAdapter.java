@@ -1,17 +1,11 @@
 package com.workspaceit.themallbd.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +13,6 @@ import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.activity.CategoryInExpandableListViewActivity;
 import com.workspaceit.themallbd.dataModel.Category;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 
 /**
@@ -41,10 +34,6 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
     public class ViewHolder {
 
         public TextView nameTextView;
-    }
-
-    public class ChildViewHolder{
-        public TextView categoryTitle;
     }
 
     @Override
@@ -84,7 +73,7 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.category_parents_group, null);
             viewHolder = new ViewHolder();

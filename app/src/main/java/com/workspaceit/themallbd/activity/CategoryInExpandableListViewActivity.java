@@ -1,21 +1,15 @@
 package com.workspaceit.themallbd.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.CategoryInExpandableListViewAdapter;
-import com.workspaceit.themallbd.adapter.CategoryInListViewAdapter;
-import com.workspaceit.themallbd.asynctask.CategoryInExpandableListViewAsyncTask;
-import com.workspaceit.themallbd.asynctask.CategoryInListViewAsyncTask;
 import com.workspaceit.themallbd.dataModel.Category;
-import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.Utility;
 
 import java.util.ArrayList;
@@ -26,22 +20,21 @@ public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDra
     private ArrayList<Category> parentsWithChildrenArrayList;
 
     private CategoryInExpandableListViewAdapter categoryInExpandableListViewAdapter;
-    private InternetConnection mInternetConnection;
 
     private int position = 0;
-    private String title = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_in_expandable_list_view);
 
         position = getIntent().getIntExtra("position", -1);
-        title = getIntent().getStringExtra("title");
+        String title = getIntent().getStringExtra("title");
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(title);
-
-        mInternetConnection = new InternetConnection(this);
+        if (actionBar != null) {
+            actionBar.setTitle(title);
+        }
 
         expandableListView = (ExpandableListView) findViewById(R.id.category_expandable_list_view);
       //  expandableListView.setOnItemClickListener(this);

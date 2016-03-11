@@ -34,7 +34,8 @@
         <activity android:name=".activity.BaseActivityWithoutDrawer" />
         <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.CategoryListViewActivity" />
-        <activity android:name=".activity.CategoryInExpandableListViewActivity"></activity>
+        <activity android:name=".activity.CategoryInExpandableListViewActivity" />
+        <activity android:name=".activity.ProductFromCategoryActivity"></activity>
     </application>
 
 </manifest>
