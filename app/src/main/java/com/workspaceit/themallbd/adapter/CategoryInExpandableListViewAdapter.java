@@ -1,6 +1,7 @@
 package com.workspaceit.themallbd.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.activity.CategoryInExpandableListViewActivity;
+import com.workspaceit.themallbd.activity.ProductFromCategoryActivity;
 import com.workspaceit.themallbd.dataModel.Category;
 
 import java.util.ArrayList;
@@ -195,7 +197,9 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(activity,getChildId(groupPosition,childPosition)+"",Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(activity, ProductFromCategoryActivity.class);
+                        intent.putExtra("category_id",childPosition);
+                        activity.startActivity(intent);
                     }
                 });
             }

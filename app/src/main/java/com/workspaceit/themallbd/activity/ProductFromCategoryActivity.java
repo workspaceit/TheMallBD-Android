@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.workspaceit.themallbd.R;
 
-public class ProductFromCategoryActivity extends AppCompatActivity {
+public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
