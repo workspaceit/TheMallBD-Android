@@ -97,22 +97,6 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild,
                              View convertView, ViewGroup parent) {
         Category children = (Category) getChild(groupPosition, childPosition);
- /*        ChildViewHolder viewHolder = null;
-
-        if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.category_child_items_in_group, null);
-            viewHolder = new ChildViewHolder();
-
-            viewHolder.categoryTitle = (TextView) convertView
-                    .findViewById(R.id.lblListItem);
-            convertView.setTag(viewHolder);
-        }else {
-            viewHolder = (ChildViewHolder) convertView.getTag();
-        }
-
-        viewHolder.categoryTitle.setText(children.title);
-
-        return convertView;*/
         SecondLevelExpandableListView secondLevelELV = new SecondLevelExpandableListView(activity);
         secondLevelELV.setAdapter(new SecondLevelAdapter(activity,children));
         secondLevelELV.setGroupIndicator(null);
@@ -164,11 +148,12 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
         }
 
         @Override
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+            TextView  text;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.category_child_items_in_group, null);
-                TextView text = (TextView) convertView.findViewById(R.id.lblListItem);
+                text = (TextView) convertView.findViewById(R.id.lblListItem);
                 text.setText(childrens.title);
             }
             return convertView;

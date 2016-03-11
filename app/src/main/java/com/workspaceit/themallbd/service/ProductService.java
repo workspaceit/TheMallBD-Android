@@ -72,7 +72,8 @@ public class ProductService extends BaseMallBDService {
         this.setParams("offset", offset);
         this.setParams("limit", limit);
         this.setParams("shop_id", String.valueOf(shop_id));
-        this.setParams("category_id",categoryId);
+       // this.setParams("category",categoryId);
+        this.setParams("category",String.valueOf(16));
 
         String resp = this.getData("POST");
         System.out.println(resp);
@@ -86,7 +87,7 @@ public class ProductService extends BaseMallBDService {
 
                 Log.i("Check", "true");
                 Products[] products = gson.fromJson(jsonObject.get("responseData"), Products[].class);
-                Collections.addAll(this.newProductsArrayList, products);
+                Collections.addAll(categoryWiseProducts, products);
                 return categoryWiseProducts;
             } else {
                 Utility.responseStat = responseStat;
