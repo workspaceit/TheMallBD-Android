@@ -57,8 +57,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     //Imageview
     private ImageView categoryWomenView,categoryBabyView,categoryMenView,categoryAllView;
 
-    private FloatingActionButton cartFabButton;
-
     //recycler view variables for horizontal scrolling
     public RecyclerView newProductHorizontalListRV,featuredProductHorizontalListRV;
 
@@ -129,17 +127,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.categoryAllView = (ImageView) findViewById(R.id.iv_home_all);
         this.categoryAllView.setOnClickListener(this);
 
-        cartFabButton = (FloatingActionButton) findViewById(R.id.cart_fab_button);
-        cartFabButton.setOnClickListener(this);
-
-        if (Utility.shoppingCart.shoppingCartCell.size()>0)
-        {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                cartFabButton.setImageDrawable(getResources().getDrawable(R.drawable.new_cart_c, this.getTheme()));
-            } else {
-                cartFabButton.setImageDrawable(getResources().getDrawable(R.drawable.new_cart_c));
-            }
-        }
     }
 
     private void initializeNewProductHorizontalSection(){
@@ -387,10 +374,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         {
             Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
             startActivity(intent);
-        }
-        if (v==cartFabButton)
-        {
-            Toast.makeText(this,"jfksjfskfjsdnx",Toast.LENGTH_SHORT).show();
         }
 
 

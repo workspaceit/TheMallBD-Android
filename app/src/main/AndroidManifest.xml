@@ -35,7 +35,11 @@
         <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.CategoryListViewActivity" />
         <activity android:name=".activity.CategoryInExpandableListViewActivity" />
-        <activity android:name=".activity.ProductFromCategoryActivity"></activity>
+        <activity android:name=".activity.ProductFromCategoryActivity" />
+        <activity
+            android:name=".activity.CheckoutActivity"
+            android:label="@string/title_activity_checkout"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

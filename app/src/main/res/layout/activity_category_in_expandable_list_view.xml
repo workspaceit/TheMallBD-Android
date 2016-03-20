@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:groupIndicator="@drawable/custom_indicator"
-        android:childIndicator="@drawable/custom_indicator_child"
         android:id="@+id/category_expandable_list_view">
 
     </ExpandableListView>

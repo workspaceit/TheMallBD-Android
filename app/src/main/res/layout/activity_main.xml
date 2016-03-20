@@ -358,18 +358,6 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-        <android.support.design.widget.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:backgroundTint="#E71E62"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/cart_fab_button"
-            android:src="@drawable/new_cart"/>
     </RelativeLayout>
 
     <android.support.design.widget.NavigationView

@@ -1,17 +1,27 @@
 package com.workspaceit.themallbd.activity;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.utility.SessionManager;
 
 public class BaseActivityWithoutDrawer extends AppCompatActivity {
+
+    public static Button CARTCOUNT;
+    public static int mCARTCOUNT = 0;
+    private TextView cartTV;
 
     private Toolbar toolbar;
 
@@ -44,7 +54,24 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_cart);
+        MenuItemCompat.setActionView(item, R.layout.cart_update_count);
+        View view = MenuItemCompat.getActionView(item);
+        // CARTCOUNT = (Button) MenuItemCompat.getActionView(item);
+        //  CARTCOUNT.setText(mCARTCOUNT+"");
+        // CARTCOUNT.setOnClickListener(this);
+        CARTCOUNT = (Button)view.findViewById(R.id.notif_count);
+        CARTCOUNT.setText(String.valueOf(mCARTCOUNT+""));
+        CARTCOUNT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),CheckoutActivity.class);
+                startActivity(intent);
+            }
+        });
+
         return true;
     }
 
@@ -70,6 +97,11 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setNotifCount(int count){
+        mCARTCOUNT = count;
+        invalidateOptionsMenu();
     }
 
     @Override

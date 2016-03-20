@@ -1,7 +1,10 @@
 package com.workspaceit.themallbd.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,7 +16,7 @@ import com.workspaceit.themallbd.service.InternetConnection;
 
 import java.util.ArrayList;
 
-public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer {
+public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener {
 
     private ListView productCategoryListView;
 
@@ -52,6 +55,8 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer {
 
         }
 
+        productCategoryListView.setOnItemClickListener(this);
+
     }
 
     public void setCategoryWiseProducts(ArrayList<Products> productses) {
@@ -73,5 +78,13 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer {
 
     public void setNewProductListError() {
         Toast.makeText(this, "Something Went wrong", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this,ProductDetailsActivity.class);
+        intent.putExtra("position",position);
+        intent.putExtra("productArray",4);
+        startActivity(intent);
     }
 }

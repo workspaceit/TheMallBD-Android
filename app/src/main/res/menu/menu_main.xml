@@ -3,11 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" tools:context=".activity.MainActivity">
 
     <item
-        android:id="@+id/toolbar_cart_id"
-        android:icon="@drawable/cart"
-        android:title="cart"
+        android:id="@+id/action_cart"
+        android:actionLayout="@layout/cart_update_count"
         app:showAsAction="ifRoom"
-        />
+        android:title="cart" />
     <item
         android:id="@+id/action_settings"
         android:title="@string/action_settings"

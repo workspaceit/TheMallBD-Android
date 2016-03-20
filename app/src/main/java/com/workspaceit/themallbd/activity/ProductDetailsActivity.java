@@ -51,6 +51,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             products = MainActivity.featuredProductsForHorizontalViewList.get(position);
         else if (arrayListIndicator==3)
             products = MainActivity.allProductsForGridViewList.get(position);
+        else if (arrayListIndicator==4)
+            products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
 
         initializeSlider();
         initialize();
@@ -143,7 +145,13 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             shoppingCartCell.addToSelectedAttributes(selectedAttributes);
 
             Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
+            setNotifCount(Utility.shoppingCart.shoppingCartCell.size());
 
         }
+    }
+    @Override
+    public void setNotifCount(int count){
+        mCARTCOUNT = count;
+        invalidateOptionsMenu();
     }
 }
