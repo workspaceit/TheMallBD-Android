@@ -231,8 +231,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
-    public void initializeSlider()
-    {
+    public void initializeSlider() {
         TextSliderView textSliderView = new TextSliderView(this);
         textSliderView
                 .description("banner image")
@@ -252,6 +251,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         sliderShow.addSlider(textSliderView2);
     }
+
     private void loadMore() {
         if (mInternetConnection.isConnectingToInternet()) {
             offsetForNewProductsHorizontalScrolling += 1 ;
@@ -277,6 +277,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
 
     }
+
     public void setNewProductListError() {
 
         userScrolled = false;
@@ -354,20 +355,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         if (v==categoryWomenView)
         {
-            Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-            intent.putExtra("parent_id",9);
+           // Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+            Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
+          //  intent.putExtra("parent_id",9);
             startActivity(intent);
         }
         if (v==categoryBabyView)
         {
-            Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-            intent.putExtra("parent_id",8);
+            //Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+            Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
+           // intent.putExtra("parent_id",8);
             startActivity(intent);
         }
         if (v==categoryMenView)
         {
-            Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-            intent.putExtra("parent_id",10);
+            Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
+          //  Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
+         //   intent.putExtra("parent_id",10);
             startActivity(intent);
         }
         if (v==categoryAllView)

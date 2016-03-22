@@ -145,7 +145,7 @@
                         android:text="@string/add_to_cart"
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
-                        android:background="@drawable/buttonshape"
+                        android:background="@drawable/selector_button_state"
                         android:textSize="@dimen/material_text_button"
                         android:id="@+id/button_add_to_cart"
                         android:layout_marginRight="10dp"

@@ -46,7 +46,8 @@ public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDra
             new CategoryInExpandableListViewAsyncTask(this).execute();
         }*/
 
-        categoryInExpandableListViewAdapter = new CategoryInExpandableListViewAdapter(CategoryInExpandableListViewActivity.this,
+        categoryInExpandableListViewAdapter = new CategoryInExpandableListViewAdapter(
+                CategoryInExpandableListViewActivity.this,
                 Utility.parentsCategoryArraylist);
         expandableListView.setAdapter(categoryInExpandableListViewAdapter);
 
