@@ -23,7 +23,7 @@ import com.workspaceit.themallbd.utility.Utility;
  * Created by rajib on 2/15/16.
  */
 public class GridViewProductsInHomePageAdapter extends BaseAdapter {
-    //private static  String IMAGE_URL = "http://cabguardpro.com/";
+
     private MainActivity mainActivity;
     private LayoutInflater layoutInflater;
     private int state;

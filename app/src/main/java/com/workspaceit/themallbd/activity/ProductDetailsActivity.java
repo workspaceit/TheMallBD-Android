@@ -19,9 +19,10 @@ import com.workspaceit.themallbd.dataModel.Picture;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.SelectedAttributes;
 import com.workspaceit.themallbd.dataModel.ShoppingCartCell;
+import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.Utility;
 
-public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener, View.OnClickListener {
+public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener {
 
     private TextView tvProductName,tvProductPrice,tvProductDescription;
     private EditText etProductQuantity;
@@ -109,15 +110,13 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         tvProductDescription.setText(products.description);
 
         etProductQuantity = (EditText) findViewById(R.id.et_product_quantity_pd);
-        productsQuantity = Integer.parseInt(etProductQuantity.getText().toString());
+
 
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
         addToWishListBtn = (Button) findViewById(R.id.button_add_to_wishlist);
         buyNowBtn = (Button) findViewById(R.id.button_buy_now);
 
-        addToCartBtn.setOnClickListener(this);
-        addToWishListBtn.setOnClickListener(this);
-        buyNowBtn.setOnClickListener(this);
+
 
 
     }
@@ -127,31 +126,48 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
     }
 
+    public void AddToCartButtonClick(View view){
 
-    @Override
-    public void onClick(View v) {
 
-        if (v == addToCartBtn)
-        {
-            SelectedAttributes selectedAttributes = new SelectedAttributes();
-            selectedAttributes.setId(products.attributes.get(0).id);
-            selectedAttributes.setName(products.attributes.get(0).name);
-            selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
-
-            ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
-            shoppingCartCell.setId(products.id);
-            shoppingCartCell.setProduct(products);
-            shoppingCartCell.setQuantity(productsQuantity);
-            shoppingCartCell.addToSelectedAttributes(selectedAttributes);
-
-            Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
-            setNotifCount(Utility.shoppingCart.shoppingCartCell.size());
+        try {
+            this.productsQuantity=Integer.parseInt(etProductQuantity.getText().toString());
+        }catch (Exception e){
+            MakeToast.showToast(this,"Invalid Quantity");
 
         }
-    }
-    @Override
-    public void setNotifCount(int count){
-        mCARTCOUNT = count;
+
+        if(this.productsQuantity<1){
+            MakeToast.showToast(this,"Quantity is not valid");
+            return;
+        }
+
+
+        for(int i=0; i<Utility.shoppingCart.shoppingCartCell.size();i++){
+            if(Utility.shoppingCart.shoppingCartCell.get(i).id==products.id){
+                Utility.shoppingCart.shoppingCartCell.get(i).quantity+=this.productsQuantity;
+                invalidateOptionsMenu();
+                return;
+            }
+
+        }
+
+        SelectedAttributes selectedAttributes = new SelectedAttributes();
+        selectedAttributes.setId(products.attributes.get(0).id);
+        selectedAttributes.setName(products.attributes.get(0).name);
+        selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
+
+        ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
+        shoppingCartCell.setId(products.id);
+        shoppingCartCell.setProduct(products);
+        shoppingCartCell.setQuantity(this.productsQuantity);
+
+        shoppingCartCell.addToSelectedAttributes(selectedAttributes);
+
+        Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
         invalidateOptionsMenu();
+
     }
+
+
+
 }

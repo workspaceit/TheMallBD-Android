@@ -41,10 +41,7 @@ public class ProductService extends BaseMallBDService {
             if (this.responseStat.status)
             {
 
-//                Utility.current_number += 5;
-//                Utility.page_number += 1;
-//                System.out.println("total: " + Utility.total);
-//                System.out.println("current: " + Utility.current_number);
+
                 Log.i("Check", "true");
                 Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
                 Collections.addAll(this.newProductsArrayList, products);

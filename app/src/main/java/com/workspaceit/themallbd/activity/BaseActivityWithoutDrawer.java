@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,11 +17,12 @@ import android.widget.TextView;
 
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.utility.SessionManager;
+import com.workspaceit.themallbd.utility.Utility;
 
 public class BaseActivityWithoutDrawer extends AppCompatActivity {
 
-    public static Button CARTCOUNT;
-    public static int mCARTCOUNT = 0;
+    private Button CARTCOUNT;
+    //public static int mCARTCOUNT = 0;
     private TextView cartTV;
 
     private Toolbar toolbar;
@@ -33,6 +35,14 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
 
         sessionManager = new SessionManager(getApplicationContext());
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(toolbar!=null)
+            invalidateOptionsMenu();
     }
 
     @Override
@@ -62,8 +72,9 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         // CARTCOUNT = (Button) MenuItemCompat.getActionView(item);
         //  CARTCOUNT.setText(mCARTCOUNT+"");
         // CARTCOUNT.setOnClickListener(this);
+
         CARTCOUNT = (Button)view.findViewById(R.id.notif_count);
-        CARTCOUNT.setText(String.valueOf(mCARTCOUNT+""));
+        CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size()+""));
         CARTCOUNT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,10 +110,10 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setNotifCount(int count){
-        mCARTCOUNT = count;
+  /*  public void setNotifCount(int count){
+        BaseActivity.mCARTCOUNT = count;
         invalidateOptionsMenu();
-    }
+    }*/
 
     @Override
     public void onBackPressed()

@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="0dp"
+        android:layout_width="80dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_marginLeft="10dp">
@@ -30,9 +30,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Medium Text"
-            android:textSize="@dimen/material_text_body1"
+            android:textSize="@dimen/material_text_subhead"
             android:id="@+id/cart_item_price_tv"
-            android:singleLine="true" />
+            android:singleLine="true"
+            android:textColor="#911414"/>
 
     </LinearLayout>
 
@@ -40,31 +41,39 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:gravity="center">
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+1"
-            android:id="@+id/button"
+            android:layout_width="25dp"
+            android:layout_height="15dp"
+
+
+            android:id="@+id/addButton"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp" />
+            android:layout_marginTop="10dp"
+            android:background="@drawable/an_arrow_upg"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5"
-            android:id="@+id/textView2"
-            android:layout_gravity="center" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#F2F2F2"
+            android:id="@+id/quantityTextView"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal|center_vertical"
+
+
+            android:textColor="#911414"/>
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="-1"
-            android:id="@+id/button2"
-            android:layout_gravity="center" />
+            android:layout_width="25dp"
+            android:layout_height="15dp"
+
+            android:id="@+id/minusButton"
+            android:layout_gravity="center"
+            android:background="@drawable/an_arrow_down"/>
 
     </LinearLayout>
 
@@ -77,12 +86,13 @@
         android:layout_gravity="center">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="right"
             style="?android:attr/buttonStyleSmall"
             android:id="@+id/cart_delete_btn"
-            android:text="X"
+            android:background="@drawable/cross_new"
             android:layout_gravity="center"
-            android:layout_marginLeft="10dp" />
+            android:layout_marginLeft="60dp" />
     </LinearLayout>
 </LinearLayout>

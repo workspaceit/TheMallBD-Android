@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.CartInListViewAdapter;
 import com.workspaceit.themallbd.adapter.CategoryInListViewAdapter;
+import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.Utility;
 
 public class CartFragment extends Fragment implements AdapterView.OnItemClickListener {

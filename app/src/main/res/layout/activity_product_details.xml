@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".activity.ProductDetailsActivity">
+        tools:context=".activity.ProductDetailsActivity"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true">
 
         <include
             android:id="@+id/toolbar"
@@ -152,7 +154,8 @@
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:padding="5dp"
-                        android:layout_gravity="start" />
+                        android:layout_gravity="start"
+                        android:onClick="AddToCartButtonClick"/>
 
                     <Button
                         android:layout_width="0dp"

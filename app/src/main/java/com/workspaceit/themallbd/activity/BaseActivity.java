@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +22,12 @@ import android.widget.Toast;
 
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.utility.SessionManager;
+import com.workspaceit.themallbd.utility.Utility;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    public static Button CARTCOUNT;
-    public static int mCARTCOUNT = 0;
+    private Button CARTCOUNT;
+   // public static int mCARTCOUNT = 0;
     private TextView cartTV;
 
     private Toolbar toolbar;
@@ -40,7 +42,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         sessionManager = new SessionManager(getApplicationContext());
 
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+           if(toolbar!=null)
+            invalidateOptionsMenu();
+    }
+
+
 
     @Override
     public void setContentView(int layoutResID) {
@@ -50,7 +63,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-        // getSupportActionBar().setIcon(R.drawable.logo);
+        //getSupportActionBar().setIcon(R.drawable.logo);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.action_bar_gradient));
@@ -154,7 +167,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(getApplicationContext(),MainActivity.class);
                 break;
             case R.id.nav_cart_id:
-                Toast.makeText(getApplicationContext(), "Cart Selected", Toast.LENGTH_SHORT).show();
+                Intent cartIntent = new Intent(getApplicationContext(),CheckoutActivity.class);
+                startActivity(cartIntent);
                 return true;
             case R.id.nav_about_id:
                 Toast.makeText(getApplicationContext(), "about Selected", Toast.LENGTH_SHORT).show();
@@ -196,8 +210,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
        // CARTCOUNT = (Button) MenuItemCompat.getActionView(item);
       //  CARTCOUNT.setText(mCARTCOUNT+"");
        // CARTCOUNT.setOnClickListener(this);
+
         CARTCOUNT = (Button)view.findViewById(R.id.notif_count);
-        CARTCOUNT.setText(String.valueOf(mCARTCOUNT+""));
+        CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size()+""));
         CARTCOUNT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -209,10 +224,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
          return true;
     }
 
-    public void setNotifCount(int count){
-        mCARTCOUNT = count;
-        invalidateOptionsMenu();
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

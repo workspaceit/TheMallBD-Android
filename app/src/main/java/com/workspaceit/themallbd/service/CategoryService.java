@@ -45,7 +45,7 @@ public class CategoryService extends BaseMallBDService {
             this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
             if (this.responseStat.status)
             {
-                Log.i("Check", "true");
+
                 Category[] categories = gson.fromJson(jsonObject.get("responseData"),Category[].class);
                 Collections.addAll(newCategoryArraylist, categories);
                 return newCategoryArraylist;

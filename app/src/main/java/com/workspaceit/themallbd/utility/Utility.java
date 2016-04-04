@@ -15,7 +15,8 @@ public class Utility {
 
     public static ResponseStat responseStat = new ResponseStat();
     public static AppCredential loggedInUser = new AppCredential();
-    public static String IMAGE_URL = "http://27.147.149.178:5555/mallbackoffice/resources/images/";
+    //public static String IMAGE_URL = "http://27.147.149.178:5555/mallbackoffice/resources/images/";
+    public static String IMAGE_URL = "http://163.53.151.2:5555/mallbackoffice/resources/images/";
     //public static  String IMAGE_URL = "http://192.168.1.11/mallbdweb/public/product_images/";
 
     public static ShoppingCart shoppingCart = new ShoppingCart();

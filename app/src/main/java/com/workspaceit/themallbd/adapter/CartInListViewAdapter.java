@@ -1,7 +1,10 @@
 package com.workspaceit.themallbd.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.dataModel.Category;
 import com.workspaceit.themallbd.dataModel.ShoppingCart;
 import com.workspaceit.themallbd.fragment.CartFragment;
+import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.Utility;
 
 import java.util.ArrayList;
@@ -44,6 +48,9 @@ public class CartInListViewAdapter extends BaseAdapter {
         public ImageView cartItemImage;
         public TextView cartItemName;
         public TextView cartItemPrice;
+        public TextView quantityTextView;
+        public Button cartItemAdd;
+        public Button cartItemMinus;
         public Button cartItemDelete;
 
 
@@ -64,8 +71,10 @@ public class CartInListViewAdapter extends BaseAdapter {
         return this.shoppingCart.shoppingCartCell.get(position).id;
     }
 
+
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
 
         if (convertView == null)
@@ -77,7 +86,69 @@ public class CartInListViewAdapter extends BaseAdapter {
             viewHolder.cartItemImage = (ImageView) convertView.findViewById(R.id.cart_item_imageView);
             viewHolder.cartItemName = (TextView) convertView.findViewById(R.id.cart_item_name_tv);
             viewHolder.cartItemPrice = (TextView) convertView.findViewById(R.id.cart_item_price_tv);
+            viewHolder.cartItemAdd=(Button)convertView.findViewById(R.id.addButton);
+            viewHolder.cartItemDelete=(Button)convertView.findViewById(R.id.cart_delete_btn);
+            viewHolder.cartItemMinus=(Button)convertView.findViewById(R.id.minusButton);
+            viewHolder.quantityTextView=(TextView)convertView.findViewById(R.id.quantityTextView);
 
+            viewHolder.cartItemAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utility.shoppingCart.shoppingCartCell.get(position).quantity+=1;
+                    CartInListViewAdapter.this.notifyDataSetChanged();
+                }
+            });
+
+            viewHolder.cartItemMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int quantity=Utility.shoppingCart.shoppingCartCell.get(position).quantity;
+                    quantity--;
+
+                    if(quantity<1){
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        alertDialogBuilder.setTitle("are u sure?");
+                        alertDialogBuilder
+                                .setMessage("If you select 0 quantity, the product will be removed from the cart.")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Utility.shoppingCart.shoppingCartCell.remove(position);
+                                        CartInListViewAdapter.this.notifyDataSetChanged();
+
+                                    }
+                                }).
+                                setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // if this button is clicked, just close
+                                        // the dialog box and do nothing
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+                        alertDialog.show();
+                    }else {
+
+                        Utility.shoppingCart.shoppingCartCell.get(position).quantity -= 1;
+                    }
+                    CartInListViewAdapter.this.notifyDataSetChanged();
+
+
+
+
+                }
+            });
+
+            viewHolder.cartItemDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Utility.shoppingCart.shoppingCartCell.remove(position);
+                    CartInListViewAdapter.this.notifyDataSetChanged();
+                }
+            });
             convertView.setTag(viewHolder);
         }
         else {
@@ -98,7 +169,9 @@ public class CartInListViewAdapter extends BaseAdapter {
             }
 
             viewHolder.cartItemName.setText(this.shoppingCart.shoppingCartCell.get(position).product.title);
-            viewHolder.cartItemPrice.setText(""+this.shoppingCart.shoppingCartCell.get(position).product.prices.get(0).retailPrice);
+            viewHolder.cartItemPrice.setText("" + this.shoppingCart.shoppingCartCell.get(position).product.prices.get(0).retailPrice);
+
+            viewHolder.quantityTextView.setText(String.valueOf(this.shoppingCart.shoppingCartCell.get(position).quantity));
         }
         catch (Exception e)
         {
