@@ -10,8 +10,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.workspaceit.themallbd.R;
+import com.workspaceit.themallbd.utility.CustomDialog;
+import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
@@ -34,14 +34,17 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private SessionManager sessionManager;
+    private String accessToken;
 
-    private TextView userNameTextView,emailTextView;
+    private TextView userNameTextView,emailTextView, logoutTextView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         sessionManager = new SessionManager(getApplicationContext());
-
+        sessionManager=new SessionManager(this);
+        accessToken=sessionManager.getEmail();
 
     }
 
@@ -49,8 +52,17 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
 
-           if(toolbar!=null)
-            invalidateOptionsMenu();
+           if(toolbar!=null) {
+               invalidateOptionsMenu();
+           }
+
+        if(userNameTextView!=null){
+        if(sessionManager.checkLogin()) {
+            userNameTextView.setText(sessionManager.getFullName());
+            emailTextView.setText(sessionManager.getEmail());
+            logoutTextView.setVisibility(View.VISIBLE);
+        }
+        }
     }
 
 
@@ -121,10 +133,23 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         userNameTextView = (TextView) header.findViewById(R.id.username_in_navigation);
         emailTextView = (TextView) header.findViewById(R.id.email_in_navigation);
+        logoutTextView =(TextView)header.findViewById(R.id.logout_in_nav);
 
         if (sessionManager.checkLogin()) {
             userNameTextView.setText(sessionManager.getFullName());
             emailTextView.setText(sessionManager.getEmail());
+            logoutTextView.setVisibility(View.VISIBLE);
+            logoutTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    userNameTextView.setText("Login");
+                    emailTextView.setText("Register");
+                    logoutTextView.setVisibility(View.GONE);
+                    sessionManager.logoutUser();
+                }
+            });
+
+
 
             userNameTextView.setOnClickListener(null);
             emailTextView.setOnClickListener(null);
@@ -132,11 +157,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         else {
             userNameTextView.setText("Login");
             emailTextView.setText("Register");
+            logoutTextView.setVisibility(View.GONE);
             userNameTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
                     startActivity(intent);
+
                 }
             });
             emailTextView.setOnClickListener(new View.OnClickListener() {
@@ -171,26 +198,51 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(cartIntent);
                 return true;
             case R.id.nav_about_id:
-                Toast.makeText(getApplicationContext(), "about Selected", Toast.LENGTH_SHORT).show();
+                MakeToast.showToast(this, accessToken);
                 return true;
             case R.id.nav_app_id:
-                Toast.makeText(getApplicationContext(), "app feedback Selected", Toast.LENGTH_SHORT).show();
+                if(sessionManager.checkLogin()){
+
+                }else{
+                    CustomDialog.showDailog(this,"You Need to Login First","You need to do login to see this feature");
+                }
                 return true;
             case R.id.nav_favorite_id:
-                Toast.makeText(getApplicationContext(), "favorite Mail Selected", Toast.LENGTH_SHORT).show();
+                if(sessionManager.checkLogin()){
+
+                }else{
+                    CustomDialog.showDailog(this,"You Need to Login First","You need to do login to see this feature");
+                }
                 return true;
+
             case R.id.nav_help_id:
                 Toast.makeText(getApplicationContext(), "help Selected", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.nav_my_mallbd_id:
-                Toast.makeText(getApplicationContext(), "my mall bd Selected", Toast.LENGTH_SHORT).show();
+                if(sessionManager.checkLogin()){
+
+                }else{
+                    CustomDialog.showDailog(this,"You Need to Login First","You need to do login to see this feature");
+                }
+
                 return true;
             case R.id.nav_settings_id:
-                Toast.makeText(getApplicationContext(), "settings Selected", Toast.LENGTH_SHORT).show();
+                if(sessionManager.checkLogin()){
+
+                }else{
+                    CustomDialog.showDailog(this,"You Need to Login First","You need to do login to see this feature");
+                }
                 return true;
+
             case R.id.nav_wishlist_id:
-                Toast.makeText(getApplicationContext(), "wishlist Selected", Toast.LENGTH_SHORT).show();
+                if(sessionManager.checkLogin()){
+
+                }else{
+                    CustomDialog.showDailog(this,"You Need to Login First","You need to do login to see this feature");
+                }
+
                 return true;
+
             default:
                 Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
                 return true;
@@ -239,7 +291,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
         if (id == R.id.action_logout)
         {
-            sessionManager.logoutUser();
+           // sessionManager.logoutUser();
             return true;
         }
         if (id == R.id.action_cart)

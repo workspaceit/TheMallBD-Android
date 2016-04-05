@@ -19,6 +19,9 @@
     <string name="nav_item_about_us">About Us</string>
     <string name="openDrawer">Open</string>
     <string name="closeDrawer">Close</string>
+    <string name="continueShoppimg">CONTINUE SHOPPING</string>
+    <string name="proceesToCheckout">PROCEED TO CHECKOUT</string>
+    <string name="logout">Logout</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">

@@ -17,6 +17,7 @@ import android.view.Display;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.GridViewProductsInHomePageAdapter;
 import com.workspaceit.themallbd.adapter.HorizontalRVAFeaturedProductsAdapter;
 import com.workspaceit.themallbd.adapter.HorizontalRecyclerViewAdapter;
+import com.workspaceit.themallbd.asynctask.CategoryInListViewAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetAllProductForGridViewAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetFeaturedProductsAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetNewProductsAsyncTask;
@@ -35,7 +37,9 @@ import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.DividerItemDecoration;
 import com.workspaceit.themallbd.utility.ExpandableHeightGridView;
+import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.RecyclerItemClickListener;
+import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
 import java.io.Serializable;
@@ -84,15 +88,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private boolean noMoreItemInGridView;
     int lastlastitem = 0;
 
+
+    TextView firstCategoryText, secondCategoryText,thirdCategoryText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+
         mInternetConnection  = new InternetConnection(this);
+
+
+
 
         initialize();
         initializeSlider();
+        this.initilizeParentCategoryList();
+
+
     }
 
     public void initialize()
@@ -126,6 +142,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         this.categoryAllView = (ImageView) findViewById(R.id.iv_home_all);
         this.categoryAllView.setOnClickListener(this);
+        firstCategoryText=(TextView)findViewById(R.id.tv_home_cat_first);
+        secondCategoryText=(TextView)findViewById(R.id.tv_home_second);
+        thirdCategoryText=(TextView)findViewById(R.id.tv_home_third);
+
+    }
+
+
+    private void initilizeParentCategoryList(){
+         new CategoryInListViewAsyncTask(this).execute();
 
     }
 
@@ -207,6 +232,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                     }
                 })
         );
+    }
+
+    public void initializeCategoryView(){
+        int count=Utility.parentsCategoryArraylist.size();
+        count--;
+        firstCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
+        count--;
+        secondCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
+        count--;
+        thirdCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
+
     }
 
     private void initializeGridViewForAllProductsSection(){
@@ -353,25 +389,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
 
+        int count=Utility.parentsCategoryArraylist.size();
+
+        count--;
+
         if (v==categoryWomenView)
         {
-           // Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-            Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
-          //  intent.putExtra("parent_id",9);
+            Intent intent = new Intent(this,CategoryInExpandableListViewActivity.class);
+            intent.putExtra("position",count-1);
+            intent.putExtra("title", Utility.parentsCategoryArraylist.get(count-1).title);
             startActivity(intent);
+
         }
         if (v==categoryBabyView)
         {
-            //Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-            Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
-           // intent.putExtra("parent_id",8);
+            Intent intent = new Intent(this,CategoryInExpandableListViewActivity.class);
+            intent.putExtra("position",count);
+            intent.putExtra("title", Utility.parentsCategoryArraylist.get(count).title);
             startActivity(intent);
+
         }
         if (v==categoryMenView)
         {
-            Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
-          //  Intent intent = new Intent(MainActivity.this,CategoryActivity.class);
-         //   intent.putExtra("parent_id",10);
+            Intent intent = new Intent(this,CategoryInExpandableListViewActivity.class);
+            intent.putExtra("position",count-2);
+            intent.putExtra("title", Utility.parentsCategoryArraylist.get(count-2).title);
             startActivity(intent);
         }
         if (v==categoryAllView)

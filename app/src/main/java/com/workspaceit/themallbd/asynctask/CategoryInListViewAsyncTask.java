@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.workspaceit.themallbd.activity.CategoryActivity;
 import com.workspaceit.themallbd.activity.CategoryListViewActivity;
+import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.dataModel.Category;
 import com.workspaceit.themallbd.service.CategoryService;
 import com.workspaceit.themallbd.utility.Utility;
@@ -16,11 +17,11 @@ import java.util.ArrayList;
  * Created by rajib on 2/26/16.
  */
 public class CategoryInListViewAsyncTask extends AsyncTask<String,String,ArrayList<Category>> {
-    private CategoryListViewActivity mContext;
+    private MainActivity mContext;
     private ProgressDialog mProgressDialog;
 
-    public CategoryInListViewAsyncTask(CategoryListViewActivity categoryActivity) {
-        this.mContext = categoryActivity;
+    public CategoryInListViewAsyncTask(MainActivity mainActivity) {
+        this.mContext = mainActivity;
     }
 
     @Override
@@ -44,13 +45,16 @@ public class CategoryInListViewAsyncTask extends AsyncTask<String,String,ArrayLi
     protected void onPostExecute(ArrayList<Category> categories) {
         super.onPostExecute(categories);
         mProgressDialog.dismiss();
-        if (categories.size()>0)
-            mContext.setNewCategoryArrayList(categories);
+        if (categories.size()>0) {
+            mContext.initializeCategoryView();
+        }
         else {
-            if (!Utility.responseStat.status)
-                mContext.setNewCategoryListError();
-            else
+            if (!Utility.responseStat.status) {
+                //mContext.setNewCategoryListError();
+            }
+            else {
                 Toast.makeText(mContext, "Something Went wrong", Toast.LENGTH_SHORT).show();
+            }
         }
 
 

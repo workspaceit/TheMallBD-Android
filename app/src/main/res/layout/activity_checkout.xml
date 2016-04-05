@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".activity.CheckoutActivity">
+    tools:context="com.workspaceit.themallbd.activity.CheckoutActivity"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -22,20 +22,65 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#664545"
-            app:tabIndicatorColor="#412E2E"
-            app:tabIndicatorHeight="4dp"
+            app:tabBackground="@drawable/tab_color_selector"
+            app:tabIndicatorColor="#664545"
             />
 
     </android.support.design.widget.AppBarLayout>
+
+
 
     <android.support.v4.view.ViewPager
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="#FFFFFF"/>
+        android:background="#FFFFFF"
+        android:layout_weight="1"
 
 
+        />
 
-</android.support.design.widget.CoordinatorLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:gravity="center|bottom"
+        >
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:id="@+id/continueShoppingButton"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/continueShoppimg"
+            android:textSize="12sp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="@drawable/button_shape_grey"
+            android:onClick="continueShoppinBtnClick"
+            android:textColor="#000000"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:id="@+id/checkOutButton"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/proceesToCheckout"
+            android:textSize="12sp"
+            style="?android:attr/buttonBarButtonStyle"
+            android:background="@drawable/selector_button_state"
+            android:onClick="chekoutBtnClick"
+
+            android:textColor="#FFFFFF"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
+

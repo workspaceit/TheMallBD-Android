@@ -3,20 +3,24 @@
     android:layout_width="match_parent"
     android:orientation="horizontal"
     android:baselineAligned="false"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="80dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_marginLeft="10dp">
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="96dp"
             android:id="@+id/cart_item_imageView"
-            android:contentDescription="sdf" />
+            android:contentDescription="sdf"
+            android:scaleType="fitStart"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -48,12 +52,10 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="25dp"
             android:layout_height="15dp"
-
-
             android:id="@+id/addButton"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/an_arrow_upg"/>
+            android:background="@drawable/an_arrow_upg"
+            android:layout_marginBottom="2dp"/>
 
         <TextView
             android:layout_width="40dp"
@@ -68,9 +70,9 @@
 
         <Button
             style="?android:attr/buttonStyleSmall"
+            android:layout_marginTop="1dp"
             android:layout_width="25dp"
             android:layout_height="15dp"
-
             android:id="@+id/minusButton"
             android:layout_gravity="center"
             android:background="@drawable/an_arrow_down"/>

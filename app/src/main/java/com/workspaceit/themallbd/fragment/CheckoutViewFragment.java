@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.workspaceit.themallbd.R;
+import com.workspaceit.themallbd.activity.CheckoutActivity;
+import com.workspaceit.themallbd.utility.MakeToast;
 
 
 public class CheckoutViewFragment extends Fragment {
@@ -21,7 +23,16 @@ public class CheckoutViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        CheckoutActivity.continueShoppingButton.setVisibility(View.GONE);
+        CheckoutActivity.checkOutButton.setVisibility(View.GONE);
+        MakeToast.showToast(getActivity(),"de");
+
+
         return inflater.inflate(R.layout.fragment_checkout_view, container, false);
+
+
     }
+
+
 
 }

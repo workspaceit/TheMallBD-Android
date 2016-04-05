@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="190dp"
+    android:layout_height="180dp"
     android:background="@drawable/nav_header_image"
     android:orientation="vertical"
     >
@@ -10,8 +10,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
         android:layout_width="76dp"
-        android:layout_height="76dp"
-        android:src="@drawable/rajib"
+        android:layout_height="match_parent"
+        android:src="@drawable/icon_un"
         android:layout_marginLeft="24dp"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -25,22 +25,38 @@
         android:textColor="#FFF"
         android:textStyle="bold"
         android:gravity="start"
-        android:paddingBottom="4dp"
+        android:paddingBottom="2dp"
         android:id="@+id/username_in_navigation"
         android:layout_above="@+id/email_in_navigation"
         android:layout_alignLeft="@+id/profile_image"
-        android:layout_alignStart="@+id/profile_image" />
+        android:layout_alignStart="@+id/profile_image"
+        android:text="Register"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/email_in_navigation"
         android:gravity="start"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         android:textSize="14sp"
         android:textColor="#fff"
         android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/username_in_navigation"
-        android:layout_alignStart="@+id/username_in_navigation" />
+        android:layout_alignStart="@+id/username_in_navigation"
+        android:text="Login"
+        android:paddingBottom="4dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/logout_in_nav"
+        android:gravity="start"
+
+        android:textSize="14sp"
+        android:textColor="#fff"
+        android:text="Logout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/email_in_navigation"
+        android:layout_alignStart="@+id/email_in_navigation"
+        />
 
 </RelativeLayout>
