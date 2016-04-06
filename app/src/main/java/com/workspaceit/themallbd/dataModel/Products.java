@@ -11,6 +11,7 @@ public class Products {
     public String code;
     public String title;
     public String description;
+    public String productDescriptionMobile;
     public String url;
     public String barCode;
     public String width;
@@ -24,6 +25,9 @@ public class Products {
     public String expireDate;
     public String manufacturedDate;
     public String createdOn;
+    public float avgRating;
+    public float previousPrice;
+
 
     public Shop shop;
     public Suppliers supplier;
@@ -58,6 +62,11 @@ public class Products {
         this.manufacturedDate = "";
         this.createdOn = "";
         this.isFeatured = 0;
+        this.productDescriptionMobile="";
+
+        this.avgRating=0;
+        this.previousPrice=0;
+
 
         this.shop = new Shop();
         this.supplier = new Suppliers();

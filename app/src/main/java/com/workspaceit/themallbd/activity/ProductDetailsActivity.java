@@ -107,7 +107,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         {
             tvProductPrice.setText(String.format("%s", products.prices.get(0).retailPrice+"TK"));
         }
-        tvProductDescription.setText(products.description);
+        tvProductDescription.setText(products.productDescriptionMobile);
 
         etProductQuantity = (EditText) findViewById(R.id.et_product_quantity_pd);
 

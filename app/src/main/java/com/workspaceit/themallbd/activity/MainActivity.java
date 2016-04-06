@@ -104,8 +104,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
 
-        initialize();
-        initializeSlider();
+
+        this.initialize();
+        this.initializeSlider();
         this.initilizeParentCategoryList();
 
 
