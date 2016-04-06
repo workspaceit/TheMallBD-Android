@@ -51,7 +51,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
       //  getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         //getSupportActionBar().setHomeButtonEnabled(true);
         // getSupportActionBar().setIcon(R.drawable.logo);
         ActionBar actionBar = getSupportActionBar();

@@ -198,7 +198,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(cartIntent);
                 return true;
             case R.id.nav_about_id:
-                MakeToast.showToast(this, accessToken);
+                Intent contactUs=new Intent(this,ContactUsActivity.class);
+                startActivity(contactUs);
                 return true;
             case R.id.nav_app_id:
                 if(sessionManager.checkLogin()){

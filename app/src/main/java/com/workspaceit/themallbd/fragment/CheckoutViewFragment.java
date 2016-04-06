@@ -96,7 +96,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
                 lnameText.getText().toString(),countrySpinner.getSelectedItem().toString(),countrySpinner.getSelectedItemPosition(),
                 addressText.getText().toString(),telephoneText.getText().toString());
 
-       
+
     }
 
     private boolean checkInputValidity(){

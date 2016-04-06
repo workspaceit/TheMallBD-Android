@@ -42,6 +42,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".activity.MyAccountActivity" >
         </activity>
+        <activity android:name=".activity.ContactUsActivity" >
+        </activity>
     </application>
 
 </manifest>
