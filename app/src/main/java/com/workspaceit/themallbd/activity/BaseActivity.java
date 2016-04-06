@@ -220,6 +220,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.nav_my_mallbd_id:
                 if(sessionManager.checkLogin()){
+                    Intent myAccount=new Intent(getApplicationContext(),MyAccountActivity.class);
+                    startActivity(myAccount);
 
                 }else{
                     CustomDialog.showDailog(this,"You Need to Login First","You need to do login to see this feature");

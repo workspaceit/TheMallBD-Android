@@ -1,13 +1,113 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.workspaceit.themallbd.fragment.CheckoutViewFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="@dimen/activity_vertical_margin"
+        android:paddingRight="@dimen/activity_vertical_margin"
+        android:weightSum="1">
+
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="0dp"
+        android:text="@string/check_out_fragment_start"
+        android:layout_weight="1"
+        android:textAllCaps="true"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 
-</FrameLayout>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:id="@+id/checkout_email"
+            android:layout_marginTop="20dp"
+            android:hint="Email Address"
+            android:textColorHint="#7F7F7F"
+            android:textColor="#7F7F7F" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/delivery_address"
+            android:layout_weight="1"
+            android:textAllCaps="true"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:id="@+id/checkout_fname"
+        android:layout_marginTop="20dp"
+        android:hint="First Name"
+        android:textColorHint="#7F7F7F"
+        android:textColor="#7F7F7F" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:id="@+id/checkout_lname"
+            android:layout_marginTop="20dp"
+            android:hint="Last Name"
+            android:textColorHint="#7F7F7F"
+            android:textColor="#7F7F7F" />
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:entries="@array/countries_array"
+            style="@style/Widget.AppCompat.Spinner.DropDown"
+            android:id="@+id/county_spinner"
+
+
+            >
+
+        </Spinner>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/checkout_address"
+            android:layout_marginTop="20dp"
+            android:hint="Address"
+            android:textColorHint="#7F7F7F"
+            android:textColor="#7F7F7F"
+            android:lines="4"
+            android:inputType="textMultiLine"
+            android:layout_weight="1"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:id="@+id/checkout_telephone"
+            android:layout_marginTop="20dp"
+            android:hint="Telephone No"
+
+            android:textColorHint="#7F7F7F"
+            android:textColor="#7F7F7F"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/confrim_payemt_method"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_state"
+            android:text="@string/confirm_payment"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="50dp"/>
+
+</LinearLayout>
+    </ScrollView>
+

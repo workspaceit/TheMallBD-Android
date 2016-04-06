@@ -23,6 +23,9 @@
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:textAllCaps="true"/>
+        android:textAllCaps="true"
+        android:textSize="16sp"
+        android:background="#8888"
+        android:textStyle="bold"/>
 
 </RelativeLayout>

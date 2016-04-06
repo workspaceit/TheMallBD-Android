@@ -36,14 +36,13 @@ import com.workspaceit.themallbd.utility.MakeToast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckoutActivity extends BaseActivityWithoutDrawer {
+public class CheckoutActivity extends BaseActivityWithoutDrawer implements TabLayout.OnTabSelectedListener {
 
 
-    private ViewPager mViewPager;
-    private int tabFlag=0;
-    private TabLayout tabLayout;
-    public static Button checkOutButton;
-    public static Button continueShoppingButton;
+    public static ViewPager mViewPager;
+    public static TabLayout tabLayout;
+    public static int tabFlag=0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +51,7 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        checkOutButton=(Button)findViewById(R.id.checkOutButton);
-        continueShoppingButton=(Button)findViewById(R.id.continueShoppingButton);
+
 
         mViewPager = (ViewPager) findViewById(R.id.container);
 
@@ -62,7 +60,7 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        TabLayout.Tab tab;
+        tabLayout.setOnTabSelectedListener(this);
 
 
 
@@ -116,6 +114,73 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        tabFlag=0;
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+
+        if(tabFlag==0){
+            if(tab.getPosition()==0){
+                tab=tabLayout.getTabAt(0);
+                tab.select();
+                mViewPager.setCurrentItem(0);
+            }else if(tab.getPosition()==1 || tab.getPosition()==2){
+                tab=tabLayout.getTabAt(0);
+                tab.select();
+
+               MakeToast.showToast(this,"First proceed from chekout Page");
+            }
+
+
+
+        }else if(tabFlag==1){
+            if(tab.getPosition()==0){
+                mViewPager.setCurrentItem(0);
+
+            }else if(tab.getPosition()==1){
+                mViewPager.setCurrentItem(1);
+
+            }else if(tab.getPosition()==2){
+                tab=tabLayout.getTabAt(mViewPager.getCurrentItem());
+                tab.select();
+                mViewPager.setCurrentItem(mViewPager.getCurrentItem());
+                MakeToast.showToast(this,"Confrim Payment Method First");
+
+            }
+
+
+        }else if(tabFlag==2){
+            if(tab.getPosition()==0){
+                mViewPager.setCurrentItem(0);
+
+            }else if(tab.getPosition()==1){
+                mViewPager.setCurrentItem(1);
+
+            }else if(tab.getPosition()==2){
+                mViewPager.setCurrentItem(2);
+
+            }
+
+        }
+
+
+
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
