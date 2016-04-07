@@ -24,21 +24,23 @@ public class SessionManager {
     int PRIVATE_MODE = 0;
 
     // Sharedpref file name
-    private static final String PREF_NAME = "users";
+    private final String PREF_NAME = "users";
 
 
     // All Shared Preferences Keys
-    private static final String IS_LOGIN = "IsLoggedIn";
+    private final String IS_LOGIN = "IsLoggedIn";
 
     // User name (make variable public to access from outside)
-    public static final String KEY_Access = "access_key";
-    public static final String KEY_REGISTRATION = "registration_key";
+    private final String KEY_Access = "access_key";
+    private final String KEY_REGISTRATION = "registration_key";
 
 
     // Email address (make variable public to access from outside)
-    public static final String KEY_EMAIL = "email";
-    public static final String KEY_UID = "uid";
-    public static final String KEY_USER_NAME = "user_full_name";
+    private final String KEY_EMAIL = "email";
+    private final String KEY_UID = "uid";
+    private final String KEY_USER_NAME = "user_full_name";
+    private final String KEY_PROFILE_IMAGE_PATH="image_path";
+
 
     // Constructor
     public SessionManager(Context context) {
@@ -62,6 +64,15 @@ public class SessionManager {
 
     }
 
+    public void saveProfileImageUri(String path){
+        editor.putString(KEY_PROFILE_IMAGE_PATH,path);
+        editor.commit();
+    }
+
+    public String getProfileImageUri(){
+
+        return pref.getString(KEY_PROFILE_IMAGE_PATH,"");
+    }
 
     public void saveRegisterId(String id) {
         editor.putString(KEY_REGISTRATION, id);
