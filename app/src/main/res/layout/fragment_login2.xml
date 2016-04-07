@@ -27,7 +27,8 @@
             android:textAlignment="center"
             android:hint="Email Address"
             android:textColorHint="#7F7F7F"
-            android:textColor="#7F7F7F" />
+            android:textColor="#7F7F7F"
+            android:paddingBottom="20dp"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -41,7 +42,8 @@
             android:hint="Password"
             android:textColor="#7F7F7F"
             android:textColorHint="#7F7F7F"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:paddingBottom="20dp"/>
 
         <Button
             android:layout_width="match_parent"
