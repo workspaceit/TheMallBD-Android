@@ -37,7 +37,8 @@ public class SessionManager {
 
     // Email address (make variable public to access from outside)
     public static final String KEY_EMAIL = "email";
-    public static final String KEY_USER_NAME="user_full_name";
+    public static final String KEY_UID = "uid";
+    public static final String KEY_USER_NAME = "user_full_name";
 
     // Constructor
     public SessionManager(Context context) {
@@ -48,48 +49,46 @@ public class SessionManager {
     }
 
 
-
-    public void createLoginSession(String access_key,String email,String fullname) {
+    public void createLoginSession(String access_key, String email, int uid, String fullname) {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         editor.putString(KEY_Access, access_key);
-        editor.putString(KEY_USER_NAME,fullname);
-        editor.putString(KEY_EMAIL,email);
+        editor.putString(KEY_USER_NAME, fullname);
+        editor.putString(KEY_EMAIL, email);
+        editor.putInt(KEY_UID, uid);
 
         editor.commit();
 
     }
 
 
-    public void saveRegisterId(String id)
-    {
-        editor.putString(KEY_REGISTRATION, id );
+    public void saveRegisterId(String id) {
+        editor.putString(KEY_REGISTRATION, id);
 
         editor.commit();
 
     }
 
+    public int getUid() {
+        return pref.getInt(KEY_UID, 0);
+    }
 
-    public String getAccessToken()
-    {
+    public String getAccessToken() {
 
         return pref.getString(KEY_Access, "");
     }
 
-    public String getKeyRegistration()
-    {
+    public String getKeyRegistration() {
 
         return pref.getString(KEY_REGISTRATION, "");
     }
 
 
-
-
     /**
      * Check login method wil check user login status If false it will redirect
      * user to login page Else won't do anything
-     * */
+     */
     public boolean checkLogin() {
         // Check login status
         return this.isLoggedIn();
@@ -97,25 +96,24 @@ public class SessionManager {
     }
 
 
-
     /**
      * Get stored session data
-     * */
-    	public HashMap<String, String> getUserDetails() {
-    		HashMap<String, String> user = new HashMap<String, String>();
-    		// user name
-    		user.put(KEY_USER_NAME, pref.getString(KEY_USER_NAME, null));
+     */
+    public HashMap<String, String> getUserDetails() {
+        HashMap<String, String> user = new HashMap<String, String>();
+        // user name
+        user.put(KEY_USER_NAME, pref.getString(KEY_USER_NAME, null));
 
-    		// user email id
-    		 user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
+        // user email id
+        user.put(KEY_EMAIL, pref.getString(KEY_EMAIL, null));
 
-    		// return user
-    		return user;
-    	}
+        // return user
+        return user;
+    }
 
     /**
      * Clear session details
-     * */
+     */
     public void logoutUser() {
         // Clearing all data from Shared Preferences
         editor.clear();
@@ -126,7 +124,7 @@ public class SessionManager {
 
     /**
      * Quick check for login
-     * **/
+     **/
     // Get Login State
     public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGIN, false);
@@ -135,8 +133,9 @@ public class SessionManager {
     public String getEmail() {
         return pref.getString(KEY_EMAIL, "");
     }
-    public String getFullName(){
-        return pref.getString(KEY_USER_NAME,"");
+
+    public String getFullName() {
+        return pref.getString(KEY_USER_NAME, "");
     }
 }
 

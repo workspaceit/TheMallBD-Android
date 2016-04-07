@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import com.workspaceit.themallbd.activity.LoginActivity;
+import com.workspaceit.themallbd.fragment.RegistrationFragment;
 import com.workspaceit.themallbd.service.RegistrationService;
 import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.Utility;
@@ -15,8 +17,10 @@ public class RegistrationAsynTask extends AsyncTask<String,String,Boolean> {
     private Activity context;
     private ProgressDialog mProgressDialog;
 
+
     public RegistrationAsynTask(Activity activity){
         this.context=activity;
+
     }
 
     @Override
@@ -49,7 +53,16 @@ public class RegistrationAsynTask extends AsyncTask<String,String,Boolean> {
         mProgressDialog.dismiss();
         if(aBoolean){
             MakeToast.showToast(context,"Registration Succesfull");
-            //this.context.finish();
+            RegistrationFragment.fnameText.setText("");
+            RegistrationFragment.lnameText.setText("");
+            RegistrationFragment.emailText.setText("");
+            RegistrationFragment.phoneText.setText("");
+            RegistrationFragment.passwordText.setText("");
+            RegistrationFragment.confrimPassText.setText("");
+            LoginActivity.mViewPager.setCurrentItem(0);
+
+
+
         }else {
             if(Utility.responseStat.msg!=null){
                 MakeToast.showToast(context,Utility.responseStat.msg);

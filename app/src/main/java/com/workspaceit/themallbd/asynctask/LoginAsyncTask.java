@@ -56,7 +56,7 @@ public class LoginAsyncTask extends AsyncTask<String,String,Boolean> {
             mSessionManager = new SessionManager(this.context);
             mSessionManager.createLoginSession(
                     Utility.loggedInUser.accesstoken,
-                    Utility.loggedInUser.email,
+                    Utility.loggedInUser.email,Utility.loggedInUser.user.id,
                     Utility.loggedInUser.user.firstName + Utility.loggedInUser.user.lastName);
 
           //  Intent intent = new Intent(this.context,MainActivity.class);

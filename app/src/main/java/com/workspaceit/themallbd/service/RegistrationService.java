@@ -46,4 +46,6 @@ public class RegistrationService extends BaseMallBDService {
 
         return false;
     }
+
+
 }

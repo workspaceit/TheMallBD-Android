@@ -30,6 +30,7 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button crossButton;
+    public static ViewPager mViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         crossButton = (Button) findViewById(R.id.cross_btn);
         crossButton.setOnClickListener(this);
 
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
+         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);

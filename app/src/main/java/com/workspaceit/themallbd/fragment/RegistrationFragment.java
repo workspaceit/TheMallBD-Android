@@ -21,13 +21,13 @@ import java.util.regex.Pattern;
 public class RegistrationFragment extends Fragment implements View.OnClickListener {
 
 
-    private EditText fnameText;
-    private EditText lnameText;
-    private EditText emailText;
-    private EditText phoneText;
-    private EditText passwordText;
-    private EditText confrimPassText;
-    private Button submitButton;
+    public static EditText fnameText;
+    public static EditText lnameText;
+    public static EditText emailText;
+    public static EditText phoneText;
+    public static EditText passwordText;
+    public static EditText confrimPassText;
+    public static Button submitButton;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -53,6 +53,9 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
 
         return view;
     }
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -116,6 +119,8 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         return true;
 
     }
+
+
 
 
 
