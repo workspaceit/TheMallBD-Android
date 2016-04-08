@@ -1,30 +1,21 @@
 package com.workspaceit.themallbd.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.graphics.Point;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.google.gson.Gson;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.GridViewProductsInHomePageAdapter;
 import com.workspaceit.themallbd.adapter.HorizontalRVAFeaturedProductsAdapter;
@@ -39,7 +30,6 @@ import com.workspaceit.themallbd.utility.DividerItemDecoration;
 import com.workspaceit.themallbd.utility.ExpandableHeightGridView;
 import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.RecyclerItemClickListener;
-import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
 import java.io.Serializable;
@@ -75,7 +65,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     int offsetForFeaturedProductsHorizontalScrolling = 0;
     int offsetForAllProductsInGridView = 0;
 
-    int limit = 5;
+    int limit = 3;
     int limitForProductsInGridView = 10;
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
@@ -151,12 +141,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     private void initilizeParentCategoryList(){
-         new CategoryInListViewAsyncTask(this).execute();
+
+            new CategoryInListViewAsyncTask(this).execute();
+
 
     }
 
     private void initializeNewProductHorizontalSection(){
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         newProductHorizontalListRV = (RecyclerView) findViewById(R.id.rv_horizontal);
         newProductHorizontalListRV.setLayoutManager(layoutManager);
         // Create adapter passing in the sample user data
@@ -165,13 +157,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.newProductHorizontalListRV.setAdapter(horizontalRecyclerViewAdapter);
         this.newProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
         // Set layout manager to position the items
-        if (mInternetConnection.isConnectingToInternet())
-        {
-            MainActivity.newProductsForHorizontalViewList.clear();
-            new GetNewProductsAsyncTask(this).execute(
-                    String.valueOf(offsetForNewProductsHorizontalScrolling),
-                    String.valueOf(limit));
+
+        if(MainActivity.newProductsForHorizontalViewList.size()<1) {
+            if (mInternetConnection.isConnectingToInternet())
+
+            {
+                MainActivity.newProductsForHorizontalViewList.clear();
+                new GetNewProductsAsyncTask(this).execute(
+                        String.valueOf(offsetForNewProductsHorizontalScrolling),
+                        String.valueOf(limit));
+            }
         }
+
+
         this.newProductHorizontalListRV.addOnItemTouchListener(
                 new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -183,11 +181,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                     }
                 })
         );
-        //TODO recyclerview onscroll load more
-     /*   this.newProductHorizontalListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+
+         this.newProductHorizontalListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                Log.v("taiful",String.valueOf(dx)+" "+String.valueOf(dy));
                 if (dx > 0) //check for scroll down
                 {
                     visibleItemCount = layoutManager.getChildCount();
@@ -198,16 +199,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             userScrolled = false;
                             Log.v("...", "Last Item Wow !");
-                            loadMore();
+                            loadNewProductMore();
                         }
                     }
                 }
             }
-        });*/
+        });
     }
 
     private void initializeFeaturedProductHorizontalSection(){
-        LinearLayoutManager layoutManagerForFeaturedProducts = new LinearLayoutManager(
+        final LinearLayoutManager layoutManagerForFeaturedProducts = new LinearLayoutManager(
                 this,LinearLayoutManager.HORIZONTAL,false);
         featuredProductHorizontalListRV = (RecyclerView) findViewById(R.id.rv_featured_horizontalProducts);
         featuredProductHorizontalListRV.setLayoutManager(layoutManagerForFeaturedProducts);
@@ -215,24 +216,65 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.featuredProductHorizontalListRV.setAdapter(horizontalRVAFeaturedProductsAdapter);
         this.featuredProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
 
-        if (mInternetConnection.isConnectingToInternet())
-        {
-            MainActivity.newProductsForHorizontalViewList.clear();
-            new GetFeaturedProductsAsyncTask(this).execute(
-                    String.valueOf(offsetForNewProductsHorizontalScrolling),
-                    String.valueOf(limit));
+        if(MainActivity.featuredProductsForHorizontalViewList.size()<1) {
+            if (mInternetConnection.isConnectingToInternet()) {
+                MainActivity.featuredProductsForHorizontalViewList.clear();
+                new GetFeaturedProductsAsyncTask(this).execute(
+                        String.valueOf(offsetForFeaturedProductsHorizontalScrolling),
+                        String.valueOf(limit));
+            }
         }
         this.featuredProductHorizontalListRV.addOnItemTouchListener(
                 new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        Intent intent = new Intent(MainActivity.this,ProductDetailsActivity.class);
-                        intent.putExtra("position",position);
-                        intent.putExtra("productArray",2);
+                        Intent intent = new Intent(MainActivity.this, ProductDetailsActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("productArray", 2);
                         startActivity(intent);
                     }
                 })
         );
+
+        this.featuredProductHorizontalListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dx > 0) //check for scroll down
+                {
+                    visibleItemCount = layoutManagerForFeaturedProducts.getChildCount();
+                    totalItemCount = layoutManagerForFeaturedProducts.getItemCount();
+                    pastVisiblesItems = layoutManagerForFeaturedProducts.findFirstVisibleItemPosition();
+
+                    if (userScrolled) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            userScrolled = false;
+                            Log.v("...", "Last Item Wow !");
+                            loadFeatureProductMore();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void loadFeatureProductMore() {
+        if (mInternetConnection.isConnectingToInternet()) {
+            this.offsetForFeaturedProductsHorizontalScrolling += 1 ;
+
+            new GetFeaturedProductsAsyncTask(this).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
+
+        }
+
+    }
+
+    private void loadAllProductMore(){
+        if (mInternetConnection.isConnectingToInternet()) {
+            this.offsetForAllProductsInGridView+= 1 ;
+
+            new GetNewProductsAsyncTask(this).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
+
+        }
     }
 
     public void initializeCategoryView(){
@@ -255,17 +297,33 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         ExpandableHeightGridView gridViewForAllProducts = (ExpandableHeightGridView) findViewById(R.id.gridView_all_Product);
         gridViewForAllProducts.setExpanded(true);
         gridViewForAllProducts.setOnItemClickListener(this);
-        gridViewForAllProducts.setOnScrollListener(this);
+
 
         this.gridViewProductsInHomePageAdapter = new GridViewProductsInHomePageAdapter(this);
         gridViewForAllProducts.setAdapter(gridViewProductsInHomePageAdapter);
 
-        if (mInternetConnection.isConnectingToInternet())
-        {
-            MainActivity.allProductsForGridViewList.clear();
-            new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
-                    String.valueOf(limitForProductsInGridView));
-        }
+
+            if (mInternetConnection.isConnectingToInternet()) {
+                MainActivity.allProductsForGridViewList.clear();
+                new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
+                        String.valueOf(limitForProductsInGridView));
+            }
+
+         gridViewForAllProducts.setOnScrollListener(new AbsListView.OnScrollListener() {
+             @Override
+             public void onScrollStateChanged(AbsListView view, int scrollState) {
+                 MakeToast.showToast(getApplicationContext(),"state");
+
+             }
+
+             @Override
+             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                 MakeToast.showToast(getApplicationContext(),"onscroll");
+
+             }
+         });
+
+
     }
 
     public void initializeSlider() {
@@ -289,10 +347,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         sliderShow.addSlider(textSliderView2);
     }
 
-    private void loadMore() {
+    private void loadNewProductMore() {
+        MakeToast.showToast(this,"load");
         if (mInternetConnection.isConnectingToInternet()) {
             offsetForNewProductsHorizontalScrolling += 1 ;
-            System.out.println("I am going for loading more contents with offsetForNewProductsHorizontalScrolling:" + offsetForNewProductsHorizontalScrolling);
+
             new GetNewProductsAsyncTask(this).execute(String.valueOf(offsetForNewProductsHorizontalScrolling),String.valueOf(limit));
 
         }
@@ -437,7 +496,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 intent.putExtra("productArray", 3);
                 startActivity(intent);
             }
-        }, 3000);
+        }, 0);
     }
 
     @Override
@@ -449,6 +508,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        MakeToast.showToast(this,"called");
         int lastInScreen = firstVisibleItem + visibleItemCount;
         System.out.println("lastinscreen: " + lastInScreen);
         System.out.println("totalItemCount: " + totalItemCount);

@@ -5,6 +5,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +20,7 @@ import com.workspaceit.themallbd.dataModel.Picture;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.SelectedAttributes;
 import com.workspaceit.themallbd.dataModel.ShoppingCartCell;
+import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.Utility;
 
@@ -37,7 +39,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private int productsQuantity = 0;
     private Products products;
 
-    private static String productUrl = "/product/thumbnail/";
+    private static String productUrl = "/product/general/";
     //private static String productUrl = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private void initializeSlider() {
 
         slideShow = (SliderLayout) findViewById(R.id.slider_product_details);
+
 
         if (products.pictures.size()>=1) {
             for (Picture picture : products.pictures) {
@@ -129,6 +132,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     public void AddToCartButtonClick(View view){
 
 
+
         try {
             this.productsQuantity=Integer.parseInt(etProductQuantity.getText().toString());
         }catch (Exception e){
@@ -151,17 +155,22 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         }
 
-        SelectedAttributes selectedAttributes = new SelectedAttributes();
-        selectedAttributes.setId(products.attributes.get(0).id);
-        selectedAttributes.setName(products.attributes.get(0).name);
-        selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
-
         ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
+
+        if(products.attributes.size()<0) {
+            SelectedAttributes selectedAttributes = new SelectedAttributes();
+            selectedAttributes.setId(products.attributes.get(0).id);
+            selectedAttributes.setName(products.attributes.get(0).name);
+            selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
+            shoppingCartCell.addToSelectedAttributes(selectedAttributes);
+        }
+
+
         shoppingCartCell.setId(products.id);
         shoppingCartCell.setProduct(products);
         shoppingCartCell.setQuantity(this.productsQuantity);
 
-        shoppingCartCell.addToSelectedAttributes(selectedAttributes);
+
 
         Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
         invalidateOptionsMenu();

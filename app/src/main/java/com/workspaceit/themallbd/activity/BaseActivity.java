@@ -79,7 +79,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
                 if (!sessionManager.getProfileImageUri().toString().equals("")) {
                     String imagePath = sessionManager.getProfileImageUri();
-                    
+
                     Uri imageUri = Uri.parse(imagePath);
                     Uri dimageUri = Uri.fromFile(new File(imageUri.toString()));
 

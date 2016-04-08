@@ -16,8 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="24dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/icon_un"/>
+        android:scaleType="centerCrop" />
 
     <TextView
         android:layout_width="wrap_content"

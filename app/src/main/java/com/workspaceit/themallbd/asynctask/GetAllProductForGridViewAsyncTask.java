@@ -1,6 +1,5 @@
 package com.workspaceit.themallbd.asynctask;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -38,7 +37,7 @@ public class GetAllProductForGridViewAsyncTask extends AsyncTask<String,String,A
         String offset = params[0];
         String limit = params[1];
         ProductService productService = new ProductService();
-        ArrayList<Products> productsArrayList = productService.getNewProducts(offset,limit);
+        ArrayList<Products> productsArrayList = productService.getAllProducts(offset, limit);
         return productsArrayList;
     }
 

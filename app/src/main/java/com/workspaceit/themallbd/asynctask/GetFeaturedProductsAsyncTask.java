@@ -39,7 +39,7 @@ public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayL
         String offset = params[0];
         String limit = params[1];
         ProductService productService = new ProductService();
-        ArrayList<Products> productsArrayList = productService.getNewProducts(offset,limit);
+        ArrayList<Products> productsArrayList = productService.getFeaturedProducts(offset, limit);
         return productsArrayList;
     }
 

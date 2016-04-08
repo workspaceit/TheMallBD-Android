@@ -18,12 +18,13 @@ import java.util.Collections;
 public class ProductService extends BaseMallBDService {
 
     private ResponseStat responseStat;
-    ArrayList<Products> newProductsArrayList;
+    ArrayList<Products> productsArrayList;
 
-    public ArrayList<Products> getNewProducts(String offset, String limit){
+
+    public ArrayList<Products> getAllProducts(String offset, String limit){
 
         this.responseStat = new ResponseStat();
-        this.newProductsArrayList = new ArrayList<>();
+        this.productsArrayList = new ArrayList<>();
 
         this.setController("api/products/all/show");
         this.setParams("offset", offset);
@@ -44,18 +45,94 @@ public class ProductService extends BaseMallBDService {
 
                 Log.i("Check", "true");
                 Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
-                Collections.addAll(this.newProductsArrayList, products);
-                return this.newProductsArrayList;
+                Collections.addAll(this.productsArrayList, products);
+                return this.productsArrayList;
             }
             else {
                 Utility.responseStat = this.responseStat;
-                return newProductsArrayList;
+                return productsArrayList;
             }
         }catch (Exception e)
         {
             e.printStackTrace();
         }
-        return this.newProductsArrayList;
+        return this.productsArrayList;
+
+    }
+
+    public ArrayList<Products>getFeaturedProducts(String offset,String limit){
+        this.responseStat = new ResponseStat();
+        this.productsArrayList = new ArrayList<>();
+
+        this.setController("api/products/featured/show");
+        this.setParams("offset", offset);
+        this.setParams("limit",limit);
+        this.setParams("shop_id", String.valueOf(shop_id));
+
+        String resp = this.getData("POST");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+            if (this.responseStat.status)
+            {
+
+
+                Log.i("Check", "true");
+                Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
+                Collections.addAll(this.productsArrayList, products);
+                return this.productsArrayList;
+            }
+            else {
+                Utility.responseStat = this.responseStat;
+                return productsArrayList;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return this.productsArrayList;
+
+    }
+
+    public ArrayList<Products> getNewProducts(String offset,String limit){
+        this.responseStat = new ResponseStat();
+        this.productsArrayList = new ArrayList<>();
+
+        this.setController("api/products/new/show");
+        this.setParams("offset", offset);
+        this.setParams("limit",limit);
+        this.setParams("shop_id", String.valueOf(shop_id));
+
+        String resp = this.getData("POST");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+            if (this.responseStat.status)
+            {
+
+
+                Log.i("Check", "true");
+                Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
+                Collections.addAll(this.productsArrayList, products);
+                return this.productsArrayList;
+            }
+            else {
+                Utility.responseStat = this.responseStat;
+                return productsArrayList;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return this.productsArrayList;
 
     }
 
