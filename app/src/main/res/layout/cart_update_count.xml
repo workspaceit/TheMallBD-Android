@@ -24,5 +24,6 @@
     android:textColor="@android:color/white"
     android:gravity="center"
     android:padding="2dp"
-    android:singleLine="true">
+    android:singleLine="true"
+   >
 </Button>

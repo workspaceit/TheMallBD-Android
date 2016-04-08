@@ -6,4 +6,7 @@
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    android:contentInsetStart="10dp"
+    android:contentInsetLeft="10dp"
+    />

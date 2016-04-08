@@ -1,12 +1,8 @@
 package com.workspaceit.themallbd.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
@@ -17,18 +13,16 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.utility.CustomDialog;
 import com.workspaceit.themallbd.utility.MakeToast;
@@ -37,7 +31,6 @@ import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -55,9 +48,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private String accessToken;
     private CircleImageView profileImage;
 
-    private TextView userNameTextView, emailTextView, logoutTextView;
+    private TextView userNameTextView;
     private static final int SELECT_PICTURE = 1;
-    private String selectedImagePath;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +73,24 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (userNameTextView != null) {
             if (sessionManager.checkLogin()) {
                 userNameTextView.setText(sessionManager.getFullName());
-                emailTextView.setText(sessionManager.getEmail());
-                logoutTextView.setVisibility(View.VISIBLE);
+
+
+                navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(true);
+
+                if (!sessionManager.getProfileImageUri().toString().equals("")) {
+                    String imagePath = sessionManager.getProfileImageUri();
+                    
+                    Uri imageUri = Uri.parse(imagePath);
+                    Uri dimageUri = Uri.fromFile(new File(imageUri.toString()));
+
+                    Picasso.with(this)
+                            .load(dimageUri)
+                            .fit()
+                            .into(profileImage);
+                }
+            } else {
+                navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(false);
+                userNameTextView.setText("Login");
             }
         }
     }
@@ -112,6 +121,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+
 
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
                 drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
@@ -150,79 +160,70 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public void customizationOfHeaderView() {
 
         View header = navigationView.getHeaderView(0);
-
         userNameTextView = (TextView) header.findViewById(R.id.username_in_navigation);
-        emailTextView = (TextView) header.findViewById(R.id.email_in_navigation);
-        logoutTextView = (TextView) header.findViewById(R.id.logout_in_nav);
         profileImage = (CircleImageView) header.findViewById(R.id.profile_image);
+
+        if (sessionManager.checkLogin()) {
+            userNameTextView.setText(sessionManager.getFullName());
+            navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(true);
+
+        } else {
+            navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(false);
+            userNameTextView.setText("Login");
+        }
+
+
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,
-                        "Select Picture"), SELECT_PICTURE);
+                if (sessionManager.checkLogin()) {
+
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent,
+                            "Select Picture"), SELECT_PICTURE);
+                }
 
             }
         });
 
-       if(sessionManager.getProfileImageUri().toString().equals("")){
 
-       }else {
-           String imagePath=sessionManager.getProfileImageUri();
+        userNameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!sessionManager.checkLogin()) {
+                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
+
+
+
+
+        if (sessionManager.getProfileImageUri().toString().equals("") || !sessionManager.checkLogin()) {
+            Picasso.with(this)
+                    .load(R.drawable.icon_un)
+                    .into(profileImage);
+
+        } else {
+            String imagePath = sessionManager.getProfileImageUri();
 
             Uri imageUri = Uri.parse(imagePath);
-           Uri dimageUri=Uri.fromFile(new File(imageUri.toString()));
-                   Log.v("taiful", imageUri.toString());
-           Picasso.with(this)
-                   .load(dimageUri)
-                   .fit()
-                   .into(profileImage);
-       }
+            Uri dimageUri = Uri.fromFile(new File(imageUri.toString()));
 
-
-
-        if (sessionManager.checkLogin()) {
-            userNameTextView.setText(sessionManager.getFullName());
-            emailTextView.setText(sessionManager.getEmail());
-            logoutTextView.setVisibility(View.VISIBLE);
-
-
-            logoutTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    userNameTextView.setText("Login");
-                    emailTextView.setText("Register");
-                    logoutTextView.setVisibility(View.GONE);
-                    sessionManager.logoutUser();
-                }
-            });
-
-
-            userNameTextView.setOnClickListener(null);
-            emailTextView.setOnClickListener(null);
-        } else {
-            userNameTextView.setText("Login");
-            emailTextView.setText("Register");
-            logoutTextView.setVisibility(View.GONE);
-            userNameTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-
-                }
-            });
-            emailTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
-            });
+            Picasso.with(this)
+                    .load(dimageUri)
+                    .fit()
+                    .into(profileImage);
         }
+
+
     }
 
 
@@ -235,7 +236,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
                 try {
                     bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                    new SaveImageToLocal().createDirectoryAndSaveFile(sessionManager,bitmap,Utility.loggedInUser.user.firstName);
+                    new SaveImageToLocal().createDirectoryAndSaveFile(sessionManager, bitmap, Utility.loggedInUser.user.firstName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -252,8 +253,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-
     /**
      * helper to retrieve the path of an image URI
      */
@@ -264,6 +263,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         //Checking if the item is in checked state or not, if not make it in checked state
         if (menuItem.isChecked()) menuItem.setChecked(false);
         else menuItem.setChecked(true);
+
 
         //Closing drawer on item click
         drawerLayout.closeDrawers();
@@ -328,7 +328,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 return true;
+            case R.id.nav_logout_id:
+                if (sessionManager.checkLogin()) {
+                    CustomDialog.logoutDailog(this,sessionManager,"Logout","Confrim Logout?");
 
+                } else {
+                    CustomDialog.showDailog(this, "You nedd to login first", "You are not logged in");
+
+                }
+                return true;
             default:
                 Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
                 return true;
@@ -343,11 +351,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_cart);
+
         MenuItemCompat.setActionView(item, R.layout.cart_update_count);
         View view = MenuItemCompat.getActionView(item);
-        // CARTCOUNT = (Button) MenuItemCompat.getActionView(item);
-        //  CARTCOUNT.setText(mCARTCOUNT+"");
-        // CARTCOUNT.setOnClickListener(this);
+
 
         CARTCOUNT = (Button) view.findViewById(R.id.notif_count);
         CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size() + ""));
@@ -371,13 +378,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == R.id.action_logout) {
-            // sessionManager.logoutUser();
-            return true;
-        }
+
         if (id == R.id.action_cart) {
             Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
             startActivity(intent);
