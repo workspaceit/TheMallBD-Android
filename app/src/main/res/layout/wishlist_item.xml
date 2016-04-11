@@ -61,11 +61,12 @@
         <Button
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:gravity="right"
+
             style="?android:attr/buttonStyleSmall"
             android:id="@+id/addbutton_wishlist"
-            android:background="@drawable/cross_new"
+            android:background="@drawable/plus_img"
             android:layout_gravity="center"
-            android:layout_marginLeft="60dp" />
+            android:layout_marginLeft="60dp"
+            />
     </LinearLayout>
 </LinearLayout>

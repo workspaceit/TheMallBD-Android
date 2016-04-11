@@ -37,7 +37,9 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
 
     public void changeAdapterState(){
 
-        wishInListViewAdapter.notifyDataSetChanged();
+
+            wishInListViewAdapter.notifyDataSetChanged();
+
     }
 
     @Override

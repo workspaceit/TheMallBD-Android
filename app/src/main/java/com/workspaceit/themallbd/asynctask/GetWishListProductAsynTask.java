@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.workspaceit.themallbd.activity.WishListActivity;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.WishListService;
+import com.workspaceit.themallbd.utility.MakeToast;
 
 import java.util.ArrayList;
 
@@ -46,6 +47,8 @@ public class GetWishListProductAsynTask extends AsyncTask<String,String,ArrayLis
         mProgressDialog.dismiss();
         if(productses.size()>0){
                 context.changeAdapterState();
+        }else {
+            MakeToast.showToast(context,"Currently there is no product in your Wishlist");
         }
     }
 }

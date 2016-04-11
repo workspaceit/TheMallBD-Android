@@ -187,7 +187,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
 
             Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
-            MakeToast.showToast(this,products.title+" added to the cart");
+            MakeToast.showToast(this,"Successfully added to the cart");
             invalidateOptionsMenu();
 
         }else if(v==addToWishListBtn){

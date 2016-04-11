@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.workspaceit.themallbd.dataModel.Category;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.ResponseStat;
+import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.Utility;
 
 import java.util.ArrayList;
@@ -71,6 +72,7 @@ public class WishListService extends BaseMallBDService {
 
             }else {
                 Utility.responseStat = this.responseStat;
+
 
                 return wishListProduct;
             }
