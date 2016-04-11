@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class GetNewProductsAsyncTask extends AsyncTask<String,String,ArrayList<Products>> {
 
     private MainActivity mContext;
-    private ProgressDialog mProgressDialog;
+    //private ProgressDialog mProgressDialog;
 
     public GetNewProductsAsyncTask(MainActivity mContext) {
         this.mContext = mContext;
@@ -26,10 +26,10 @@ public class GetNewProductsAsyncTask extends AsyncTask<String,String,ArrayList<P
 
     @Override
     protected void onPreExecute() {
-        mProgressDialog = new ProgressDialog(mContext);
+      /*  mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage("Getting data...");
-        mProgressDialog.show();
+        mProgressDialog.show();*/
         super.onPreExecute();
     }
 
@@ -45,7 +45,7 @@ public class GetNewProductsAsyncTask extends AsyncTask<String,String,ArrayList<P
     @Override
     protected void onPostExecute(ArrayList<Products> productses) {
         super.onPostExecute(productses);
-        mProgressDialog.dismiss();
+        //mProgressDialog.dismiss();
         if (productses.size()>0)
         {
             mContext.setNewProductsList(productses);

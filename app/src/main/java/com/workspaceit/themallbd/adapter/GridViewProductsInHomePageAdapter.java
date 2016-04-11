@@ -17,6 +17,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.R;
+import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.Utility;
 
 /**
@@ -62,6 +63,7 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
 
         ViewHolder viewHolder = null;
 

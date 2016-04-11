@@ -2,6 +2,7 @@ package com.workspaceit.themallbd.utility;
 
 import com.workspaceit.themallbd.dataModel.AppCredential;
 import com.workspaceit.themallbd.dataModel.Category;
+import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.ResponseStat;
 import com.workspaceit.themallbd.dataModel.ShoppingCart;
 import com.workspaceit.themallbd.dataModel.User;
@@ -21,4 +22,5 @@ public class Utility {
     public static ShoppingCart shoppingCart = new ShoppingCart();
 
     public static ArrayList<Category> parentsCategoryArraylist = new ArrayList<>();
+    public static ArrayList<Products>wishlistProductArrayList=new ArrayList<>();
 }

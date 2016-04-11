@@ -16,15 +16,17 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.workspaceit.themallbd.R;
+import com.workspaceit.themallbd.asynctask.WishListAsynTask;
 import com.workspaceit.themallbd.dataModel.Picture;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.SelectedAttributes;
 import com.workspaceit.themallbd.dataModel.ShoppingCartCell;
 import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.MakeToast;
+import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
-public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener {
+public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener,View.OnClickListener {
 
     private TextView tvProductName,tvProductPrice,tvProductDescription;
     private EditText etProductQuantity;
@@ -38,6 +40,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private static int arrayListIndicator = 0;
     private int productsQuantity = 0;
     private Products products;
+    SessionManager sessionManager;
 
     private static String productUrl = "/product/general/";
     //private static String productUrl = "";
@@ -46,6 +49,11 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
+        addToCartBtn=(Button)findViewById(R.id.button_add_to_cart);
+        addToCartBtn.setOnClickListener(this);
+        addToWishListBtn=(Button)findViewById(R.id.button_add_to_wishlist);
+        addToWishListBtn.setOnClickListener(this);
+        sessionManager=new SessionManager(this);
         position = getIntent().getIntExtra("position", -1);
         arrayListIndicator = getIntent().getIntExtra("productArray",-1);
         if (arrayListIndicator==1)
@@ -56,6 +64,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             products = MainActivity.allProductsForGridViewList.get(position);
         else if (arrayListIndicator==4)
             products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
+        else if (arrayListIndicator==5)
+            products=Utility.wishlistProductArrayList.get(position);
 
         initializeSlider();
         initialize();
@@ -127,56 +137,63 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     @Override
     public void onSliderClick(BaseSliderView slider) {
 
+
     }
 
-    public void AddToCartButtonClick(View view){
 
 
 
-        try {
-            this.productsQuantity=Integer.parseInt(etProductQuantity.getText().toString());
-        }catch (Exception e){
-            MakeToast.showToast(this,"Invalid Quantity");
+    @Override
+    public void onClick(View v) {
+        if(v==addToCartBtn){
 
-        }
+            try {
+                this.productsQuantity=Integer.parseInt(etProductQuantity.getText().toString());
+            }catch (Exception e){
+                MakeToast.showToast(this,"Invalid Quantity");
 
-        if(this.productsQuantity<1){
-            MakeToast.showToast(this,"Quantity is not valid");
-            return;
-        }
+            }
 
-
-        for(int i=0; i<Utility.shoppingCart.shoppingCartCell.size();i++){
-            if(Utility.shoppingCart.shoppingCartCell.get(i).id==products.id){
-                Utility.shoppingCart.shoppingCartCell.get(i).quantity+=this.productsQuantity;
-                invalidateOptionsMenu();
+            if(this.productsQuantity<1){
+                MakeToast.showToast(this,"Quantity is not valid");
                 return;
             }
 
+
+            for(int i=0; i<Utility.shoppingCart.shoppingCartCell.size();i++){
+                if(Utility.shoppingCart.shoppingCartCell.get(i).id==products.id){
+                    Utility.shoppingCart.shoppingCartCell.get(i).quantity+=this.productsQuantity;
+                    invalidateOptionsMenu();
+                    return;
+                }
+
+            }
+
+            ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
+
+            if(products.attributes.size()<0) {
+                SelectedAttributes selectedAttributes = new SelectedAttributes();
+                selectedAttributes.setId(products.attributes.get(0).id);
+                selectedAttributes.setName(products.attributes.get(0).name);
+                selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
+                shoppingCartCell.addToSelectedAttributes(selectedAttributes);
+            }
+
+
+            shoppingCartCell.setId(products.id);
+            shoppingCartCell.setProduct(products);
+            shoppingCartCell.setQuantity(this.productsQuantity);
+
+
+
+            Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
+            MakeToast.showToast(this,products.title+" added to the cart");
+            invalidateOptionsMenu();
+
+        }else if(v==addToWishListBtn){
+
+            new WishListAsynTask(this).execute(String.valueOf(sessionManager.getUid()),String.valueOf(products.id));
+
         }
-
-        ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
-
-        if(products.attributes.size()<0) {
-            SelectedAttributes selectedAttributes = new SelectedAttributes();
-            selectedAttributes.setId(products.attributes.get(0).id);
-            selectedAttributes.setName(products.attributes.get(0).name);
-            selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
-            shoppingCartCell.addToSelectedAttributes(selectedAttributes);
-        }
-
-
-        shoppingCartCell.setId(products.id);
-        shoppingCartCell.setProduct(products);
-        shoppingCartCell.setQuantity(this.productsQuantity);
-
-
-
-        Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
-        invalidateOptionsMenu();
-
     }
-
-
-
 }

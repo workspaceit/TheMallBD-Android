@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,13 +28,17 @@ import com.workspaceit.themallbd.asynctask.GetFeaturedProductsAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetNewProductsAsyncTask;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.InternetConnection;
+import com.workspaceit.themallbd.utility.AllProductGridView;
 import com.workspaceit.themallbd.utility.DividerItemDecoration;
-import com.workspaceit.themallbd.utility.ExpandableHeightGridView;
+
 import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.RecyclerItemClickListener;
 import com.workspaceit.themallbd.utility.Utility;
 
 import java.io.Serializable;
+
+import java.net.CookieHandler;
+import java.net.CookiePolicy;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener,
@@ -53,6 +59,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     //recycler view variables for horizontal scrolling
     public RecyclerView newProductHorizontalListRV,featuredProductHorizontalListRV;
+    private AllProductGridView gridViewForAllProducts;
 
     public static  ArrayList<Products> newProductsForHorizontalViewList;
     public static ArrayList<Products> featuredProductsForHorizontalViewList;
@@ -65,8 +72,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     int offsetForFeaturedProductsHorizontalScrolling = 0;
     int offsetForAllProductsInGridView = 0;
 
-    int limit = 3;
-    int limitForProductsInGridView = 10;
+    int limit = 5;
+    int limitForProductsInGridView = 4;
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     int pastVisibleItemsInGridView,visibleItemCountInGridView,totalItemCountInGridView;
@@ -268,14 +275,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    private void loadAllProductMore(){
-        if (mInternetConnection.isConnectingToInternet()) {
-            this.offsetForAllProductsInGridView+= 1 ;
-
-            new GetNewProductsAsyncTask(this).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
-
-        }
-    }
 
     public void initializeCategoryView(){
         int count=Utility.parentsCategoryArraylist.size();
@@ -290,17 +289,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void initializeGridViewForAllProductsSection(){
 
-        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
-        float dpHeight = displayMetrics.heightPixels / displayMetrics.density;
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
 
-        ExpandableHeightGridView gridViewForAllProducts = (ExpandableHeightGridView) findViewById(R.id.gridView_all_Product);
-        gridViewForAllProducts.setExpanded(true);
+
+       gridViewForAllProducts = (AllProductGridView) findViewById(R.id.gridView_all_Product);
+
+
         gridViewForAllProducts.setOnItemClickListener(this);
+        gridViewForAllProducts.setOnScrollListener(this);
 
 
         this.gridViewProductsInHomePageAdapter = new GridViewProductsInHomePageAdapter(this);
         gridViewForAllProducts.setAdapter(gridViewProductsInHomePageAdapter);
+
+
 
 
             if (mInternetConnection.isConnectingToInternet()) {
@@ -309,19 +310,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                         String.valueOf(limitForProductsInGridView));
             }
 
-         gridViewForAllProducts.setOnScrollListener(new AbsListView.OnScrollListener() {
-             @Override
-             public void onScrollStateChanged(AbsListView view, int scrollState) {
-                 MakeToast.showToast(getApplicationContext(),"state");
 
-             }
-
-             @Override
-             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                 MakeToast.showToast(getApplicationContext(),"onscroll");
-
-             }
-         });
 
 
     }
@@ -348,7 +337,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void loadNewProductMore() {
-        MakeToast.showToast(this,"load");
+
         if (mInternetConnection.isConnectingToInternet()) {
             offsetForNewProductsHorizontalScrolling += 1 ;
 
@@ -425,7 +414,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public void setAllProductsListError(){
         userScrolledInGridView = false;
         noMoreItemInGridView = true;
-        Toast.makeText(this, "No Data for all products", Toast.LENGTH_LONG).show();
+
     }
 
 
@@ -508,7 +497,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        MakeToast.showToast(this,"called");
+
         int lastInScreen = firstVisibleItem + visibleItemCount;
         System.out.println("lastinscreen: " + lastInScreen);
         System.out.println("totalItemCount: " + totalItemCount);

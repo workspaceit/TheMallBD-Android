@@ -322,6 +322,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_wishlist_id:
                 if (sessionManager.checkLogin()) {
+                    Utility.wishlistProductArrayList.clear();
+                    Intent wishIntent= new Intent(getApplicationContext(),WishListActivity.class);
+                    startActivity(wishIntent);
 
                 } else {
                     CustomDialog.showDailog(this, "You Need to Login First", "You need to do login to see this feature");

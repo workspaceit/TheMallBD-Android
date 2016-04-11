@@ -345,11 +345,14 @@
                     android:layout_height="fill_parent"
                     android:background="#FFFFFF">
 
-                    <com.workspaceit.themallbd.utility.ExpandableHeightGridView
-                        android:layout_width="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <com.workspaceit.themallbd.utility.AllProductGridView
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/gridView_all_Product"
-                        android:numColumns="auto_fit"
+                        android:numColumns="2"
+                        android:stretchMode="columnWidth"
                         android:verticalSpacing="5dp"
                         android:horizontalSpacing="5dp"
                         android:layout_marginTop="5dp"

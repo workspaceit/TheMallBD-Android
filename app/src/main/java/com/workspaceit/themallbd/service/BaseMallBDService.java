@@ -1,6 +1,8 @@
 package com.workspaceit.themallbd.service;
 
 
+import com.workspaceit.themallbd.utility.SessionManager;
+
 import org.apache.http.*;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -14,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.CookieManager;
 import java.net.HttpURLConnection;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -39,6 +42,8 @@ public class BaseMallBDService {
     private String controller;
     public String responseMsg;
     public boolean status;
+    private static String sCookie;
+
 
 
     protected Map<String, String> getPostParams;
@@ -73,22 +78,35 @@ public class BaseMallBDService {
                 URL url = new URL(baseURL+this.controller);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
+                if(sCookie!=null && sCookie.length()>0){
+                    connection.setRequestProperty("Cookie", sCookie);
+                }
+
                 System.out.println("GET");
                 connection.setRequestMethod(method);
                 int responseCode = connection.getResponseCode();
                 System.out.println("GET Response Code :: " + responseCode);
                 if (responseCode == HttpURLConnection.HTTP_OK) { // success
 
-                    // print result
+                    String cookie = connection.getHeaderField("set-cookie");
+                    if(cookie!=null && cookie.length()>0){
+                        sCookie = cookie;
+                    }
                     return readStream(connection.getInputStream());
                 } else {
                     System.out.println("GET request not worked");
                 }
             }
             else if (method.equalsIgnoreCase("POST")) {
+
+
                 System.out.println(baseURL+this.controller);
                 URL obj = new URL(baseURL+this.controller);
+
                 HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+                if(sCookie!=null && sCookie.length()>0){
+                    connection.setRequestProperty("Cookie", sCookie);
+                }
                 connection.setRequestMethod(method);
 
                 String urlParameters = getPostURLEncodedParams();
@@ -101,12 +119,17 @@ public class BaseMallBDService {
                 int responseCode = connection.getResponseCode();
                 System.out.println("POST Response Code :: " + responseCode);
                 if (responseCode == HttpURLConnection.HTTP_OK) { // success
-
+                    String cookie = connection.getHeaderField("set-cookie");
+                    if(cookie!=null && cookie.length()>0){
+                        sCookie = cookie;
+                    }
                     // print result
                     return readStream(connection.getInputStream());
                 } else {
                     System.out.println("POST request not worked");
                 }
+
+
             }
 
         } catch (IOException e) {

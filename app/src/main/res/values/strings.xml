@@ -292,5 +292,6 @@
         <item>Zambia</item>
         <item>Zimbabwe</item>
     </string-array>
+    <string name="title_activity_wish_list">WishListActivity</string>
 
 </resources>
