@@ -11,6 +11,8 @@ import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.WishInListViewAdapter;
 import com.workspaceit.themallbd.asynctask.GetNewProductsAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetWishListProductAsynTask;
+import com.workspaceit.themallbd.dataModel.SelectedAttributes;
+import com.workspaceit.themallbd.dataModel.ShoppingCartCell;
 import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.Utility;
 
@@ -34,6 +36,38 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
         new GetWishListProductAsynTask(this).execute();
     }
 
+
+    public Boolean addProductTotheCart(int position){
+        for(int i=0; i<Utility.shoppingCart.shoppingCartCell.size();i++){
+            if(Utility.shoppingCart.shoppingCartCell.get(i).id==Utility.wishlistProductArrayList.get(position).id){
+                Utility.shoppingCart.shoppingCartCell.get(i).quantity+=1;
+                invalidateOptionsMenu();
+                return false;
+            }
+
+        }
+
+        ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
+
+        if(Utility.wishlistProductArrayList.get(position).attributes.size()<0) {
+            SelectedAttributes selectedAttributes = new SelectedAttributes();
+            selectedAttributes.setId(Utility.wishlistProductArrayList.get(position).attributes.get(0).id);
+            selectedAttributes.setName(Utility.wishlistProductArrayList.get(position).attributes.get(0).name);
+            selectedAttributes.setValue(Utility.wishlistProductArrayList.get(position).attributes.get(0).attributesValue.get(0).value);
+            shoppingCartCell.addToSelectedAttributes(selectedAttributes);
+        }
+
+
+        shoppingCartCell.setId(Utility.wishlistProductArrayList.get(position).id);
+        shoppingCartCell.setProduct(Utility.wishlistProductArrayList.get(position));
+        shoppingCartCell.setQuantity(1);
+
+
+
+        Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
+        invalidateOptionsMenu();
+        return true;
+    }
 
     public void changeAdapterState(){
 

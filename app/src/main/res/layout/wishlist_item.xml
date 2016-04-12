@@ -54,19 +54,21 @@
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight=".50"
+        android:layout_weight=".5"
         android:layout_marginRight="10dp"
         android:layout_gravity="center">
 
         <Button
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="2dp"
 
             style="?android:attr/buttonStyleSmall"
             android:id="@+id/addbutton_wishlist"
+            android:gravity="center"
             android:background="@drawable/plus_img"
             android:layout_gravity="center"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="50dp"
             />
     </LinearLayout>
 </LinearLayout>

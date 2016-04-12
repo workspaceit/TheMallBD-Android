@@ -47,6 +47,8 @@
     <string name="buy_now">buy now</string>
     <string name="title_activity_checkout">Checkout</string>
     <string name="contact_us">Contact</string>
+    <string name="account_info">Account Infromation</string>
+    <string name="shipping_info">Shipping Infromation</string>
 
     <string-array name="countries_array">
         <item>Country</item>

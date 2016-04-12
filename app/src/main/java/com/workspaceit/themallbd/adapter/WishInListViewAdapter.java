@@ -20,7 +20,7 @@ import com.workspaceit.themallbd.utility.Utility;
  */
 public class WishInListViewAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private Activity context;
+    private WishListActivity context;
     private static String productUrl = "product/thumbnail/";
 
     public WishInListViewAdapter(WishListActivity activity){
@@ -45,7 +45,7 @@ public class WishInListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if(convertView==null){
             convertView = layoutInflater.inflate(R.layout.wishlist_item,null);
@@ -59,7 +59,13 @@ public class WishInListViewAdapter extends BaseAdapter {
             viewHolder.addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MakeToast.showToast(context,"clciked");
+                    if(context.addProductTotheCart(position)){
+                        MakeToast.showToast(context,"Successfully added to the cart");
+
+                    }else {
+
+                    }
+
                 }
             });
 

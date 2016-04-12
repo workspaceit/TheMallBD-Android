@@ -30,7 +30,8 @@
         <activity
             android:name=".activity.LoginActivity"
             android:label="@string/title_activity_login"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".activity.BaseActivityWithoutDrawer" />
         <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.CategoryListViewActivity" />

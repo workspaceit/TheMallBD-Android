@@ -40,7 +40,7 @@ public class Products {
     public ArrayList<Tags> tags;
     public ArrayList<Picture> pictures;
     public ArrayList<Attributes> attributes;
-    public int isFeatured;
+    public Boolean isFeatured;
     public ArrayList<Quantity> productQuantity;
 
     public Products() {
@@ -61,7 +61,7 @@ public class Products {
         this.expireDate = "";
         this.manufacturedDate = "";
         this.createdOn = "";
-        this.isFeatured = 0;
+        this.isFeatured = false;
         this.productDescriptionMobile="";
 
         this.avgRating=0;
