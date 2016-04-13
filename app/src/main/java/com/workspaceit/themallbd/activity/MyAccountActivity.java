@@ -150,6 +150,7 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
 
             if (editFabFlag == 0) {
                 emailTextView.setEnabled(true);
+                emailTextView.requestFocus();
                 fnameTextView.setEnabled(true);
                 addressAccountInfoEditext.setEnabled(true);
                 zipCodeEditText.setEnabled(true);
