@@ -79,9 +79,10 @@ public class CartFragment extends Fragment implements AdapterView.OnItemClickLis
     public void onClick(View v) {
         if(v == continueShoppingButton)
         {
+            getActivity().finish();
             Intent intent=new Intent(getActivity(),MainActivity.class);
             startActivity(intent);
-            getActivity().finish();
+
 
         }
         else if(v == checkOutButton)

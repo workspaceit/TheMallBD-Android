@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="15dp"
-                android:animateLayoutChanges="true"
+
 
 
                 >
@@ -54,7 +54,8 @@
                     android:text="@string/account_info"
                     android:textAllCaps="true"
                     android:textColor="#FFFFFF"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
+
                     android:drawableRight="@drawable/arrow_down"
                     android:id="@+id/acc_info_expand_button"/>
 
@@ -63,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/acc_info_layout"
                     android:orientation="vertical"
+                    android:animateLayoutChanges="true"
                     >
 
 
@@ -81,17 +83,17 @@
                         android:paddingBottom="5dp"
                         android:text="Email"
                         android:textColor="#000000"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/email_myacc_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="20dp"
                         android:background="@android:color/transparent"
-                        android:editable="false"
-                        android:text="tomal@gmail.com"
+                        android:textSize="14sp"
                         android:textColor="#000000" />
 
                     <View
@@ -114,17 +116,17 @@
                         android:paddingBottom="5dp"
                         android:text="First Name"
                         android:textColor="#000000"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/fname_myacc_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="20dp"
                         android:background="@android:color/transparent"
-                        android:editable="false"
-                        android:text="saiful"
+                        android:textSize="14sp"
                         android:textColor="#000000" />
 
                     <View
@@ -132,6 +134,73 @@
                         android:layout_height="1dp"
                         android:background="#b2beb5" />
                 </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:text="Last Name"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/lname_myacc_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@android:color/transparent"
+                            android:textSize="14sp"
+                            android:textColor="#000000" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:background="#b2beb5" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:text="Phone"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/phone_myacc_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@android:color/transparent"
+                            android:textSize="14sp"
+                            android:inputType="number"
+                            android:textColor="#000000" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:background="#b2beb5" />
+                    </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -147,20 +216,22 @@
                         android:paddingBottom="5dp"
                         android:text="Address"
                         android:textColor="#000000"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        />
 
                     <EditText
+                        android:id="@+id/address_myacc_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="20dp"
                         android:background="@android:color/transparent"
-                        android:editable="false"
+                        android:textSize="14sp"
                         android:inputType="textMultiLine"
                         android:lines="4"
-                        android:text="JAsdha"
-                        android:textColor="#000000" />
+                        android:textColor="#000000"
+                        android:gravity="top"/>
 
                     <View
                         android:layout_width="fill_parent"
@@ -180,21 +251,20 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="10dp"
                         android:paddingBottom="5dp"
-                        android:text="Zip Code"
                         android:textColor="#000000"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
+                        android:text="Zip Code"
                         android:textStyle="bold" />
 
                     <EditText
+                        android:id="@+id/zipcoe_myacc_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
                         android:layout_marginLeft="20dp"
                         android:background="@android:color/transparent"
-                        android:editable="false"
-                        android:inputType="number"
-                        android:text="1800"
-                        android:textColor="#000000" />
+                        android:textColor="#000000"
+                        android:textSize="14sp"/>
 
                     <View
                         android:layout_width="fill_parent"
@@ -264,7 +334,7 @@
             android:text="@string/shipping_info"
             android:textAllCaps="true"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="14sp"
             android:drawableRight="@drawable/arrow_down"/>
 
 
@@ -284,6 +354,7 @@
             android:background="#343434"
             android:textColor="#FFFFFF"
             android:layout_marginLeft="20dp"
+            android:id="@+id/addnew_myacc_button"
             />
 
 
@@ -294,6 +365,7 @@
             android:layout_marginTop="15dp"
             android:orientation="vertical">
         <TextView
+            android:id="@+id/counter_myacc_textview"
             android:layout_width="35dp"
             android:layout_height="40dp"
             android:layout_marginTop="20dp"
@@ -316,21 +388,50 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Name"
                     android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="First Name"/>
 
                 <EditText
+                    android:id="@+id/firstname_myacc_edittext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="20dp"
                     android:background="@android:color/transparent"
-                    android:editable="false"
                     android:inputType="text"
-                    android:text="Saiful"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:textSize="14sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:text="Last Name"/>
+
+                <EditText
+                    android:id="@+id/lastname_myacc_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@android:color/transparent"
+                    android:inputType="text"
+                    android:textColor="#000000"
+                    android:textSize="14sp"/>
             </LinearLayout>
 
             <LinearLayout
@@ -347,7 +448,7 @@
                     android:paddingBottom="5dp"
                     android:text="Address"
                     android:textColor="#000000"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -356,11 +457,12 @@
                     android:layout_marginBottom="15dp"
                     android:layout_marginLeft="20dp"
                     android:background="@android:color/transparent"
-                    android:editable="false"
                     android:inputType="textMultiLine"
                     android:lines="4"
-                    android:text="JAsdha"
-                    android:textColor="#000000" />
+                    android:textColor="#000000"
+                    android:gravity="top"
+                    android:textSize="14sp"
+                    android:id="@+id/shipping_info_address_edittxet"/>
                 </LinearLayout>
 
         </LinearLayout>

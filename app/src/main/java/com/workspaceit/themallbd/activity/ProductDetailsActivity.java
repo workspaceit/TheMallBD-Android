@@ -43,6 +43,13 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     SessionManager sessionManager;
 
     private static String productUrl = "/product/general/";
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+    }
+
     //private static String productUrl = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

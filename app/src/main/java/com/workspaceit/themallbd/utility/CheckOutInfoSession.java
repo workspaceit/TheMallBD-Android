@@ -27,6 +27,7 @@ public class CheckOutInfoSession {
     private static final String PREF_ADDRESS = "address";
     private static final String PREF_TELEPHONE = "telephone";
 
+
     public CheckOutInfoSession(Context context){
         this._context = context;
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);

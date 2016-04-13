@@ -39,7 +39,14 @@ public class SessionManager {
     private final String KEY_EMAIL = "email";
     private final String KEY_UID = "uid";
     private final String KEY_USER_NAME = "user_full_name";
+    private final String KEY_FIRST_NAME="user_first_name";
+    private final String KEY_LAST_NAME="user_last_name";
     private final String KEY_PROFILE_IMAGE_PATH="image_path";
+    private final String KEY_ADRESS="key_adress";
+    private final String KEY_ZIP_CODE="key_zipcode";
+    private final String KEY_PHONE="key_phone";
+    private final String KEY_CITY="key_city";
+    private final String KEY_COUNTRY="key_country";
 
 
     // Constructor
@@ -51,7 +58,8 @@ public class SessionManager {
     }
 
 
-    public void createLoginSession(String access_key, String email, int uid, String fullname) {
+    public void createLoginSession(String access_key, String email, int uid, String fullname,String fname, String lname,String address,
+                                   String zip,String phone, String city, String country) {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -59,14 +67,38 @@ public class SessionManager {
         editor.putString(KEY_USER_NAME, fullname);
         editor.putString(KEY_EMAIL, email);
         editor.putInt(KEY_UID, uid);
+        editor.putString(KEY_FIRST_NAME, fname);
+        editor.putString(KEY_LAST_NAME, lname);
+        editor.putString(KEY_ADRESS, address);
+        editor.putString(KEY_ZIP_CODE,zip);
+        editor.putString(KEY_PHONE,phone);
+        editor.putString(KEY_CITY,city);
+        editor.putString(KEY_COUNTRY,country);
 
         editor.commit();
 
     }
 
+
+    public String getPhone(){
+        return pref.getString(KEY_PHONE,"");
+    }
+
+    public String getCity(){
+        return pref.getString(KEY_CITY,"");
+    }
+
+    public String getCountry(){
+        return pref.getString(KEY_COUNTRY,"");
+    }
+
     public void saveProfileImageUri(String path){
         editor.putString(KEY_PROFILE_IMAGE_PATH,path);
         editor.commit();
+    }
+
+    public String getZipcode(){
+        return pref.getString(KEY_ZIP_CODE,"");
     }
 
     public String getProfileImageUri(){
@@ -81,6 +113,10 @@ public class SessionManager {
 
     }
 
+    public String getAddress(){
+        return pref.getString(KEY_ADRESS,"");
+    }
+
     public int getUid() {
         return pref.getInt(KEY_UID, 0);
     }
@@ -93,6 +129,14 @@ public class SessionManager {
     public String getKeyRegistration() {
 
         return pref.getString(KEY_REGISTRATION, "");
+    }
+
+    public String getFirstName(){
+        return pref.getString(KEY_FIRST_NAME,"");
+    }
+
+    public String  getLastName(){
+        return pref.getString(KEY_LAST_NAME,"");
     }
 
 

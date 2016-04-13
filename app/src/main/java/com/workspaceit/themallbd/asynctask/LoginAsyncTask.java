@@ -57,10 +57,12 @@ public class LoginAsyncTask extends AsyncTask<String,String,Boolean> {
             mSessionManager.createLoginSession(
                     Utility.loggedInUser.accesstoken,
                     Utility.loggedInUser.email,Utility.loggedInUser.user.id,
-                    Utility.loggedInUser.user.firstName +" "+Utility.loggedInUser.user.lastName);
+                    Utility.loggedInUser.user.firstName +" "+Utility.loggedInUser.user.lastName,Utility.loggedInUser.user.firstName,
+                    Utility.loggedInUser.user.lastName,
+                    Utility.loggedInUser.user.userDetails.address.address,Utility.loggedInUser.user.userDetails.address.zipCode,
+                    Utility.loggedInUser.user.phone,Utility.loggedInUser.user.userDetails.address.city,
+                    Utility.loggedInUser.user.userDetails.address.country);
 
-          //  Intent intent = new Intent(this.context,MainActivity.class);
-          //  this.context.startActivity(intent);
             this.context.finish();
         }
         else {
