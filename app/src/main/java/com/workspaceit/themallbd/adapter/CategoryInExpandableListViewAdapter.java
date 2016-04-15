@@ -14,6 +14,7 @@ import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.activity.CategoryInExpandableListViewActivity;
 import com.workspaceit.themallbd.activity.ProductFromCategoryActivity;
 import com.workspaceit.themallbd.dataModel.Category;
+import com.workspaceit.themallbd.utility.MakeToast;
 
 import java.util.ArrayList;
 
@@ -182,8 +183,9 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
                 text.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         Intent intent = new Intent(activity, ProductFromCategoryActivity.class);
-                        intent.putExtra("category_id",childPosition);
+                        intent.putExtra("category_id",childrens.childrens.get(childPosition).id);
                         activity.startActivity(intent);
                     }
                 });

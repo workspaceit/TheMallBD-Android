@@ -51,10 +51,12 @@ public class CategoryWiseProductsAsyncTask extends AsyncTask<String,String,Array
             activity.setCategoryWiseProducts(productses);
         }
         else {
-            if (!Utility.responseStat.status)
+            if (!Utility.responseStat.status) {
                 activity.setNewProductListError();
-            else
-                Toast.makeText(activity, "Something Went wrong", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(activity, "Something went wrong!!", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

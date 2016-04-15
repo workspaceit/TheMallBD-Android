@@ -147,7 +147,7 @@ public class ProductService extends BaseMallBDService {
         this.setParams("limit", limit);
         this.setParams("shop_id", String.valueOf(shop_id));
        // this.setParams("category",categoryId);
-        this.setParams("category",String.valueOf(16));
+        this.setParams("category",String.valueOf(categoryId));
 
         String resp = this.getData("POST");
         System.out.println(resp);

@@ -13,6 +13,7 @@ import com.workspaceit.themallbd.adapter.CategoryWiseProductsAdapter;
 import com.workspaceit.themallbd.asynctask.CategoryWiseProductsAsyncTask;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.InternetConnection;
+import com.workspaceit.themallbd.utility.MakeToast;
 
 import java.util.ArrayList;
 
@@ -49,6 +50,7 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer imple
 
         if (mInternetConnection.isConnectingToInternet())
         {
+
             ProductFromCategoryActivity.categoryWiseProductsArrayList.clear();
             new CategoryWiseProductsAsyncTask(this).execute(String.valueOf(offset),String.valueOf(limit)
             ,String.valueOf(CATEGORY_ID));
@@ -77,7 +79,7 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer imple
     }
 
     public void setNewProductListError() {
-        Toast.makeText(this, "Something Went wrong", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No Item Found!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -51,7 +51,7 @@ public class CategoryInExpandableListViewActivity extends BaseActivityWithoutDra
                 Utility.parentsCategoryArraylist);
         expandableListView.setAdapter(categoryInExpandableListViewAdapter);
 
-        //
+
         expandableListView.expandGroup(position);
 
         expandableListView.setOnChildClickListener(this);

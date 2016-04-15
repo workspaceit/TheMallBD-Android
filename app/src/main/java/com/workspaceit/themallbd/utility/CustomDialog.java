@@ -91,12 +91,12 @@ public class CustomDialog {
                 .centerCrop()
                 .into(image);
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
         alertDialogBuilder.setTitle(pTitle);
         alertDialogBuilder
-                .setCancelable(false)
+                .setCancelable(true)
                 .setView(image)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setNeutralButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
                         dialog.cancel();
