@@ -1,5 +1,6 @@
 package com.workspaceit.themallbd.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -22,19 +24,21 @@ import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.SelectedAttributes;
 import com.workspaceit.themallbd.dataModel.ShoppingCartCell;
 import com.workspaceit.themallbd.service.InternetConnection;
+import com.workspaceit.themallbd.utility.CustomDialog;
 import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
-public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener,View.OnClickListener {
+public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener, View.OnClickListener {
 
-    private TextView tvProductName,tvProductPrice,tvProductDescription;
+    private TextView tvProductName, tvProductPrice, tvProductDescription;
     private EditText etProductQuantity;
     private Toolbar toolbar;
 
-    private Button addToCartBtn,addToWishListBtn,buyNowBtn;
+    private Button addToCartBtn, addToWishListBtn, buyNowBtn;
 
     private SliderLayout slideShow;
+    // private TextSliderView textSliderView;
 
     private static int position;
     private static int arrayListIndicator = 0;
@@ -56,23 +60,23 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
-        addToCartBtn=(Button)findViewById(R.id.button_add_to_cart);
+        addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
         addToCartBtn.setOnClickListener(this);
-        addToWishListBtn=(Button)findViewById(R.id.button_add_to_wishlist);
+        addToWishListBtn = (Button) findViewById(R.id.button_add_to_wishlist);
         addToWishListBtn.setOnClickListener(this);
-        sessionManager=new SessionManager(this);
+        sessionManager = new SessionManager(this);
         position = getIntent().getIntExtra("position", -1);
-        arrayListIndicator = getIntent().getIntExtra("productArray",-1);
-        if (arrayListIndicator==1)
+        arrayListIndicator = getIntent().getIntExtra("productArray", -1);
+        if (arrayListIndicator == 1)
             products = MainActivity.newProductsForHorizontalViewList.get(position);
-        else if (arrayListIndicator==2)
+        else if (arrayListIndicator == 2)
             products = MainActivity.featuredProductsForHorizontalViewList.get(position);
-        else if (arrayListIndicator==3)
+        else if (arrayListIndicator == 3)
             products = MainActivity.allProductsForGridViewList.get(position);
-        else if (arrayListIndicator==4)
+        else if (arrayListIndicator == 4)
             products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
-        else if (arrayListIndicator==5)
-            products=Utility.wishlistProductArrayList.get(position);
+        else if (arrayListIndicator == 5)
+            products = Utility.wishlistProductArrayList.get(position);
 
         initializeSlider();
         initialize();
@@ -85,7 +89,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         slideShow = (SliderLayout) findViewById(R.id.slider_product_details);
 
 
-        if (products.pictures.size()>=1) {
+        if (products.pictures.size() >= 1) {
             for (Picture picture : products.pictures) {
                 TextSliderView textSliderView = new TextSliderView(this);
                 // initialize a SliderLayout
@@ -97,9 +101,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
                 slideShow.addSlider(textSliderView);
             }
-        }
-        else
-        {
+        } else {
             TextSliderView textSliderView = new TextSliderView(this);
             // initialize a SliderLayout
             textSliderView
@@ -123,9 +125,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         tvProductName.setText(products.title);
         int size = products.prices.size();
-        if (size>=1)
-        {
-            tvProductPrice.setText(String.format("%s", products.prices.get(0).retailPrice+"TK"));
+        if (size >= 1) {
+            tvProductPrice.setText(String.format("%s", products.prices.get(0).retailPrice + "TK"));
         }
         tvProductDescription.setText(products.productDescriptionMobile);
 
@@ -137,39 +138,39 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         buyNowBtn = (Button) findViewById(R.id.button_buy_now);
 
 
-
-
     }
 
     @Override
     public void onSliderClick(BaseSliderView slider) {
 
+       // MakeToast.showToast(this,String.valueOf(getApplicationContext().getResources().getConfiguration().orientation));
+
+       CustomDialog.showImageDiolog(this, slider.getUrl(), products.title);
+
 
     }
 
 
-
-
     @Override
     public void onClick(View v) {
-        if(v==addToCartBtn){
+        if (v == addToCartBtn) {
 
             try {
-                this.productsQuantity=Integer.parseInt(etProductQuantity.getText().toString());
-            }catch (Exception e){
-                MakeToast.showToast(this,"Invalid Quantity");
+                this.productsQuantity = Integer.parseInt(etProductQuantity.getText().toString());
+            } catch (Exception e) {
+                MakeToast.showToast(this, "Invalid Quantity");
 
             }
 
-            if(this.productsQuantity<1){
-                MakeToast.showToast(this,"Quantity is not valid");
+            if (this.productsQuantity < 1) {
+                MakeToast.showToast(this, "Quantity is not valid");
                 return;
             }
 
 
-            for(int i=0; i<Utility.shoppingCart.shoppingCartCell.size();i++){
-                if(Utility.shoppingCart.shoppingCartCell.get(i).id==products.id){
-                    Utility.shoppingCart.shoppingCartCell.get(i).quantity+=this.productsQuantity;
+            for (int i = 0; i < Utility.shoppingCart.shoppingCartCell.size(); i++) {
+                if (Utility.shoppingCart.shoppingCartCell.get(i).id == products.id) {
+                    Utility.shoppingCart.shoppingCartCell.get(i).quantity += this.productsQuantity;
                     invalidateOptionsMenu();
                     return;
                 }
@@ -178,7 +179,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
             ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
 
-            if(products.attributes.size()<0) {
+            if (products.attributes.size() < 0) {
                 SelectedAttributes selectedAttributes = new SelectedAttributes();
                 selectedAttributes.setId(products.attributes.get(0).id);
                 selectedAttributes.setName(products.attributes.get(0).name);
@@ -192,14 +193,13 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             shoppingCartCell.setQuantity(this.productsQuantity);
 
 
-
             Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
-            MakeToast.showToast(this,"Successfully added to the cart");
+            MakeToast.showToast(this, "Successfully added to the cart");
             invalidateOptionsMenu();
 
-        }else if(v==addToWishListBtn){
+        } else if (v == addToWishListBtn) {
 
-            new WishListAsynTask(this).execute(String.valueOf(sessionManager.getUid()),String.valueOf(products.id));
+            new WishListAsynTask(this).execute(String.valueOf(sessionManager.getUid()), String.valueOf(products.id));
 
         }
     }
