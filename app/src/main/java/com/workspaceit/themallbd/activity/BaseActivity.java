@@ -101,9 +101,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         super.setContentView(layoutResID);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
         //getSupportActionBar().setIcon(R.drawable.logo);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -355,7 +357,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_cart);
 
-        MenuItemCompat.setActionView(item, R.layout.cart_update_count);
+       MenuItemCompat.setActionView(item, R.layout.cart_update_count);
         View view = MenuItemCompat.getActionView(item);
 
 

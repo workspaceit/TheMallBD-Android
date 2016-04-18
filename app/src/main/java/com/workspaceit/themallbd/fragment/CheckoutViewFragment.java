@@ -125,7 +125,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             countrySpinner.requestFocus();
             return false;
         }else if(addressText.getText().toString().equals("")){
-            MakeToast.showToast(getActivity(), "Delivery Adress is required");
+            MakeToast.showToast(getActivity(), "Delivery Address is required");
             addressText.requestFocus();
             return false;
         } else if (telephoneText.getText().toString().equals("")){

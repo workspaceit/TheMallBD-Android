@@ -79,6 +79,17 @@ public class SessionManager {
 
     }
 
+    public void updateUserInformation(String fname, String lname, String phone, String addrs, String country, String city, String zipcode){
+        editor.putString(KEY_FIRST_NAME,fname);
+        editor.putString(KEY_LAST_NAME,lname);
+        editor.putString(KEY_PHONE,phone);
+        editor.putString(KEY_ADRESS,addrs);
+        editor.putString(KEY_COUNTRY,country);
+        editor.putString(KEY_CITY,city);
+        editor.putString(KEY_ZIP_CODE,zipcode);
+        editor.commit();
+    }
+
 
     public String getPhone(){
         return pref.getString(KEY_PHONE,"");

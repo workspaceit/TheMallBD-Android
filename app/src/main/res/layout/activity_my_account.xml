@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
+    android:id="@+id/myacc_scroll"
     >
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -238,6 +239,66 @@
                         android:layout_height="1dp"
                         android:background="#b2beb5" />
                 </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginBottom="15dp"
+                            android:entries="@array/countries_array"
+                            style="@style/Widget.AppCompat.Spinner.DropDown"
+                            android:id="@+id/county_myacc_spinner"
+
+                            >
+                        </Spinner>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:background="#b2beb5" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:text="City"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/city_myacc_edittext"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@android:color/transparent"
+                            android:textColor="#000000"
+                            android:textSize="14sp"/>
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dp"
+                            android:background="#b2beb5" />
+                    </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -69,9 +69,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.action_cart);
         MenuItemCompat.setActionView(item, R.layout.cart_update_count);
         View view = MenuItemCompat.getActionView(item);
-        // CARTCOUNT = (Button) MenuItemCompat.getActionView(item);
-        //  CARTCOUNT.setText(mCARTCOUNT+"");
-        // CARTCOUNT.setOnClickListener(this);
+
 
         CARTCOUNT = (Button)view.findViewById(R.id.notif_count);
         CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size()+""));
