@@ -60,14 +60,13 @@ public class WishListService extends BaseMallBDService {
             this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
 
             if(this.responseStat.status){
-                if (this.responseStat.status)
-                {
+
 
                     Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
                     Collections.addAll(wishListProduct,products);
                     Collections.addAll(Utility.wishlistProductArrayList,products);
                     return wishListProduct;
-                }
+
 
 
             }else {

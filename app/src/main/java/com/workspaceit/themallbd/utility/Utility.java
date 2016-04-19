@@ -23,4 +23,6 @@ public class Utility {
 
     public static ArrayList<Category> parentsCategoryArraylist = new ArrayList<>();
     public static ArrayList<Products>wishlistProductArrayList=new ArrayList<>();
+
+    public static ArrayList<Products>searchProductArrayList=new ArrayList<>();
 }

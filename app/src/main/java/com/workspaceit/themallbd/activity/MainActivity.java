@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -32,6 +33,7 @@ import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.GridViewProductsInHomePageAdapter;
 import com.workspaceit.themallbd.adapter.HorizontalRVAFeaturedProductsAdapter;
 import com.workspaceit.themallbd.adapter.HorizontalRecyclerViewAdapter;
+import com.workspaceit.themallbd.adapter.SearchProductAdapter;
 import com.workspaceit.themallbd.asynctask.CategoryInListViewAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetAllProductForGridViewAsyncTask;
 import com.workspaceit.themallbd.asynctask.GetFeaturedProductsAsyncTask;
@@ -39,6 +41,7 @@ import com.workspaceit.themallbd.asynctask.GetNewProductsAsyncTask;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.AllProductGridView;
+import com.workspaceit.themallbd.utility.AutoCompleteTextChangeLisnter;
 import com.workspaceit.themallbd.utility.DividerItemDecoration;
 
 import com.workspaceit.themallbd.utility.MakeToast;
@@ -96,6 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private ImageButton searchButton;
     private AutoCompleteTextView homeSearcTextView;
     private ScrollView mainScroll;
+    SearchProductAdapter searchProductAdapter;
 
 
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
@@ -136,7 +140,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initializeGridViewForAllProductsSection();
 
 
+     /*   String[] countries = getResources().getStringArray(R.array.countries_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countries);*/
         this.homeSearcTextView = (AutoCompleteTextView) findViewById(R.id.search_in_home);
+        searchProductAdapter=new SearchProductAdapter(this);
+        homeSearcTextView.addTextChangedListener(new AutoCompleteTextChangeLisnter(this));
+
+
+        homeSearcTextView.setAdapter(searchProductAdapter);
+        homeSearcTextView.setThreshold(1);
+
+
+
         this.mainScroll = (ScrollView) findViewById(R.id.scroll_main_view);
         this.categoryWomenView = (ImageView) findViewById(R.id.iv_home_women);
         this.categoryWomenView.setOnClickListener(this);
@@ -156,11 +171,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        MakeToast.showToast(this, "assa");
-        return super.onOptionsItemSelected(item);
-    }
+
 
     private void initilizeParentCategoryList() {
 
@@ -372,6 +383,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
+    public void setSeacrhAdater(){
+        searchProductAdapter.notifyDataSetChanged();
+    }
     public void setNewProductListError() {
 
         userScrolled = false;
