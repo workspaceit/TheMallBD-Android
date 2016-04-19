@@ -1,18 +1,28 @@
 package com.workspaceit.themallbd.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.webkit.CookieManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,12 +47,10 @@ import com.workspaceit.themallbd.utility.Utility;
 
 import java.io.Serializable;
 
-import java.net.CookieHandler;
-import java.net.CookiePolicy;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener,
-        AdapterView.OnItemClickListener, AbsListView.OnScrollListener,Serializable {
+        AdapterView.OnItemClickListener, AbsListView.OnScrollListener, Serializable {
 
     private SliderLayout sliderShow;
 
@@ -52,16 +60,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public GridViewProductsInHomePageAdapter gridViewProductsInHomePageAdapter;
 
     //TextViews
-    private TextView userNameTextView,emailTextView;
+    private TextView userNameTextView, emailTextView;
 
     //Imageview
-    private ImageView categoryWomenView,categoryBabyView,categoryMenView,categoryAllView;
+    private ImageView categoryWomenView, categoryBabyView, categoryMenView, categoryAllView;
 
     //recycler view variables for horizontal scrolling
-    public RecyclerView newProductHorizontalListRV,featuredProductHorizontalListRV;
+    public RecyclerView newProductHorizontalListRV, featuredProductHorizontalListRV;
     private AllProductGridView gridViewForAllProducts;
 
-    public static  ArrayList<Products> newProductsForHorizontalViewList;
+    public static ArrayList<Products> newProductsForHorizontalViewList;
     public static ArrayList<Products> featuredProductsForHorizontalViewList;
     public static ArrayList<Products> allProductsForGridViewList;
 
@@ -76,7 +84,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     int limitForProductsInGridView = 4;
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
-    int pastVisibleItemsInGridView,visibleItemCountInGridView,totalItemCountInGridView;
+    int pastVisibleItemsInGridView, visibleItemCountInGridView, totalItemCountInGridView;
 
     private boolean userScrolled;
     private boolean userScrolledInGridView;
@@ -84,9 +92,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private boolean noMoreItem;
     private boolean noMoreItemInGridView;
     int lastlastitem = 0;
+    private Button cartButton;
+    private ImageButton searchButton;
+    private AutoCompleteTextView homeSearcTextView;
+    private ScrollView mainScroll;
 
 
-    TextView firstCategoryText, secondCategoryText,thirdCategoryText;
+    TextView firstCategoryText, secondCategoryText, thirdCategoryText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,12 +107,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         setContentView(R.layout.activity_main);
 
 
-
-
-        mInternetConnection  = new InternetConnection(this);
-
-
-
+        mInternetConnection = new InternetConnection(this);
 
 
         this.initialize();
@@ -109,8 +117,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    public void initialize()
-    {
+    public void initialize() {
         newProductsForHorizontalViewList = new ArrayList<>();
         featuredProductsForHorizontalViewList = new ArrayList<>();
         allProductsForGridViewList = new ArrayList<>();
@@ -129,6 +136,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initializeGridViewForAllProductsSection();
 
 
+        this.homeSearcTextView = (AutoCompleteTextView) findViewById(R.id.search_in_home);
+        this.mainScroll = (ScrollView) findViewById(R.id.scroll_main_view);
         this.categoryWomenView = (ImageView) findViewById(R.id.iv_home_women);
         this.categoryWomenView.setOnClickListener(this);
 
@@ -140,21 +149,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         this.categoryAllView = (ImageView) findViewById(R.id.iv_home_all);
         this.categoryAllView.setOnClickListener(this);
-        firstCategoryText=(TextView)findViewById(R.id.tv_home_cat_first);
-        secondCategoryText=(TextView)findViewById(R.id.tv_home_second);
-        thirdCategoryText=(TextView)findViewById(R.id.tv_home_third);
+        firstCategoryText = (TextView) findViewById(R.id.tv_home_cat_first);
+        secondCategoryText = (TextView) findViewById(R.id.tv_home_second);
+        thirdCategoryText = (TextView) findViewById(R.id.tv_home_third);
 
     }
 
 
-    private void initilizeParentCategoryList(){
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        MakeToast.showToast(this, "assa");
+        return super.onOptionsItemSelected(item);
+    }
 
-            new CategoryInListViewAsyncTask(this).execute();
+    private void initilizeParentCategoryList() {
+
+        new CategoryInListViewAsyncTask(this).execute();
 
 
     }
 
-    private void initializeNewProductHorizontalSection(){
+    private void initializeNewProductHorizontalSection() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         newProductHorizontalListRV = (RecyclerView) findViewById(R.id.rv_horizontal);
         newProductHorizontalListRV.setLayoutManager(layoutManager);
@@ -165,7 +180,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.newProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
         // Set layout manager to position the items
 
-        if(MainActivity.newProductsForHorizontalViewList.size()<1) {
+        if (MainActivity.newProductsForHorizontalViewList.size() < 1) {
             if (mInternetConnection.isConnectingToInternet())
 
             {
@@ -190,12 +205,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         );
 
 
-
-         this.newProductHorizontalListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        this.newProductHorizontalListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.v("taiful",String.valueOf(dx)+" "+String.valueOf(dy));
+                Log.v("taiful", String.valueOf(dx) + " " + String.valueOf(dy));
                 if (dx > 0) //check for scroll down
                 {
                     visibleItemCount = layoutManager.getChildCount();
@@ -214,16 +228,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         });
     }
 
-    private void initializeFeaturedProductHorizontalSection(){
+    private void initializeFeaturedProductHorizontalSection() {
         final LinearLayoutManager layoutManagerForFeaturedProducts = new LinearLayoutManager(
-                this,LinearLayoutManager.HORIZONTAL,false);
+                this, LinearLayoutManager.HORIZONTAL, false);
         featuredProductHorizontalListRV = (RecyclerView) findViewById(R.id.rv_featured_horizontalProducts);
         featuredProductHorizontalListRV.setLayoutManager(layoutManagerForFeaturedProducts);
         this.horizontalRVAFeaturedProductsAdapter = new HorizontalRVAFeaturedProductsAdapter(this);
         this.featuredProductHorizontalListRV.setAdapter(horizontalRVAFeaturedProductsAdapter);
         this.featuredProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
 
-        if(MainActivity.featuredProductsForHorizontalViewList.size()<1) {
+        if (MainActivity.featuredProductsForHorizontalViewList.size() < 1) {
             if (mInternetConnection.isConnectingToInternet()) {
                 MainActivity.featuredProductsForHorizontalViewList.clear();
                 new GetFeaturedProductsAsyncTask(this).execute(
@@ -267,7 +281,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void loadFeatureProductMore() {
         if (mInternetConnection.isConnectingToInternet()) {
-            this.offsetForFeaturedProductsHorizontalScrolling += 1 ;
+            this.offsetForFeaturedProductsHorizontalScrolling += 1;
 
             new GetFeaturedProductsAsyncTask(this).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
 
@@ -276,8 +290,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    public void initializeCategoryView(){
-        int count=Utility.parentsCategoryArraylist.size();
+    public void initializeCategoryView() {
+        int count = Utility.parentsCategoryArraylist.size();
         count--;
         firstCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
         count--;
@@ -287,11 +301,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    private void initializeGridViewForAllProductsSection(){
+    private void initializeGridViewForAllProductsSection() {
 
 
-
-       gridViewForAllProducts = (AllProductGridView) findViewById(R.id.gridView_all_Product);
+        gridViewForAllProducts = (AllProductGridView) findViewById(R.id.gridView_all_Product);
 
 
         gridViewForAllProducts.setOnItemClickListener(this);
@@ -302,15 +315,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         gridViewForAllProducts.setAdapter(gridViewProductsInHomePageAdapter);
 
 
-
-
-            if (mInternetConnection.isConnectingToInternet()) {
-                MainActivity.allProductsForGridViewList.clear();
-                new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
-                        String.valueOf(limitForProductsInGridView));
-            }
-
-
+        if (mInternetConnection.isConnectingToInternet()) {
+            MainActivity.allProductsForGridViewList.clear();
+            new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
+                    String.valueOf(limitForProductsInGridView));
+        }
 
 
     }
@@ -339,9 +348,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private void loadNewProductMore() {
 
         if (mInternetConnection.isConnectingToInternet()) {
-            offsetForNewProductsHorizontalScrolling += 1 ;
+            offsetForNewProductsHorizontalScrolling += 1;
 
-            new GetNewProductsAsyncTask(this).execute(String.valueOf(offsetForNewProductsHorizontalScrolling),String.valueOf(limit));
+            new GetNewProductsAsyncTask(this).execute(String.valueOf(offsetForNewProductsHorizontalScrolling), String.valueOf(limit));
 
         }
     }
@@ -351,14 +360,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         for (int i = 0; i < productsList.size(); i++) {
             try {
-                System.out.println("product id:"+productsList.get(i).id);
+                System.out.println("product id:" + productsList.get(i).id);
                 MainActivity.newProductsForHorizontalViewList.add(productsList.get(i));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         System.out.println("Final Data Limit:" + MainActivity.newProductsForHorizontalViewList.size());
-      //  this.horizontalListViewOfProductsAdapter.notifyDataSetChanged();
+        //  this.horizontalListViewOfProductsAdapter.notifyDataSetChanged();
         this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
 
     }
@@ -376,7 +385,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         for (int i = 0; i < productList.size(); i++) {
             try {
-                System.out.println("product id:"+productList.get(i).id);
+                System.out.println("product id:" + productList.get(i).id);
                 MainActivity.featuredProductsForHorizontalViewList.add(productList.get(i));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -393,12 +402,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         Toast.makeText(this, "No Data for featured products", Toast.LENGTH_SHORT).show();
     }
 
-    public void setAllProductList(ArrayList<Products> productsList){
+    public void setAllProductList(ArrayList<Products> productsList) {
         System.out.print("allProductsListSize:" + productsList.size());
 
         for (int i = 0; i < productsList.size(); i++) {
             try {
-                System.out.println("product id:"+productsList.get(i).id);
+                System.out.println("product id:" + productsList.get(i).id);
                 MainActivity.allProductsForGridViewList.add(productsList.get(i));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -411,7 +420,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    public void setAllProductsListError(){
+    public void setAllProductsListError() {
         userScrolledInGridView = false;
         noMoreItemInGridView = true;
 
@@ -436,39 +445,98 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        MenuItem item = menu.findItem(R.id.action_cart);
+        MenuItem item1 = menu.findItem(R.id.action_search);
+
+        MenuItemCompat.setActionView(item1, R.layout.toolbar_search_icon);
+        MenuItemCompat.setActionView(item, R.layout.cart_update_count);
+        View view = MenuItemCompat.getActionView(item);
+        View searchView = MenuItemCompat.getActionView(item1);
+
+
+        searchButton = (ImageButton) searchView.findViewById(R.id.search_icon_btn);
+
+
+        searchButton.setOnClickListener(this);
+
+
+        cartButton = (Button) view.findViewById(R.id.notif_count);
+        cartButton.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size() + ""));
+        cartButton.setOnClickListener(this);
+
+        return true;
+    }
+
+    @Override
     public void onClick(View v) {
 
-        int count=Utility.parentsCategoryArraylist.size();
+        int count = Utility.parentsCategoryArraylist.size();
 
         count--;
 
-        if (v==categoryWomenView)
-        {
-            Intent intent = new Intent(this,CategoryInExpandableListViewActivity.class);
-            intent.putExtra("position",count-1);
-            intent.putExtra("title", Utility.parentsCategoryArraylist.get(count-1).title);
+        if (v == categoryWomenView) {
+            Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
+            intent.putExtra("position", count - 1);
+            intent.putExtra("title", Utility.parentsCategoryArraylist.get(count - 1).title);
             startActivity(intent);
 
-        }
-        if (v==categoryBabyView)
-        {
-            Intent intent = new Intent(this,CategoryInExpandableListViewActivity.class);
-            intent.putExtra("position",count);
+        } else if (v == categoryBabyView) {
+            Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
+            intent.putExtra("position", count);
             intent.putExtra("title", Utility.parentsCategoryArraylist.get(count).title);
             startActivity(intent);
 
-        }
-        if (v==categoryMenView)
-        {
-            Intent intent = new Intent(this,CategoryInExpandableListViewActivity.class);
-            intent.putExtra("position",count-2);
-            intent.putExtra("title", Utility.parentsCategoryArraylist.get(count-2).title);
+        } else if (v == categoryMenView) {
+            Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
+            intent.putExtra("position", count - 2);
+            intent.putExtra("title", Utility.parentsCategoryArraylist.get(count - 2).title);
             startActivity(intent);
-        }
-        if (v==categoryAllView)
-        {
-            Intent intent = new Intent(MainActivity.this,CategoryListViewActivity.class);
+        } else if (v == categoryAllView) {
+            Intent intent = new Intent(MainActivity.this, CategoryListViewActivity.class);
             startActivity(intent);
+        } else if (v == cartButton) {
+            Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+            startActivity(intent);
+        } else if (v == searchButton) {
+            if(mainScroll.getScrollY()==0){
+                homeSearcTextView.requestFocus();
+                InputMethodManager keyboard = (InputMethodManager)
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                keyboard.showSoftInput(homeSearcTextView, 0);
+                return;
+            }
+
+            ValueAnimator realSmoothScrollAnimation =
+                    ValueAnimator.ofInt(mainScroll.getScrollY(), 0);
+            realSmoothScrollAnimation.setDuration(700);
+            realSmoothScrollAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    int scrollTo = (Integer) animation.getAnimatedValue();
+                    mainScroll.scrollTo(0, scrollTo);
+                }
+
+
+            });
+
+            realSmoothScrollAnimation.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    homeSearcTextView.requestFocus();
+                    InputMethodManager keyboard = (InputMethodManager)
+                            getSystemService(Context.INPUT_METHOD_SERVICE);
+                    keyboard.showSoftInput(homeSearcTextView, 0);
+                }
+            });
+
+            realSmoothScrollAnimation.start();
+
+
         }
 
 
@@ -504,13 +572,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         if (lastInScreen >= totalItemCount && userScrolledInGridView && !noMoreItemInGridView) {
             Log.d("TAG", "onScroll lastInScreen - so load more");
             System.out.println("getCalled");
-            if(lastlastitem != lastInScreen){
+            if (lastlastitem != lastInScreen) {
                 lastlastitem = lastInScreen;
                 //  if (Utility.current_number < Utility.total) {
                 //TODO onscroll load more data
                 if (mInternetConnection.isConnectingToInternet()) {
                     // search.offset = Utility.page_number;
-                    offsetForAllProductsInGridView += 1 ;
+                    offsetForAllProductsInGridView += 1;
                     System.out.println("I am going for loading more contents with offset:" + offsetForAllProductsInGridView);
                     new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
                             String.valueOf(limitForProductsInGridView));

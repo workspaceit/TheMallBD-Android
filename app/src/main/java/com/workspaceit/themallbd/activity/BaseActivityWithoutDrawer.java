@@ -68,6 +68,10 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_cart);
         MenuItemCompat.setActionView(item, R.layout.cart_update_count);
+
+        MenuItem item1=menu.findItem(R.id.action_search);
+
+        MenuItemCompat.setActionView(item1,R.layout.toolbar_search_icon);
         View view = MenuItemCompat.getActionView(item);
 
 
@@ -80,7 +84,6 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         return true;
     }
 

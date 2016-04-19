@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,7 +38,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-    private Button CARTCOUNT;
+
+   // private Button CARTCOUNT;
+
     // public static int mCARTCOUNT = 0;
     private TextView cartTV;
 
@@ -50,6 +53,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
     private TextView userNameTextView;
     private static final int SELECT_PICTURE = 1;
+
 
 
     @Override
@@ -350,15 +354,25 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_cart);
+        MenuItem item1=menu.findItem(R.id.action_search);
 
+        MenuItemCompat.setActionView(item1,R.layout.toolbar_search_icon);
        MenuItemCompat.setActionView(item, R.layout.cart_update_count);
         View view = MenuItemCompat.getActionView(item);
+        View searchView=MenuItemCompat.getActionView(item1);
+
+
+        searchButton=(ImageButton)searchView.findViewById(R.id.search_icon_btn);
+
+        MakeToast.showToast(this,"called");
+
 
 
         CARTCOUNT = (Button) view.findViewById(R.id.notif_count);
@@ -370,9 +384,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
-
+        this.mainMenu=menu;
         return true;
-    }
+    }*/
 
 
     @Override

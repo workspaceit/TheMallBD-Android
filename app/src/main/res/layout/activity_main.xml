@@ -27,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
-            android:background="#EEE">
+            android:background="#EEE"
+            android:id="@+id/scroll_main_view">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,7 +47,7 @@
                     android:descendantFocusability="beforeDescendants"
                     android:focusableInTouchMode="true">
 
-                    <EditText
+                    <AutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/search_in_home"
