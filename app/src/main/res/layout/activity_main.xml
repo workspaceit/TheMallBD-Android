@@ -47,7 +47,7 @@
                     android:descendantFocusability="beforeDescendants"
                     android:focusableInTouchMode="true">
 
-                    <AutoCompleteTextView
+                    <com.workspaceit.themallbd.utility.CustomAutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/search_in_home"

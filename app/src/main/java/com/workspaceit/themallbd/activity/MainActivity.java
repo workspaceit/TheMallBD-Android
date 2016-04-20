@@ -42,6 +42,7 @@ import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.AllProductGridView;
 import com.workspaceit.themallbd.utility.AutoCompleteTextChangeLisnter;
+import com.workspaceit.themallbd.utility.CustomAutoCompleteTextView;
 import com.workspaceit.themallbd.utility.DividerItemDecoration;
 
 import com.workspaceit.themallbd.utility.MakeToast;
@@ -97,10 +98,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     int lastlastitem = 0;
     private Button cartButton;
     private ImageButton searchButton;
-    private AutoCompleteTextView homeSearcTextView;
+    public AutoCompleteTextView homeSearcTextView;
     private ScrollView mainScroll;
-    SearchProductAdapter searchProductAdapter;
-
+    public SearchProductAdapter searchProductAdapter;
+    public String[]countries;
 
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
 
@@ -140,15 +141,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initializeGridViewForAllProductsSection();
 
 
-     /*   String[] countries = getResources().getStringArray(R.array.countries_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countries);*/
-        this.homeSearcTextView = (AutoCompleteTextView) findViewById(R.id.search_in_home);
-        searchProductAdapter=new SearchProductAdapter(this);
+       //countries=getResources().getStringArray(R.array.countries_array);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countries);
+        this.homeSearcTextView = (CustomAutoCompleteTextView) findViewById(R.id.search_in_home);
+
+        homeSearcTextView.setThreshold(1);
         homeSearcTextView.addTextChangedListener(new AutoCompleteTextChangeLisnter(this));
 
 
-        homeSearcTextView.setAdapter(searchProductAdapter);
-        homeSearcTextView.setThreshold(1);
+
+
+
 
 
 
@@ -384,7 +387,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     public void setSeacrhAdater(){
-        searchProductAdapter.notifyDataSetChanged();
+        searchProductAdapter=new SearchProductAdapter(this,R.layout.search_product_row,Utility.searchProductTitle);
+
+
+        if(Utility.searchProductTitle.size()>0) {
+            homeSearcTextView.setAdapter(searchProductAdapter);
+            searchProductAdapter.notifyDataSetChanged();
+            homeSearcTextView.showDropDown();
+        }else {
+            homeSearcTextView.setAdapter(null);
+        }
+
+
     }
     public void setNewProductListError() {
 
