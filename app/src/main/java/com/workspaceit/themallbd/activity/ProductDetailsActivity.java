@@ -1,6 +1,7 @@
 package com.workspaceit.themallbd.activity;
 
 import android.app.Activity;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -10,13 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.asynctask.WishListAsynTask;
 import com.workspaceit.themallbd.dataModel.Picture;
@@ -25,14 +30,16 @@ import com.workspaceit.themallbd.dataModel.SelectedAttributes;
 import com.workspaceit.themallbd.dataModel.ShoppingCartCell;
 import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.CustomDialog;
+import com.workspaceit.themallbd.utility.CustomSliderView;
 import com.workspaceit.themallbd.utility.MakeToast;
 import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
 public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener, View.OnClickListener {
 
-    private TextView tvProductName, tvProductPrice, tvProductDescription;
-    private EditText etProductQuantity;
+    private TextView tvProductName, tvProductPrice, tvProductDescription,previousPrictTextView;
+
+    private Spinner productQunatitySpinner;
     private Toolbar toolbar;
 
     private Button addToCartBtn, addToWishListBtn, buyNowBtn;
@@ -59,6 +66,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
+
+        previousPrictTextView=(TextView)findViewById(R.id.tv_previous_product_price);
+        previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
         addToCartBtn.setOnClickListener(this);
@@ -89,9 +99,15 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         slideShow = (SliderLayout) findViewById(R.id.slider_product_details);
 
 
+        slideShow.stopAutoCycle();
+
+
+
+
+
         if (products.pictures.size() >= 1) {
             for (Picture picture : products.pictures) {
-                TextSliderView textSliderView = new TextSliderView(this);
+                CustomSliderView textSliderView = new CustomSliderView(this);
                 // initialize a SliderLayout
                 textSliderView
                         .description(picture.caption)
@@ -107,15 +123,19 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             textSliderView
                     .description("Image not found")
                     .image(R.drawable.image_not_found)
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+
 
             slideShow.addSlider(textSliderView);
         }
-        slideShow.setPresetTransformer(SliderLayout.Transformer.Accordion);
+
+
+
+        slideShow.setPresetTransformer(SliderLayout.Transformer.Foreground2Background);
         slideShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         slideShow.setCustomAnimation(new DescriptionAnimation());
-        slideShow.setDuration(4000);
+
+
     }
 
     private void initialize() {
@@ -130,7 +150,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         }
         tvProductDescription.setText(products.productDescriptionMobile);
 
-        etProductQuantity = (EditText) findViewById(R.id.et_product_quantity_pd);
+        productQunatitySpinner = (Spinner) findViewById(R.id.et_product_quantity_pd);
+
 
 
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
@@ -156,7 +177,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         if (v == addToCartBtn) {
 
             try {
-                this.productsQuantity = Integer.parseInt(etProductQuantity.getText().toString());
+                this.productsQuantity = Integer.parseInt(productQunatitySpinner.getSelectedItem().toString());
             } catch (Exception e) {
                 MakeToast.showToast(this, "Invalid Quantity");
 
