@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:fillViewport="true"
-    android:id="@+id/myacc_scroll"
+    android:id="@+id/produt_details_scroll"
     >
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:background="#FFFFFF">
 
@@ -17,7 +17,7 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:descendantFocusability="beforeDescendants"
         android:focusableInTouchMode="true"
         android:orientation="vertical"
@@ -296,15 +296,36 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="wrap_content"
                     android:background="#FFFFFF"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">\
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Products Related to this item"
+                        android:textSize="24sp"
+                        android:layout_marginBottom="10dp"
+                        />
 
-                    <ListView
+                    <com.workspaceit.themallbd.utility.RelatedProductListView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/relatede_product_list__view">
-                    </ListView>
+                        android:layout_height="wrap_content"
+                        android:id="@+id/relatede_product_list__view"
+                        android:dividerHeight="0dp"
+                        android:divider="@null">
+                    </com.workspaceit.themallbd.utility.RelatedProductListView>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Load More"
+                        android:textAlignment="textStart"
+                        android:background="@drawable/button_border_product_details"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/load_more_button"
+                      />
 
                 </LinearLayout>
 

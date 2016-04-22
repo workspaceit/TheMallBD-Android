@@ -1,6 +1,11 @@
 package com.workspaceit.themallbd.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -12,10 +17,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,12 +46,13 @@ import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.CustomDialog;
 import com.workspaceit.themallbd.utility.CustomSliderView;
 import com.workspaceit.themallbd.utility.MakeToast;
+import com.workspaceit.themallbd.utility.RelatedProductListView;
 import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
-public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener, View.OnClickListener {
+public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
-    private TextView tvProductName, tvProductPrice, tvProductDescription,previousPrictTextView;
+    private TextView tvProductName, tvProductPrice, tvProductDescription, previousPrictTextView;
 
     private Spinner productQunatitySpinner;
     private Toolbar toolbar;
@@ -59,8 +68,10 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private int productsQuantity = 0;
     private Products products;
     SessionManager sessionManager;
-    private ListView relatedProductListView;
-
+    private RelatedProductListView relatedProductListView;
+    private RelatedProductAdapter relatedProductAdapter;
+    private Button loadMoreButton;
+    private ScrollView scrollView;
 
     private static String productUrl = "/product/general/";
 
@@ -76,16 +87,30 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
-        previousPrictTextView=(TextView)findViewById(R.id.tv_previous_product_price);
+        previousPrictTextView = (TextView) findViewById(R.id.tv_previous_product_price);
         previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        ratingBar=(RatingBar)findViewById(R.id.mallBdRatingBar);
+        ratingBar = (RatingBar) findViewById(R.id.mallBdRatingBar);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.parseColor("#961C1E"), PorterDuff.Mode.SRC_ATOP);
+        loadMoreButton = (Button) findViewById(R.id.load_more_button);
+        loadMoreButton.setOnClickListener(this);
 
+        Utility.relatedProductArryList.addAll(MainActivity.newProductsForHorizontalViewList);
+
+        scrollView=(ScrollView)findViewById(R.id.produt_details_scroll);
         ratingBar.setRating((float) 4);
 
-        relatedProductListView=(ListView)findViewById(R.id.relatede_product_list__view);
-        relatedProductListView.setAdapter(new RelatedProductAdapter(this));
+        relatedProductListView = (RelatedProductListView) findViewById(R.id.relatede_product_list__view);
+
+        relatedProductAdapter = new RelatedProductAdapter(this, 1);
+        relatedProductListView.setAdapter(relatedProductAdapter);
+        relatedProductListView.setOnItemClickListener(this);
+        relatedProductAdapter.notifyDataSetChanged();
+        slideShow = (SliderLayout) findViewById(R.id.slider_product_details);
+        tvProductName = (TextView) findViewById(R.id.tv_product_name_pd);
+        tvProductPrice = (TextView) findViewById(R.id.tv_product_price);
+        tvProductDescription = (TextView) findViewById(R.id.tv_product_description);
+        productQunatitySpinner = (Spinner) findViewById(R.id.et_product_quantity_pd);
 
 
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
@@ -105,6 +130,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
         else if (arrayListIndicator == 5)
             products = Utility.wishlistProductArrayList.get(position);
+        else if (arrayListIndicator == 6)
+            products = Utility.relatedProductArryList.get(position);
 
         initializeSlider();
         initialize();
@@ -114,13 +141,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
     private void initializeSlider() {
 
-        slideShow = (SliderLayout) findViewById(R.id.slider_product_details);
 
-
+        slideShow.removeAllSliders();
         slideShow.stopAutoCycle();
-
-
-
 
 
         if (products.pictures.size() >= 1) {
@@ -148,7 +171,6 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         }
 
 
-
         slideShow.setPresetTransformer(SliderLayout.Transformer.Foreground2Background);
         slideShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         slideShow.setCustomAnimation(new DescriptionAnimation());
@@ -157,19 +179,13 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     }
 
     private void initialize() {
-        tvProductName = (TextView) findViewById(R.id.tv_product_name_pd);
-        tvProductPrice = (TextView) findViewById(R.id.tv_product_price);
-        tvProductDescription = (TextView) findViewById(R.id.tv_product_description);
-
         tvProductName.setText(products.title);
+
         int size = products.prices.size();
         if (size >= 1) {
             tvProductPrice.setText(String.format("%s", products.prices.get(0).retailPrice + "TK"));
         }
         tvProductDescription.setText(products.productDescriptionMobile);
-
-        productQunatitySpinner = (Spinner) findViewById(R.id.et_product_quantity_pd);
-
 
 
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
@@ -182,9 +198,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     @Override
     public void onSliderClick(BaseSliderView slider) {
 
-       // MakeToast.showToast(this,String.valueOf(getApplicationContext().getResources().getConfiguration().orientation));
+        // MakeToast.showToast(this,String.valueOf(getApplicationContext().getResources().getConfiguration().orientation));
 
-       CustomDialog.showImageDiolog(this, slider.getUrl(), products.title);
+        CustomDialog.showImageDiolog(this, slider.getUrl(), products.title);
 
 
     }
@@ -240,6 +256,31 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
             new WishListAsynTask(this).execute(String.valueOf(sessionManager.getUid()), String.valueOf(products.id));
 
+        } else if (v == loadMoreButton) {
+            Intent intent = new Intent(this, ShowRelatedProduct.class);
+            startActivity(intent);
         }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        products = Utility.relatedProductArryList.get(position);
+
+        initializeSlider();
+        initialize();
+        ValueAnimator realSmoothScrollAnimation =
+                ValueAnimator.ofInt(scrollView.getScrollY(), 0);
+        realSmoothScrollAnimation.setDuration(500);
+        realSmoothScrollAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int scrollTo = (Integer) animation.getAnimatedValue();
+                scrollView.scrollTo(0, scrollTo);
+            }
+
+
+        });
+
+        realSmoothScrollAnimation.start();
     }
 }
