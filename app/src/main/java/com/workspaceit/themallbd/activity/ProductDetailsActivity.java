@@ -1,7 +1,10 @@
 package com.workspaceit.themallbd.activity;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -11,6 +14,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +28,7 @@ import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.workspaceit.themallbd.R;
+import com.workspaceit.themallbd.adapter.RelatedProductAdapter;
 import com.workspaceit.themallbd.asynctask.WishListAsynTask;
 import com.workspaceit.themallbd.dataModel.Picture;
 import com.workspaceit.themallbd.dataModel.Products;
@@ -43,6 +49,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private Toolbar toolbar;
 
     private Button addToCartBtn, addToWishListBtn, buyNowBtn;
+    private RatingBar ratingBar;
 
     private SliderLayout slideShow;
     // private TextSliderView textSliderView;
@@ -52,6 +59,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private int productsQuantity = 0;
     private Products products;
     SessionManager sessionManager;
+    private ListView relatedProductListView;
+
 
     private static String productUrl = "/product/general/";
 
@@ -69,6 +78,15 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         previousPrictTextView=(TextView)findViewById(R.id.tv_previous_product_price);
         previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        ratingBar=(RatingBar)findViewById(R.id.mallBdRatingBar);
+        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.parseColor("#961C1E"), PorterDuff.Mode.SRC_ATOP);
+
+        ratingBar.setRating((float) 4);
+
+        relatedProductListView=(ListView)findViewById(R.id.relatede_product_list__view);
+        relatedProductListView.setAdapter(new RelatedProductAdapter(this));
+
 
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
         addToCartBtn.setOnClickListener(this);

@@ -29,4 +29,6 @@ public class Utility {
     public static ArrayList<SearchResult>searchResults=new ArrayList<>();
     public static ArrayList<String>searchProductTitle=new ArrayList<>();
 
+    public static ArrayList<Products> relatedProductArryList=new ArrayList<>();
+
 }
