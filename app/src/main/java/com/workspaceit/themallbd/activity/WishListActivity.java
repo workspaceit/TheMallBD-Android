@@ -3,9 +3,11 @@ package com.workspaceit.themallbd.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.WishInListViewAdapter;
@@ -25,8 +27,11 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wish_list);
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Wishlist");
+
+
+        Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbar);
+        TextView mTitle = (TextView) toolbarTop.findViewById(R.id.toolbar_title);
+        mTitle.setText("Wishlist");
 
 
         wishListListView=(ListView)findViewById(R.id.wish_list_listview);

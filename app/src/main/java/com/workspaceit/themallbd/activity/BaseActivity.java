@@ -23,6 +23,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.squareup.picasso.Picasso;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.utility.CustomDialog;
@@ -39,7 +42,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
 
-   // private Button CARTCOUNT;
+    // private Button CARTCOUNT;
 
     // public static int mCARTCOUNT = 0;
     private TextView cartTV;
@@ -50,10 +53,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private SessionManager sessionManager;
     private String accessToken;
     private CircleImageView profileImage;
-
+    private Button CARTCOUNT;
     private TextView userNameTextView;
     private static final int SELECT_PICTURE = 1;
-
 
 
     @Override
@@ -63,6 +65,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager = new SessionManager(this);
         accessToken = sessionManager.getEmail();
+        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                .cacheInMemory(false)
+                .cacheOnDisk(false)
+                .build();
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                .defaultDisplayImageOptions(defaultOptions)
+                .build();
+
+        ImageLoader.getInstance().init(config);
 
     }
 
@@ -209,9 +220,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         });
 
 
-
-
-
         if (sessionManager.getProfileImageUri().toString().equals("") || !sessionManager.checkLogin()) {
             Picasso.with(this)
                     .load(R.drawable.icon_un)
@@ -329,7 +337,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_wishlist_id:
                 if (sessionManager.checkLogin()) {
                     Utility.wishlistProductArrayList.clear();
-                    Intent wishIntent= new Intent(getApplicationContext(),WishListActivity.class);
+                    Intent wishIntent = new Intent(getApplicationContext(), WishListActivity.class);
                     startActivity(wishIntent);
 
                 } else {
@@ -339,7 +347,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.nav_logout_id:
                 if (sessionManager.checkLogin()) {
-                    CustomDialog.logoutDailog(this,sessionManager,"Logout","Confrim Logout?");
+                    CustomDialog.logoutDailog(this, sessionManager, "Logout", "Confrim Logout?");
 
                 } else {
                     CustomDialog.showDailog(this, "You nedd to login first", "You are not logged in");
@@ -354,25 +362,19 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-   /* @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_cart);
-        MenuItem item1=menu.findItem(R.id.action_search);
+        MenuItem item1 = menu.findItem(R.id.action_search);
 
-        MenuItemCompat.setActionView(item1,R.layout.toolbar_search_icon);
-       MenuItemCompat.setActionView(item, R.layout.cart_update_count);
+        MenuItemCompat.setActionView(item1, R.layout.toolbar_search_icon);
+        MenuItemCompat.setActionView(item, R.layout.cart_update_count);
         View view = MenuItemCompat.getActionView(item);
-        View searchView=MenuItemCompat.getActionView(item1);
-
-
-        searchButton=(ImageButton)searchView.findViewById(R.id.search_icon_btn);
-
-        MakeToast.showToast(this,"called");
-
+        View searchView = MenuItemCompat.getActionView(item1);
 
 
         CARTCOUNT = (Button) view.findViewById(R.id.notif_count);
@@ -384,7 +386,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
             }
         });
-        this.mainMenu=menu;
+
         return true;
     }*/
 

@@ -139,8 +139,15 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         initializeSlider();
         initialize();
-        initializeRelatedProductArrayList();
 
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initializeRelatedProductArrayList();
 
     }
 
