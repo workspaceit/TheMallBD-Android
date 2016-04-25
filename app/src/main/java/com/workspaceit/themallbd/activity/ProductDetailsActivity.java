@@ -37,6 +37,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.RelatedProductAdapter;
+import com.workspaceit.themallbd.asynctask.GetRelatedProductAsynTask;
 import com.workspaceit.themallbd.asynctask.WishListAsynTask;
 import com.workspaceit.themallbd.dataModel.Picture;
 import com.workspaceit.themallbd.dataModel.Products;
@@ -59,7 +60,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
     private Button addToCartBtn, addToWishListBtn, buyNowBtn;
     private RatingBar ratingBar;
-
+    private TextView normalRelatedProductTextView;
     private SliderLayout slideShow;
     // private TextSliderView textSliderView;
 
@@ -87,25 +88,28 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
+
         previousPrictTextView = (TextView) findViewById(R.id.tv_previous_product_price);
         previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         ratingBar = (RatingBar) findViewById(R.id.mallBdRatingBar);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.parseColor("#961C1E"), PorterDuff.Mode.SRC_ATOP);
         loadMoreButton = (Button) findViewById(R.id.load_more_button);
+        loadMoreButton.setVisibility(View.GONE);
         loadMoreButton.setOnClickListener(this);
+        normalRelatedProductTextView=(TextView)findViewById(R.id.related_product_normal_text_view);
+        normalRelatedProductTextView.setVisibility(View.GONE);
 
-        Utility.relatedProductArryList.addAll(MainActivity.newProductsForHorizontalViewList);
+        scrollView = (ScrollView) findViewById(R.id.produt_details_scroll);
 
-        scrollView=(ScrollView)findViewById(R.id.produt_details_scroll);
-        ratingBar.setRating((float) 4);
 
         relatedProductListView = (RelatedProductListView) findViewById(R.id.relatede_product_list__view);
 
         relatedProductAdapter = new RelatedProductAdapter(this, 1);
         relatedProductListView.setAdapter(relatedProductAdapter);
+
+
         relatedProductListView.setOnItemClickListener(this);
-        relatedProductAdapter.notifyDataSetChanged();
         slideShow = (SliderLayout) findViewById(R.id.slider_product_details);
         tvProductName = (TextView) findViewById(R.id.tv_product_name_pd);
         tvProductPrice = (TextView) findViewById(R.id.tv_product_price);
@@ -135,6 +139,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         initializeSlider();
         initialize();
+        initializeRelatedProductArrayList();
 
 
     }
@@ -191,8 +196,38 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
         addToWishListBtn = (Button) findViewById(R.id.button_add_to_wishlist);
         buyNowBtn = (Button) findViewById(R.id.button_buy_now);
+        ratingBar.setRating(products.avgRating);
 
 
+
+    }
+
+
+    private void initializeRelatedProductArrayList() {
+
+        Utility.relatedProductArryList.clear();
+        relatedProductAdapter.notifyDataSetChanged();
+        new GetRelatedProductAsynTask(this,1).execute(String.valueOf(3), String.valueOf(0),
+                String.valueOf(products.id), String.valueOf(products.categories.get(0).id));
+    }
+
+    public void setDataSetAdapter() {
+
+        relatedProductAdapter.notifyDataSetChanged();
+
+        if(Utility.relatedProductArryList.size()==0){
+            normalRelatedProductTextView.setVisibility(View.GONE);
+        }else {
+            normalRelatedProductTextView.setVisibility(View.VISIBLE);
+        }
+
+        if (Utility.relatedProductArryList.size() < 3) {
+            loadMoreButton.setVisibility(View.GONE);
+
+        } else {
+
+            loadMoreButton.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -258,6 +293,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         } else if (v == loadMoreButton) {
             Intent intent = new Intent(this, ShowRelatedProduct.class);
+
+            intent.putExtra("product_id",products.id);
+            intent.putExtra("category_id",products.categories.get(0).id);
             startActivity(intent);
         }
     }
@@ -266,8 +304,12 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         products = Utility.relatedProductArryList.get(position);
 
+        loadMoreButton.setVisibility(View.GONE);
+        normalRelatedProductTextView.setVisibility(View.GONE);
+
         initializeSlider();
         initialize();
+
         ValueAnimator realSmoothScrollAnimation =
                 ValueAnimator.ofInt(scrollView.getScrollY(), 0);
         realSmoothScrollAnimation.setDuration(500);
@@ -281,6 +323,15 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         });
 
+        realSmoothScrollAnimation.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                initializeRelatedProductArrayList();
+            }
+        });
         realSmoothScrollAnimation.start();
+
+
     }
 }

@@ -46,10 +46,7 @@ public class RelatedProductAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if(flag==1){return 3;
-        }else {
-            return Utility.relatedProductArryList.size();
-        }
+        return  Utility.relatedProductArryList.size();
 
     }
 
@@ -100,7 +97,7 @@ public class RelatedProductAdapter extends BaseAdapter {
 
             viewHolder.productName.setText(Utility.relatedProductArryList.get(position).title);
             viewHolder.priceTextView.setText("$" + String.valueOf(Utility.relatedProductArryList.get(position).prices.get(0).retailPrice));
-            viewHolder.ratingRelatedProduct.setRating((float) 3.0);
+            viewHolder.ratingRelatedProduct.setRating(Utility.relatedProductArryList.get(position).avgRating);
             viewHolder.reviewsTextView.setText("345 reviews");
 
         } catch (Exception e) {
