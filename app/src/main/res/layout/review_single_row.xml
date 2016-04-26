@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+
+
+    <RatingBar
+        android:id="@+id/rating_review"
+        style="?android:attr/ratingBarStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize=".5"
+        android:rating="2.0"
+        android:layout_marginBottom="8dp"
+        />
+
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="description"
+            android:id="@+id/note_review_text_view"
+            android:textColor="#000000"
+            android:layout_marginBottom="10dp"/>
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    android:orientation="horizontal"
+    android:layout_marginBottom="3dp">
+    <TextView
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".2"
+        android:text="By"
+        android:layout_marginRight="10dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight=".8"
+        android:text="Developer Wsit"
+        android:textSize="16sp"
+        android:textColor="#7EC0EE"
+        android:layout_marginRight="20dp"
+        android:id="@+id/review_user_name_text_view"/>
+
+
+
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:text="Date:"
+            android:layout_marginRight="10dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:text="22-02-1998"
+            android:textSize="14sp"
+            android:textColor="#7EC0EE"
+            android:id="@+id/review_date_text_view"/>
+
+        </LinearLayout>
+
+
+</LinearLayout>

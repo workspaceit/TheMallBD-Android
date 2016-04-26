@@ -9,8 +9,8 @@
 
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_width="160dip"
+        android:layout_height="100dip"
         android:id="@+id/iv_productImage_gv"
         android:contentDescription="@string/new_product"
         android:layout_gravity="center" />

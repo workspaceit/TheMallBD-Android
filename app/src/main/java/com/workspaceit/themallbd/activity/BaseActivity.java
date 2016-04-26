@@ -23,9 +23,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.squareup.picasso.Picasso;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.utility.CustomDialog;
@@ -56,6 +58,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private Button CARTCOUNT;
     private TextView userNameTextView;
     private static final int SELECT_PICTURE = 1;
+    private static boolean IMAGE_LOADER_FLAG=true;
 
 
     @Override
@@ -65,15 +68,28 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager = new SessionManager(this);
         accessToken = sessionManager.getEmail();
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheInMemory(false)
-                .cacheOnDisk(false)
-                .build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-                .defaultDisplayImageOptions(defaultOptions)
-                .build();
 
-        ImageLoader.getInstance().init(config);
+        if(true) {
+            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                    .cacheInMemory(false)
+                    .cacheOnDisk(true)
+                    .considerExifParams(true)
+                    .resetViewBeforeLoading(false)
+                    .bitmapConfig(Bitmap.Config.RGB_565)
+                    .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+                    .build();
+
+            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                    .defaultDisplayImageOptions(defaultOptions)
+                    .threadPoolSize(5)
+                    .memoryCache(new WeakMemoryCache())
+                    .threadPriority(Thread.MIN_PRIORITY + 3)
+                    .memoryCacheSize(1048576 * 10)
+                    .build();
+
+            ImageLoader.getInstance().init(config);
+            IMAGE_LOADER_FLAG=false;
+        }
 
     }
 
@@ -282,13 +298,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         //Closing drawer on item click
         drawerLayout.closeDrawers();
 
-        Intent intent;
+        //Intent intent;
         //Check to see which item was being clicked and perform appropriate action
         switch (menuItem.getItemId()) {
 
             //Replacing the main content with ContentFragment Which is our Inbox View;
             case R.id.nav_home_id:
-                intent = new Intent(getApplicationContext(), MainActivity.class);
+                //intent = new Intent(getApplicationContext(), MainActivity.class);
+                drawerLayout.closeDrawers();
                 break;
             case R.id.nav_cart_id:
                 Intent cartIntent = new Intent(getApplicationContext(), CheckoutActivity.class);
@@ -358,7 +375,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
                 return true;
         }
-        startActivity(intent);
+
         return true;
     }
 

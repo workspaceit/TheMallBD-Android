@@ -90,10 +90,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     int pastVisiblesItems, visibleItemCount, totalItemCount;
     int pastVisibleItemsInGridView, visibleItemCountInGridView, totalItemCountInGridView;
 
-    private boolean userScrolled;
+    private boolean userScrolledForNewProduct;
+    private boolean userScrollForFeatureProduct;
     private boolean userScrolledInGridView;
 
-    private boolean noMoreItem;
+    private boolean noMoreItemNewProduct;
+    private boolean noMoreItemFeatureProduct;
     private boolean noMoreItemInGridView;
     int lastlastitem = 0;
     private Button cartButton;
@@ -104,6 +106,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public String[]countries;
 
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
+
+
 
 
     @Override
@@ -127,8 +131,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         featuredProductsForHorizontalViewList = new ArrayList<>();
         allProductsForGridViewList = new ArrayList<>();
 
-        this.userScrolled = true;
-        this.noMoreItem = false;
+        this.userScrolledForNewProduct = true;
+        this.userScrollForFeatureProduct=true;
+        this.noMoreItemFeatureProduct = false;
+        this.noMoreItemNewProduct=false;
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
         //initializing new product horizontal scrolling section
@@ -223,22 +229,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.v("taiful", String.valueOf(dx) + " " + String.valueOf(dy));
-                if (dx > 0) //check for scroll down
-                {
-                    visibleItemCount = layoutManager.getChildCount();
-                    totalItemCount = layoutManager.getItemCount();
-                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
-                    if (userScrolled) {
-                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            userScrolled = false;
-                            Log.v("...", "Last Item Wow !");
-                            loadNewProductMore();
+
+                    if (dx > 0) //check for scroll down
+                    {
+                        visibleItemCount = layoutManager.getChildCount();
+                        totalItemCount = layoutManager.getItemCount();
+                        pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
+
+                        if (userScrolledForNewProduct) {
+                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                                userScrolledForNewProduct = false;
+
+
+                                loadNewProductMore();
+                            }
                         }
                     }
                 }
-            }
+
         });
     }
 
@@ -251,14 +261,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.featuredProductHorizontalListRV.setAdapter(horizontalRVAFeaturedProductsAdapter);
         this.featuredProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
 
-        if (MainActivity.featuredProductsForHorizontalViewList.size() < 1) {
+
             if (mInternetConnection.isConnectingToInternet()) {
                 MainActivity.featuredProductsForHorizontalViewList.clear();
                 new GetFeaturedProductsAsyncTask(this).execute(
                         String.valueOf(offsetForFeaturedProductsHorizontalScrolling),
                         String.valueOf(limit));
             }
-        }
+
         this.featuredProductHorizontalListRV.addOnItemTouchListener(
                 new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
@@ -271,20 +281,27 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 })
         );
 
+
+
         this.featuredProductHorizontalListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+
                 if (dx > 0) //check for scroll down
                 {
                     visibleItemCount = layoutManagerForFeaturedProducts.getChildCount();
                     totalItemCount = layoutManagerForFeaturedProducts.getItemCount();
                     pastVisiblesItems = layoutManagerForFeaturedProducts.findFirstVisibleItemPosition();
+                    Log.v("taiful","Feature:"+visibleItemCount+" "+totalItemCount+" "+pastVisiblesItems);
 
-                    if (userScrolled) {
+                    if (userScrollForFeatureProduct) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                            userScrolled = false;
-                            Log.v("...", "Last Item Wow !");
+                            userScrollForFeatureProduct = false;
                             loadFeatureProductMore();
                         }
                     }
@@ -370,19 +387,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     public void setNewProductsList(ArrayList<Products> productsList) {
-        System.out.println("productArrayListSize:" + productsList.size());
+
 
         for (int i = 0; i < productsList.size(); i++) {
             try {
-                System.out.println("product id:" + productsList.get(i).id);
+
                 MainActivity.newProductsForHorizontalViewList.add(productsList.get(i));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        System.out.println("Final Data Limit:" + MainActivity.newProductsForHorizontalViewList.size());
+
         //  this.horizontalListViewOfProductsAdapter.notifyDataSetChanged();
         this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
+
 
     }
 
@@ -402,9 +420,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
     public void setNewProductListError() {
 
-        userScrolled = false;
-        noMoreItem = true;
-        Toast.makeText(this, "No Data for new products", Toast.LENGTH_SHORT).show();
+        userScrolledForNewProduct = false;
+        this.noMoreItemNewProduct = true;
+
     }
 
     public void setFeaturedProductsList(ArrayList<Products> productList) {
@@ -419,15 +437,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 e.printStackTrace();
             }
         }
-        System.out.println("Final Data Limit:" + MainActivity.featuredProductsForHorizontalViewList.size());
-        //  this.horizontalListViewOfProductsAdapter.notifyDataSetChanged();
+
+
         this.horizontalRVAFeaturedProductsAdapter.notifyDataSetChanged();
     }
 
     public void setFeaturedProductListError() {
-        userScrolled = false;
-        noMoreItem = true;
-        Toast.makeText(this, "No Data for featured products", Toast.LENGTH_SHORT).show();
+        userScrollForFeatureProduct = false;
+        this.noMoreItemFeatureProduct = true;
+
     }
 
     public void setAllProductList(ArrayList<Products> productsList) {
@@ -591,13 +609,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+
+    static int count=0;
+
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
         int lastInScreen = firstVisibleItem + visibleItemCount;
-        System.out.println("lastinscreen: " + lastInScreen);
-        System.out.println("totalItemCount: " + totalItemCount);
+
+
         if (lastInScreen >= totalItemCount && userScrolledInGridView && !noMoreItemInGridView) {
+
+
             Log.d("TAG", "onScroll lastInScreen - so load more");
             System.out.println("getCalled");
             if (lastlastitem != lastInScreen) {

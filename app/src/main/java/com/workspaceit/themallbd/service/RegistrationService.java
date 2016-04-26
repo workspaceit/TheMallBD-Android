@@ -26,7 +26,7 @@ public class RegistrationService extends BaseMallBDService {
         this.setParams("phone", phone);
         this.setParams("password", password);
         String resp = this.getData("POST");
-        System.out.println(resp);
+
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
             Gson gson = new Gson();
@@ -63,7 +63,7 @@ public class RegistrationService extends BaseMallBDService {
         this.setParams("country", country);
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
             Gson gson = new Gson();

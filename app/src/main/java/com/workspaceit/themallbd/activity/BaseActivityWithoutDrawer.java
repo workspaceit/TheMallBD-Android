@@ -21,7 +21,7 @@ import com.workspaceit.themallbd.utility.Utility;
 
 public class BaseActivityWithoutDrawer extends AppCompatActivity {
 
-    private Button CARTCOUNT;
+
     //public static int mCARTCOUNT = 0;
     private TextView cartTV;
 
@@ -75,7 +75,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         View view = MenuItemCompat.getActionView(item);
 
 
-        CARTCOUNT = (Button)view.findViewById(R.id.notif_count);
+        Button CARTCOUNT = (Button)view.findViewById(R.id.notif_count);
         CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size()+""));
         CARTCOUNT.setOnClickListener(new View.OnClickListener() {
             @Override

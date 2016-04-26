@@ -34,7 +34,7 @@ public class GetSearchProductService extends BaseMallBDService {
 
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
             Gson gson = new Gson();
@@ -49,11 +49,11 @@ public class GetSearchProductService extends BaseMallBDService {
                 SearchResult[] searchResults = gson.fromJson(jobject.get("category"), SearchResult[].class);
 
 
-                Log.v("tomal", String.valueOf(searchResults.length));
+
 
                 for (int i = 0; i < searchResults.length; i++) {
                     productTitles.add(searchResults[i].product_title);
-                    Log.v("taiful", productTitles.get(i));
+
 
                 }
                 Collections.addAll(Utility.searchResults, searchResults);
@@ -82,7 +82,7 @@ public class GetSearchProductService extends BaseMallBDService {
         this.setParams("product_category_id", categoryId);
         Log.v("taiful",limit+" "+offset+" product ID: "+productId+" categoryId: "+categoryId);
         String resp = this.getData("POST");
-        System.out.println("related :"+resp);
+
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
             Gson gson = new Gson();

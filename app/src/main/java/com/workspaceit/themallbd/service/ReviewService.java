@@ -1,29 +1,40 @@
 package com.workspaceit.themallbd.service;
 
+import android.content.Intent;
+import android.util.Log;
+import android.view.LayoutInflater;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.workspaceit.themallbd.dataModel.Category;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.ResponseStat;
-import com.workspaceit.themallbd.utility.MakeToast;
+import com.workspaceit.themallbd.dataModel.Review;
 import com.workspaceit.themallbd.utility.Utility;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Created by Mausum on 4/11/2016.
+ * Created by Mausum on 4/26/2016.
  */
-public class WishListService extends BaseMallBDService {
+public class ReviewService extends BaseMallBDService{
+
     private ResponseStat responseStat;
 
-    public boolean addProductToWisgList(String customerId,String productId){
+    public ArrayList<Review> getReviewList(String productId,String limit, String offset){
+        ArrayList<Review>reviewsList=new ArrayList<>();
         this.responseStat=new ResponseStat();
-        this.setController("api/customer/wishlist/add");
-        this.setParams("customer_id", customerId);
-        this.setParams("product_id",productId);
+        this.setController("api/product/review");
+        this.setParams("product_id", productId);
+        this.setParams("limit",limit);
+        this.setParams("offset",offset);
+
         String resp=this.getData("POST");
+        System.out.println(resp);
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
@@ -33,25 +44,32 @@ public class WishListService extends BaseMallBDService {
 
             if(this.responseStat.status){
 
-                return true;
+                Review[] reviews = gson.fromJson(jsonObject.get("responseData"), Review[].class);
+                Collections.addAll(reviewsList,reviews);
+
+                return reviewsList;
             }else {
                 Utility.responseStat = this.responseStat;
-                return false;
+                return reviewsList;
             }
 
         }catch (Exception e){
             e.printStackTrace();
 
         }
-        return false;
+        return reviewsList;
     }
 
-    public ArrayList<Products> getProductOfWishList(){
-        ArrayList<Products> wishListProduct=new ArrayList<>();
-        this.responseStat=new ResponseStat();
-        this.setController("api/customer/wishlist/all");
 
-        String resp=this.getData("GET");
+    public Integer getReviewCount(String productId){
+
+        this.responseStat=new ResponseStat();
+        this.setController("api/review/count");
+        this.setParams("product_id", productId);
+
+
+        String resp=this.getData("POST");
+        System.out.println(resp);
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
@@ -61,26 +79,20 @@ public class WishListService extends BaseMallBDService {
 
             if(this.responseStat.status){
 
+                JsonElement jelement = new JsonParser().parse(String.valueOf(jsonObject.get("responseData")));
 
-                    Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
-                    Collections.addAll(wishListProduct,products);
-                    Collections.addAll(Utility.wishlistProductArrayList,products);
-                    return wishListProduct;
+                int count=Integer.parseInt(jelement.toString());
 
-
-
+                return count;
             }else {
                 Utility.responseStat = this.responseStat;
-
-
-                return wishListProduct;
+                return 0;
             }
 
         }catch (Exception e){
             e.printStackTrace();
 
         }
-        return wishListProduct;
-
+        return 0;
     }
 }

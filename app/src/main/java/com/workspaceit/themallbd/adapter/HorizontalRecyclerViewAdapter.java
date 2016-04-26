@@ -57,29 +57,25 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
 
         // Set item views based on the data model
         viewHolder.nameTextView.setText(MainActivity.newProductsForHorizontalViewList.get(position).title);
-        if (MainActivity.newProductsForHorizontalViewList.get(position).prices.size()>0)
+        if (MainActivity.newProductsForHorizontalViewList.get(position).prices.size() > 0)
             viewHolder.priceTextView.setText("" + MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
         else
             viewHolder.priceTextView.setText("no prices");
 
         int size = MainActivity.newProductsForHorizontalViewList.get(position).pictures.size();
         if (size >= 1) {
-            if (ImageLoader.getInstance().isInited())
-                ImageLoader.getInstance().displayImage(
+            ImageLoader imageLoader = ImageLoader.getInstance();
+
+            imageLoader.getInstance().displayImage(
                     Utility.IMAGE_URL + productUrl + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
                     viewHolder.imageView);
-            else {
-                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
-                ImageLoader.getInstance().init(config);
-                ImageLoader.getInstance().displayImage(
-                        Utility.IMAGE_URL+productUrl + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
-                        viewHolder.imageView);
-            }
+
         } else {
             viewHolder.imageView.setImageResource(R.drawable.image_not_found);
         }
 
     }
+
     @Override
     public int getItemCount() {
         return MainActivity.newProductsForHorizontalViewList.size();

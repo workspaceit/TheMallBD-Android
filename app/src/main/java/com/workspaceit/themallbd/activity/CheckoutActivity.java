@@ -75,8 +75,8 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer implements TabLa
     }
 
     public void chekoutBtnClick(View view) {
-        this.tabFlag = 1;
-        TabLayout.Tab tab = this.tabLayout.getTabAt(1);
+        tabFlag = 1;
+        TabLayout.Tab tab = tabLayout.getTabAt(1);
         tab.select();
 
     }

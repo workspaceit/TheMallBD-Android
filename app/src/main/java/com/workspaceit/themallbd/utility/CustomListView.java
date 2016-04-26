@@ -7,16 +7,16 @@ import android.widget.ListView;
 /**
  * Created by Mausum on 4/22/2016.
  */
-public class RelatedProductListView extends ListView {
-    public RelatedProductListView(Context context) {
+public class CustomListView extends ListView {
+    public CustomListView(Context context) {
         super(context);
     }
 
 
-    public RelatedProductListView(Context context, AttributeSet attrs) {
+    public CustomListView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-    public RelatedProductListView(Context context, AttributeSet attrs, int defStyle) {
+    public CustomListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

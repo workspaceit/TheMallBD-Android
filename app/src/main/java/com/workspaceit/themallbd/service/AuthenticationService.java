@@ -29,7 +29,7 @@ public class AuthenticationService extends BaseMallBDService {
         this.setParams("password",password);
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();

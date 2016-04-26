@@ -87,7 +87,9 @@ public class HorizontalListViewOfProductsAdapter extends BaseAdapter{
         }
         try {
             if (MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name != null) {
-                ImageLoader.getInstance().displayImage(Utility.IMAGE_URL + productUrl+MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name, viewHolder.productImage);
+                ImageLoader imageLoader=ImageLoader.getInstance();
+
+                imageLoader.displayImage(Utility.IMAGE_URL + productUrl+MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name, viewHolder.productImage);
             } else {
                 viewHolder.productImage.setImageResource(R.drawable.cart);
             }

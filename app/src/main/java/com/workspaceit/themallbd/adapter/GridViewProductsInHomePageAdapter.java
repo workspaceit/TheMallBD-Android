@@ -67,6 +67,7 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
 
         ViewHolder viewHolder = null;
 
+
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.custom_grid_view_item,null);
             viewHolder = new ViewHolder();
@@ -82,21 +83,15 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
         try {
             int size = MainActivity.allProductsForGridViewList.get(position).pictures.size();
             if (size>=1) {
-            //    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
-            //    ImageLoader.getInstance().init(config);
-                ImageLoader.getInstance().displayImage(
+
+                ImageLoader imageLoader=ImageLoader.getInstance();
+
+                imageLoader.displayImage(
                         Utility.IMAGE_URL + productUrl +
                                 MainActivity.allProductsForGridViewList.get(position).pictures.get(0).name,
                         viewHolder.productImage);
             } else {
-                BitmapFactory.Options ourOptions=new BitmapFactory.Options();
-                ourOptions.inDither=false;
-                ourOptions.inPurgeable=true;
-                ourOptions.inInputShareable=true;
-                ourOptions.inTempStorage=new byte[32 * 1024];
-                Bitmap bm = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.image_not_found, ourOptions);
-               // viewHolder.productImage.setImageResource(R.drawable.image_not_found);
-                viewHolder.productImage.setImageBitmap(bm);
+                viewHolder.productImage.setImageResource(R.drawable.image_not_found);
             }
             viewHolder.productName.setText(MainActivity.allProductsForGridViewList.get(position).title);
             if (MainActivity.allProductsForGridViewList.get(position).prices.size()>0)

@@ -312,18 +312,18 @@
                         android:id="@+id/related_product_normal_text_view"
                         />
 
-                    <com.workspaceit.themallbd.utility.RelatedProductListView
+                    <com.workspaceit.themallbd.utility.CustomListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/relatede_product_list__view"
                         android:dividerHeight="0dp"
                         android:divider="@null">
-                    </com.workspaceit.themallbd.utility.RelatedProductListView>
+                    </com.workspaceit.themallbd.utility.CustomListView>
 
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Load More"
+                        android:text="Load More Related Product"
                         android:textAlignment="center"
                         android:background="@drawable/button_border_product_details"
                         android:paddingLeft="10dp"
@@ -333,6 +333,42 @@
                 </LinearLayout>
 
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">\
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Recent Reviews"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="10dp"
+                        android:id="@+id/review_normal_text_view"
+                        />
+
+                    <com.workspaceit.themallbd.utility.CustomListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/review_list__view"
+                        android:dividerHeight="0dp"
+                        android:layout_marginBottom="5dp"
+                        >
+                    </com.workspaceit.themallbd.utility.CustomListView>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:background="@drawable/button_border_product_details"
+                        android:paddingLeft="10dp"
+                        android:id="@+id/load_more_review_button"
+                        />
+
+                </LinearLayout>
 
             </LinearLayout>
 

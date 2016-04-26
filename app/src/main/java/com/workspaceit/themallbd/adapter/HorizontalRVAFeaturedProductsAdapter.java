@@ -55,17 +55,17 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<H
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
 
         // Set item views based on the data model
-        viewHolder.nameTextView.setText(MainActivity.newProductsForHorizontalViewList.get(position).title);
-        if (MainActivity.newProductsForHorizontalViewList.get(position).prices.size()>0)
-            viewHolder.priceTextView.setText("" + MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
+        viewHolder.nameTextView.setText(MainActivity.featuredProductsForHorizontalViewList.get(position).title);
+        if (MainActivity.featuredProductsForHorizontalViewList.get(position).prices.size()>0)
+            viewHolder.priceTextView.setText("" + MainActivity.featuredProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
         else
             viewHolder.priceTextView.setText("no prices");
-        int size = MainActivity.newProductsForHorizontalViewList.get(position).pictures.size();
+        int size = MainActivity.featuredProductsForHorizontalViewList.get(position).pictures.size();
         if (size>=1) {
-           // ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
-          //  ImageLoader.getInstance().init(config);
-            ImageLoader.getInstance().displayImage(
-                    Utility.IMAGE_URL + productUrl + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
+            ImageLoader imageLoader = ImageLoader.getInstance();
+
+            imageLoader.getInstance().displayImage(
+                    Utility.IMAGE_URL + productUrl + MainActivity.featuredProductsForHorizontalViewList.get(position).pictures.get(0).name,
                     viewHolder.imageView);
         } else {
             viewHolder.imageView.setImageResource(R.drawable.image_not_found);
@@ -74,7 +74,7 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<H
     }
     @Override
     public int getItemCount() {
-        return MainActivity.newProductsForHorizontalViewList.size();
+        return MainActivity.featuredProductsForHorizontalViewList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

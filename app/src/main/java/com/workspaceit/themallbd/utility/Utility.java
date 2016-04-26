@@ -4,6 +4,7 @@ import com.workspaceit.themallbd.dataModel.AppCredential;
 import com.workspaceit.themallbd.dataModel.Category;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.ResponseStat;
+import com.workspaceit.themallbd.dataModel.Review;
 import com.workspaceit.themallbd.dataModel.SearchResult;
 import com.workspaceit.themallbd.dataModel.ShoppingCart;
 import com.workspaceit.themallbd.dataModel.User;
@@ -30,5 +31,7 @@ public class Utility {
     public static ArrayList<String>searchProductTitle=new ArrayList<>();
 
     public static ArrayList<Products> relatedProductArryList=new ArrayList<>();
+
+    public static ArrayList<Review>reviews=new ArrayList<>();
 
 }

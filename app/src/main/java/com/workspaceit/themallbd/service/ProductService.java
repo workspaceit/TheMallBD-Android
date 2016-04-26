@@ -32,7 +32,7 @@ public class ProductService extends BaseMallBDService {
         this.setParams("shop_id", String.valueOf(shop_id));
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
@@ -43,7 +43,7 @@ public class ProductService extends BaseMallBDService {
             {
 
 
-                Log.i("Check", "true");
+
                 Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
                 Collections.addAll(this.productsArrayList, products);
                 return this.productsArrayList;
@@ -70,7 +70,7 @@ public class ProductService extends BaseMallBDService {
         this.setParams("shop_id", String.valueOf(shop_id));
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
@@ -108,7 +108,7 @@ public class ProductService extends BaseMallBDService {
         this.setParams("shop_id", String.valueOf(shop_id));
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();

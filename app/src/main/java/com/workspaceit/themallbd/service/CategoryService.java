@@ -36,7 +36,7 @@ public class CategoryService extends BaseMallBDService {
         }
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
@@ -70,7 +70,7 @@ public class CategoryService extends BaseMallBDService {
         this.setController("api/category/parents/show");
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();

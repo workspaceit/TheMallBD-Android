@@ -1,7 +1,6 @@
 package com.workspaceit.themallbd.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,13 +10,12 @@ import android.widget.TextView;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.RelatedProductAdapter;
 import com.workspaceit.themallbd.asynctask.GetRelatedProductAsynTask;
-import com.workspaceit.themallbd.utility.MakeToast;
-import com.workspaceit.themallbd.utility.RelatedProductListView;
+import com.workspaceit.themallbd.utility.CustomListView;
 import com.workspaceit.themallbd.utility.Utility;
 
 public class ShowRelatedProduct extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener {
 
-    private RelatedProductListView relatedProductListView;
+    private CustomListView relatedProductListView;
     private RelatedProductAdapter relatedProductAdapter;
     private TextView titleTextView;
     private ScrollView scrollView;
@@ -37,7 +35,7 @@ public class ShowRelatedProduct extends BaseActivityWithoutDrawer implements Ada
         scrollView = (ScrollView) findViewById(R.id.scroll_view_show_related_product);
 
 
-        relatedProductListView = (RelatedProductListView) findViewById(R.id.related_product_page_list_view);
+        relatedProductListView = (CustomListView) findViewById(R.id.related_product_page_list_view);
         relatedProductAdapter = new RelatedProductAdapter(this, 23);
         relatedProductListView.setAdapter(relatedProductAdapter);
         relatedProductListView.setOnItemClickListener(this);

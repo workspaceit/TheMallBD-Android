@@ -3,51 +3,40 @@ package com.workspaceit.themallbd.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Transformers.BaseTransformer;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.adapter.RelatedProductAdapter;
+import com.workspaceit.themallbd.adapter.ReviewSingleRowAdapter;
 import com.workspaceit.themallbd.asynctask.GetRelatedProductAsynTask;
+import com.workspaceit.themallbd.asynctask.GetReviewAsynTask;
+import com.workspaceit.themallbd.asynctask.GetReviewCountAsynTask;
 import com.workspaceit.themallbd.asynctask.WishListAsynTask;
 import com.workspaceit.themallbd.dataModel.Picture;
 import com.workspaceit.themallbd.dataModel.Products;
 import com.workspaceit.themallbd.dataModel.SelectedAttributes;
 import com.workspaceit.themallbd.dataModel.ShoppingCartCell;
-import com.workspaceit.themallbd.service.InternetConnection;
 import com.workspaceit.themallbd.utility.CustomDialog;
 import com.workspaceit.themallbd.utility.CustomSliderView;
 import com.workspaceit.themallbd.utility.MakeToast;
-import com.workspaceit.themallbd.utility.RelatedProductListView;
+import com.workspaceit.themallbd.utility.CustomListView;
 import com.workspaceit.themallbd.utility.SessionManager;
 import com.workspaceit.themallbd.utility.Utility;
 
@@ -69,10 +58,16 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private int productsQuantity = 0;
     private Products products;
     SessionManager sessionManager;
-    private RelatedProductListView relatedProductListView;
+    private CustomListView relatedProductListView;
     private RelatedProductAdapter relatedProductAdapter;
+    private ReviewSingleRowAdapter reviewSingleRowAdapter;
+    private TextView reviewNormalTextView;
+
+    private CustomListView reviewsListView;
+    private Button reviewLoadMoreButon;
     private Button loadMoreButton;
     private ScrollView scrollView;
+    private int reviewCount;
 
     private static String productUrl = "/product/general/";
 
@@ -99,14 +94,22 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         loadMoreButton.setOnClickListener(this);
         normalRelatedProductTextView=(TextView)findViewById(R.id.related_product_normal_text_view);
         normalRelatedProductTextView.setVisibility(View.GONE);
-
+        reviewNormalTextView=(TextView)findViewById(R.id.review_normal_text_view);
         scrollView = (ScrollView) findViewById(R.id.produt_details_scroll);
+        reviewNormalTextView.setVisibility(View.GONE);
 
 
-        relatedProductListView = (RelatedProductListView) findViewById(R.id.relatede_product_list__view);
+        relatedProductListView = (CustomListView) findViewById(R.id.relatede_product_list__view);
 
         relatedProductAdapter = new RelatedProductAdapter(this, 1);
         relatedProductListView.setAdapter(relatedProductAdapter);
+
+        reviewsListView=(CustomListView)findViewById(R.id.review_list__view);
+        reviewSingleRowAdapter=new ReviewSingleRowAdapter(this);
+        reviewsListView.setAdapter(reviewSingleRowAdapter);
+
+        reviewLoadMoreButon=(Button)findViewById(R.id.load_more_review_button);
+        reviewLoadMoreButon.setVisibility(View.GONE);
 
 
         relatedProductListView.setOnItemClickListener(this);
@@ -148,8 +151,20 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     protected void onResume() {
         super.onResume();
         initializeRelatedProductArrayList();
+        initializeReviews();
 
     }
+
+
+    private void initializeReviews(){
+        Utility.reviews.clear();
+        reviewSingleRowAdapter.notifyDataSetChanged();
+        new GetReviewAsynTask(this,1).execute(String.valueOf(products.id), String.valueOf(3),
+                String.valueOf(0));
+
+        new GetReviewCountAsynTask(this).execute(String.valueOf(products.id));
+    }
+
 
     private void initializeSlider() {
 
@@ -235,6 +250,24 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
             loadMoreButton.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void reviewCountSet(int count){
+        this.reviewCount=count;
+
+
+        if(count>3){
+            reviewLoadMoreButon.setText("See All "+count+" reviews (newest first)");
+            reviewLoadMoreButon.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setReviewDatasetAdapter(){
+
+        if(Utility.reviews.size()>0){
+            reviewNormalTextView.setVisibility(View.VISIBLE);
+        }
+        reviewSingleRowAdapter.notifyDataSetChanged();
     }
 
     @Override
