@@ -1,15 +1,27 @@
 package com.workspaceit.themallbd.utility;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.workspaceit.themallbd.R;
 import com.workspaceit.themallbd.activity.LoginActivity;
+import com.workspaceit.themallbd.asynctask.AddNewReviewAsynTask;
 
 import java.net.URL;
 
@@ -112,4 +124,50 @@ public class CustomDialog {
 
 
     }
+
+public static void addReviewCustomDailog(final Context context,String title, final String productId){
+    final Dialog dialog = new Dialog(context);
+    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+    dialog.setContentView(R.layout.add_review_custom_dialog);
+    TextView titleTV = (TextView)dialog.findViewById(R.id.rateHeader);
+    final TextView rateTV = (TextView)dialog.findViewById(R.id.rateTV);
+
+    Button submitBtn = (Button)dialog.findViewById(R.id.submitRateBtn);
+    Button cancelBtn = (Button)dialog.findViewById(R.id.cancelRateBtn);
+    final RatingBar ratingBar = (RatingBar)dialog.findViewById(R.id.ratingsBar);
+    LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+    stars.getDrawable(2).setColorFilter(Color.parseColor("#961C1E"), PorterDuff.Mode.SRC_ATOP);
+
+    final EditText reviewED = (EditText)dialog.findViewById(R.id.reviewED);
+    titleTV.setText(title);
+    dialog.show();
+
+    cancelBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            dialog.cancel();
+        }
+    });
+
+    submitBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(reviewED.getText().toString().equals("")){
+                MakeToast.showToast(context,"Please add some review");
+            }else {
+                dialog.dismiss();
+                new AddNewReviewAsynTask(context).execute(productId,reviewED.getText().toString(),String.valueOf(ratingBar.getRating()));
+            }
+
+        }
+    });
+
+    ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        @Override
+        public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+            rateTV.setText(String.valueOf(rating));
+        }
+    });
+
+}
 }

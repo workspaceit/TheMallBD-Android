@@ -68,6 +68,11 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private Button loadMoreButton;
     private ScrollView scrollView;
     private int reviewCount;
+    private Button addReviewButton;
+    private TextView savePriceTextViw;
+    private TextView nomalPreviousPrice;
+    private TextView saveNormalTextView;
+
 
     private static String productUrl = "/product/general/";
 
@@ -86,6 +91,13 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         previousPrictTextView = (TextView) findViewById(R.id.tv_previous_product_price);
         previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        previousPrictTextView.setVisibility(View.GONE);
+        nomalPreviousPrice=(TextView)findViewById(R.id.previous_normal_price);
+        nomalPreviousPrice.setVisibility(View.GONE);
+        savePriceTextViw=(TextView)findViewById(R.id.tv_save_product_price);
+        saveNormalTextView=(TextView)findViewById(R.id.save_normal_text_view);
+        saveNormalTextView.setVisibility(View.GONE);
+        savePriceTextViw.setVisibility(View.GONE);
         ratingBar = (RatingBar) findViewById(R.id.mallBdRatingBar);
         LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(Color.parseColor("#961C1E"), PorterDuff.Mode.SRC_ATOP);
@@ -97,6 +109,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         reviewNormalTextView=(TextView)findViewById(R.id.review_normal_text_view);
         scrollView = (ScrollView) findViewById(R.id.produt_details_scroll);
         reviewNormalTextView.setVisibility(View.GONE);
+        addReviewButton=(Button)findViewById(R.id.add_review_button);
+        addReviewButton.setOnClickListener(this);
 
 
         relatedProductListView = (CustomListView) findViewById(R.id.relatede_product_list__view);
@@ -109,6 +123,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         reviewsListView.setAdapter(reviewSingleRowAdapter);
 
         reviewLoadMoreButon=(Button)findViewById(R.id.load_more_review_button);
+        reviewLoadMoreButon.setOnClickListener(this);
         reviewLoadMoreButon.setVisibility(View.GONE);
 
 
@@ -139,6 +154,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             products = Utility.wishlistProductArrayList.get(position);
         else if (arrayListIndicator == 6)
             products = Utility.relatedProductArryList.get(position);
+
+
 
         initializeSlider();
         initialize();
@@ -208,10 +225,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private void initialize() {
         tvProductName.setText(products.title);
 
-        int size = products.prices.size();
-        if (size >= 1) {
-            tvProductPrice.setText(String.format("%s", products.prices.get(0).retailPrice + "TK"));
-        }
+
         tvProductDescription.setText(products.productDescriptionMobile);
 
 
@@ -219,6 +233,24 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         addToWishListBtn = (Button) findViewById(R.id.button_add_to_wishlist);
         buyNowBtn = (Button) findViewById(R.id.button_buy_now);
         ratingBar.setRating(products.avgRating);
+
+        if(products.discountActiveFlag){
+            nomalPreviousPrice.setVisibility(View.VISIBLE);
+            previousPrictTextView.setVisibility(View.VISIBLE);
+            saveNormalTextView.setVisibility(View.VISIBLE);
+            previousPrictTextView.setText(products.prices.get(0).retailPrice+" Tk");
+            float currentPrice= (float) (products.prices.get(0).retailPrice-products.discountAmount);
+            tvProductPrice.setText(currentPrice + " Tk");
+            savePriceTextViw.setVisibility(View.VISIBLE);
+            savePriceTextViw.setText(products.discountAmount+" Tk");
+
+        }else {
+            nomalPreviousPrice.setVisibility(View.GONE);
+            previousPrictTextView.setVisibility(View.GONE);
+            savePriceTextViw.setVisibility(View.GONE);
+            saveNormalTextView.setVisibility(View.GONE);
+            tvProductPrice.setText(products.prices.get(0).retailPrice+" Tk");
+        }
 
 
 
@@ -257,7 +289,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
 
         if(count>3){
-            reviewLoadMoreButon.setText("See All "+count+" reviews (newest first)");
+            reviewLoadMoreButon.setText("See all "+count+" reviews (newest first)");
             reviewLoadMoreButon.setVisibility(View.VISIBLE);
         }
     }
@@ -337,6 +369,14 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             intent.putExtra("product_id",products.id);
             intent.putExtra("category_id",products.categories.get(0).id);
             startActivity(intent);
+        }else if(v==reviewLoadMoreButon){
+                Intent intent=new Intent(this,ShowAllReviewActivity.class);
+            intent.putExtra("product_id",products.id);
+            intent.putExtra("review_count",reviewCount);
+            startActivity(intent);
+        }
+        else if(v==addReviewButton){
+            CustomDialog.addReviewCustomDailog(this,products.title,String.valueOf(products.id));
         }
     }
 
@@ -346,6 +386,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         loadMoreButton.setVisibility(View.GONE);
         normalRelatedProductTextView.setVisibility(View.GONE);
+        reviewLoadMoreButon.setVisibility(View.GONE);
+        reviewNormalTextView.setVisibility(View.GONE);
 
         initializeSlider();
         initialize();
@@ -368,6 +410,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 initializeRelatedProductArrayList();
+                initializeReviews();
             }
         });
         realSmoothScrollAnimation.start();

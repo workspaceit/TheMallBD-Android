@@ -69,7 +69,7 @@ public class ReviewService extends BaseMallBDService{
 
 
         String resp=this.getData("POST");
-        System.out.println(resp);
+
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
@@ -94,5 +94,38 @@ public class ReviewService extends BaseMallBDService{
 
         }
         return 0;
+    }
+
+
+    public boolean addNewReviewService(String productId, String rating, String note){
+        this.responseStat=new ResponseStat();
+        this.setController("api/customer/review/add");
+        this.setParams("product_id", productId);
+        this.setParams("rating",rating);
+        this.setParams("note",note);
+
+
+        String resp=this.getData("POST");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+
+            if(this.responseStat.status){
+
+                return true;
+            }else {
+                Utility.responseStat = this.responseStat;
+                return false;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
+        return false;
     }
 }

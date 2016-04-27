@@ -28,6 +28,7 @@ public class CategoryInExpandableListViewAsyncTask extends AsyncTask<String,Stri
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage("Loading categories");
+        mProgressDialog.setCancelable(false);
         mProgressDialog.show();
         super.onPreExecute();
     }

@@ -103,11 +103,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public AutoCompleteTextView homeSearcTextView;
     private ScrollView mainScroll;
     public SearchProductAdapter searchProductAdapter;
-    public String[]countries;
+    public String[] countries;
 
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
-
-
 
 
     @Override
@@ -132,9 +130,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         allProductsForGridViewList = new ArrayList<>();
 
         this.userScrolledForNewProduct = true;
-        this.userScrollForFeatureProduct=true;
+        this.userScrollForFeatureProduct = true;
         this.noMoreItemFeatureProduct = false;
-        this.noMoreItemNewProduct=false;
+        this.noMoreItemNewProduct = false;
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
         //initializing new product horizontal scrolling section
@@ -147,18 +145,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initializeGridViewForAllProductsSection();
 
 
-       //countries=getResources().getStringArray(R.array.countries_array);
+        //countries=getResources().getStringArray(R.array.countries_array);
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countries);
         this.homeSearcTextView = (CustomAutoCompleteTextView) findViewById(R.id.search_in_home);
 
         homeSearcTextView.setThreshold(1);
         homeSearcTextView.addTextChangedListener(new AutoCompleteTextChangeLisnter(this));
-
-
-
-
-
-
 
 
         this.mainScroll = (ScrollView) findViewById(R.id.scroll_main_view);
@@ -178,8 +170,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         thirdCategoryText = (TextView) findViewById(R.id.tv_home_third);
 
     }
-
-
 
 
     private void initilizeParentCategoryList() {
@@ -231,23 +221,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 super.onScrolled(recyclerView, dx, dy);
 
 
-                    if (dx > 0) //check for scroll down
-                    {
-                        visibleItemCount = layoutManager.getChildCount();
-                        totalItemCount = layoutManager.getItemCount();
-                        pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+                if (dx > 0) //check for scroll down
+                {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
 
-                        if (userScrolledForNewProduct) {
-                            if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
-                                userScrolledForNewProduct = false;
+                    if (userScrolledForNewProduct) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            userScrolledForNewProduct = false;
 
 
-                                loadNewProductMore();
-                            }
+                            loadNewProductMore();
                         }
                     }
                 }
+            }
 
         });
     }
@@ -262,12 +252,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.featuredProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
 
 
-            if (mInternetConnection.isConnectingToInternet()) {
-                MainActivity.featuredProductsForHorizontalViewList.clear();
-                new GetFeaturedProductsAsyncTask(this).execute(
-                        String.valueOf(offsetForFeaturedProductsHorizontalScrolling),
-                        String.valueOf(limit));
-            }
+        if (mInternetConnection.isConnectingToInternet()) {
+            MainActivity.featuredProductsForHorizontalViewList.clear();
+            new GetFeaturedProductsAsyncTask(this).execute(
+                    String.valueOf(offsetForFeaturedProductsHorizontalScrolling),
+                    String.valueOf(limit));
+        }
 
         this.featuredProductHorizontalListRV.addOnItemTouchListener(
                 new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
@@ -282,9 +272,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         );
 
 
-
         this.featuredProductHorizontalListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
-
 
 
             @Override
@@ -297,7 +285,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                     visibleItemCount = layoutManagerForFeaturedProducts.getChildCount();
                     totalItemCount = layoutManagerForFeaturedProducts.getItemCount();
                     pastVisiblesItems = layoutManagerForFeaturedProducts.findFirstVisibleItemPosition();
-                    Log.v("taiful","Feature:"+visibleItemCount+" "+totalItemCount+" "+pastVisiblesItems);
+                    Log.v("taiful", "Feature:" + visibleItemCount + " " + totalItemCount + " " + pastVisiblesItems);
 
                     if (userScrollForFeatureProduct) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
@@ -311,8 +299,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    private void loadMoreAllProduct(){
-        if(mInternetConnection.isConnectingToInternet()){
+    private void loadMoreAllProduct() {
+        if (mInternetConnection.isConnectingToInternet()) {
             this.offsetForAllProductsInGridView++;
             new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
                     String.valueOf(limitForProductsInGridView));
@@ -340,6 +328,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         thirdCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
 
     }
+
+    private boolean gridViewScrollFlag = false;
 
     private void initializeGridViewForAllProductsSection() {
 
@@ -413,20 +403,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    public void setSeacrhAdater(){
-        searchProductAdapter=new SearchProductAdapter(this,R.layout.search_product_row,Utility.searchProductTitle);
+    public void setSeacrhAdater() {
+        searchProductAdapter = new SearchProductAdapter(this, R.layout.search_product_row, Utility.searchProductTitle);
 
 
-        if(Utility.searchProductTitle.size()>0) {
+        if (Utility.searchProductTitle.size() > 0) {
             homeSearcTextView.setAdapter(searchProductAdapter);
             searchProductAdapter.notifyDataSetChanged();
             homeSearcTextView.showDropDown();
-        }else {
+        } else {
             homeSearcTextView.setAdapter(null);
         }
 
 
     }
+
     public void setNewProductListError() {
 
         userScrolledForNewProduct = false;
@@ -557,7 +548,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
             startActivity(intent);
         } else if (v == searchButton) {
-            if(mainScroll.getScrollY()==0){
+            if (mainScroll.getScrollY() == 0) {
                 homeSearcTextView.requestFocus();
                 InputMethodManager keyboard = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -619,15 +610,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    static int count=0;
+    static int count = 0;
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
         int lastInScreen = firstVisibleItem + visibleItemCount;
 
-        MakeToast.showToast(this,""+count);
-        count++;
         if (lastInScreen >= totalItemCount && userScrolledInGridView && !noMoreItemInGridView) {
 
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 
 import com.workspaceit.themallbd.activity.MainActivity;
 import com.workspaceit.themallbd.activity.ProductDetailsActivity;
+import com.workspaceit.themallbd.activity.ShowAllReviewActivity;
 import com.workspaceit.themallbd.dataModel.ProductAttributeCombination;
 import com.workspaceit.themallbd.dataModel.Review;
 import com.workspaceit.themallbd.service.ReviewService;
@@ -64,9 +65,14 @@ public class GetReviewAsynTask extends AsyncTask<String, String,ArrayList<Review
         }
 
         Utility.reviews.clear();
-        if(reviews.size()!=0){
+        if(reviews.size()>0){
             Utility.reviews.addAll(reviews);
-            ((ProductDetailsActivity) context).setReviewDatasetAdapter();
+
+            if(flag==1) {
+                ((ProductDetailsActivity) context).setReviewDatasetAdapter();
+            }else {
+                ((ShowAllReviewActivity)context).setReviewDataSet();
+            }
         }
     }
 }

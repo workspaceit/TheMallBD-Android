@@ -9,7 +9,9 @@
 
     <!-- if you want to load images from a file OR from the internet -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="18" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -52,6 +54,8 @@
             android:theme="@style/AppTheme" >
         </activity>
         <activity android:name=".activity.ShowRelatedProduct" >
+        </activity>
+        <activity android:name=".activity.ShowAllReviewActivity" >
         </activity>
     </application>
 

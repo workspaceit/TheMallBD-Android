@@ -88,7 +88,8 @@
                                 android:textAlignment="textEnd"
                                 android:textAllCaps="true"
                                 android:textColor="#3C3C3C"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:id="@+id/previous_normal_price"/>
 
                             <TextView
                                 android:id="@+id/tv_previous_product_price"
@@ -146,7 +147,8 @@
                                 android:text="@string/save_price"
                                 android:textAlignment="textEnd"
                                 android:textColor="#3C3C3C"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:id="@+id/save_normal_text_view"/>
 
                             <TextView
                                 android:id="@+id/tv_save_product_price"
@@ -328,6 +330,7 @@
                         android:background="@drawable/button_border_product_details"
                         android:paddingLeft="10dp"
                         android:id="@+id/load_more_button"
+                        android:textAllCaps="false"
                       />
 
                 </LinearLayout>
@@ -346,7 +349,7 @@
                         android:layout_height="wrap_content"
                         android:text="Recent Reviews"
                         android:textSize="20sp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="5dp"
                         android:id="@+id/review_normal_text_view"
                         />
 
@@ -355,7 +358,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/review_list__view"
                         android:dividerHeight="0dp"
-                        android:layout_marginBottom="5dp"
+                        android:layout_marginBottom="10dp"
                         >
                     </com.workspaceit.themallbd.utility.CustomListView>
 
@@ -366,6 +369,27 @@
                         android:background="@drawable/button_border_product_details"
                         android:paddingLeft="10dp"
                         android:id="@+id/load_more_review_button"
+                        android:textAllCaps="false"
+                        android:textStyle="bold"
+                        android:textSize="13sp"
+                        />
+                    <Button
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/add_review_button"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:textAlignment="center"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="#e9e9e9"
+                        android:padding="10dp"
+                        android:text="Write a review"
+                        android:textAllCaps="false"
+                        android:textColor="#000000"
+                        android:paddingLeft="10dp"
+                        android:textSize="16sp"
+
                         />
 
                 </LinearLayout>

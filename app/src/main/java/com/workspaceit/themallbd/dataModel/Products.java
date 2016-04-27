@@ -27,7 +27,8 @@ public class Products {
     public String createdOn;
     public float avgRating;
     public float previousPrice;
-
+    public float discountAmount;
+    public boolean discountActiveFlag;
 
     public Shop shop;
     public Suppliers supplier;
@@ -66,8 +67,8 @@ public class Products {
 
         this.avgRating=0;
         this.previousPrice=0;
-
-
+        this.discountAmount=0;
+        this.discountActiveFlag=false;
         this.shop = new Shop();
         this.supplier = new Suppliers();
         this.warehouse = new WareHouse();
