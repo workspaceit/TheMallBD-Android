@@ -310,6 +310,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         });
     }
 
+
+    private void loadMoreAllProduct(){
+        if(mInternetConnection.isConnectingToInternet()){
+            this.offsetForAllProductsInGridView++;
+            new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
+                    String.valueOf(limitForProductsInGridView));
+        }
+    }
+
     private void loadFeatureProductMore() {
         if (mInternetConnection.isConnectingToInternet()) {
             this.offsetForFeaturedProductsHorizontalScrolling += 1;
@@ -617,7 +626,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         int lastInScreen = firstVisibleItem + visibleItemCount;
 
-
+        MakeToast.showToast(this,""+count);
+        count++;
         if (lastInScreen >= totalItemCount && userScrolledInGridView && !noMoreItemInGridView) {
 
 
@@ -629,10 +639,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 //TODO onscroll load more data
                 if (mInternetConnection.isConnectingToInternet()) {
                     // search.offset = Utility.page_number;
-                    offsetForAllProductsInGridView += 1;
-                    System.out.println("I am going for loading more contents with offset:" + offsetForAllProductsInGridView);
-                    new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
-                            String.valueOf(limitForProductsInGridView));
+                    loadMoreAllProduct();
 
 
                 }
