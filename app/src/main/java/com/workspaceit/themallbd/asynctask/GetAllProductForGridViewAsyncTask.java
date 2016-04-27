@@ -1,5 +1,6 @@
 package com.workspaceit.themallbd.asynctask;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -13,9 +14,9 @@ import java.util.ArrayList;
 /**
  * Created by rajib on 2/15/16.
  */
-public class GetAllProductForGridViewAsyncTask extends AsyncTask<String,String,ArrayList<Products>> {
+public class GetAllProductForGridViewAsyncTask extends AsyncTask<String, String, ArrayList<Products>> {
     private MainActivity mContext;
-  //  private ProgressDialog mProgressDialog;
+    private ProgressDialog mProgressDialog;
 
     public GetAllProductForGridViewAsyncTask(MainActivity mContext) {
         this.mContext = mContext;
@@ -24,10 +25,7 @@ public class GetAllProductForGridViewAsyncTask extends AsyncTask<String,String,A
 
     @Override
     protected void onPreExecute() {
-       // mProgressDialog = new ProgressDialog(mContext);
-      //  mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-      //  mProgressDialog.setMessage("Getting products...");
-     //   mProgressDialog.show();
+
         super.onPreExecute();
     }
 
@@ -44,12 +42,10 @@ public class GetAllProductForGridViewAsyncTask extends AsyncTask<String,String,A
     @Override
     protected void onPostExecute(ArrayList<Products> productses) {
         super.onPostExecute(productses);
-      //  mProgressDialog.dismiss();
-        if (productses.size()>0)
-        {
+
+        if (productses.size() > 0) {
             mContext.setAllProductList(productses);
-        }
-        else {
+        } else {
             if (!Utility.responseStat.status)
                 mContext.setAllProductsListError();
             else

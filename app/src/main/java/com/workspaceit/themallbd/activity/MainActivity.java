@@ -10,10 +10,12 @@ import android.os.Handler;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.transition.Visibility;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
@@ -54,7 +56,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener,
-        AdapterView.OnItemClickListener, AbsListView.OnScrollListener, Serializable {
+        AdapterView.OnItemClickListener, Serializable {
 
     private SliderLayout sliderShow;
 
@@ -104,7 +106,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private ScrollView mainScroll;
     public SearchProductAdapter searchProductAdapter;
     public String[] countries;
-
+    private boolean gridAllFlag=true;
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
 
 
@@ -338,7 +340,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
         gridViewForAllProducts.setOnItemClickListener(this);
-        gridViewForAllProducts.setOnScrollListener(this);
+        //gridViewForAllProducts.setOnScrollListener(this);
 
 
         this.gridViewProductsInHomePageAdapter = new GridViewProductsInHomePageAdapter(this);
@@ -350,6 +352,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
                     String.valueOf(limitForProductsInGridView));
         }
+
+      gridViewForAllProducts.setOnTouchListener(new View.OnTouchListener() {
+          @Override
+          public boolean onTouch(View v, MotionEvent event) {
+
+
+              if(event.getActionMasked()==MotionEvent.ACTION_DOWN){
+                  if(gridAllFlag && !noMoreItemInGridView) {
+                        gridAllFlag=false;
+                     loadMoreAllProduct();
+                  }
+              }
+              return false;
+          }
+      });
 
 
     }
@@ -449,11 +466,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     public void setAllProductList(ArrayList<Products> productsList) {
-        System.out.print("allProductsListSize:" + productsList.size());
+
 
         for (int i = 0; i < productsList.size(); i++) {
             try {
-                System.out.println("product id:" + productsList.get(i).id);
+
                 MainActivity.allProductsForGridViewList.add(productsList.get(i));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -461,7 +478,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
         userScrolledInGridView = true;
         noMoreItemInGridView = false;
-        System.out.println("Final Data Limit:" + MainActivity.allProductsForGridViewList.size());
+        gridAllFlag=true;
+
         this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
 
     }
@@ -469,6 +487,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public void setAllProductsListError() {
         userScrolledInGridView = false;
         noMoreItemInGridView = true;
+        gridAllFlag=false;
 
     }
 
@@ -602,7 +621,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }, 0);
     }
 
-    @Override
+   /* @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
         if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
             userScrolledInGridView = true;
@@ -617,25 +636,29 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         int lastInScreen = firstVisibleItem + visibleItemCount;
 
-        if (lastInScreen >= totalItemCount && userScrolledInGridView && !noMoreItemInGridView) {
+
+            Log.v("taiful","hey"+count++);
+            if (lastInScreen >= totalItemCount && userScrolledInGridView && !noMoreItemInGridView) {
 
 
-            Log.d("TAG", "onScroll lastInScreen - so load more");
-            System.out.println("getCalled");
-            if (lastlastitem != lastInScreen) {
-                lastlastitem = lastInScreen;
-                //  if (Utility.current_number < Utility.total) {
-                //TODO onscroll load more data
-                if (mInternetConnection.isConnectingToInternet()) {
-                    // search.offset = Utility.page_number;
-                    loadMoreAllProduct();
+                Log.v("TAG", "onScroll lastInScreen - so load more");
+
+                if (lastlastitem != lastInScreen) {
+                    lastlastitem = lastInScreen;
+                    //  if (Utility.current_number < Utility.total) {
+                    //TODO onscroll load more data
+                    if (mInternetConnection.isConnectingToInternet()) {
+                        // search.offset = Utility.page_number;
+                        loadMoreAllProduct();
 
 
+                    }
                 }
+
+
             }
 
 
-        }
-    }
+    }*/
 
 }
