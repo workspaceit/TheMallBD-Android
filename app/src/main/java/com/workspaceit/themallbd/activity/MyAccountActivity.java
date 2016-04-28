@@ -173,6 +173,7 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
 
                 if (shippingInfoLyout.getVisibility() == View.VISIBLE) {
                     this.hideLayout(shippingInfoLyout, 100);
+                    expandShippingInfoButton.setCompoundDrawablesWithIntrinsicBounds(0,0,imageDownArrow,0);
                 }
                 this.showLayout(accountInfoLayout, 500);
             }
@@ -186,6 +187,7 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
                 expandShippingInfoButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, imageUpArrow, 0);
                 if (accountInfoLayout.getVisibility() == View.VISIBLE) {
                     this.hideLayout(accountInfoLayout, 100);
+                    exapandAccountInfoButton.setCompoundDrawablesWithIntrinsicBounds(0,0,imageDownArrow,0);
                 }
 
                 this.showLayout(shippingInfoLyout, 500);

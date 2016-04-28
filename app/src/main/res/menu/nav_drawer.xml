@@ -30,28 +30,24 @@
             android:title="@string/nav_item_wishlist" />
 
 
-        <item
-            android:id="@+id/nav_favorite_id"
-            android:checked="false"
-            android:icon="@drawable/nd_favorite"
-            android:title="@string/nav_item_favorite" />
+
     </group>
     <group android:id="@+id/group2" android:checkableBehavior="single">
-        <item
+       <!-- <item
             android:id="@+id/nav_settings_id"
             android:checked="false"
             android:icon="@drawable/nd_settings"
-            android:title="@string/nav_item_settings" />
+            android:title="@string/nav_item_settings" />-->
         <item
             android:id="@+id/nav_app_id"
             android:checked="false"
             android:icon="@drawable/nd_app"
             android:title="@string/nav_item_app_feedback" />
-        <item
+    <!--    <item
             android:id="@+id/nav_help_id"
             android:checked="false"
             android:icon="@drawable/nd_help"
-            android:title="@string/nav_item_help_center" />
+            android:title="@string/nav_item_help_center" />-->
         <item
             android:id="@+id/nav_about_id"
             android:checked="false"

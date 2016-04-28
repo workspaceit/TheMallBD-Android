@@ -322,17 +322,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                     CustomDialog.showDailog(this, "You Need to Login First", "You need to do login to see this feature");
                 }
                 return true;
-            case R.id.nav_favorite_id:
-                if (sessionManager.checkLogin()) {
 
-                } else {
-                    CustomDialog.showDailog(this, "You Need to Login First", "You need to do login to see this feature");
-                }
-                return true;
 
-            case R.id.nav_help_id:
-                Toast.makeText(getApplicationContext(), "help Selected", Toast.LENGTH_SHORT).show();
-                return true;
+
             case R.id.nav_my_mallbd_id:
                 if (sessionManager.checkLogin()) {
                     Intent myAccount = new Intent(getApplicationContext(), MyAccountActivity.class);
@@ -343,13 +335,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 return true;
-            case R.id.nav_settings_id:
-                if (sessionManager.checkLogin()) {
 
-                } else {
-                    CustomDialog.showDailog(this, "You Need to Login First", "You need to do login to see this feature");
-                }
-                return true;
 
             case R.id.nav_wishlist_id:
                 if (sessionManager.checkLogin()) {
