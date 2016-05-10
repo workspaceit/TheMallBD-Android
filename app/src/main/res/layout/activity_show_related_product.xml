@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.workspaceit.themallbd.activity.ShowRelatedProduct"
+    tools:context="com.themallbd.workspaceit.activity.ShowRelatedProduct"
     android:background="#FFFFFF">
 
     <include
@@ -35,7 +35,7 @@
             />
 
 
-        <com.workspaceit.themallbd.utility.CustomListView
+        <com.themallbd.workspaceit.utility.CustomListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:dividerHeight="1dp"
@@ -43,7 +43,7 @@
             android:divider="@null"
             >
 
-        </com.workspaceit.themallbd.utility.CustomListView>
+        </com.themallbd.workspaceit.utility.CustomListView>
 
     </LinearLayout>
 </ScrollView>

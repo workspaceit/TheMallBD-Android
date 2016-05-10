@@ -47,7 +47,7 @@
                     android:descendantFocusability="beforeDescendants"
                     android:focusableInTouchMode="true">
 
-                    <com.workspaceit.themallbd.utility.CustomAutoCompleteTextView
+                    <com.themallbd.workspaceit.utility.CustomAutoCompleteTextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/search_in_home"
@@ -359,7 +359,7 @@
                     android:background="#FFFFFF">
 
 
-                    <com.workspaceit.themallbd.utility.AllProductGridView
+                    <com.themallbd.workspaceit.utility.AllProductGridView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/gridView_all_Product"
