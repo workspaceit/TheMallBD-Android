@@ -78,6 +78,8 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
 
     }
 
+
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this,ProductDetailsActivity.class);

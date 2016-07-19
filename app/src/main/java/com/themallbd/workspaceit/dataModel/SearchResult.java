@@ -47,6 +47,7 @@ public class SearchResult {
     public int warehouse_id;
     public String weight;
     public String width;
+    public String image_name;
 
     public SearchResult() {
         this.avg_rating = 0;
@@ -92,6 +93,7 @@ public class SearchResult {
         this.warehouse_id = 0;
         this.weight = "";
         this.width = "";
+        this.image_name="";
 
     }
 

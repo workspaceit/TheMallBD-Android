@@ -141,7 +141,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         initializeNavigationView();
 
         //customization in header view of navigation drawer
-        // customizationOfHeaderView();
+            //customizationOfHeaderView();
 
     }
 

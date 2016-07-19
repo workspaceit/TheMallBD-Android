@@ -50,11 +50,11 @@ public class ProductSearchAsynTask extends AsyncTask<String,String,ArrayList<Str
         if(productTitles.size()>0){
 
             contex.setSeacrhAdater();
-            MakeToast.showToast(contex,String.valueOf(Utility.searchProductTitle.size()));
+           
 
 
         }else {
-            MakeToast.showToast(contex, Utility.responseStat.msg);
+            MakeToast.showToast(contex, "Nothing Found..");
         }
     }
 

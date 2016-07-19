@@ -14,7 +14,7 @@ public class RegistrationService extends BaseMallBDService {
     private ResponseStat responseStat;
     private AppCredential appCredential;
 
-    public boolean completeRegistration(String fname, String lname, String email, String phone, String password) {
+    public boolean completeRegistration(String fname, String lname, String email, String phone, String password, String confirmPassword) {
         this.responseStat = new ResponseStat();
         this.appCredential = new AppCredential();
         this.setController("api/registration/register");
@@ -23,6 +23,7 @@ public class RegistrationService extends BaseMallBDService {
         this.setParams("email", email);
         this.setParams("phone", phone);
         this.setParams("password", password);
+        this.setParams("confirm_password",confirmPassword);
         String resp = this.getData("POST");
 
         try {

@@ -22,6 +22,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.themallbd.workspaceit.asynctask.GetProductByProductIdAsynctask;
 import com.themallbd.workspaceit.dataModel.Picture;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.dataModel.SelectedAttributes;
@@ -72,6 +73,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private TextView savePriceTextViw;
     private TextView nomalPreviousPrice;
     private TextView saveNormalTextView;
+    private boolean loadFlag;
 
 
     private static String productUrl = "/product/general/";
@@ -82,20 +84,21 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         this.finish();
     }
 
-    //private static String productUrl = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
+        loadFlag=true;
 
         previousPrictTextView = (TextView) findViewById(R.id.tv_previous_product_price);
         previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         previousPrictTextView.setVisibility(View.GONE);
-        nomalPreviousPrice=(TextView)findViewById(R.id.previous_normal_price);
+        nomalPreviousPrice = (TextView) findViewById(R.id.previous_normal_price);
         nomalPreviousPrice.setVisibility(View.GONE);
-        savePriceTextViw=(TextView)findViewById(R.id.tv_save_product_price);
-        saveNormalTextView=(TextView)findViewById(R.id.save_normal_text_view);
+        savePriceTextViw = (TextView) findViewById(R.id.tv_save_product_price);
+        saveNormalTextView = (TextView) findViewById(R.id.save_normal_text_view);
         saveNormalTextView.setVisibility(View.GONE);
         savePriceTextViw.setVisibility(View.GONE);
         ratingBar = (RatingBar) findViewById(R.id.mallBdRatingBar);
@@ -104,12 +107,12 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         loadMoreButton = (Button) findViewById(R.id.load_more_button);
         loadMoreButton.setVisibility(View.GONE);
         loadMoreButton.setOnClickListener(this);
-        normalRelatedProductTextView=(TextView)findViewById(R.id.related_product_normal_text_view);
+        normalRelatedProductTextView = (TextView) findViewById(R.id.related_product_normal_text_view);
         normalRelatedProductTextView.setVisibility(View.GONE);
-        reviewNormalTextView=(TextView)findViewById(R.id.review_normal_text_view);
+        reviewNormalTextView = (TextView) findViewById(R.id.review_normal_text_view);
         scrollView = (ScrollView) findViewById(R.id.produt_details_scroll);
         reviewNormalTextView.setVisibility(View.GONE);
-        addReviewButton=(Button)findViewById(R.id.add_review_button);
+        addReviewButton = (Button) findViewById(R.id.add_review_button);
         addReviewButton.setOnClickListener(this);
 
 
@@ -118,11 +121,11 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         relatedProductAdapter = new RelatedProductAdapter(this, 1);
         relatedProductListView.setAdapter(relatedProductAdapter);
 
-        reviewsListView=(CustomListView)findViewById(R.id.review_list__view);
-        reviewSingleRowAdapter=new ReviewSingleRowAdapter(this);
+        reviewsListView = (CustomListView) findViewById(R.id.review_list__view);
+        reviewSingleRowAdapter = new ReviewSingleRowAdapter(this);
         reviewsListView.setAdapter(reviewSingleRowAdapter);
 
-        reviewLoadMoreButon=(Button)findViewById(R.id.load_more_review_button);
+        reviewLoadMoreButon = (Button) findViewById(R.id.load_more_review_button);
         reviewLoadMoreButon.setOnClickListener(this);
         reviewLoadMoreButon.setVisibility(View.GONE);
 
@@ -154,12 +157,17 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             products = Utility.wishlistProductArrayList.get(position);
         else if (arrayListIndicator == 6)
             products = Utility.relatedProductArryList.get(position);
+        else if (arrayListIndicator == 7) {
+            int productId = getIntent().getIntExtra("productId", -1);
+            new GetProductByProductIdAsynctask(this).execute(String.valueOf(productId));
+            loadFlag=false;
+        }
 
 
-
-        initializeSlider();
-        initialize();
-
+        if(arrayListIndicator!=7) {
+            initializeSlider();
+            initialize();
+        }
 
 
     }
@@ -167,16 +175,19 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     @Override
     protected void onResume() {
         super.onResume();
-        initializeRelatedProductArrayList();
-        initializeReviews();
+        if(loadFlag) {
+            initializeRelatedProductArrayList();
+            initializeReviews();
+            loadFlag=true;
+        }
 
     }
 
 
-    private void initializeReviews(){
+    private void initializeReviews() {
         Utility.reviews.clear();
         reviewSingleRowAdapter.notifyDataSetChanged();
-        new GetReviewAsynTask(this,1).execute(String.valueOf(products.id), String.valueOf(3),
+        new GetReviewAsynTask(this, 1).execute(String.valueOf(products.id), String.valueOf(3),
                 String.valueOf(0));
 
         new GetReviewCountAsynTask(this).execute(String.valueOf(products.id));
@@ -222,6 +233,15 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
     }
 
+    public void setProductForSearch(Products product){
+        this.products=product;
+        initializeSlider();
+        initialize();
+        initializeRelatedProductArrayList();
+        initializeReviews();
+
+
+    }
     private void initialize() {
         tvProductName.setText(products.title);
 
@@ -234,24 +254,23 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         buyNowBtn = (Button) findViewById(R.id.button_buy_now);
         ratingBar.setRating(products.avgRating);
 
-        if(products.discountActiveFlag){
+        if (products.discountActiveFlag) {
             nomalPreviousPrice.setVisibility(View.VISIBLE);
             previousPrictTextView.setVisibility(View.VISIBLE);
             saveNormalTextView.setVisibility(View.VISIBLE);
-            previousPrictTextView.setText(products.prices.get(0).retailPrice+" Tk");
-            float currentPrice= (float) (products.prices.get(0).retailPrice-products.discountAmount);
+            previousPrictTextView.setText(products.prices.get(0).retailPrice + " Tk");
+            float currentPrice = (float) (products.prices.get(0).retailPrice - products.discountAmount);
             tvProductPrice.setText(currentPrice + " Tk");
             savePriceTextViw.setVisibility(View.VISIBLE);
-            savePriceTextViw.setText(products.discountAmount+" Tk");
+            savePriceTextViw.setText(products.discountAmount + " Tk");
 
-        }else {
+        } else {
             nomalPreviousPrice.setVisibility(View.GONE);
             previousPrictTextView.setVisibility(View.GONE);
             savePriceTextViw.setVisibility(View.GONE);
             saveNormalTextView.setVisibility(View.GONE);
-            tvProductPrice.setText(products.prices.get(0).retailPrice+" Tk");
+            tvProductPrice.setText(products.prices.get(0).retailPrice + " Tk");
         }
-
 
 
     }
@@ -261,7 +280,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         Utility.relatedProductArryList.clear();
         relatedProductAdapter.notifyDataSetChanged();
-        new GetRelatedProductAsynTask(this,1).execute(String.valueOf(3), String.valueOf(0),
+        new GetRelatedProductAsynTask(this, 1).execute(String.valueOf(3), String.valueOf(0),
                 String.valueOf(products.id), String.valueOf(products.categories.get(0).id));
     }
 
@@ -269,9 +288,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         relatedProductAdapter.notifyDataSetChanged();
 
-        if(Utility.relatedProductArryList.size()==0){
+        if (Utility.relatedProductArryList.size() == 0) {
             normalRelatedProductTextView.setVisibility(View.GONE);
-        }else {
+        } else {
             normalRelatedProductTextView.setVisibility(View.VISIBLE);
         }
 
@@ -284,19 +303,19 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         }
     }
 
-    public void reviewCountSet(int count){
-        this.reviewCount=count;
+    public void reviewCountSet(int count) {
+        this.reviewCount = count;
 
 
-        if(count>3){
-            reviewLoadMoreButon.setText("See all "+count+" reviews (newest first)");
+        if (count > 3) {
+            reviewLoadMoreButon.setText("See all " + count + " reviews (newest first)");
             reviewLoadMoreButon.setVisibility(View.VISIBLE);
         }
     }
 
-    public void setReviewDatasetAdapter(){
+    public void setReviewDatasetAdapter() {
 
-        if(Utility.reviews.size()>0){
+        if (Utility.reviews.size() > 0) {
             reviewNormalTextView.setVisibility(View.VISIBLE);
         }
         reviewSingleRowAdapter.notifyDataSetChanged();
@@ -366,17 +385,16 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         } else if (v == loadMoreButton) {
             Intent intent = new Intent(this, ShowRelatedProduct.class);
 
-            intent.putExtra("product_id",products.id);
-            intent.putExtra("category_id",products.categories.get(0).id);
+            intent.putExtra("product_id", products.id);
+            intent.putExtra("category_id", products.categories.get(0).id);
             startActivity(intent);
-        }else if(v==reviewLoadMoreButon){
-                Intent intent=new Intent(this,ShowAllReviewActivity.class);
-            intent.putExtra("product_id",products.id);
-            intent.putExtra("review_count",reviewCount);
+        } else if (v == reviewLoadMoreButon) {
+            Intent intent = new Intent(this, ShowAllReviewActivity.class);
+            intent.putExtra("product_id", products.id);
+            intent.putExtra("review_count", reviewCount);
             startActivity(intent);
-        }
-        else if(v==addReviewButton){
-            CustomDialog.addReviewCustomDailog(this,products.title,String.valueOf(products.id));
+        } else if (v == addReviewButton) {
+            CustomDialog.addReviewCustomDailog(this, products.title, String.valueOf(products.id));
         }
     }
 

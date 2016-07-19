@@ -61,7 +61,7 @@ public class RegistrationFragment extends Fragment implements View.OnClickListen
         if (v == submitButton) {
             if(this.checkInputValidity()){
                 new RegistrationAsynTask(getActivity()).execute(lnameText.getText().toString(),lnameText.getText().toString(),
-                        emailText.getText().toString(),phoneText.getText().toString(),passwordText.getText().toString());
+                        emailText.getText().toString(),phoneText.getText().toString(),passwordText.getText().toString(),confrimPassText.getText().toString());
 
             }
 

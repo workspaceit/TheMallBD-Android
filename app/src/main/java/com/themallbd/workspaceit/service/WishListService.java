@@ -1,11 +1,14 @@
 package com.themallbd.workspaceit.service;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
 import com.themallbd.workspaceit.utility.Utility;
+
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,6 +57,7 @@ public class WishListService extends BaseMallBDService {
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
             Gson gson = new Gson();
+
 
             this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
 

@@ -40,11 +40,12 @@ public class RegistrationAsynTask extends AsyncTask<String,String,Boolean> {
         String email=params[2];
         String phone=params[3];
         String password=params[4];
+        String confirmPassword=params[5];
 
         RegistrationService registrationService=new RegistrationService();
 
 
-        return registrationService.completeRegistration(fname,lname,email,phone,password);
+        return registrationService.completeRegistration(fname,lname,email,phone,password,confirmPassword);
     }
 
     @Override

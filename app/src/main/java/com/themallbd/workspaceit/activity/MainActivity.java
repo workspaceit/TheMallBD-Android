@@ -10,6 +10,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -26,6 +27,7 @@ import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.GridViewProductsInHomePageAdapter;
 import com.themallbd.workspaceit.adapter.HorizontalRVAFeaturedProductsAdapter;
@@ -145,8 +147,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countries);
         this.homeSearcTextView = (CustomAutoCompleteTextView) findViewById(R.id.search_in_home);
 
-        homeSearcTextView.setThreshold(1);
+        homeSearcTextView.setThreshold(3);
         homeSearcTextView.addTextChangedListener(new AutoCompleteTextChangeLisnter(this));
+        homeSearcTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(homeSearcTextView.getText().toString().equals("")){
+                    MakeToast.showToast(getApplicationContext(),"You didn't type anything...");
+                    return false;
+                }
+                Intent intent=new Intent(getApplicationContext(),SearchProductListActivity.class);
+                intent.putExtra("keyword",homeSearcTextView.getText().toString());
+                startActivity(intent);
+                return true;
+            }
+        });
 
 
         this.mainScroll = (ScrollView) findViewById(R.id.scroll_main_view);

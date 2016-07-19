@@ -26,18 +26,19 @@ public class AutoCompleteTextChangeLisnter implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
+        if(count>2) {
+            if (!s.toString().equals("")) {
 
-
+                Utility.searchProductTitle.clear();
+                new ProductSearchAsynTask(activity).execute(s.toString());
+            }
+        }
 
     }
 
     @Override
     public void afterTextChanged(Editable s) {
-        if(!s.toString().equals("")) {
 
-           Utility.searchProductTitle.clear();
-            new ProductSearchAsynTask(activity).execute(s.toString());
-        }
 
     }
 }

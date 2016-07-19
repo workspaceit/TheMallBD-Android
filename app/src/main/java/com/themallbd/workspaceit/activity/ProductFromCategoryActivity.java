@@ -25,7 +25,7 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer imple
 
     public static ArrayList<Products> categoryWiseProductsArrayList;
     private int CATEGORY_ID=0;
-    private int offset = 0,limit = 5;
+    private int offset = 0,limit = 7;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

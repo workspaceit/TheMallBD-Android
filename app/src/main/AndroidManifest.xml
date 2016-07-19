@@ -57,6 +57,8 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.ShowAllReviewActivity" >
         </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.SearchProductListActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -60,6 +60,8 @@
                         android:paddingLeft="15dp"
                         android:paddingStart="15dp"
                         android:textSize="@dimen/material_text_body1"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
                         />
                 </LinearLayout>
 
