@@ -22,6 +22,7 @@
     <string name="continueShoppimg">CONTINUE SHOPPING</string>
     <string name="proceesToCheckout">PROCEED TO CHECKOUT</string>
     <string name="logout">Logout</string>
+    <string name="searc_result">Search Results...</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">

@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.service.GetSearchProductService;
+import com.themallbd.workspaceit.utility.AutoCompleteTextChangeLisnter;
 import com.themallbd.workspaceit.utility.Utility;
 import com.themallbd.workspaceit.utility.MakeToast;
 
@@ -56,6 +57,8 @@ public class ProductSearchAsynTask extends AsyncTask<String,String,ArrayList<Str
         }else {
             MakeToast.showToast(contex, "Nothing Found..");
         }
+
+        AutoCompleteTextChangeLisnter.callFlag=true;
     }
 
 }

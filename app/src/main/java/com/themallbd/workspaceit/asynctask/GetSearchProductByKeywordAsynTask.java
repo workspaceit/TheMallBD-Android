@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 
 import com.themallbd.workspaceit.activity.SearchProductListActivity;
 import com.themallbd.workspaceit.service.GetSearchProductService;
+import com.themallbd.workspaceit.utility.MakeToast;
+import com.themallbd.workspaceit.utility.Utility;
 
 /**
  * Created by Tomal on 7/19/2016.
@@ -47,6 +49,14 @@ public class GetSearchProductByKeywordAsynTask extends AsyncTask<String,String,B
         mProgressDialog.dismiss();
 
             activity.notifyDataSetChange();
+        if(!aBoolean){
+
+            activity.NoMoreProductInSearch();
+            if(SearchProductListActivity.searchProductArrayList.size()==0){
+                activity.NoSearcResult();
+            }
+        }
+
 
 
     }

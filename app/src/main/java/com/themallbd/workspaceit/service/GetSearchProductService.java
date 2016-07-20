@@ -151,11 +151,12 @@ public class GetSearchProductService extends BaseMallBDService {
         ArrayList<Products> relatedProdutsArry = new ArrayList<>();
         this.responseStat = new ResponseStat();
         this.setController("api/products/all/search");
-        this.setParams("keyword",keyword);
+        this.setParams("keyword", keyword);
         this.setParams("limit", limit);
         this.setParams("offset", offset);
-
+        System.out.println(keyword+" "+limit+" "+offset);
         String resp = this.getData("POST");
+        System.out.println(resp);
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
@@ -169,6 +170,7 @@ public class GetSearchProductService extends BaseMallBDService {
 
 
                 Collections.addAll(SearchProductListActivity.searchProductArrayList, products);
+                Utility.responseStat=this.responseStat;
 
                 return true;
             } else {

@@ -161,6 +161,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             int productId = getIntent().getIntExtra("productId", -1);
             new GetProductByProductIdAsynctask(this).execute(String.valueOf(productId));
             loadFlag=false;
+        }else if(arrayListIndicator==8){
+            products=SearchProductListActivity.searchProductArrayList.get(position);
         }
 
 

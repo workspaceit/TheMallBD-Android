@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:local="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
@@ -19,5 +21,10 @@
         android:textStyle="bold"
         android:layout_gravity="center|bottom"
         android:id="@+id/toolbar_title" />
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/myEditText"
+        android:background="#000000" />
 
     </android.support.v7.widget.Toolbar>

@@ -2,6 +2,7 @@ package com.themallbd.workspaceit.utility;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.asynctask.ProductSearchAsynTask;
@@ -11,6 +12,7 @@ import com.themallbd.workspaceit.asynctask.ProductSearchAsynTask;
  */
 public class AutoCompleteTextChangeLisnter implements TextWatcher {
     private MainActivity activity;
+    public static boolean callFlag=true;
 
 
     public AutoCompleteTextChangeLisnter(MainActivity activity){
@@ -22,14 +24,18 @@ public class AutoCompleteTextChangeLisnter implements TextWatcher {
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+
     }
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if(count>2) {
-            if (!s.toString().equals("")) {
 
+
+        if(count>2 && callFlag) {
+            if (!s.toString().equals("")) {
+                callFlag=false;
                 Utility.searchProductTitle.clear();
+                activity.setSeacrhAdater();
                 new ProductSearchAsynTask(activity).execute(s.toString());
             }
         }

@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -438,7 +439,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             searchProductAdapter.notifyDataSetChanged();
             homeSearcTextView.showDropDown();
         } else {
-            homeSearcTextView.setAdapter(null);
+            homeSearcTextView.setAdapter(searchProductAdapter);
+            searchProductAdapter.notifyDataSetChanged();
         }
 
 
@@ -510,7 +512,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override

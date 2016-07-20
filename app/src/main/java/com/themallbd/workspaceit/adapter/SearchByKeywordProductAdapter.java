@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 import com.themallbd.workspaceit.activity.ProductFromCategoryActivity;
 import com.themallbd.workspaceit.activity.SearchProductListActivity;
 import com.themallbd.workspaceit.utility.Utility;
@@ -81,6 +82,8 @@ public class SearchByKeywordProductAdapter extends BaseAdapter {
                                 SearchProductListActivity.searchProductArrayList.get(position).pictures.get(0).name,
                         viewHolder.productImage);
             } else {
+
+
                 BitmapFactory.Options ourOptions=new BitmapFactory.Options();
                 ourOptions.inDither=false;
                 ourOptions.inPurgeable=true;

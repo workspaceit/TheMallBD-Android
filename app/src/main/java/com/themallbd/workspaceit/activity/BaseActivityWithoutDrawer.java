@@ -1,5 +1,8 @@
 package com.themallbd.workspaceit.activity;
 
+import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
@@ -7,13 +10,20 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import  android.support.v7.widget.SearchView;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.themallbd.workspaceit.utility.CustomAutoCompleteTextView;
+import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
@@ -27,12 +37,15 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
     private Toolbar toolbar;
 
     private SessionManager sessionManager;
+    private SearchView searchView = null;
+    private SearchView.OnQueryTextListener queryTextListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         sessionManager = new SessionManager(getApplicationContext());
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
     }
 
@@ -42,6 +55,8 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         super.onResume();
         if(toolbar!=null)
             invalidateOptionsMenu();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override
@@ -68,21 +83,43 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
         MenuItem item = menu.findItem(R.id.action_cart);
         MenuItemCompat.setActionView(item, R.layout.cart_update_count);
 
-        MenuItem item1=menu.findItem(R.id.action_search);
 
-        MenuItemCompat.setActionView(item1,R.layout.toolbar_search_icon);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+            queryTextListener = new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    Log.i("onQueryTextChange", newText);
+
+                    return true;
+                }
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    Log.i("onQueryTextSubmit", query);
+                    if(query.equals("")){
+                        MakeToast.showToast(getApplicationContext(),"You didn't type anything...");
+                        return false;
+                    }
+                    Intent intent=new Intent(getApplicationContext(),SearchProductListActivity.class);
+                    intent.putExtra("keyword",query);
+                    startActivity(intent);
+                    return true;
+                }
+            };
+            searchView.setOnQueryTextListener(queryTextListener);
+        }
+
+
         View view = MenuItemCompat.getActionView(item);
+        Button CARTCOUNT = (Button) view.findViewById(R.id.notif_count);
+        CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size() + ""));
 
 
-        Button CARTCOUNT = (Button)view.findViewById(R.id.notif_count);
-        CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size()+""));
-        CARTCOUNT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CheckoutActivity.class);
-                startActivity(intent);
-            }
-        });
         return true;
     }
 
@@ -97,6 +134,10 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity {
      
         if (id == android.R.id.home) {
             onBackPressed();
+            return true;
+        }else if (id==R.id.action_cart){
+            Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+            startActivity(intent);
             return true;
         }
 
