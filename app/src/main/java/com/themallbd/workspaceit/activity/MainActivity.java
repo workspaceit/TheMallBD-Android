@@ -16,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -27,7 +26,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.themallbd.workspaceit.asynctask.GetBannerImagesAsyncTask;
+import com.themallbd.workspaceit.dataModel.Banner;
+import com.themallbd.workspaceit.dataModel.Picture;
+import com.themallbd.workspaceit.utility.CustomSliderView;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.GridViewProductsInHomePageAdapter;
@@ -115,15 +119,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         mInternetConnection = new InternetConnection(this);
 
+        if(!mInternetConnection.isConnectingToInternet()){
+            MakeToast.showToast(this,"There is no Interenet Connection...");
+            return;
+        }
 
+
+        this.getNecessaryData();
         this.initialize();
-        this.initializeSlider();
         this.initilizeParentCategoryList();
 
 
     }
 
-    public void initialize() {
+
+    private void getNecessaryData(){
+
+
+        new GetBannerImagesAsyncTask(this).execute();
+
+
+    }
+
+    private void initialize() {
+
+
+
         newProductsForHorizontalViewList = new ArrayList<>();
         featuredProductsForHorizontalViewList = new ArrayList<>();
         allProductsForGridViewList = new ArrayList<>();
@@ -382,24 +403,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     public void initializeSlider() {
-        TextSliderView textSliderView = new TextSliderView(this);
-        textSliderView
-                .description("banner image")
-                .image(R.drawable.banner_image2);
-        sliderShow.addSlider(textSliderView);
 
-        TextSliderView textSliderView1 = new TextSliderView(this);
-        textSliderView1
-                .description("banner image")
-                .image(R.drawable.banner_image3);
-        sliderShow.addSlider(textSliderView1);
 
-        TextSliderView textSliderView2 = new TextSliderView(this);
-        textSliderView2
-                .description("banner image")
-                .image(R.drawable.banner_image1);
 
-        sliderShow.addSlider(textSliderView2);
+        if (Utility.banners.size() >= 1) {
+            for (Banner banner : Utility.banners) {
+                CustomSliderView textSliderView = new CustomSliderView(this);
+                // initialize a SliderLayout
+                textSliderView
+                        .description("Banner Image")
+                        .image(Utility.IMAGE_URL + "/banner/" + banner.image)
+                        .setScaleType(BaseSliderView.ScaleType.Fit);
+
+                sliderShow.addSlider(textSliderView);
+            }
+        } else {
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView
+                    .description("Banner not found")
+                    .image(R.drawable.image_not_found)
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+
+
+            sliderShow.addSlider(textSliderView);
+        }
     }
 
     private void loadNewProductMore() {
@@ -512,6 +540,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
+        sliderShow.startAutoCycle();
     }
 
     @Override

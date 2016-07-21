@@ -36,7 +36,7 @@ public class AutoCompleteTextChangeLisnter implements TextWatcher {
                 callFlag=false;
                 Utility.searchProductTitle.clear();
                 activity.setSeacrhAdater();
-                new ProductSearchAsynTask(activity).execute(s.toString());
+                new ProductSearchAsynTask(activity, (short) 1).execute(s.toString());
             }
         }
 

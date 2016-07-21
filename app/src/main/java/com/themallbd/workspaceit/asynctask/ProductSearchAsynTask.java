@@ -1,7 +1,10 @@
 package com.themallbd.workspaceit.asynctask;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 
+import com.themallbd.workspaceit.activity.BaseActivityWithoutDrawer;
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.service.GetSearchProductService;
 import com.themallbd.workspaceit.utility.AutoCompleteTextChangeLisnter;
@@ -15,13 +18,17 @@ import java.util.ArrayList;
  */
 public class ProductSearchAsynTask extends AsyncTask<String,String,ArrayList<String>> {
     private String shopID="1";
-    MainActivity contex;
+    Context contex;
+    private short decidingFlag;
 
 
-    public ProductSearchAsynTask(MainActivity activity){
-        this.contex=activity;
+    public ProductSearchAsynTask(Context context,short flag){
+        this.contex=context;
+        this.decidingFlag=flag;
 
     }
+
+
 
     @Override
     protected void onPreExecute() {
@@ -50,7 +57,14 @@ public class ProductSearchAsynTask extends AsyncTask<String,String,ArrayList<Str
 
         if(productTitles.size()>0){
 
-            contex.setSeacrhAdater();
+            if(this.decidingFlag==1){
+                ((MainActivity)contex).setSeacrhAdater();
+                AutoCompleteTextChangeLisnter.callFlag=true;
+            }else if (decidingFlag==2){
+                ((BaseActivityWithoutDrawer)contex).notifyOnSeacrDataChnaged();
+                BaseActivityWithoutDrawer.otherPageSearchCallFlag=true;
+            }
+
            
 
 
@@ -58,7 +72,7 @@ public class ProductSearchAsynTask extends AsyncTask<String,String,ArrayList<Str
             MakeToast.showToast(contex, "Nothing Found..");
         }
 
-        AutoCompleteTextChangeLisnter.callFlag=true;
+
     }
 
 }

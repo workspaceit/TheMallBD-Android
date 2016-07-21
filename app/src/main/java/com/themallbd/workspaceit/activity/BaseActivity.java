@@ -19,12 +19,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.squareup.picasso.Picasso;
+import com.themallbd.workspaceit.dataModel.ShoppingCartCell;
+import com.themallbd.workspaceit.utility.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.SessionManager;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.utility.CustomDialog;
@@ -33,6 +36,7 @@ import com.themallbd.workspaceit.utility.Utility;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -65,6 +69,15 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         accessToken = sessionManager.getEmail();
 
         if(true) {
+
+            LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
+            String newCart=localShoppintCart.getCart();
+            Gson gson=new Gson();
+            ShoppingCartCell[] shoppingCartCells=gson.fromJson(newCart,ShoppingCartCell[].class);
+            Utility.shoppingCart.shoppingCartCell.clear();
+            Collections.addAll(Utility.shoppingCart.shoppingCartCell, shoppingCartCells);
+
+
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                     .cacheInMemory(false)
                     .cacheOnDisk(true)
@@ -412,6 +425,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public void onClick(View v) {
 
     }
+
+
+
+
 
 
 }

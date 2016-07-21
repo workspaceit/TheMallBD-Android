@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themallbd.workspaceit.dataModel.ShoppingCart;
 import com.themallbd.workspaceit.fragment.CartFragment;
+import com.themallbd.workspaceit.utility.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
@@ -28,12 +30,16 @@ public class CartInListViewAdapter extends BaseAdapter {
     private ShoppingCart shoppingCart;
     private LayoutInflater layoutInflater;
     private Activity context;
+    Gson gson;
+    LocalShoppintCart localShoppintCart;
 
     public CartInListViewAdapter(Activity cartFragment, ShoppingCart shop) {
         this.context = cartFragment;
        // this.mCartFragment = cartFragment;
         this.shoppingCart = shop;
         layoutInflater = context.getLayoutInflater();
+        gson=new Gson();
+        localShoppintCart=new LocalShoppintCart(this.context);
 
     }
 
@@ -90,6 +96,10 @@ public class CartInListViewAdapter extends BaseAdapter {
                 public void onClick(View v) {
                     Utility.shoppingCart.shoppingCartCell.get(position).quantity+=1;
                     CartInListViewAdapter.this.notifyDataSetChanged();
+                    String cart=gson.toJson(Utility.shoppingCart.shoppingCartCell);
+                    localShoppintCart=new LocalShoppintCart(context);
+                    localShoppintCart.setCart(cart);
+
                 }
             });
 
@@ -128,6 +138,10 @@ public class CartInListViewAdapter extends BaseAdapter {
 
                         Utility.shoppingCart.shoppingCartCell.get(position).quantity -= 1;
                     }
+
+                    String cart=gson.toJson(Utility.shoppingCart.shoppingCartCell);
+                    localShoppintCart=new LocalShoppintCart(context);
+                    localShoppintCart.setCart(cart);
                     CartInListViewAdapter.this.notifyDataSetChanged();
 
 
@@ -140,6 +154,10 @@ public class CartInListViewAdapter extends BaseAdapter {
                 @Override
                 public void onClick(View v) {
                     Utility.shoppingCart.shoppingCartCell.remove(position);
+
+                    String cart=gson.toJson(Utility.shoppingCart.shoppingCartCell);
+                    localShoppintCart=new LocalShoppintCart(context);
+                    localShoppintCart.setCart(cart);
                     CartInListViewAdapter.this.notifyDataSetChanged();
                 }
             });
@@ -173,5 +191,11 @@ public class CartInListViewAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         return convertView;
+    }
+
+
+    private void updateCart(){
+
+
     }
 }

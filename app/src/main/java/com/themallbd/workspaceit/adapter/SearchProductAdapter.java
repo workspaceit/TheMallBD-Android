@@ -59,7 +59,7 @@ public class SearchProductAdapter extends ArrayAdapter<String> {
         }
 
         if(Utility.searchProductTitle.size()>0) {
-            viewHolder.productTitle.setText(productTitle.get(position));
+            viewHolder.productTitle.setText(Utility.searchResults.get(position).product_title);
             ImageLoader.getInstance().displayImage(Utility.IMAGE_URL+productUrl+Utility.searchResults.get(position).image_name,
                     viewHolder.searchImage);
 

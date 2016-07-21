@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.google.gson.Gson;
 import com.themallbd.workspaceit.asynctask.GetProductByProductIdAsynctask;
 import com.themallbd.workspaceit.dataModel.Picture;
 import com.themallbd.workspaceit.dataModel.Products;
@@ -29,6 +31,8 @@ import com.themallbd.workspaceit.dataModel.SelectedAttributes;
 import com.themallbd.workspaceit.dataModel.ShoppingCartCell;
 import com.themallbd.workspaceit.utility.CustomDialog;
 import com.themallbd.workspaceit.utility.CustomSliderView;
+import com.themallbd.workspaceit.utility.LocalShoppintCart;
+import com.themallbd.workspaceit.utility.MallBdDataBaseHelper;
 import com.themallbd.workspaceit.utility.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
@@ -40,6 +44,8 @@ import com.themallbd.workspaceit.asynctask.GetReviewCountAsynTask;
 import com.themallbd.workspaceit.asynctask.WishListAsynTask;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.CustomListView;
+
+import java.util.Collections;
 
 public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -74,6 +80,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private TextView nomalPreviousPrice;
     private TextView saveNormalTextView;
     private boolean loadFlag;
+    private MallBdDataBaseHelper mallBdDataBaseHelper;
 
 
     private static String productUrl = "/product/general/";
@@ -90,7 +97,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
-        loadFlag=true;
+        mallBdDataBaseHelper = new MallBdDataBaseHelper(this);
+
+        loadFlag = true;
 
         previousPrictTextView = (TextView) findViewById(R.id.tv_previous_product_price);
         previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -160,13 +169,13 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         else if (arrayListIndicator == 7) {
             int productId = getIntent().getIntExtra("productId", -1);
             new GetProductByProductIdAsynctask(this).execute(String.valueOf(productId));
-            loadFlag=false;
-        }else if(arrayListIndicator==8){
-            products=SearchProductListActivity.searchProductArrayList.get(position);
+            loadFlag = false;
+        } else if (arrayListIndicator == 8) {
+            products = SearchProductListActivity.searchProductArrayList.get(position);
         }
 
 
-        if(arrayListIndicator!=7) {
+        if (arrayListIndicator != 7) {
             initializeSlider();
             initialize();
         }
@@ -177,10 +186,10 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     @Override
     protected void onResume() {
         super.onResume();
-        if(loadFlag) {
+        if (loadFlag) {
             initializeRelatedProductArrayList();
             initializeReviews();
-            loadFlag=true;
+            loadFlag = true;
         }
 
     }
@@ -235,8 +244,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
     }
 
-    public void setProductForSearch(Products product){
-        this.products=product;
+    public void setProductForSearch(Products product) {
+        this.products = product;
         initializeSlider();
         initialize();
         initializeRelatedProductArrayList();
@@ -244,6 +253,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
 
     }
+
     private void initialize() {
         tvProductName.setText(products.title);
 
@@ -354,6 +364,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             for (int i = 0; i < Utility.shoppingCart.shoppingCartCell.size(); i++) {
                 if (Utility.shoppingCart.shoppingCartCell.get(i).id == products.id) {
                     Utility.shoppingCart.shoppingCartCell.get(i).quantity += this.productsQuantity;
+                    this.updateCart();
+                    MakeToast.showToast(this,"Product already exist in the cart. Quantity updated..");
                     invalidateOptionsMenu();
                     return;
                 }
@@ -377,7 +389,12 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
 
             Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
-            MakeToast.showToast(this, "Successfully added to the cart");
+          /* boolean flag= mallBdDataBaseHelper.insertNewData(products.title,shoppingCartCell.quantity,shoppingCartCell.product.prices.get(0).retailPrice,
+                    shoppingCartCell.product.pictures.get(0).name);*/
+
+
+            this.updateCart();
+            MakeToast.showToast(this, "Succesfully added to cart...");
             invalidateOptionsMenu();
 
         } else if (v == addToWishListBtn) {
@@ -398,6 +415,14 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         } else if (v == addReviewButton) {
             CustomDialog.addReviewCustomDailog(this, products.title, String.valueOf(products.id));
         }
+    }
+
+    private void updateCart(){
+        Gson gson=new Gson();
+        String cart=gson.toJson(Utility.shoppingCart.shoppingCartCell);
+        LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
+        localShoppintCart.setCart(cart);
+
     }
 
     @Override
