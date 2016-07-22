@@ -55,22 +55,27 @@ public class ProductSearchAsynTask extends AsyncTask<String,String,ArrayList<Str
     protected void onPostExecute(ArrayList<String> productTitles) {
         super.onPostExecute(productTitles);
 
+        if(this.decidingFlag==1)
+            AutoCompleteTextChangeLisnter.callFlag=true;
+        else if(this.decidingFlag==2)
+            BaseActivityWithoutDrawer.otherPageSearchCallFlag=true;
+
         if(productTitles.size()>0){
 
             if(this.decidingFlag==1){
                 ((MainActivity)contex).setSeacrhAdater();
-                AutoCompleteTextChangeLisnter.callFlag=true;
+
             }else if (decidingFlag==2){
                 ((BaseActivityWithoutDrawer)contex).notifyOnSeacrDataChnaged();
-                BaseActivityWithoutDrawer.otherPageSearchCallFlag=true;
+
             }
-
-           
-
-
         }else {
             MakeToast.showToast(contex, "Nothing Found..");
         }
+
+
+
+
 
 
     }

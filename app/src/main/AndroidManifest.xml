@@ -59,6 +59,8 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.SearchProductListActivity" >
         </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.NoInternetActiviy" >
+        </activity>
     </application>
 
 </manifest>

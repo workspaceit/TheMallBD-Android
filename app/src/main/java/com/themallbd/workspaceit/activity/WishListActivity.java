@@ -8,8 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.dataModel.SelectedAttributes;
-import com.themallbd.workspaceit.dataModel.ShoppingCartCell;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.WishInListViewAdapter;
@@ -40,33 +40,33 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
 
 
     public Boolean addProductTotheCart(int position){
-        for(int i=0; i< Utility.shoppingCart.shoppingCartCell.size();i++){
-            if(Utility.shoppingCart.shoppingCartCell.get(i).id==Utility.wishlistProductArrayList.get(position).id){
-                Utility.shoppingCart.shoppingCartCell.get(i).quantity+=1;
+        for(int i=0; i< Utility.shoppingCart.productCell.size();i++){
+            if(Utility.shoppingCart.productCell.get(i).id==Utility.wishlistProductArrayList.get(position).id){
+                Utility.shoppingCart.productCell.get(i).quantity+=1;
                 invalidateOptionsMenu();
                 return false;
             }
 
         }
 
-        ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
+        ProductCell productCell=new ProductCell();
 
         if(Utility.wishlistProductArrayList.get(position).attributes.size()<0) {
             SelectedAttributes selectedAttributes = new SelectedAttributes();
             selectedAttributes.setId(Utility.wishlistProductArrayList.get(position).attributes.get(0).id);
             selectedAttributes.setName(Utility.wishlistProductArrayList.get(position).attributes.get(0).name);
             selectedAttributes.setValue(Utility.wishlistProductArrayList.get(position).attributes.get(0).attributesValue.get(0).value);
-            shoppingCartCell.addToSelectedAttributes(selectedAttributes);
+            productCell.addToSelectedAttributes(selectedAttributes);
         }
 
 
-        shoppingCartCell.setId(Utility.wishlistProductArrayList.get(position).id);
-        shoppingCartCell.setProduct(Utility.wishlistProductArrayList.get(position));
-        shoppingCartCell.setQuantity(1);
+        productCell.setId(Utility.wishlistProductArrayList.get(position).id);
+        productCell.setProduct(Utility.wishlistProductArrayList.get(position));
+        productCell.setQuantity(1);
 
 
 
-        Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
+        Utility.shoppingCart.productCell.add(productCell);
         invalidateOptionsMenu();
         return true;
     }

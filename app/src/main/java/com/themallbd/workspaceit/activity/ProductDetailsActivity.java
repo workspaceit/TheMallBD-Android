@@ -10,7 +10,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -26,9 +25,9 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.themallbd.workspaceit.asynctask.GetProductByProductIdAsynctask;
 import com.themallbd.workspaceit.dataModel.Picture;
+import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.dataModel.SelectedAttributes;
-import com.themallbd.workspaceit.dataModel.ShoppingCartCell;
 import com.themallbd.workspaceit.utility.CustomDialog;
 import com.themallbd.workspaceit.utility.CustomSliderView;
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
@@ -44,8 +43,6 @@ import com.themallbd.workspaceit.asynctask.GetReviewCountAsynTask;
 import com.themallbd.workspaceit.asynctask.WishListAsynTask;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.CustomListView;
-
-import java.util.Collections;
 
 public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener, View.OnClickListener, AdapterView.OnItemClickListener {
 
@@ -361,9 +358,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             }
 
 
-            for (int i = 0; i < Utility.shoppingCart.shoppingCartCell.size(); i++) {
-                if (Utility.shoppingCart.shoppingCartCell.get(i).id == products.id) {
-                    Utility.shoppingCart.shoppingCartCell.get(i).quantity += this.productsQuantity;
+            for (int i = 0; i < Utility.shoppingCart.productCell.size(); i++) {
+                if (Utility.shoppingCart.productCell.get(i).id == products.id) {
+                    Utility.shoppingCart.productCell.get(i).quantity += this.productsQuantity;
                     this.updateCart();
                     MakeToast.showToast(this,"Product already exist in the cart. Quantity updated..");
                     invalidateOptionsMenu();
@@ -372,23 +369,22 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
             }
 
-            ShoppingCartCell shoppingCartCell = new ShoppingCartCell();
+            ProductCell productCell=new ProductCell();
 
             if (products.attributes.size() < 0) {
                 SelectedAttributes selectedAttributes = new SelectedAttributes();
                 selectedAttributes.setId(products.attributes.get(0).id);
                 selectedAttributes.setName(products.attributes.get(0).name);
                 selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
-                shoppingCartCell.addToSelectedAttributes(selectedAttributes);
+                productCell.addToSelectedAttributes(selectedAttributes);
             }
 
+            productCell.setId(products.id);
+            productCell.setProduct(products);
+            productCell.setQuantity(this.productsQuantity);
 
-            shoppingCartCell.setId(products.id);
-            shoppingCartCell.setProduct(products);
-            shoppingCartCell.setQuantity(this.productsQuantity);
 
-
-            Utility.shoppingCart.addToShoppingCart(shoppingCartCell);
+            Utility.shoppingCart.productCell.add(productCell);
           /* boolean flag= mallBdDataBaseHelper.insertNewData(products.title,shoppingCartCell.quantity,shoppingCartCell.product.prices.get(0).retailPrice,
                     shoppingCartCell.product.pictures.get(0).name);*/
 
@@ -419,7 +415,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
     private void updateCart(){
         Gson gson=new Gson();
-        String cart=gson.toJson(Utility.shoppingCart.shoppingCartCell);
+        String cart=gson.toJson(Utility.shoppingCart.productCell);
         LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
         localShoppintCart.setCart(cart);
 

@@ -70,7 +70,7 @@ public class SearchProductAdapter extends ArrayAdapter<String> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context,ProductDetailsActivity.class);
-                intent.putExtra("productId", Integer.parseInt(Utility.searchResults.get(position).product_id));
+                intent.putExtra("productId", Utility.searchResults.get(position).id);
                 intent.putExtra("productArray", 7);
                 context.startActivity(intent);
             }

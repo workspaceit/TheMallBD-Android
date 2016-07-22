@@ -31,8 +31,10 @@ public class AutoCompleteTextChangeLisnter implements TextWatcher {
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
+        System.out.println(s+" "+String.valueOf(callFlag)+" "+count);
         if(count>2 && callFlag) {
             if (!s.toString().equals("")) {
+                System.out.println("called");
                 callFlag=false;
                 Utility.searchProductTitle.clear();
                 activity.setSeacrhAdater();

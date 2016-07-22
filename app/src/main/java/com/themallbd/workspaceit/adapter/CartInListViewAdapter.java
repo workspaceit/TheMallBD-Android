@@ -58,17 +58,17 @@ public class CartInListViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return this.shoppingCart.shoppingCartCell.size();
+        return this.shoppingCart.productCell.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return this.shoppingCart.shoppingCartCell.get(position);
+        return this.shoppingCart.productCell.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return this.shoppingCart.shoppingCartCell.get(position).id;
+        return this.shoppingCart.productCell.get(position).id;
     }
 
 
@@ -94,9 +94,9 @@ public class CartInListViewAdapter extends BaseAdapter {
             viewHolder.cartItemAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utility.shoppingCart.shoppingCartCell.get(position).quantity+=1;
+                    Utility.shoppingCart.productCell.get(position).quantity+=1;
                     CartInListViewAdapter.this.notifyDataSetChanged();
-                    String cart=gson.toJson(Utility.shoppingCart.shoppingCartCell);
+                    String cart=gson.toJson(Utility.shoppingCart.productCell);
                     localShoppintCart=new LocalShoppintCart(context);
                     localShoppintCart.setCart(cart);
 
@@ -106,7 +106,7 @@ public class CartInListViewAdapter extends BaseAdapter {
             viewHolder.cartItemMinus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int quantity=Utility.shoppingCart.shoppingCartCell.get(position).quantity;
+                    int quantity=Utility.shoppingCart.productCell.get(position).quantity;
                     quantity--;
 
                     if(quantity<1){
@@ -117,7 +117,7 @@ public class CartInListViewAdapter extends BaseAdapter {
                                 .setCancelable(false)
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Utility.shoppingCart.shoppingCartCell.remove(position);
+                                        Utility.shoppingCart.productCell.remove(position);
                                         CartInListViewAdapter.this.notifyDataSetChanged();
 
                                     }
@@ -136,10 +136,10 @@ public class CartInListViewAdapter extends BaseAdapter {
                         alertDialog.show();
                     }else {
 
-                        Utility.shoppingCart.shoppingCartCell.get(position).quantity -= 1;
+                        Utility.shoppingCart.productCell.get(position).quantity -= 1;
                     }
 
-                    String cart=gson.toJson(Utility.shoppingCart.shoppingCartCell);
+                    String cart=gson.toJson(Utility.shoppingCart.productCell);
                     localShoppintCart=new LocalShoppintCart(context);
                     localShoppintCart.setCart(cart);
                     CartInListViewAdapter.this.notifyDataSetChanged();
@@ -153,9 +153,9 @@ public class CartInListViewAdapter extends BaseAdapter {
             viewHolder.cartItemDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utility.shoppingCart.shoppingCartCell.remove(position);
+                    Utility.shoppingCart.productCell.remove(position);
 
-                    String cart=gson.toJson(Utility.shoppingCart.shoppingCartCell);
+                    String cart=gson.toJson(Utility.shoppingCart.productCell);
                     localShoppintCart=new LocalShoppintCart(context);
                     localShoppintCart.setCart(cart);
                     CartInListViewAdapter.this.notifyDataSetChanged();
@@ -168,7 +168,7 @@ public class CartInListViewAdapter extends BaseAdapter {
         }
 
         try {
-            String icon = this.shoppingCart.shoppingCartCell.get(position).product.pictures.get(0).name;
+            String icon = this.shoppingCart.productCell.get(position).product.pictures.get(0).name;
             int size = icon!=null? icon.length(): 0;
             if (size>0) {
                 //    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
@@ -180,10 +180,10 @@ public class CartInListViewAdapter extends BaseAdapter {
                 viewHolder.cartItemImage.setImageResource(R.drawable.image_not_found);
             }
 
-            viewHolder.cartItemName.setText(this.shoppingCart.shoppingCartCell.get(position).product.title);
-            viewHolder.cartItemPrice.setText("" + this.shoppingCart.shoppingCartCell.get(position).product.prices.get(0).retailPrice);
+            viewHolder.cartItemName.setText(this.shoppingCart.productCell.get(position).product.title);
+            viewHolder.cartItemPrice.setText("" + this.shoppingCart.productCell.get(position).product.prices.get(0).retailPrice);
 
-            viewHolder.quantityTextView.setText(String.valueOf(this.shoppingCart.shoppingCartCell.get(position).quantity));
+            viewHolder.quantityTextView.setText(String.valueOf(this.shoppingCart.productCell.get(position).quantity));
         }
         catch (Exception e)
         {
@@ -194,8 +194,5 @@ public class CartInListViewAdapter extends BaseAdapter {
     }
 
 
-    private void updateCart(){
 
-
-    }
 }

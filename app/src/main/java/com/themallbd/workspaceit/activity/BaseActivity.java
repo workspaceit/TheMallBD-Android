@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +25,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.squareup.picasso.Picasso;
-import com.themallbd.workspaceit.dataModel.ShoppingCartCell;
+import com.themallbd.workspaceit.asynctask.LoginByAccesTokenAsynTask;
+import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.SessionManager;
 import com.workspaceit.themall.R;
@@ -54,10 +54,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private SessionManager sessionManager;
     private String accessToken;
     private CircleImageView profileImage;
-    private Button CARTCOUNT;
+
     private TextView userNameTextView;
     private static final int SELECT_PICTURE = 1;
     private static boolean IMAGE_LOADER_FLAG=true;
+
 
 
     @Override
@@ -66,16 +67,24 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager = new SessionManager(this);
-        accessToken = sessionManager.getEmail();
+        accessToken = sessionManager.getAccessToken();
+
+
 
         if(true) {
 
+            if(sessionManager.checkLogin()) {
+                System.out.println("calling " + accessToken);
+                new LoginByAccesTokenAsynTask().execute(accessToken);
+            }
             LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
             String newCart=localShoppintCart.getCart();
             Gson gson=new Gson();
-            ShoppingCartCell[] shoppingCartCells=gson.fromJson(newCart,ShoppingCartCell[].class);
-            Utility.shoppingCart.shoppingCartCell.clear();
-            Collections.addAll(Utility.shoppingCart.shoppingCartCell, shoppingCartCells);
+            ProductCell[] productCells=gson.fromJson(newCart,ProductCell[].class);
+            Utility.shoppingCart.productCell.clear();
+            if(productCells!=null) {
+                Collections.addAll(Utility.shoppingCart.productCell, productCells);
+            }
 
 
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()

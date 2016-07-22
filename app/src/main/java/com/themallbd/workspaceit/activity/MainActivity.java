@@ -30,7 +30,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.themallbd.workspaceit.asynctask.GetBannerImagesAsyncTask;
 import com.themallbd.workspaceit.dataModel.Banner;
-import com.themallbd.workspaceit.dataModel.Picture;
+
 import com.themallbd.workspaceit.utility.CustomSliderView;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     int limitForProductsInGridView = 4;
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
-    int pastVisibleItemsInGridView, visibleItemCountInGridView, totalItemCountInGridView;
+   
 
     private boolean userScrolledForNewProduct;
     private boolean userScrollForFeatureProduct;
@@ -120,7 +120,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         mInternetConnection = new InternetConnection(this);
 
         if(!mInternetConnection.isConnectingToInternet()){
-            MakeToast.showToast(this,"There is no Interenet Connection...");
+            Intent intent=new Intent(this,NoInternetActiviy.class);
+            startActivity(intent);
             return;
         }
 
@@ -531,17 +532,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    @Override
-    protected void onStop() {
-        sliderShow.stopAutoCycle();
-        super.onStop();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        sliderShow.startAutoCycle();
-    }
+
 
     @Override
     protected void onPause() {
@@ -569,7 +561,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
         cartButton = (Button) view.findViewById(R.id.notif_count);
-        cartButton.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size() + ""));
+        cartButton.setText(String.valueOf(Utility.shoppingCart.productCell.size() + ""));
         cartButton.setOnClickListener(this);
 
         return true;

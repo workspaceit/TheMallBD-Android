@@ -53,6 +53,7 @@ public class WishListService extends BaseMallBDService {
         this.setController("api/customer/wishlist/all");
 
         String resp=this.getData("GET");
+        System.out.print(resp);
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();

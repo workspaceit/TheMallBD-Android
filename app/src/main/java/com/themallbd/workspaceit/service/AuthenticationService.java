@@ -23,9 +23,10 @@ public class AuthenticationService extends BaseMallBDService {
         this.appCredential = new AppCredential();
         this.setController("login");
         this.setParams("email", email);
-        this.setParams("password",password);
+        this.setParams("password", password);
 
         String resp = this.getData("POST");
+
 
 
         try {
@@ -54,10 +55,40 @@ public class AuthenticationService extends BaseMallBDService {
         return  false;
     }
 
-    public boolean loginWithAccessToken(String accesstoken)
-    {
+    public boolean loginWithAccessToken(String accesstoken) {
         this.responseStat = new ResponseStat();
         this.appCredential = new AppCredential();
-        return  true;
+        this.setController("api/login/accesstoken");
+        this.setParams("accesstoken", accesstoken);
+
+
+        String resp = this.getData("POST");
+
+
+
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+            if (this.responseStat.status && this.responseStat.isLogin)
+            {
+                appCredential = gson.fromJson(jsonObject.get("responseData"),AppCredential.class);
+                Utility.loggedInUser = appCredential;
+                return true;
+
+            }
+            else {
+                Utility.responseStat = this.responseStat;
+                return false;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return  false;
+
     }
 }

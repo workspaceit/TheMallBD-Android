@@ -26,8 +26,9 @@ public class GetSearchProductService extends BaseMallBDService {
         ArrayList<String> productTitles = new ArrayList<>();
         Utility.searchProductTitle.clear();
         this.responseStat = new ResponseStat();
-        this.setController("api/product/category/searchbytitle/mobile");
+        this.setController("api/products/all/search/suggestion");
         this.setParams("keyword", keyword);
+        this.setParams("limit","50");
 
 
         String resp = this.getData("POST");
@@ -39,11 +40,8 @@ public class GetSearchProductService extends BaseMallBDService {
             this.responseStat = gson.fromJson(jsonObject.get("responseStat"), responseStat.getClass());
 
             if (this.responseStat.status) {
-                JsonElement jelement = new JsonParser().parse(String.valueOf(jsonObject.get("responseData")));
-                JsonObject jobject = jelement.getAsJsonObject();
 
-
-                SearchResult[] searchResults = gson.fromJson(jobject.get("category"), SearchResult[].class);
+                SearchResult[] searchResults = gson.fromJson(jsonObject.get("responseData"), SearchResult[].class);
 
 
 

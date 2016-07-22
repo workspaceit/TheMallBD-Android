@@ -7,36 +7,29 @@ import java.util.ArrayList;
  */
 public class ShoppingCart {
 
-    public ArrayList<ShoppingCartCell> shoppingCartCell;
-    public double totalPrice;
-    public double totalDiscount;
-    public double totalTax;
+    public ArrayList<ProductCell> productCell;
+    public ArrayList<MallBdPackageCell> mallBdPackageCell;
+    public float orderTotal;
+    public float productDiscountTotal;
+    public float shippingCost;
+    public float totalDiscount;
+    public float totalPrice;
+    public float totalTax;
+    public float voucherDiscount;
 
     public ShoppingCart() {
-        this.shoppingCartCell = new ArrayList<>();
-        this.totalPrice = 0.0;
-        this.totalDiscount = 0.0;
-        this.totalTax = 0.0;
+        this.productCell=new ArrayList<>();
+        this.mallBdPackageCell=new ArrayList<>();
+        this.orderTotal=0;
+        this.productDiscountTotal=0;
+        this.shippingCost=0;
+        this.totalDiscount=0;
+        this.totalPrice=0;
+        this.totalTax=0;
+        this.voucherDiscount=0;
+
+
     }
 
-    public void setShoppingCartCell(ArrayList<ShoppingCartCell> shoppingCartCell) {
-        this.shoppingCartCell = shoppingCartCell;
-    }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public void setTotalDiscount(double totalDiscount) {
-        this.totalDiscount = totalDiscount;
-    }
-
-    public void setTotalTax(double totalTax) {
-        this.totalTax = totalTax;
-    }
-
-    public void addToShoppingCart(ShoppingCartCell shoppingCartCell)
-    {
-        this.shoppingCartCell.add(shoppingCartCell);
-    }
 }

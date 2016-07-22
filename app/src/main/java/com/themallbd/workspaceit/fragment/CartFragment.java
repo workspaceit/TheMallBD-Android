@@ -48,7 +48,7 @@ public class CartFragment extends Fragment implements AdapterView.OnItemClickLis
 
 
         cartListView.setOnItemClickListener(this);
-        if (Utility.shoppingCart.shoppingCartCell.size()>0) {
+        if (Utility.shoppingCart.productCell.size()>0) {
             cartInListViewAdapter = new CartInListViewAdapter(getActivity(), Utility.shoppingCart);
             cartListView.setAdapter(cartInListViewAdapter);
         }
@@ -79,7 +79,7 @@ public class CartFragment extends Fragment implements AdapterView.OnItemClickLis
         else if(v == checkOutButton)
         {
 
-            if(Utility.shoppingCart.shoppingCartCell.size()<1){
+            if(Utility.shoppingCart.productCell.size()<1){
                 MakeToast.showToast(getActivity(),"Your shopping cart is empty!");
 
             }else {

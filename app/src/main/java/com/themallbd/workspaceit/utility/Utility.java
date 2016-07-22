@@ -18,23 +18,16 @@ public class Utility {
 
     public static ResponseStat responseStat = new ResponseStat();
     public static AppCredential loggedInUser = new AppCredential();
-    //public static String IMAGE_URL = "http://163.53.151.2:5555/mallbackoffice/resources/images/";
     public static String IMAGE_URL="http://188.166.214.41/mallbackoffice/resources/images/";//riyad vai server
-
-
     public static ShoppingCart shoppingCart = new ShoppingCart();
-
     public static ArrayList<Category> parentsCategoryArraylist = new ArrayList<>();
     public static ArrayList<Products>wishlistProductArrayList=new ArrayList<>();
-
-    public static ArrayList<Products>searchProductArrayList=new ArrayList<>();
     public static ArrayList<SearchResult>searchResults=new ArrayList<>();
     public static ArrayList<String>searchProductTitle=new ArrayList<>();
-
     public static ArrayList<Products> relatedProductArryList=new ArrayList<>();
-
     public static ArrayList<Review>reviews=new ArrayList<>();
-
     public static ArrayList<Banner>banners=new ArrayList<>();
+
+    public static boolean isLoggedInFlag=false;
 
 }
