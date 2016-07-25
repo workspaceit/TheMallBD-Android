@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.utility.Utility;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
@@ -171,5 +172,44 @@ public class ProductService extends BaseMallBDService {
             e.printStackTrace();
         }
         return categoryWiseProducts;
+    }
+
+
+    public boolean getDiscountProduct(String limit,String offset){
+        ResponseStat responseStat;
+        responseStat = new ResponseStat();
+        ArrayList<Products> discountProduct = new ArrayList<>();
+
+        this.setController("api/products/special/show");
+        this.setParams("offset", offset);
+        this.setParams("limit", limit);
+        this.setParams("shop_id", String.valueOf(shop_id));
+
+
+        String resp = this.getData("POST");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"), responseStat.getClass());
+            if (this.responseStat.status) {
+
+
+                Products[] products = gson.fromJson(jsonObject.get("responseData"), Products[].class);
+                Collections.addAll(MainActivity.discountProductForHorizontalList,products);
+
+                return true;
+            } else {
+                Utility.responseStat = responseStat;
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+
+
     }
 }

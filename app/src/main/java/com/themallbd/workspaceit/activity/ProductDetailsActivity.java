@@ -169,6 +169,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             loadFlag = false;
         } else if (arrayListIndicator == 8) {
             products = SearchProductListActivity.searchProductArrayList.get(position);
+        }else if(arrayListIndicator==9){
+            products=MainActivity.discountProductForHorizontalList.get(position);
         }
 
 

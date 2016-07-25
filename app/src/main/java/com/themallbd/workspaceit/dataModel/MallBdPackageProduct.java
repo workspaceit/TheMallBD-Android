@@ -3,7 +3,7 @@ package com.themallbd.workspaceit.dataModel;
 /**
  * Created by Tomal on 7/22/2016.
  */
-public class MallBdPackageProduct {
+public class MallBdPackageProduct{
 
     public int id;
     public int packageId;

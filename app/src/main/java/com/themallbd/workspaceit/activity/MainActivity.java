@@ -28,9 +28,14 @@ import android.widget.TextView;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.themallbd.workspaceit.adapter.DiscountProductRecyleViewAdapter;
+import com.themallbd.workspaceit.adapter.PackageInHorizontalListAdapter;
 import com.themallbd.workspaceit.asynctask.GetBannerImagesAsyncTask;
+import com.themallbd.workspaceit.asynctask.GetPackagesAsynTask;
+import com.themallbd.workspaceit.asynctask.GetSpecailDiscountProductAsynTask;
 import com.themallbd.workspaceit.dataModel.Banner;
 
+import com.themallbd.workspaceit.dataModel.MallBdPackage;
 import com.themallbd.workspaceit.utility.CustomSliderView;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
@@ -62,30 +67,39 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private SliderLayout sliderShow;
 
     //  Adapters
-    public HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter;
-    public HorizontalRVAFeaturedProductsAdapter horizontalRVAFeaturedProductsAdapter;
-    public GridViewProductsInHomePageAdapter gridViewProductsInHomePageAdapter;
+    private HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter;
+    private HorizontalRVAFeaturedProductsAdapter horizontalRVAFeaturedProductsAdapter;
+    private GridViewProductsInHomePageAdapter gridViewProductsInHomePageAdapter;
+    private DiscountProductRecyleViewAdapter discountProductRecyleViewAdapter;
+    private PackageInHorizontalListAdapter packageInHorizontalListAdapter;
 
-    //TextViews
-    private TextView userNameTextView, emailTextView;
+
+
+
 
     //Imageview
     private ImageView categoryWomenView, categoryBabyView, categoryMenView, categoryAllView;
 
     //recycler view variables for horizontal scrolling
-    public RecyclerView newProductHorizontalListRV, featuredProductHorizontalListRV;
+    private RecyclerView newProductHorizontalListRV, featuredProductHorizontalListRV, packgeProductHorizontalListRV, specailDiscountProductHorizonatlRV;
     private AllProductGridView gridViewForAllProducts;
 
     public static ArrayList<Products> newProductsForHorizontalViewList;
     public static ArrayList<Products> featuredProductsForHorizontalViewList;
     public static ArrayList<Products> allProductsForGridViewList;
+    public static ArrayList<MallBdPackage> packgeProductForHorizontalList;
+    public static ArrayList<Products> discountProductForHorizontalList;
+
+
 
     private InternetConnection mInternetConnection;
 
 
-    int offsetForNewProductsHorizontalScrolling = 0;
-    int offsetForFeaturedProductsHorizontalScrolling = 0;
-    int offsetForAllProductsInGridView = 0;
+    private int offsetForNewProductsHorizontalScrolling = 0;
+    private int offsetForFeaturedProductsHorizontalScrolling = 0;
+    private int offsetForAllProductsInGridView = 0;
+    private int offsetForDiscountProduct=0;
+    private int offsetForPackage=0;
 
     int limit = 5;
     int limitForProductsInGridView = 4;
@@ -95,6 +109,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private boolean userScrolledForNewProduct;
     private boolean userScrollForFeatureProduct;
+    private boolean userScrollForPackge;
+    private boolean userScrollForDiscountProduct;
     private boolean userScrolledInGridView;
 
     private boolean noMoreItemNewProduct;
@@ -149,9 +165,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         newProductsForHorizontalViewList = new ArrayList<>();
         featuredProductsForHorizontalViewList = new ArrayList<>();
         allProductsForGridViewList = new ArrayList<>();
+        packgeProductForHorizontalList =new ArrayList<>();
+        discountProductForHorizontalList=new ArrayList<>();
 
         this.userScrolledForNewProduct = true;
         this.userScrollForFeatureProduct = true;
+        this.userScrollForPackge=true;
+        this.userScrollForDiscountProduct=true;
+
         this.noMoreItemFeatureProduct = false;
         this.noMoreItemNewProduct = false;
 
@@ -164,6 +185,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         //initializing gridview for all products
         initializeGridViewForAllProductsSection();
+
+        initializeDiscountProductForHorizontalSection();
+
+        initializePackageProductForHorizontalList();
 
 
         //countries=getResources().getStringArray(R.array.countries_array);
@@ -205,6 +230,134 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
+
+    private void initializePackageProductForHorizontalList(){
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        packgeProductHorizontalListRV= (RecyclerView) findViewById(R.id.packge_list_reclyeview);
+        packgeProductHorizontalListRV.setLayoutManager(layoutManager);
+        // Create adapter passing in the sample user data
+        this.packageInHorizontalListAdapter = new PackageInHorizontalListAdapter(this);
+        // Attach the adapter to the recyclerview to populate items
+        this.packgeProductHorizontalListRV.setAdapter(packageInHorizontalListAdapter);
+        this.packgeProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
+        // Set layout manager to position the items
+
+
+
+
+        if (MainActivity.packgeProductForHorizontalList.size() < 1) {
+            if (mInternetConnection.isConnectingToInternet())
+
+            {
+                MainActivity.packgeProductForHorizontalList.clear();
+                new GetPackagesAsynTask(this).execute(String.valueOf(this.limit), String.valueOf(offsetForPackage));
+            }
+        }
+
+
+        this.packgeProductHorizontalListRV.addOnItemTouchListener(
+                new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(MainActivity.this, PackageDetailsActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("productArray", 1);
+                        startActivity(intent);
+                    }
+                })
+        );
+
+        this.packgeProductHorizontalListRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+
+                if (dx > 0) //check for scroll down
+                {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
+
+                    if (userScrollForPackge) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            userScrollForPackge = false;
+
+                            loadMorePackages();
+                        }
+                    }
+                }
+            }
+
+        });
+
+
+    }
+
+
+    private void initializeDiscountProductForHorizontalSection(){
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        specailDiscountProductHorizonatlRV= (RecyclerView) findViewById(R.id.specail_product_recyleiew);
+        specailDiscountProductHorizonatlRV.setLayoutManager(layoutManager);
+        // Create adapter passing in the sample user data
+        this.discountProductRecyleViewAdapter = new DiscountProductRecyleViewAdapter(this);
+        // Attach the adapter to the recyclerview to populate items
+        this.specailDiscountProductHorizonatlRV.setAdapter(discountProductRecyleViewAdapter);
+        this.specailDiscountProductHorizonatlRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
+        // Set layout manager to position the items
+
+        if (MainActivity.discountProductForHorizontalList.size() < 1) {
+            if (mInternetConnection.isConnectingToInternet())
+
+            {
+                MainActivity.discountProductForHorizontalList.clear();
+               new GetSpecailDiscountProductAsynTask(this).execute(String.valueOf(this.limit),String.valueOf(offsetForDiscountProduct));
+            }
+        }
+
+
+        this.specailDiscountProductHorizonatlRV.addOnItemTouchListener(
+                new RecyclerItemClickListener(MainActivity.this, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Intent intent = new Intent(MainActivity.this, ProductDetailsActivity.class);
+                        intent.putExtra("position", position);
+                        intent.putExtra("productArray", 9);
+                        startActivity(intent);
+                    }
+                })
+        );
+
+
+        this.specailDiscountProductHorizonatlRV.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+
+                if (dx > 0) //check for scroll down
+                {
+                    visibleItemCount = layoutManager.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
+
+
+                    if (userScrollForDiscountProduct) {
+                        if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                            userScrollForDiscountProduct = false;
+
+
+                            loadMoreDiscountProducts();
+                        }
+                    }
+                }
+            }
+
+        });
+
+    }
 
     private void initilizeParentCategoryList() {
 
@@ -431,6 +584,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
     }
 
+
+    private void loadMorePackages(){
+        if (mInternetConnection.isConnectingToInternet()){
+            this.offsetForPackage++;
+            new GetPackagesAsynTask(this).execute(String.valueOf(this.limit),String.valueOf(this.offsetForPackage));
+        }
+    }
+
+    private void loadMoreDiscountProducts(){
+        if(mInternetConnection.isConnectingToInternet()){
+            this.offsetForDiscountProduct++;
+            new GetSpecailDiscountProductAsynTask(this).execute(String.valueOf(this.limit), String.valueOf(this.offsetForDiscountProduct));
+        }
+    }
+
     private void loadNewProductMore() {
 
         if (mInternetConnection.isConnectingToInternet()) {
@@ -439,6 +607,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             new GetNewProductsAsyncTask(this).execute(String.valueOf(offsetForNewProductsHorizontalScrolling), String.valueOf(limit));
 
         }
+    }
+
+
+    public void notifyDiscountProductDataSet(){
+        discountProductRecyleViewAdapter.notifyDataSetChanged();
+    }
+
+    public void notifyPackageDataSet(){
+        this.userScrollForPackge=true;
+        packageInHorizontalListAdapter.notifyDataSetChanged();
     }
 
     public void setNewProductsList(ArrayList<Products> productsList) {
@@ -473,6 +651,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
 
 
+    }
+
+    public void setDiscountProductError(){
+        this.userScrollForDiscountProduct=false;
+        MakeToast.showToast(this,"No More Discount Product...");
+    }
+
+    public void setPackageListError(){
+        this.userScrollForPackge=false;
+        MakeToast.showToast(this,"No More Package...");
     }
 
     public void setNewProductListError() {

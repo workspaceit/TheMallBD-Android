@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:id="@+id/produt_details_scroll"
+    >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:background="#FFFFFF">
+
+
+
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            tools:context=".activity.PackageDetailsActivity">
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/toolbar" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_package_name_pd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Lipstick"
+                    android:textColor="#3C3C3C"
+                    android:textSize="@dimen/material_text_title" />
+
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/slider_package_details"
+                    android:layout_width="350dp"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp" />
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="-10dp"
+                    android:layout_marginTop="20dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".6"
+                        android:orientation="vertical"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_weight=".02"
+                                android:text="@string/previous_price"
+                                android:textAlignment="textEnd"
+                                android:textAllCaps="true"
+                                android:textColor="#3C3C3C"
+                                android:textSize="16sp"
+                                android:id="@+id/previous_normal_package_price"/>
+
+                            <TextView
+                                android:id="@+id/tv_previous_package_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:layout_weight=".98"
+                                android:text="000 TK"
+                                android:textColor="#3C3C3C"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_weight=".02"
+                                android:text="@string/price"
+                                android:textAlignment="textEnd"
+                                android:textColor="#3C3C3C"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/tv_package_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+
+                                android:layout_weight=".30"
+                                android:text="000 TK"
+                                android:textColor="#961C1E"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <TextView
+                                android:layout_width="80dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="10dp"
+                                android:layout_weight=".02"
+                                android:text="@string/save_price"
+                                android:textAlignment="textEnd"
+                                android:textColor="#3C3C3C"
+                                android:textSize="16sp"
+                                android:id="@+id/save_package_normal_text_view"/>
+
+                            <TextView
+                                android:id="@+id/tv_package_save_product_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+
+                                android:layout_weight=".98"
+                                android:text="000 TK"
+                                android:textColor="#961C1E"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".4"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="85dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:text="@string/quantity"
+                            android:textAllCaps="true"
+                            android:textColor="#961C1E"
+                            android:textSize="@dimen/material_text_subhead" />
+
+                        <Spinner
+                            android:id="@+id/et_package_quantity_pd"
+                            android:layout_width="100dp"
+                            android:layout_height="30dp"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                            android:layout_marginRight="@dimen/activity_horizontal_margin"
+                            android:entries="@array/quantity_number"
+                            android:textColor="#3C3C3C"
+                            android:textSize="@dimen/material_text_headline"
+                            android:textStyle="bold"
+                            />
+
+
+                    </LinearLayout>
+
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/product_Packge_text"
+                        android:textAllCaps="true"
+                        android:textColor="#961C1E"
+                        android:textSize="@dimen/material_text_subhead"/>
+
+
+                    <com.themallbd.workspaceit.utility.CustomListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/package_product_list_view"
+                        android:dividerHeight="0dp"
+                        android:divider="@null">
+                    </com.themallbd.workspaceit.utility.CustomListView>
+
+
+
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description"
+                        android:textAllCaps="true"
+                        android:textColor="#961C1E"
+                        android:textSize="@dimen/material_text_subhead" />
+
+                    <TextView
+                        android:id="@+id/tv_package_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="New Text"
+                        android:textColor="#3C3C3C"
+                        android:textSize="@dimen/material_text_body1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/button_add_package_to_cart"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textAlignment="textStart"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_button_state"
+                        android:padding="10dp"
+                        android:text="@string/add_to_cart"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:paddingLeft="15dp"
+                        android:textSize="@dimen/material_text_button" />
+
+
+
+
+
+                    <Button
+                        android:id="@+id/button_buy_now"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textAlignment="textStart"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonshape_pink"
+                        android:padding="10dp"
+                        android:text="@string/buy_now"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/material_text_button"
+                        android:paddingLeft="15dp"/>
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>
+
+
+

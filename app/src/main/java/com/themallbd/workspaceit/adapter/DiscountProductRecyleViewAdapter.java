@@ -8,30 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themallbd.workspaceit.activity.MainActivity;
-import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
-import java.util.List;
-
 /**
- * Created by rajib on 2/15/16.
+ * Created by Tomal on 7/25/2016.
  */
-public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<HorizontalRecyclerViewAdapter.ViewHolder> {
-
-    private List<Products> productsList;
-
+public class DiscountProductRecyleViewAdapter extends RecyclerView.Adapter<DiscountProductRecyleViewAdapter.ViewHolder>{
     private String productUrl = "product/large/";
     private MainActivity mainActivity;
 
-
-
-    // Pass in the contact array into the constructor
-    public HorizontalRecyclerViewAdapter(MainActivity mainActivity) {
-        this.mainActivity = mainActivity;
+    public DiscountProductRecyleViewAdapter(MainActivity mainActivity){
+        this.mainActivity=mainActivity;
 
     }
 
@@ -50,20 +40,19 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
-
         // Set item views based on the data model
-        viewHolder.nameTextView.setText(MainActivity.newProductsForHorizontalViewList.get(position).title);
-        if (MainActivity.newProductsForHorizontalViewList.get(position).prices.size() > 0)
-            viewHolder.priceTextView.setText("" + MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
+        viewHolder.nameTextView.setText(MainActivity.discountProductForHorizontalList.get(position).title);
+        if (MainActivity.discountProductForHorizontalList.get(position).prices.size() > 0)
+            viewHolder.priceTextView.setText("" + MainActivity.discountProductForHorizontalList.get(position).prices.get(0).retailPrice);
         else
             viewHolder.priceTextView.setText("no prices");
 
-        int size = MainActivity.newProductsForHorizontalViewList.get(position).pictures.size();
+        int size = MainActivity.discountProductForHorizontalList.get(position).pictures.size();
         if (size >= 1) {
             ImageLoader imageLoader = ImageLoader.getInstance();
 
             imageLoader.getInstance().displayImage(
-                    Utility.IMAGE_URL + productUrl + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
+                    Utility.IMAGE_URL + productUrl + MainActivity.discountProductForHorizontalList.get(position).pictures.get(0).name,
                     viewHolder.imageView);
 
         } else {
@@ -74,7 +63,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
 
     @Override
     public int getItemCount() {
-        return MainActivity.newProductsForHorizontalViewList.size();
+        return MainActivity.discountProductForHorizontalList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

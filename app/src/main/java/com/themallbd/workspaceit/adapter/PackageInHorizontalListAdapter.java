@@ -8,31 +8,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themallbd.workspaceit.activity.MainActivity;
-import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
-import java.util.List;
-
 /**
- * Created by rajib on 2/15/16.
+ * Created by Tomal on 7/25/2016.
  */
-public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<HorizontalRecyclerViewAdapter.ViewHolder> {
-
-    private List<Products> productsList;
-
-    private String productUrl = "product/large/";
+public class PackageInHorizontalListAdapter extends RecyclerView.Adapter<PackageInHorizontalListAdapter.ViewHolder> {
+    private String packageUrl = "package/general/";
     private MainActivity mainActivity;
 
-
-
-    // Pass in the contact array into the constructor
-    public HorizontalRecyclerViewAdapter(MainActivity mainActivity) {
+    public PackageInHorizontalListAdapter(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
-
     }
 
     @Override
@@ -50,31 +39,25 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
+// Set item views based on the data model
+        viewHolder.nameTextView.setText(MainActivity.packgeProductForHorizontalList.get(position).packageTitle);
 
-        // Set item views based on the data model
-        viewHolder.nameTextView.setText(MainActivity.newProductsForHorizontalViewList.get(position).title);
-        if (MainActivity.newProductsForHorizontalViewList.get(position).prices.size() > 0)
-            viewHolder.priceTextView.setText("" + MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
-        else
-            viewHolder.priceTextView.setText("no prices");
+            viewHolder.priceTextView.setText("" + MainActivity.packgeProductForHorizontalList.get(position).originalPriceTotal);
 
-        int size = MainActivity.newProductsForHorizontalViewList.get(position).pictures.size();
-        if (size >= 1) {
+
+
             ImageLoader imageLoader = ImageLoader.getInstance();
 
             imageLoader.getInstance().displayImage(
-                    Utility.IMAGE_URL + productUrl + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
+                    Utility.IMAGE_URL + packageUrl + MainActivity.packgeProductForHorizontalList.get(position).image,
                     viewHolder.imageView);
 
-        } else {
-            viewHolder.imageView.setImageResource(R.drawable.image_not_found);
-        }
 
     }
 
     @Override
     public int getItemCount() {
-        return MainActivity.newProductsForHorizontalViewList.size();
+        return MainActivity.packgeProductForHorizontalList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

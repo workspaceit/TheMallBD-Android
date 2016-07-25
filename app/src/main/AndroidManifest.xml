@@ -61,6 +61,8 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.NoInternetActiviy" >
         </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.PackageDetailsActivity" >
+        </activity>
     </application>
 
 </manifest>

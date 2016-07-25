@@ -23,6 +23,9 @@
     <string name="proceesToCheckout">PROCEED TO CHECKOUT</string>
     <string name="logout">Logout</string>
     <string name="searc_result">Search Results...</string>
+    <string name="package_text">Package List</string>
+    <string name="specail_Product_text">Special Discount</string>
+    <string name="product_Packge_text">Product In This Package</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
