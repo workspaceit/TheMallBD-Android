@@ -73,7 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private DiscountProductRecyleViewAdapter discountProductRecyleViewAdapter;
     private PackageInHorizontalListAdapter packageInHorizontalListAdapter;
 
-
+    private Button showAllNewProductButton,showAllFeatureProductButton,showAllPackageButton,showAllDiscountButton;
 
 
 
@@ -200,17 +200,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         homeSearcTextView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(homeSearcTextView.getText().toString().equals("")){
-                    MakeToast.showToast(getApplicationContext(),"You didn't type anything...");
+                if (homeSearcTextView.getText().toString().equals("")) {
+                    MakeToast.showToast(getApplicationContext(), "You didn't type anything...");
                     return false;
                 }
-                Intent intent=new Intent(getApplicationContext(),SearchProductListActivity.class);
-                intent.putExtra("keyword",homeSearcTextView.getText().toString());
+                Intent intent = new Intent(getApplicationContext(), SearchProductListActivity.class);
+                intent.putExtra("keyword", homeSearcTextView.getText().toString());
                 startActivity(intent);
                 return true;
             }
         });
 
+
+        this.showAllNewProductButton=(Button)findViewById(R.id.more_new_product_button);
+        this.showAllFeatureProductButton=(Button)findViewById(R.id.more_feature_product_button);
+        this.showAllPackageButton=(Button)findViewById(R.id.more_package_list_button);
+        this.showAllDiscountButton=(Button)findViewById(R.id.discount_prouct_more_button);
+        showAllNewProductButton.setOnClickListener(this);
+        showAllFeatureProductButton.setOnClickListener(this);
+        showAllPackageButton.setOnClickListener(this);
+        showAllDiscountButton.setOnClickListener(this);
 
         this.mainScroll = (ScrollView) findViewById(R.id.scroll_main_view);
         this.categoryWomenView = (ImageView) findViewById(R.id.iv_home_women);
@@ -757,6 +766,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
+
+        if (v==showAllNewProductButton){
+            MakeToast.showToast(this,"new");
+            return;
+        }else if(v==showAllFeatureProductButton){
+            MakeToast.showToast(this,"feature");
+            return;
+        }else if(v==showAllPackageButton){
+            MakeToast.showToast(this,"package");
+            return;
+        }else if(v==showAllDiscountButton){
+            MakeToast.showToast(this,"discount");
+            return;
+        }
 
         int count = Utility.parentsCategoryArraylist.size();
 
