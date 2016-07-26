@@ -67,6 +67,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private ReviewSingleRowAdapter reviewSingleRowAdapter;
     private TextView reviewNormalTextView;
 
+
     private CustomListView reviewsListView;
     private Button reviewLoadMoreButon;
     private Button loadMoreButton;
@@ -419,7 +420,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         Gson gson=new Gson();
         String cart=gson.toJson(Utility.shoppingCart.productCell);
         LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
-        localShoppintCart.setCart(cart);
+        localShoppintCart.setProductCart(cart);
 
     }
 

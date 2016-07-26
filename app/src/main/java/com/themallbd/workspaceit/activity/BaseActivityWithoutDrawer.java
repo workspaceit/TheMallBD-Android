@@ -119,7 +119,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
 
         View view = MenuItemCompat.getActionView(item);
         Button CARTCOUNT = (Button) view.findViewById(R.id.notif_count);
-        CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.productCell.size() + ""));
+        CARTCOUNT.setText(String.valueOf((Utility.shoppingCart.productCell.size() + Utility.shoppingCart.mallBdPackageCell.size())+""));
 
         CARTCOUNT.setOnClickListener(new View.OnClickListener() {
             @Override

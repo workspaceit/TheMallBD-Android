@@ -218,7 +218,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="6dp"
-                    android:background="#FFFFFF">
+                    android:background="#FFFFFF"
+                    android:weightSum="1"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -233,7 +235,20 @@
                         android:textColor="#4D4D4D"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_weight=".9"/>
+                    <Button
+                        android:background="@drawable/button_bg_transparent"
+                        android:layout_width="54dp"
+                        android:layout_height="25dp"
+                        android:layout_gravity="right|center"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="More..."
+                        android:textSize="14sp"
+
+                        android:textColor="#4D4D4D"
+
+                        />
                 </LinearLayout>
                 <View
                     android:orientation="horizontal"
@@ -307,7 +322,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="6dp"
-                    android:background="#FFFFFF">
+                    android:background="#FFFFFF"
+                    android:weightSum="1">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -322,7 +338,24 @@
                         android:textColor="#4D4D4D"
                         android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_weight=".9"/>
+
+                    <Button
+                        android:background="#eee"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_gravity="right|center"
+                        android:text="Show All"
+                        android:textSize="@dimen/material_text_subhead"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textColor="#4D4D4D"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginLeft="10dp"
+
+
+                        />
 
                 </LinearLayout>
                 <View

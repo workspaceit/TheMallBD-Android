@@ -749,7 +749,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
         cartButton = (Button) view.findViewById(R.id.notif_count);
-        cartButton.setText(String.valueOf(Utility.shoppingCart.productCell.size() + ""));
+        cartButton.setText(String.valueOf((Utility.shoppingCart.productCell.size() + Utility.shoppingCart.mallBdPackageCell.size())+""));
         cartButton.setOnClickListener(this);
 
         return true;

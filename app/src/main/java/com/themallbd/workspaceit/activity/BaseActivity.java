@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.squareup.picasso.Picasso;
 import com.themallbd.workspaceit.asynctask.LoginByAccesTokenAsynTask;
+import com.themallbd.workspaceit.dataModel.MallBdPackageCell;
 import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.SessionManager;
@@ -78,12 +79,19 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 new LoginByAccesTokenAsynTask().execute(accessToken);
             }
             LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
-            String newCart=localShoppintCart.getCart();
+            String oldProductCart=localShoppintCart.getProductCart();
+            String oldPackageCart=localShoppintCart.getPackageCart();
             Gson gson=new Gson();
-            ProductCell[] productCells=gson.fromJson(newCart,ProductCell[].class);
+            ProductCell[] productCells=gson.fromJson(oldProductCart,ProductCell[].class);
+            MallBdPackageCell[]mallBdPackageCells=gson.fromJson(oldPackageCart,MallBdPackageCell[].class);
             Utility.shoppingCart.productCell.clear();
             if(productCells!=null) {
                 Collections.addAll(Utility.shoppingCart.productCell, productCells);
+            }
+
+            Utility.shoppingCart.mallBdPackageCell.clear();
+            if(mallBdPackageCells!=null){
+                Collections.addAll(Utility.shoppingCart.mallBdPackageCell,mallBdPackageCells);
             }
 
 

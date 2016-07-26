@@ -16,7 +16,7 @@ public class MallBdPackage {
     public float packagePriceTotal;
     public String status;
     public String createdOn;
-    public ArrayList<MallBdPackageProduct> mallBdPackageProduct;
+    public ArrayList<MallBdPackageProduct> packageProduct;
 
     public MallBdPackage(){
         this.id=0;
@@ -29,7 +29,7 @@ public class MallBdPackage {
         this.packagePriceTotal=0;
         this.status="";
         this.createdOn="";
-        this.mallBdPackageProduct=new ArrayList<>();
+        this.packageProduct=new ArrayList<>();
 
     }
 }

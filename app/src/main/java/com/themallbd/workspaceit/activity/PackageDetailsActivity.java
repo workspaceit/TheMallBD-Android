@@ -1,8 +1,8 @@
 package com.themallbd.workspaceit.activity;
 
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -11,29 +11,31 @@ import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.google.gson.Gson;
 import com.themallbd.workspaceit.adapter.ProductsInPackageAdapter;
 import com.themallbd.workspaceit.dataModel.MallBdPackage;
-import com.themallbd.workspaceit.dataModel.Picture;
+import com.themallbd.workspaceit.dataModel.MallBdPackageCell;
 import com.themallbd.workspaceit.utility.CustomListView;
 import com.themallbd.workspaceit.utility.CustomSliderView;
+import com.themallbd.workspaceit.utility.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
-public class PackageDetailsActivity extends BaseActivityWithoutDrawer {
-    private TextView tvPackageName, tvPackagePrice, tvPackageDescription, prevoiusPackagePrice;
+public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements View.OnClickListener {
+    private TextView tvPackageName, tvPackagePrice, tvPackageDescription, prevoiusPackagePrice,savePackagePrice;
     private Spinner packageQunatitySpinner;
     private Button addToCart,BuyNow;
     private static int position;
     private static int arrayListIndicator = 0;
-    private int productsQuantity = 0;
+
     private MallBdPackage mallBdPackage;
     SessionManager sessionManager;
     private CustomListView packageProductListView;
     private SliderLayout slideShow;
     private ProductsInPackageAdapter productsInPackageAdapter;
-
+    private int packageQuantity;
     private String packageUrl = "package/general/";
 
     @Override
@@ -46,6 +48,7 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer {
         tvPackageDescription=(TextView)findViewById(R.id.tv_package_description);
         prevoiusPackagePrice =(TextView)findViewById(R.id.tv_previous_package_price);
         prevoiusPackagePrice.setPaintFlags(prevoiusPackagePrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        savePackagePrice=(TextView)findViewById(R.id.tv_package_save_product_price);
 
         slideShow=(SliderLayout)findViewById(R.id.slider_package_details);
         packageQunatitySpinner=(Spinner)findViewById(R.id.et_package_quantity_pd);
@@ -70,10 +73,16 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer {
     private void initialize(){
         tvPackageName.setText(mallBdPackage.packageTitle);
         tvPackageDescription.setText(mallBdPackage.description);
-        MakeToast.showToast(this,mallBdPackage.mallBdPackageProduct.size()+"");
-      /*  productsInPackageAdapter=new ProductsInPackageAdapter(this,mallBdPackage.mallBdPackageProduct);
+        prevoiusPackagePrice.setText(mallBdPackage.originalPriceTotal+" Tk");
+        tvPackagePrice.setText(mallBdPackage.packagePriceTotal + " Tk");
+        savePackagePrice.setText((mallBdPackage.originalPriceTotal-mallBdPackage.packagePriceTotal)+" Tk");
+        addToCart.setOnClickListener(this);
+
+
+
+        productsInPackageAdapter=new ProductsInPackageAdapter(this,mallBdPackage.packageProduct);
         packageProductListView.setAdapter(productsInPackageAdapter);
-        productsInPackageAdapter.notifyDataSetChanged();*/
+        productsInPackageAdapter.notifyDataSetChanged();
 
     }
 
@@ -120,5 +129,57 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer {
     public void onBackPressed() {
         super.onBackPressed();
         this.finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if(v==addToCart){
+            try {
+                this.packageQuantity = Integer.parseInt(packageQunatitySpinner.getSelectedItem().toString());
+            } catch (Exception e) {
+                MakeToast.showToast(this, "Invalid Quantity");
+
+            }
+
+            if (this.packageQuantity < 1) {
+                MakeToast.showToast(this, "Quantity is not valid");
+                return;
+            }
+
+            for (int i = 0; i < Utility.shoppingCart.mallBdPackageCell.size(); i++) {
+                if (Utility.shoppingCart.mallBdPackageCell.get(i).mallBdPackage.id == mallBdPackage.id) {
+                    Utility.shoppingCart.mallBdPackageCell.get(i).quantity += this.packageQuantity;
+                    this.updateCart();
+                    MakeToast.showToast(this,"Product already exist in the cart. Quantity updated..");
+                    invalidateOptionsMenu();
+                    return;
+                }
+
+            }
+
+
+            MallBdPackageCell mallBdPackageCell=new MallBdPackageCell();
+            mallBdPackageCell.setId(mallBdPackage.id);
+            mallBdPackageCell.setQuantity(this.packageQuantity);
+            mallBdPackageCell.setMallBdPackage(mallBdPackage);
+
+            Utility.shoppingCart.mallBdPackageCell.add(mallBdPackageCell);
+
+            this.updateCart();
+            MakeToast.showToast(this, "Succesfully added to cart...");
+            invalidateOptionsMenu();
+        }
+
+    }
+
+
+
+    private void updateCart(){
+        Gson gson=new Gson();
+        String cart=gson.toJson(Utility.shoppingCart.mallBdPackageCell);
+        LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
+        localShoppintCart.setPackageCart(cart);
+
     }
 }

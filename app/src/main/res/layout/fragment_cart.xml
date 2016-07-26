@@ -1,24 +1,67 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.themallbd.workspaceit.fragment.CartFragment"
     android:orientation="vertical">
 
-    <ListView
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:layout_marginBottom="80dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+    <com.themallbd.workspaceit.utility.CustomListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/cart_lv"
+        android:layout_weight="1"
+
+        >
+
+
+    </com.themallbd.workspaceit.utility.CustomListView>
+
+
+    <View
+        android:background="#EEE"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        />
+
+    <com.themallbd.workspaceit.utility.CustomListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cart_package"
         android:layout_weight="1"
         >
 
-    </ListView>
+    </com.themallbd.workspaceit.utility.CustomListView>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:gravity="center|bottom"
+        android:layout_marginTop="2dp"
         >
         <Button
             android:layout_width="0dp"
@@ -53,8 +96,4 @@
 
 
 
-
-
-
-
-</LinearLayout>
+</RelativeLayout>

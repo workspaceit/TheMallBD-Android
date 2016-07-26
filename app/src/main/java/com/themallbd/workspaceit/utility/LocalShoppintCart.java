@@ -22,7 +22,8 @@ public class LocalShoppintCart {
     // Sharedpref file name
     private final String PREF_NAME = "cart";
 
-    private final String CART_JSON="cart";
+    private final String PRODUCT_CART_JSON="product_cart";
+    private final String PACKAGE_CART_JSON="package_cart";
 
 
     public LocalShoppintCart(Context context){
@@ -31,13 +32,22 @@ public class LocalShoppintCart {
         editor = pref.edit();
     }
 
-    public void setCart(String cart){
-        editor.putString(CART_JSON,cart);
+    public void setProductCart(String cart){
+        editor.putString(PRODUCT_CART_JSON,cart);
         editor.commit();
 
     }
 
-    public String getCart(){
-        return pref.getString(CART_JSON,"");
+    public String getProductCart(){
+        return pref.getString(PRODUCT_CART_JSON,"");
+    }
+
+    public void setPackageCart(String cart){
+        editor.putString(PACKAGE_CART_JSON,cart);
+        editor.commit();
+    }
+
+    public String getPackageCart(){
+        return pref.getString(PACKAGE_CART_JSON,"");
     }
 }

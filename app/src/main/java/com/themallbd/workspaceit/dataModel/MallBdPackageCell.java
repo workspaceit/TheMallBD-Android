@@ -8,11 +8,25 @@ import java.util.ArrayList;
 public class MallBdPackageCell {
     public int id;
     public int quantity;
-    public ArrayList<MallBdPackage> mallBdPackage;
+    public MallBdPackage mallBdPackage;
 
     public MallBdPackageCell(){
         this.id=0;
         this.quantity=0;
-        this.mallBdPackage=new ArrayList<>();
+        this.mallBdPackage=new MallBdPackage();
+    }
+
+
+    public void setId(int id){
+        this.id=id;
+
+    }
+
+    public void setQuantity(int quantity){
+        this.quantity=quantity;
+    }
+
+    public void setMallBdPackage(MallBdPackage mallBdPackage){
+        this.mallBdPackage=mallBdPackage;
     }
 }

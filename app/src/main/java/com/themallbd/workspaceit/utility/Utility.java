@@ -1,5 +1,6 @@
 package com.themallbd.workspaceit.utility;
 
+
 import com.themallbd.workspaceit.dataModel.Banner;
 import com.themallbd.workspaceit.dataModel.Review;
 import com.themallbd.workspaceit.dataModel.SearchResult;
@@ -29,5 +30,7 @@ public class Utility {
     public static ArrayList<Banner>banners=new ArrayList<>();
 
     public static boolean isLoggedInFlag=false;
+
+
 
 }

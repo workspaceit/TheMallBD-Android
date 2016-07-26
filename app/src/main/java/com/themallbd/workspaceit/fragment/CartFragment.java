@@ -12,6 +12,9 @@ import android.widget.ListView;
 
 import com.themallbd.workspaceit.activity.CheckoutActivity;
 import com.themallbd.workspaceit.activity.MainActivity;
+import com.themallbd.workspaceit.adapter.PackageProductCartAdapter;
+import com.themallbd.workspaceit.utility.CustomAutoCompleteTextView;
+import com.themallbd.workspaceit.utility.CustomListView;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.CartInListViewAdapter;
@@ -19,9 +22,10 @@ import com.themallbd.workspaceit.utility.MakeToast;
 
 public class CartFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener{
 
-    private ListView cartListView;
+    private CustomListView cartListView,packageListView;
 
     private CartInListViewAdapter cartInListViewAdapter;
+    private PackageProductCartAdapter packageProductCartAdapter;
     public Button checkOutButton;
     public Button continueShoppingButton;
 
@@ -37,7 +41,8 @@ public class CartFragment extends Fragment implements AdapterView.OnItemClickLis
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
-        cartListView = (ListView) view.findViewById(R.id.cart_lv);
+        cartListView = (CustomListView) view.findViewById(R.id.cart_lv);
+        packageListView=(CustomListView)view.findViewById(R.id.cart_package);
 
         checkOutButton=(Button)view.findViewById(R.id.checkOutButton);
         checkOutButton.setOnClickListener(this);
@@ -51,6 +56,13 @@ public class CartFragment extends Fragment implements AdapterView.OnItemClickLis
         if (Utility.shoppingCart.productCell.size()>0) {
             cartInListViewAdapter = new CartInListViewAdapter(getActivity(), Utility.shoppingCart);
             cartListView.setAdapter(cartInListViewAdapter);
+
+
+        }
+
+        if(Utility.shoppingCart.mallBdPackageCell.size()>0){
+            packageProductCartAdapter=new PackageProductCartAdapter(getActivity(),Utility.shoppingCart);
+            packageListView.setAdapter(packageProductCartAdapter);
         }
         return view;
 
