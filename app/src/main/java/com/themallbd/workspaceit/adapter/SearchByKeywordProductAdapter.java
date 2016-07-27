@@ -1,7 +1,6 @@
 package com.themallbd.workspaceit.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
-import com.themallbd.workspaceit.activity.ProductFromCategoryActivity;
 import com.themallbd.workspaceit.activity.SearchProductListActivity;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
@@ -25,7 +22,7 @@ import com.workspaceit.themall.R;
 public class SearchByKeywordProductAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater layoutInflater;
-    private static String productUrl = "product/thumbnail/";
+    private String productUrl = "product/general/";
 
     public SearchByKeywordProductAdapter(Activity activity){
         this.activity=activity;
@@ -39,6 +36,7 @@ public class SearchByKeywordProductAdapter extends BaseAdapter {
         public ImageView productImage;
         public TextView productName;
         public TextView priceView;
+        public TextView manufraturer;
     }
 
     @Override
@@ -61,12 +59,13 @@ public class SearchByKeywordProductAdapter extends BaseAdapter {
         ViewHolder viewHolder = null;
 
         if (convertView == null) {
-            convertView = layoutInflater.inflate(R.layout.category_wise_products,null);
+            convertView = layoutInflater.inflate(R.layout.any_products_list_item,null);
             viewHolder = new ViewHolder();
 
             viewHolder.productImage = (ImageView) convertView.findViewById(R.id.product_category_imageview);
             viewHolder.productName = (TextView) convertView.findViewById(R.id.product_category_name);
             viewHolder.priceView = (TextView) convertView.findViewById(R.id.product_category_price);
+            viewHolder.manufraturer=(TextView)convertView.findViewById(R.id.any_product_manufracturer_text_view);
 
             convertView.setTag(viewHolder);
         } else {
@@ -94,6 +93,7 @@ public class SearchByKeywordProductAdapter extends BaseAdapter {
                 viewHolder.productImage.setImageBitmap(bm);
             }
             viewHolder.productName.setText(SearchProductListActivity.searchProductArrayList.get(position).title);
+            viewHolder.manufraturer.setText(SearchProductListActivity.searchProductArrayList.get(position).manufacturer.name);
             if (SearchProductListActivity.searchProductArrayList.get(position).prices.size()>0)
                 viewHolder.priceView.setText(""+SearchProductListActivity.searchProductArrayList.get(position).prices.get(0).retailPrice);
             else

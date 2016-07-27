@@ -21,9 +21,6 @@ import java.util.ArrayList;
 public class SearchProductAdapter extends ArrayAdapter<String> {
     private LayoutInflater layoutInflater;
     private Context context;
-    public ArrayList<String> originalSearchResults;
-    public ArrayList<String>filterSearchResult;
-    private int viewResourceId;
     private String productUrl = "/product/general/";
 
     private ArrayList<String> productTitle;

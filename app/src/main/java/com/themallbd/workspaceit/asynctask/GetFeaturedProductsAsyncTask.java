@@ -1,8 +1,10 @@
 package com.themallbd.workspaceit.asynctask;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.themallbd.workspaceit.activity.AllFeaturesProductActivity;
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.service.ProductService;
@@ -15,10 +17,10 @@ import java.util.ArrayList;
  */
 public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayList<Products>> {
 
-    private MainActivity mContext;
+    private Context mContext;
 
 
-    public GetFeaturedProductsAsyncTask(MainActivity mContext) {
+    public GetFeaturedProductsAsyncTask(Context mContext) {
         this.mContext = mContext;
     }
 
@@ -34,24 +36,41 @@ public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayL
 
         String offset = params[0];
         String limit = params[1];
-        ProductService productService = new ProductService();
-        ArrayList<Products> productsArrayList = productService.getFeaturedProducts(offset, limit);
-        return productsArrayList;
+
+        return new ProductService().getFeaturedProducts(offset,limit);
     }
 
     @Override
     protected void onPostExecute(ArrayList<Products> productses) {
         super.onPostExecute(productses);
 
-        if (productses.size()>0)
-        {
-            mContext.setFeaturedProductsList(productses);
-        }
-        else {
-            if (!Utility.responseStat.status)
-                mContext.setFeaturedProductListError();
-            else
-                Toast.makeText(mContext, "Something Went wrong", Toast.LENGTH_SHORT).show();
+        if (Utility.responseStat.status) {
+            if(mContext instanceof MainActivity){
+                if (mContext instanceof MainActivity) {
+                    if (MainActivity.featuredProductsForHorizontalViewList.size() != 0) {
+                        MainActivity.featuredProductsForHorizontalViewList.remove(MainActivity.featuredProductsForHorizontalViewList.size() - 1);
+                    }
+
+                    MainActivity.featuredProductsForHorizontalViewList.addAll(productses);
+                    ((MainActivity)mContext).setFeaturedProductsList();
+                }
+            }else if(mContext instanceof AllFeaturesProductActivity){
+                ((AllFeaturesProductActivity)mContext).notifyDataSetChange();
+            }
+
+        } else {
+            if(mContext instanceof MainActivity){
+                if (MainActivity.featuredProductsForHorizontalViewList.size()!=0) {
+                    MainActivity.featuredProductsForHorizontalViewList.remove(MainActivity.featuredProductsForHorizontalViewList.size() - 1);
+                }
+
+                ((MainActivity)mContext).setFeaturedProductListError();
+            }else if (mContext instanceof AllFeaturesProductActivity){
+                ((AllFeaturesProductActivity)mContext).featureProductError();
+            }
+
+
+
         }
     }
 }

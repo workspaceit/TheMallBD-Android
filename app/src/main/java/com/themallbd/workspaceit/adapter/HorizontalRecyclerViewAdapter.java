@@ -2,10 +2,12 @@ package com.themallbd.workspaceit.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -20,11 +22,14 @@ import java.util.List;
 /**
  * Created by rajib on 2/15/16.
  */
-public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<HorizontalRecyclerViewAdapter.ViewHolder> {
+public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG  = 0;
 
     private List<Products> productsList;
 
-    private String productUrl = "product/large/";
+    private String productUrl = "product/general/";
     private MainActivity mainActivity;
 
 
@@ -36,40 +41,67 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
+        RecyclerView.ViewHolder vh;
+        if(viewType==VIEW_ITEM){
+            // Inflate the custom layout
+            View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
 
-        // Inflate the custom layout
-        View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
+            // Return a new holder instance
+            ViewHolder viewHolder = new ViewHolder(productView);
+            vh=viewHolder;
 
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(productView);
-        return viewHolder;
+        }else {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_view_loader, parent, false);
+
+            vh = new ProgressViewHolder(v);
+
+        }
+
+
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         // Set item views based on the data model
-        viewHolder.nameTextView.setText(MainActivity.newProductsForHorizontalViewList.get(position).title);
-        if (MainActivity.newProductsForHorizontalViewList.get(position).prices.size() > 0)
-            viewHolder.priceTextView.setText("" + MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
-        else
-            viewHolder.priceTextView.setText("no prices");
 
-        int size = MainActivity.newProductsForHorizontalViewList.get(position).pictures.size();
-        if (size >= 1) {
-            ImageLoader imageLoader = ImageLoader.getInstance();
+        if(holder instanceof ViewHolder){
+            HorizontalRecyclerViewAdapter.ViewHolder viewHolder=(HorizontalRecyclerViewAdapter.ViewHolder)holder;
+            viewHolder.nameTextView.setText(MainActivity.newProductsForHorizontalViewList.get(position).title);
+            if (MainActivity.newProductsForHorizontalViewList.get(position).prices.size() > 0)
+                viewHolder.priceTextView.setText("" + MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
+            else
+                viewHolder.priceTextView.setText("no prices");
 
-            imageLoader.getInstance().displayImage(
-                    Utility.IMAGE_URL + productUrl + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
-                    viewHolder.imageView);
+            int size = MainActivity.newProductsForHorizontalViewList.get(position).pictures.size();
+            if (size >= 1) {
 
-        } else {
-            viewHolder.imageView.setImageResource(R.drawable.image_not_found);
+
+                ImageLoader.getInstance().displayImage(
+                        Utility.IMAGE_URL + productUrl + MainActivity.newProductsForHorizontalViewList.get(position).pictures.get(0).name,
+                        viewHolder.imageView);
+
+            } else {
+                viewHolder.imageView.setImageResource(R.drawable.image_not_found);
+            }
+
+        }else {
+
+            ((ProgressViewHolder)holder).progressBar.setIndeterminate(true);
+            ((ProgressViewHolder)holder).progressBar.setVisibility(View.VISIBLE);
         }
 
+
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return MainActivity.newProductsForHorizontalViewList.get(position)!=null? VIEW_ITEM: VIEW_PROG;
     }
 
     @Override
@@ -95,6 +127,15 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
             imageView = (ImageView) itemView.findViewById(R.id.iv_productImage_hl);
             nameTextView = (TextView) itemView.findViewById(R.id.tv_productName_hl);
             priceTextView = (TextView) itemView.findViewById(R.id.tv_productPrice_hl);
+        }
+    }
+
+
+    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+        public ProgressViewHolder(View v) {
+            super(v);
+            progressBar = (ProgressBar)v.findViewById(R.id.progressBar);
         }
     }
 }

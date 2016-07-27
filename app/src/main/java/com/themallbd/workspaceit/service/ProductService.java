@@ -61,9 +61,10 @@ public class ProductService extends BaseMallBDService {
 
     }
 
-    public ArrayList<Products>getFeaturedProducts(String offset,String limit){
+    public ArrayList<Products> getFeaturedProducts(String offset,String limit){
         this.responseStat = new ResponseStat();
-        this.productsArrayList = new ArrayList<>();
+        this.productsArrayList=new ArrayList<>();
+
 
         this.setController("api/products/featured/show");
         this.setParams("offset", offset);
@@ -82,14 +83,14 @@ public class ProductService extends BaseMallBDService {
             {
 
 
-                Log.i("Check", "true");
+                Utility.responseStat = this.responseStat;
                 Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
                 Collections.addAll(this.productsArrayList, products);
                 return this.productsArrayList;
             }
             else {
                 Utility.responseStat = this.responseStat;
-                return productsArrayList;
+                return this.productsArrayList;
             }
         }catch (Exception e)
         {
@@ -101,7 +102,7 @@ public class ProductService extends BaseMallBDService {
 
     public ArrayList<Products> getNewProducts(String offset,String limit){
         this.responseStat = new ResponseStat();
-        this.productsArrayList = new ArrayList<>();
+        this.productsArrayList=new ArrayList<>();
 
         this.setController("api/products/new/show");
         this.setParams("offset", offset);
@@ -109,6 +110,7 @@ public class ProductService extends BaseMallBDService {
         this.setParams("shop_id", String.valueOf(shop_id));
 
         String resp = this.getData("POST");
+        System.out.println(resp);
 
 
         try {
@@ -120,10 +122,11 @@ public class ProductService extends BaseMallBDService {
             {
 
 
-                Log.i("Check", "true");
+                Utility.responseStat = this.responseStat;
                 Products[] products = gson.fromJson(jsonObject.get("responseData"),Products[].class);
-                Collections.addAll(this.productsArrayList, products);
-                return this.productsArrayList;
+
+                Collections.addAll(productsArrayList, products);
+                return productsArrayList;
             }
             else {
                 Utility.responseStat = this.responseStat;
@@ -133,7 +136,7 @@ public class ProductService extends BaseMallBDService {
         {
             e.printStackTrace();
         }
-        return this.productsArrayList;
+        return productsArrayList;
 
     }
 

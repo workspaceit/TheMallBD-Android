@@ -1,5 +1,6 @@
 package com.themallbd.workspaceit.adapter;
 
+import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,49 +12,55 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.themallbd.workspaceit.activity.ProductFromCategoryActivity;
+import com.themallbd.workspaceit.activity.MainActivity;
+import com.themallbd.workspaceit.activity.SearchProductListActivity;
+import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
+import java.util.ArrayList;
+import java.util.logging.StreamHandler;
+
 /**
- * Created by rajib on 3/11/16.
+ * Created by Tomal on 7/27/2016.
  */
-public class CategoryWiseProductsAdapter extends BaseAdapter {
-    private ProductFromCategoryActivity activity;
+public class AnyProductListAdapter extends BaseAdapter {
+    private Activity activity;
+    private ArrayList<Products>productses;
     private LayoutInflater layoutInflater;
+    private String productUrl = "/product/general/";
 
-    private static String productUrl = "product/general/";
+    public AnyProductListAdapter(Activity activity,ArrayList<Products>productses){
+        this.activity=activity;
+        this.productses=new ArrayList<>();
+        this.productses.addAll(productses);
+        this.layoutInflater=activity.getLayoutInflater();
 
-    public CategoryWiseProductsAdapter(ProductFromCategoryActivity activity) {
-        this.activity = activity;
-        this.layoutInflater = activity.getLayoutInflater();
     }
-    public class ViewHolder {
 
-        public ImageView productImage;
-        public TextView productName;
-        public TextView priceView;
-        public TextView manufracturer;
+
+    public void updateProductArrayList(ArrayList<Products>productses){
+        this.productses.clear();
+        this.productses.addAll(productses);
     }
 
     @Override
     public int getCount() {
-        return ProductFromCategoryActivity.categoryWiseProductsArrayList.size();
+        return productses.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
+        return productses.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return productses.get(position).id;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         ViewHolder viewHolder = null;
 
         if (convertView == null) {
@@ -63,22 +70,24 @@ public class CategoryWiseProductsAdapter extends BaseAdapter {
             viewHolder.productImage = (ImageView) convertView.findViewById(R.id.product_category_imageview);
             viewHolder.productName = (TextView) convertView.findViewById(R.id.product_category_name);
             viewHolder.priceView = (TextView) convertView.findViewById(R.id.product_category_price);
-            viewHolder.manufracturer=(TextView)convertView.findViewById(R.id.any_product_manufracturer_text_view);
+            viewHolder.manufraturer=(TextView)convertView.findViewById(R.id.any_product_manufracturer_text_view);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         try {
-            int size = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position).pictures.size();
+            int size = this.productses.get(position).pictures.size();
             if (size>=1) {
                 //    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
                 //    ImageLoader.getInstance().init(config);
                 ImageLoader.getInstance().displayImage(
                         Utility.IMAGE_URL + productUrl +
-                                ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position).pictures.get(0).name,
+                                this.productses.get(position).pictures.get(0).name,
                         viewHolder.productImage);
             } else {
+
+
                 BitmapFactory.Options ourOptions=new BitmapFactory.Options();
                 ourOptions.inDither=false;
                 ourOptions.inPurgeable=true;
@@ -88,10 +97,10 @@ public class CategoryWiseProductsAdapter extends BaseAdapter {
                 // viewHolder.productImage.setImageResource(R.drawable.image_not_found);
                 viewHolder.productImage.setImageBitmap(bm);
             }
-            viewHolder.productName.setText(ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position).title);
-            viewHolder.manufracturer.setText(ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position).manufacturer.name);
-            if (ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position).prices.size()>0)
-                viewHolder.priceView.setText(""+ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position).prices.get(0).retailPrice);
+            viewHolder.productName.setText(this.productses.get(position).title);
+            viewHolder.manufraturer.setText(this.productses.get(position).manufacturer.name);
+            if (this.productses.get(position).prices.size()>0)
+                viewHolder.priceView.setText(""+this.productses.get(position).prices.get(0).retailPrice);
             else
                 viewHolder.priceView.setText("No price");
         }
@@ -101,5 +110,14 @@ public class CategoryWiseProductsAdapter extends BaseAdapter {
             e.printStackTrace();
         }
         return convertView;
+    }
+
+
+    public class ViewHolder {
+
+        public ImageView productImage;
+        public TextView productName;
+        public TextView priceView;
+        public TextView manufraturer;
     }
 }

@@ -31,7 +31,7 @@ public class SearchProductListActivity extends BaseActivityWithoutDrawer impleme
 
     public static ArrayList<Products> searchProductArrayList;
     private String keyword;
-    private int offset = 0,limit = 7;
+    private int offset = 0,limit = 5;
     private SearchByKeywordProductAdapter searchByKeywordProductAdapter;
 
     @Override

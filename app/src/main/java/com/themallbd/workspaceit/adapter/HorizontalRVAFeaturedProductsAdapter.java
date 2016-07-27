@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -19,11 +20,12 @@ import java.util.List;
 /**
  * Created by rajib on 2/15/16.
  */
-public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<HorizontalRVAFeaturedProductsAdapter.ViewHolder>  {
-
+public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG  = 0;
     private List<Products> productsList;
 
-    private static String productUrl = "product/large/";
+    private static String productUrl = "product/general/";
     private MainActivity mainActivity;
 
     // Pass in the contact array into the constructor
@@ -34,39 +36,65 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<H
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
+        RecyclerView.ViewHolder vh;
+        if(viewType==VIEW_ITEM){
+            // Inflate the custom layout
+            View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
 
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(productView);
-        return viewHolder;
+            // Return a new holder instance
+            ViewHolder viewHolder = new ViewHolder(productView);
+            vh=viewHolder;
+
+        }else {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_view_loader, parent, false);
+
+            vh = new ProgressViewHolder(v);
+
+        }
+
+
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-        // Set item views based on the data model
-        viewHolder.nameTextView.setText(MainActivity.featuredProductsForHorizontalViewList.get(position).title);
-        if (MainActivity.featuredProductsForHorizontalViewList.get(position).prices.size()>0)
-            viewHolder.priceTextView.setText("" + MainActivity.featuredProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
-        else
-            viewHolder.priceTextView.setText("no prices");
-        int size = MainActivity.featuredProductsForHorizontalViewList.get(position).pictures.size();
-        if (size>=1) {
-            ImageLoader imageLoader = ImageLoader.getInstance();
+        if(holder instanceof ViewHolder) {
+            HorizontalRVAFeaturedProductsAdapter.ViewHolder viewHolder=(HorizontalRVAFeaturedProductsAdapter.ViewHolder)holder;
+            // Set item views based on the data model
+            viewHolder.nameTextView.setText(MainActivity.featuredProductsForHorizontalViewList.get(position).title);
+            if (MainActivity.featuredProductsForHorizontalViewList.get(position).prices.size() > 0)
+                viewHolder.priceTextView.setText("" + MainActivity.featuredProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
+            else
+                viewHolder.priceTextView.setText("no prices");
+            int size = MainActivity.featuredProductsForHorizontalViewList.get(position).pictures.size();
+            if (size >= 1) {
+                ImageLoader imageLoader = ImageLoader.getInstance();
 
-            imageLoader.getInstance().displayImage(
-                    Utility.IMAGE_URL + productUrl + MainActivity.featuredProductsForHorizontalViewList.get(position).pictures.get(0).name,
-                    viewHolder.imageView);
-        } else {
-            viewHolder.imageView.setImageResource(R.drawable.image_not_found);
+                imageLoader.getInstance().displayImage(
+                        Utility.IMAGE_URL + productUrl + MainActivity.featuredProductsForHorizontalViewList.get(position).pictures.get(0).name,
+                        viewHolder.imageView);
+            } else {
+                viewHolder.imageView.setImageResource(R.drawable.image_not_found);
+            }
+        }else {
+            ((ProgressViewHolder)holder).progressBar.setIndeterminate(true);
+            ((ProgressViewHolder)holder).progressBar.setVisibility(View.VISIBLE);
         }
 
     }
+
+    @Override
+    public int getItemViewType(int position) {
+        return MainActivity.featuredProductsForHorizontalViewList.get(position)!=null? VIEW_ITEM: VIEW_PROG;
+    }
+
     @Override
     public int getItemCount() {
         return MainActivity.featuredProductsForHorizontalViewList.size();
@@ -90,6 +118,15 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<H
             imageView = (ImageView) itemView.findViewById(R.id.iv_productImage_hl);
             nameTextView = (TextView) itemView.findViewById(R.id.tv_productName_hl);
             priceTextView = (TextView) itemView.findViewById(R.id.tv_productPrice_hl);
+        }
+    }
+
+
+    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+        public ProgressViewHolder(View v) {
+            super(v);
+            progressBar = (ProgressBar)v.findViewById(R.id.progressBar);
         }
     }
 }

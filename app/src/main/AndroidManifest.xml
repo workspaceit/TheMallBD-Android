@@ -63,6 +63,10 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.PackageDetailsActivity" >
         </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.AllNewProductActivity" >
+        </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.AllFeaturesProductActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -96,7 +96,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
 
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                    .cacheInMemory(false)
+                    .cacheInMemory(true)
+                    .resetViewBeforeLoading(true)
                     .cacheOnDisk(true)
                     .considerExifParams(true)
                     .resetViewBeforeLoading(false)
@@ -110,7 +111,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                     .threadPoolSize(5)
                     .memoryCache(new WeakMemoryCache())
                     .threadPriority(Thread.MIN_PRIORITY + 3)
-                    .memoryCacheSize(1048576 * 10)
+                    .memoryCacheSize(2 * 1024 * 1024)
                     .build();
 
             ImageLoader.getInstance().init(config);
