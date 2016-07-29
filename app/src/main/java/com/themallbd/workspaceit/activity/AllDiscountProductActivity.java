@@ -13,43 +13,50 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.themallbd.workspaceit.adapter.AnyProductListAdapter;
-import com.themallbd.workspaceit.asynctask.GetFeaturedProductsAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetNewProductsAsyncTask;
+import com.themallbd.workspaceit.asynctask.GetSpecailDiscountProductAsynTask;
 import com.themallbd.workspaceit.service.InternetConnection;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
 
-public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implements AbsListView.OnScrollListener,AdapterView.OnItemClickListener {
+public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implements AbsListView.OnScrollListener,AdapterView.OnItemClickListener {
     private Toolbar toolbar;
     private TextView toolBarTitle;
-    private ListView allFeatureProductListView;
+    private ListView allDiscountProductListView;
     private AnyProductListAdapter anyProductListAdapter;
     private int limit=5;
     private int offset=0;
     private InternetConnection mInternetConnection;
     private boolean loadProductFlag=true;
     private View footer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all_features_product);
+        setContentView(R.layout.activity_all_discount_product);
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
         toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
-        toolBarTitle.setText("Features Product");
-        allFeatureProductListView=(ListView)findViewById(R.id.all_feature_product_list_view);
-        anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.featuredProductsForHorizontalViewList);
-        allFeatureProductListView.setAdapter(anyProductListAdapter);
+        toolBarTitle.setText("Special Discount Product");
+        allDiscountProductListView=(ListView)findViewById(R.id.all_discount_product_list_view);
+        anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.discountProductForHorizontalList);
+        allDiscountProductListView.setAdapter(anyProductListAdapter);
 
         mInternetConnection=new InternetConnection(this);
-        this.offset=((MainActivity.featuredProductsForHorizontalViewList.size()/5)-1);
-        MakeToast.showToast(this,this.offset+"");
+        this.offset=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
 
 
         footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
-        this.allFeatureProductListView.setOnScrollListener(this);
-        this.allFeatureProductListView.setOnItemClickListener(this);
+
+        this.allDiscountProductListView.setOnScrollListener(this);
+        this.allDiscountProductListView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this, ProductDetailsActivity.class);
+        intent.putExtra("position", position);
+        intent.putExtra("productArray", 9);
+        startActivity(intent);
     }
 
     @Override
@@ -59,18 +66,17 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if(firstVisibleItem+visibleItemCount>=totalItemCount && loadProductFlag && MainActivity.moreItemFeatureProduct){
+        if(firstVisibleItem+visibleItemCount>=totalItemCount && loadProductFlag && MainActivity.moreItemNewProduct){
 
 
             loadProductFlag=false;
             if (mInternetConnection.isConnectingToInternet())
             {
-                allFeatureProductListView.addFooterView(footer);
+                allDiscountProductListView.addFooterView(footer);
                 this.offset++;
 
-                System.out.println("before call : "+this.offset+" limit "+this.limit+" size "+MainActivity.packgeProductForHorizontalList.size());
 
-                new GetFeaturedProductsAsyncTask(this).execute(String.valueOf(this.offset), String.valueOf(limit));
+                new GetSpecailDiscountProductAsynTask(this).execute(String.valueOf(this.limit), String.valueOf(offset));
 
 
 
@@ -85,28 +91,16 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
     }
 
     public void notifyDataSetChange() {
-        System.out.println("size " + MainActivity.featuredProductsForHorizontalViewList.size());
-        this.allFeatureProductListView.removeFooterView(footer);
-
-        this.anyProductListAdapter.updateProductArrayList(MainActivity.featuredProductsForHorizontalViewList);
+        this.allDiscountProductListView.removeFooterView(footer);
+        this.anyProductListAdapter.updateProductArrayList(MainActivity.discountProductForHorizontalList);
         this.anyProductListAdapter.notifyDataSetChanged();
         loadProductFlag=true;
     }
 
-    public void featureProductError(){
-        allFeatureProductListView.removeFooterView(footer);
+    public void newProductError(){
+        this.allDiscountProductListView.removeFooterView(footer);
         loadProductFlag=false;
-        MainActivity.moreItemFeatureProduct=false;
-        MakeToast.showToast(this,"No More Feauture Product...");
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this,ProductDetailsActivity.class);
-        intent.putExtra("position",position);
-        intent.putExtra("productArray",2);
-        startActivity(intent);
-
-
+        MainActivity.moreDiscountProduct=false;
+        MakeToast.showToast(this, "No More New Product...");
     }
 }

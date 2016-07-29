@@ -24,7 +24,7 @@ import com.workspaceit.themall.R;
  */
 public class CartInListViewAdapter extends BaseAdapter {
 
-    private static String productUrl = "product/thumbnail/";
+    private static String productUrl = "product/general/";
 
     private CartFragment mCartFragment;
     private ShoppingCart shoppingCart;
@@ -56,6 +56,7 @@ public class CartInListViewAdapter extends BaseAdapter {
         public Button cartItemAdd;
         public Button cartItemMinus;
         public Button cartItemDelete;
+        public TextView singleSubTotal;
 
 
     }
@@ -94,6 +95,7 @@ public class CartInListViewAdapter extends BaseAdapter {
             viewHolder.cartItemDelete=(Button)convertView.findViewById(R.id.cart_delete_btn);
             viewHolder.cartItemMinus=(Button)convertView.findViewById(R.id.minusButton);
             viewHolder.quantityTextView=(TextView)convertView.findViewById(R.id.quantityTextView);
+            viewHolder.singleSubTotal=(TextView)convertView.findViewById(R.id.single_sub_total_text_view);
 
             viewHolder.cartItemAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -185,8 +187,11 @@ public class CartInListViewAdapter extends BaseAdapter {
             }
 
             viewHolder.cartItemName.setText(this.shoppingCart.productCell.get(position).product.title);
-            viewHolder.cartItemPrice.setText("" + this.shoppingCart.productCell.get(position).product.prices.get(0).retailPrice);
-
+            viewHolder.cartItemPrice.setText("" + this.shoppingCart.productCell.get(position).product.prices.get(0).retailPrice+" BDT");
+            int quantity=this.shoppingCart.productCell.get(position).quantity;
+            double price= this.shoppingCart.productCell.get(position).product.prices.get(0).retailPrice;
+            double subTotal=quantity*price;
+            viewHolder.singleSubTotal.setText(subTotal+" BDT");
             viewHolder.quantityTextView.setText(String.valueOf(this.shoppingCart.productCell.get(position).quantity));
         }
         catch (Exception e)

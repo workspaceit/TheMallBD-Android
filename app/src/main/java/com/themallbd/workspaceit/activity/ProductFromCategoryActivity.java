@@ -84,7 +84,7 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer imple
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(this,ProductDetailsActivity.class);
         intent.putExtra("position",position);
-        intent.putExtra("productArray",8);
+        intent.putExtra("productArray",10);
         startActivity(intent);
     }
 }

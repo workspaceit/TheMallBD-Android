@@ -178,10 +178,9 @@ public class ProductService extends BaseMallBDService {
     }
 
 
-    public boolean getDiscountProduct(String limit,String offset){
-        ResponseStat responseStat;
-        responseStat = new ResponseStat();
-        ArrayList<Products> discountProduct = new ArrayList<>();
+    public ArrayList<Products> getDiscountProduct(String limit,String offset){
+        this.responseStat=new ResponseStat();
+        this.productsArrayList=new ArrayList<>();
 
         this.setController("api/products/special/show");
         this.setParams("offset", offset);
@@ -190,7 +189,7 @@ public class ProductService extends BaseMallBDService {
 
 
         String resp = this.getData("POST");
-        System.out.println(resp);
+
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
@@ -201,17 +200,17 @@ public class ProductService extends BaseMallBDService {
 
 
                 Products[] products = gson.fromJson(jsonObject.get("responseData"), Products[].class);
-                Collections.addAll(MainActivity.discountProductForHorizontalList,products);
-
-                return true;
+                Collections.addAll(this.productsArrayList,products);
+                Utility.responseStat=this.responseStat;
+                return this.productsArrayList;
             } else {
-                Utility.responseStat = responseStat;
-                return false;
+                Utility.responseStat = this.responseStat;
+                return this.productsArrayList;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return false;
+        return this.productsArrayList;
 
 
     }

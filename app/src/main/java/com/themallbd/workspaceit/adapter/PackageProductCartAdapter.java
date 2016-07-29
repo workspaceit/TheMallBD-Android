@@ -78,6 +78,7 @@ public class PackageProductCartAdapter extends BaseAdapter {
             viewHolder.cartItemDelete=(Button)convertView.findViewById(R.id.cart_delete_btn);
             viewHolder.cartItemMinus=(Button)convertView.findViewById(R.id.minusButton);
             viewHolder.quantityTextView=(TextView)convertView.findViewById(R.id.quantityTextView);
+            viewHolder.singleSubTotal=(TextView)convertView.findViewById(R.id.single_sub_total_text_view);
 
             viewHolder.cartItemAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -171,6 +172,11 @@ public class PackageProductCartAdapter extends BaseAdapter {
             viewHolder.cartItemName.setText(this.shoppingCart.mallBdPackageCell.get(position).mallBdPackage.packageTitle);
             viewHolder.cartItemPrice.setText("" + this.shoppingCart.mallBdPackageCell.get(position).mallBdPackage.packagePriceTotal);
 
+            int quantity=this.shoppingCart.mallBdPackageCell.get(position).quantity;
+            double price= this.shoppingCart.mallBdPackageCell.get(position).mallBdPackage.packagePriceTotal;
+            double subTotal=quantity*price;
+            viewHolder.singleSubTotal.setText(subTotal+" BDT");
+
             viewHolder.quantityTextView.setText(String.valueOf(this.shoppingCart.mallBdPackageCell.get(position).quantity));
         }
         catch (Exception e)
@@ -191,6 +197,7 @@ public class PackageProductCartAdapter extends BaseAdapter {
         public Button cartItemAdd;
         public Button cartItemMinus;
         public Button cartItemDelete;
+        public TextView singleSubTotal;
 
 
     }

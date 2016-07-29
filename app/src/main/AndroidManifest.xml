@@ -67,6 +67,10 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.AllFeaturesProductActivity" >
         </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.AllPacakgeActivity" >
+        </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.AllDiscountProductActivity" >
+        </activity>
     </application>
 
 </manifest>

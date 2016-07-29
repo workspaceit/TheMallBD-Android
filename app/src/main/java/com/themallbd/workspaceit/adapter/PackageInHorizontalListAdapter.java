@@ -1,5 +1,6 @@
 package com.themallbd.workspaceit.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,34 +17,58 @@ import com.workspaceit.themall.R;
 /**
  * Created by Tomal on 7/25/2016.
  */
-public class PackageInHorizontalListAdapter extends RecyclerView.Adapter<PackageInHorizontalListAdapter.ViewHolder> {
+public class PackageInHorizontalListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG  = 0;
     private String packageUrl = "package/general/";
-    private MainActivity mainActivity;
+    private Activity mainActivity;
+
+    @Override
+    public int getItemViewType(int position) {
+         return MainActivity.packgeProductForHorizontalList.get(position)!=null? VIEW_ITEM: VIEW_PROG;
+    }
 
     public PackageInHorizontalListAdapter(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        // Inflate the custom layout
-        View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
+        RecyclerView.ViewHolder vh;
+        if(viewType==VIEW_ITEM){
+            // Inflate the custom layout
+            View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
 
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(productView);
-        return viewHolder;
+            // Return a new holder instance
+            ViewHolder viewHolder = new ViewHolder(productView);
+            vh=viewHolder;
+
+        }else {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_view_loader, parent, false);
+
+            vh = new HorizontalRecyclerViewAdapter.ProgressViewHolder(v);
+
+        }
+
+
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        if(holder instanceof ViewHolder) {
+            PackageInHorizontalListAdapter.ViewHolder viewHolder=(PackageInHorizontalListAdapter.ViewHolder)holder;
+
+
 // Set item views based on the data model
-        viewHolder.nameTextView.setText(MainActivity.packgeProductForHorizontalList.get(position).packageTitle);
+            viewHolder.nameTextView.setText(MainActivity.packgeProductForHorizontalList.get(position).packageTitle);
 
             viewHolder.priceTextView.setText("" + MainActivity.packgeProductForHorizontalList.get(position).originalPriceTotal);
-
 
 
             ImageLoader imageLoader = ImageLoader.getInstance();
@@ -52,7 +77,11 @@ public class PackageInHorizontalListAdapter extends RecyclerView.Adapter<Package
                     Utility.IMAGE_URL + packageUrl + MainActivity.packgeProductForHorizontalList.get(position).image,
                     viewHolder.imageView);
 
+        }else {
 
+            ((HorizontalRecyclerViewAdapter.ProgressViewHolder)holder).progressBar.setIndeterminate(true);
+            ((HorizontalRecyclerViewAdapter.ProgressViewHolder)holder).progressBar.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

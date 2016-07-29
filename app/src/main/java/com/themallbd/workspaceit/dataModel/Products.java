@@ -12,6 +12,7 @@ public class Products {
     public String title;
     public String description;
     public String productDescriptionMobile;
+    public int point;
     public String url;
     public String barCode;
     public String width;
@@ -50,6 +51,7 @@ public class Products {
         this.title = "";
         this.description = "";
         this.url = "";
+        this.point=0;
         this.barCode = "";
         this.width = "";
         this.height = "";

@@ -64,6 +64,7 @@ public class CategoryListViewActivity extends BaseActivityWithoutDrawer implemen
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
         Intent intent = new Intent(this,CategoryInExpandableListViewActivity.class);
         intent.putExtra("position",position);
         intent.putExtra("title",this.parentCategoryArrayList.get(position).title);

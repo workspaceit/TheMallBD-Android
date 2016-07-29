@@ -1,10 +1,12 @@
 package com.themallbd.workspaceit.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -16,12 +18,13 @@ import com.workspaceit.themall.R;
  * Created by rajib on 2/15/16.
  */
 public class GridViewProductsInHomePageAdapter extends BaseAdapter {
-
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG  = 0;
     private MainActivity mainActivity;
     private LayoutInflater layoutInflater;
     private int state;
 
-    private static String productUrl = "product/large/";
+    private static String productUrl = "product/general/";
 
 
     public GridViewProductsInHomePageAdapter(MainActivity mainActivity) {
@@ -45,7 +48,7 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return MainActivity.allProductsForGridViewList.get(position);
     }
 
     @Override
@@ -55,6 +58,8 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+
 
 
         ViewHolder viewHolder = null;

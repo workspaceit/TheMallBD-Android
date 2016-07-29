@@ -16,8 +16,10 @@ import com.workspaceit.themall.R;
 /**
  * Created by Tomal on 7/25/2016.
  */
-public class DiscountProductRecyleViewAdapter extends RecyclerView.Adapter<DiscountProductRecyleViewAdapter.ViewHolder>{
-    private String productUrl = "product/large/";
+public class DiscountProductRecyleViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG  = 0;
+    private String productUrl = "product/general/";
     private MainActivity mainActivity;
 
     public DiscountProductRecyleViewAdapter(MainActivity mainActivity){
@@ -26,37 +28,62 @@ public class DiscountProductRecyleViewAdapter extends RecyclerView.Adapter<Disco
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
+        RecyclerView.ViewHolder vh;
+        if(viewType==VIEW_ITEM){
+            // Inflate the custom layout
+            View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
 
-        // Inflate the custom layout
-        View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
+            // Return a new holder instance
+            ViewHolder viewHolder = new ViewHolder(productView);
+            vh=viewHolder;
 
-        // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(productView);
-        return viewHolder;
+        }else {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_view_loader, parent, false);
+
+            vh = new HorizontalRecyclerViewAdapter.ProgressViewHolder(v);
+
+        }
+
+
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
-        // Set item views based on the data model
-        viewHolder.nameTextView.setText(MainActivity.discountProductForHorizontalList.get(position).title);
-        if (MainActivity.discountProductForHorizontalList.get(position).prices.size() > 0)
-            viewHolder.priceTextView.setText("" + MainActivity.discountProductForHorizontalList.get(position).prices.get(0).retailPrice);
-        else
-            viewHolder.priceTextView.setText("no prices");
+    public int getItemViewType(int position) {
+        return MainActivity.discountProductForHorizontalList.get(position)!=null? VIEW_ITEM: VIEW_PROG;
+    }
 
-        int size = MainActivity.discountProductForHorizontalList.get(position).pictures.size();
-        if (size >= 1) {
-            ImageLoader imageLoader = ImageLoader.getInstance();
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-            imageLoader.getInstance().displayImage(
-                    Utility.IMAGE_URL + productUrl + MainActivity.discountProductForHorizontalList.get(position).pictures.get(0).name,
-                    viewHolder.imageView);
+        if(holder instanceof ViewHolder) {
+            DiscountProductRecyleViewAdapter.ViewHolder viewHolder = (DiscountProductRecyleViewAdapter.ViewHolder) holder;
 
-        } else {
-            viewHolder.imageView.setImageResource(R.drawable.image_not_found);
+            // Set item views based on the data model
+            viewHolder.nameTextView.setText(MainActivity.discountProductForHorizontalList.get(position).title);
+            if (MainActivity.discountProductForHorizontalList.get(position).prices.size() > 0)
+                viewHolder.priceTextView.setText("" + MainActivity.discountProductForHorizontalList.get(position).prices.get(0).retailPrice);
+            else
+                viewHolder.priceTextView.setText("no prices");
+
+            int size = MainActivity.discountProductForHorizontalList.get(position).pictures.size();
+            if (size >= 1) {
+                ImageLoader imageLoader = ImageLoader.getInstance();
+
+                imageLoader.getInstance().displayImage(
+                        Utility.IMAGE_URL + productUrl + MainActivity.discountProductForHorizontalList.get(position).pictures.get(0).name,
+                        viewHolder.imageView);
+
+            } else {
+                viewHolder.imageView.setImageResource(R.drawable.image_not_found);
+            }
+        }else {
+            ((HorizontalRecyclerViewAdapter.ProgressViewHolder)holder).progressBar.setIndeterminate(true);
+            ((HorizontalRecyclerViewAdapter.ProgressViewHolder)holder).progressBar.setVisibility(View.VISIBLE);
         }
 
     }

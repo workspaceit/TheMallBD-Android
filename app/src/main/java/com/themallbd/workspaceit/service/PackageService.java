@@ -8,6 +8,7 @@ import com.themallbd.workspaceit.dataModel.MallBdPackage;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
 import com.themallbd.workspaceit.utility.Utility;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
@@ -16,10 +17,11 @@ import java.util.Collections;
 public class PackageService extends BaseMallBDService {
 
     private ResponseStat responseStat;
+    private ArrayList<MallBdPackage> mallBdPackages;
 
-    public boolean getAllPackages(String limit, String offset){
+    public ArrayList<MallBdPackage> getAllPackages(String limit, String offset){
         this.responseStat = new ResponseStat();
-
+        this.mallBdPackages=new ArrayList<>();
 
         this.setController("api/package/all");
         this.setParams("offset", offset);
@@ -39,19 +41,19 @@ public class PackageService extends BaseMallBDService {
             {
 
 
-
+                Utility.responseStat=this.responseStat;
                 MallBdPackage[] packages = gson.fromJson(jsonObject.get("responseData"),MallBdPackage[].class);
-                Collections.addAll(MainActivity.packgeProductForHorizontalList,packages);
-                return true;
+                Collections.addAll(this.mallBdPackages,packages);
+                return this.mallBdPackages;
             }
             else {
                 Utility.responseStat = this.responseStat;
-                return false;
+                return this.mallBdPackages;
             }
         }catch (Exception e)
         {
             e.printStackTrace();
         }
-        return false;
+        return this.mallBdPackages;
     }
 }

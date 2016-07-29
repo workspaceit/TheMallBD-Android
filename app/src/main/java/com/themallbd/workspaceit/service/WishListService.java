@@ -25,6 +25,7 @@ public class WishListService extends BaseMallBDService {
         this.setParams("customer_id", customerId);
         this.setParams("product_id",productId);
         String resp=this.getData("POST");
+        System.out.println(resp);
 
         try {
             JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();

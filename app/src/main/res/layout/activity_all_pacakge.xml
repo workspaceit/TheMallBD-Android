@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.themallbd.workspaceit.activity.AllDiscountProductActivity">
+    tools:context="com.themallbd.workspaceit.activity.ProductFromCategoryActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -14,9 +14,10 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/all_new_product_list_view">
+        android:id="@+id/all_package_list_view">
 
     </ListView>
 
 
-    </LinearLayout>
+</LinearLayout>
+

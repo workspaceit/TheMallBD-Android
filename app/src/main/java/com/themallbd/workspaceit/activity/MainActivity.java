@@ -23,6 +23,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -75,7 +76,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private PackageInHorizontalListAdapter packageInHorizontalListAdapter;
 
     private Button showAllNewProductButton,showAllFeatureProductButton,showAllPackageButton,showAllDiscountButton;
-    private View footer;
+    private ProgressBar gridViewProgressBar;
 
 
     //Imageview
@@ -116,6 +117,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     public static boolean moreItemNewProduct;
     public static boolean moreItemFeatureProduct;
+    public static boolean morePackage;
+    public static boolean moreDiscountProduct;
     private boolean noMoreItemInGridView;
     int lastlastitem = 0;
     private Button cartButton;
@@ -142,9 +145,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             return;
         }
 
-
-        this.getNecessaryData();
         this.initialize();
+        this.getNecessaryData();
         this.initilizeParentCategoryList();
 
 
@@ -153,16 +155,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void getNecessaryData(){
 
-
-        new GetBannerImagesAsyncTask(this).execute();
-
+        if(Utility.banners.size()<1) {
+            new GetBannerImagesAsyncTask(this).execute();
+        }else {
+            this.initializeSlider();
+        }
 
     }
 
     private void initialize() {
 
 
-        footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_view_loader, null, false);
+        this.gridViewProgressBar=(ProgressBar)findViewById(R.id.grid_view_progress_bar);
         newProductsForHorizontalViewList = new ArrayList<>();
         featuredProductsForHorizontalViewList = new ArrayList<>();
         allProductsForGridViewList = new ArrayList<>();
@@ -176,6 +180,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         moreItemFeatureProduct = true;
         moreItemNewProduct = true;
+        morePackage=true;
+        moreDiscountProduct=true;
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
         //initializing new product horizontal scrolling section
@@ -291,7 +297,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                     pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
 
-                    if (userScrollForPackge) {
+                    if (userScrollForPackge && morePackage) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             userScrollForPackge = false;
 
@@ -354,7 +360,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                     pastVisiblesItems = layoutManager.findFirstVisibleItemPosition();
 
 
-                    if (userScrollForDiscountProduct) {
+                    if (userScrollForDiscountProduct && moreDiscountProduct) {
                         if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
                             userScrollForDiscountProduct = false;
 
@@ -371,7 +377,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void initilizeParentCategoryList() {
 
-        new CategoryInListViewAsyncTask(this).execute();
+        if(Utility.parentsCategoryArraylist.size()<1) {
+
+            new CategoryInListViewAsyncTask(this).execute();
+        }else {
+            this.initializeCategoryView();
+        }
 
 
     }
@@ -499,6 +510,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     private void loadMoreAllProduct() {
+            this.gridViewProgressBar.setVisibility(View.VISIBLE);
         if (mInternetConnection.isConnectingToInternet()) {
             this.offsetForAllProductsInGridView++;
             new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
@@ -601,6 +613,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     private void loadMorePackages(){
+        MainActivity.packgeProductForHorizontalList.add(null);
+        this.packageInHorizontalListAdapter.notifyItemInserted(packgeProductForHorizontalList.size()-1);
+
         if (mInternetConnection.isConnectingToInternet()){
             this.offsetForPackage++;
             new GetPackagesAsynTask(this).execute(String.valueOf(this.limit),String.valueOf(this.offsetForPackage));
@@ -608,6 +623,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void loadMoreDiscountProducts(){
+        MainActivity.discountProductForHorizontalList.add(null);
+        this.discountProductRecyleViewAdapter.notifyItemInserted(discountProductForHorizontalList.size()-1);
         if(mInternetConnection.isConnectingToInternet()){
             this.offsetForDiscountProduct++;
             new GetSpecailDiscountProductAsynTask(this).execute(String.valueOf(this.limit), String.valueOf(this.offsetForDiscountProduct));
@@ -663,12 +680,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     public void setDiscountProductError(){
+        this.discountProductRecyleViewAdapter.notifyItemRemoved(MainActivity.discountProductForHorizontalList.size()-1);
+        moreDiscountProduct =false;
         this.userScrollForDiscountProduct=false;
         MakeToast.showToast(this,"No More Discount Product...");
     }
 
     public void setPackageListError(){
+        this.packageInHorizontalListAdapter.notifyItemRemoved(MainActivity.packgeProductForHorizontalList.size()-1);
         this.userScrollForPackge=false;
+        morePackage=false;
         MakeToast.showToast(this,"No More Package...");
     }
 
@@ -697,7 +718,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     public void setAllProductList(ArrayList<Products> productsList) {
 
-
+        this.gridViewProgressBar.setVisibility(View.GONE);
         for (int i = 0; i < productsList.size(); i++) {
             try {
 
@@ -715,6 +736,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
     public void setAllProductsListError() {
+        this.gridViewProgressBar.setVisibility(View.GONE);
         userScrolledInGridView = false;
         noMoreItemInGridView = true;
         gridAllFlag=false;
@@ -763,13 +785,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         if(newProductsForHorizontalViewList.size()>0){
             this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
             this.offsetForNewProductsHorizontalScrolling=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
-           
+
         }
 
         if(featuredProductsForHorizontalViewList.size()>0){
             this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
             this.offsetForFeaturedProductsHorizontalScrolling=((MainActivity.featuredProductsForHorizontalViewList.size()/5)-1);
 
+        }
+
+        if(packgeProductForHorizontalList.size()>0){
+            this.packageInHorizontalListAdapter.notifyDataSetChanged();
+            this.offsetForPackage=((MainActivity.packgeProductForHorizontalList.size()/5)-1);
+        }
+
+        if(discountProductForHorizontalList.size()>0){
+            this.discountProductRecyleViewAdapter.notifyDataSetChanged();
+            this.offsetForDiscountProduct=((MainActivity.discountProductForHorizontalList.size()/5)-1);
         }
 
 
@@ -787,10 +819,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             startActivity(intent);
             return;
         }else if(v==showAllPackageButton){
-            MakeToast.showToast(this,"package");
+            Intent intent=new Intent(this,AllPacakgeActivity.class);
+            startActivity(intent);
             return;
         }else if(v==showAllDiscountButton){
-            MakeToast.showToast(this,"discount");
+            Intent intent=new Intent(this,AllDiscountProductActivity.class);
+            startActivity(intent);
             return;
         }
 

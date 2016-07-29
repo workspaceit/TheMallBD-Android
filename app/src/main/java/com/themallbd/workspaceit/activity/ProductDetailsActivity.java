@@ -10,6 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,6 +25,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.themallbd.workspaceit.asynctask.GetProductByProductIdAsynctask;
+import com.themallbd.workspaceit.asynctask.SubmitChectoutAsyntask;
 import com.themallbd.workspaceit.dataModel.Picture;
 import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.dataModel.Products;
@@ -172,6 +174,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             products = SearchProductListActivity.searchProductArrayList.get(position);
         }else if(arrayListIndicator==9){
             products=MainActivity.discountProductForHorizontalList.get(position);
+        }else if(arrayListIndicator==10){
+            products=ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
         }
 
 
@@ -264,6 +268,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
         addToWishListBtn = (Button) findViewById(R.id.button_add_to_wishlist);
         buyNowBtn = (Button) findViewById(R.id.button_buy_now);
+        buyNowBtn.setOnClickListener(this);
         ratingBar.setRating(products.avgRating);
 
         if (products.discountActiveFlag) {
@@ -292,8 +297,10 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         Utility.relatedProductArryList.clear();
         relatedProductAdapter.notifyDataSetChanged();
-        new GetRelatedProductAsynTask(this, 1).execute(String.valueOf(3), String.valueOf(0),
-                String.valueOf(products.id), String.valueOf(products.categories.get(0).id));
+        if (products.categories.size()>0) {
+            new GetRelatedProductAsynTask(this, 1).execute(String.valueOf(3), String.valueOf(0),
+                    String.valueOf(products.id), String.valueOf(products.categories.get(0).id));
+        }
     }
 
     public void setDataSetAdapter() {
@@ -388,8 +395,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
 
             Utility.shoppingCart.productCell.add(productCell);
-          /* boolean flag= mallBdDataBaseHelper.insertNewData(products.title,shoppingCartCell.quantity,shoppingCartCell.product.prices.get(0).retailPrice,
-                    shoppingCartCell.product.pictures.get(0).name);*/
+
 
 
             this.updateCart();
@@ -413,8 +419,16 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             startActivity(intent);
         } else if (v == addReviewButton) {
             CustomDialog.addReviewCustomDailog(this, products.title, String.valueOf(products.id));
+        }else if(v==buyNowBtn){
+            MakeToast.showToast(this,"clickrf");
+            Gson gson=new Gson();
+            Log.v("taiful",gson.toJson(Utility.shoppingCart));
+            new SubmitChectoutAsyntask(this).execute("tomal","taiful","v@v.vom","12345678910","basabo","dhaka",
+                    "ANDROID","basbo","Bangladesh", "1","shs","1","1","1",gson.toJson(Utility.shoppingCart));
         }
     }
+
+
 
     private void updateCart(){
         Gson gson=new Gson();

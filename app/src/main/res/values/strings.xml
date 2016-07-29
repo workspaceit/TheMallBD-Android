@@ -52,6 +52,7 @@
     <string name="title_activity_checkout">Checkout</string>
     <string name="contact_us">Contact</string>
     <string name="account_info">Account Infromation</string>
+    <string name="checkout_informatio">Checkout Infromation</string>
     <string name="shipping_info">Shipping Infromation</string>
     <string name="previous_price">PRP:  </string>
     <string name="save_price">You Save: </string>

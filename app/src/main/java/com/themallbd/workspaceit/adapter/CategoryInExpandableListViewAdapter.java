@@ -1,7 +1,9 @@
 package com.themallbd.workspaceit.adapter;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,6 +74,7 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
         return true;
     }
 
+
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
@@ -86,8 +89,25 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Category category = (Category) getGroup(groupPosition);
+        final Category category = (Category) getGroup(groupPosition);
         viewHolder.nameTextView.setText(category.title);
+
+        if (category.childrens.size()==0){
+            viewHolder.nameTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(activity, ProductFromCategoryActivity.class);
+                    intent.putExtra("category_id",category.id);
+                    activity.startActivity(intent);
+
+                }
+            });
+        }
+
+
+
+
+
 
         return convertView;
     }
@@ -154,6 +174,18 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
                 convertView = inflater.inflate(R.layout.category_child_items_in_group, null);
                 text = (TextView) convertView.findViewById(R.id.lblListItem);
                 text.setText(childrens.title);
+                if(childrens.childrens.size()==0){
+                    text.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(activity, ProductFromCategoryActivity.class);
+                            intent.putExtra("category_id",childrens.id);
+                            activity.startActivity(intent);
+
+                        }
+                    });
+                }
+
             }
             return convertView;
         }

@@ -55,7 +55,8 @@ public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayL
                     ((MainActivity)mContext).setFeaturedProductsList();
                 }
             }else if(mContext instanceof AllFeaturesProductActivity){
-                ((AllFeaturesProductActivity)mContext).notifyDataSetChange();
+                MainActivity.featuredProductsForHorizontalViewList.addAll(productses);
+                        ((AllFeaturesProductActivity) mContext).notifyDataSetChange();
             }
 
         } else {

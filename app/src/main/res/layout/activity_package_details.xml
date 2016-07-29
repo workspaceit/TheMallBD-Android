@@ -292,7 +292,7 @@
 
 
                     <Button
-                        android:id="@+id/button_buy_now"
+                        android:id="@+id/button_package_buy_now"
                         style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
