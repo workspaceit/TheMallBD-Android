@@ -65,6 +65,8 @@ public class CustomDialog {
                 .setPositiveButton("Confrim Logout", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         sessionManager.logoutUser();
+                        Utility.isLoggedInFlag=false;
+                        Utility.loggedInUser=null;
                         MakeToast.showToast(context, "You are successfully logged out");
 
 

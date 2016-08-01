@@ -1,5 +1,6 @@
 package com.themallbd.workspaceit.asynctask;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
@@ -7,16 +8,27 @@ import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.activity.ProductDetailsActivity;
 import com.themallbd.workspaceit.service.SubmitCheckoutService;
 import com.themallbd.workspaceit.utility.MakeToast;
+import com.themallbd.workspaceit.utility.Utility;
 
 /**
  * Created by Tomal on 7/28/2016.
  */
 public class SubmitChectoutAsyntask extends AsyncTask<String,String,String> {
     private Context context;
+    private ProgressDialog mProgressDialog;
     public SubmitChectoutAsyntask(Context context){
         this.context=context;
     }
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        mProgressDialog = new ProgressDialog(this.context);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage("Completing Your Order. Please Wait...");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -45,6 +57,8 @@ public class SubmitChectoutAsyntask extends AsyncTask<String,String,String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
+        mProgressDialog.dismiss();
+        MakeToast.showToast(context, Utility.responseStat.msg);
 
     }
 

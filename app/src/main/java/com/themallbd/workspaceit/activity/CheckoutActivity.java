@@ -114,7 +114,7 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer implements TabLa
                 tab.select();
                 mViewPager.setCurrentItem(0);
 
-            } else if (tab.getPosition() == 1 && Utility.shoppingCart.productCell.size() < 1) {
+            } else if (tab.getPosition() == 1 && Utility.shoppingCart.productCell.size() < 1 && Utility.shoppingCart.mallBdPackageCell.size()<1) {
                 MakeToast.showToast(this, "Your shopping Cart is empty");
                 tab = tabLayout.getTabAt(0);
                 tab.select();

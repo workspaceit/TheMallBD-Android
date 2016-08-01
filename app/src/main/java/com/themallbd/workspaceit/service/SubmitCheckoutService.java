@@ -1,6 +1,10 @@
 package com.themallbd.workspaceit.service;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
+import com.themallbd.workspaceit.utility.Utility;
 
 /**
  * Created by Tomal on 7/28/2016.
@@ -34,6 +38,26 @@ public class SubmitCheckoutService extends BaseMallBDService{
 
         String resp=this.getData("POST");
         System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+
+            if(this.responseStat.status){
+                Utility.responseStat=this.responseStat;
+                return resp;
+            }else {
+                Utility.responseStat = this.responseStat;
+                return resp;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
+
 
         return resp;
 

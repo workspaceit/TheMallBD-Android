@@ -91,7 +91,7 @@ public class CartFragment extends Fragment implements AdapterView.OnItemClickLis
         else if(v == checkOutButton)
         {
 
-            if(Utility.shoppingCart.productCell.size()<1){
+            if(Utility.shoppingCart.productCell.size()<1 && Utility.shoppingCart.mallBdPackageCell.size()<1){
                 MakeToast.showToast(getActivity(),"Your shopping cart is empty!");
 
             }else {

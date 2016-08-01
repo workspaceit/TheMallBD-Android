@@ -2,6 +2,8 @@ package com.themallbd.workspaceit.utility;
 
 
 import com.themallbd.workspaceit.dataModel.Banner;
+import com.themallbd.workspaceit.dataModel.DeliveryMethod;
+import com.themallbd.workspaceit.dataModel.PaymentMethods;
 import com.themallbd.workspaceit.dataModel.Review;
 import com.themallbd.workspaceit.dataModel.SearchResult;
 import com.themallbd.workspaceit.dataModel.ShoppingCart;
@@ -30,6 +32,9 @@ public class Utility {
     public static ArrayList<Banner>banners=new ArrayList<>();
 
     public static boolean isLoggedInFlag=false;
+
+    public static ArrayList<PaymentMethods>paymentMethodses=new ArrayList<>();
+    public static ArrayList<DeliveryMethod>deliveryMethods=new ArrayList<>();
 
 
 

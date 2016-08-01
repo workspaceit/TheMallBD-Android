@@ -32,6 +32,8 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.themallbd.workspaceit.adapter.DiscountProductRecyleViewAdapter;
 import com.themallbd.workspaceit.adapter.PackageInHorizontalListAdapter;
+import com.themallbd.workspaceit.asynctask.GetAllDeliveryMethodsAsyncTask;
+import com.themallbd.workspaceit.asynctask.GetAllPaymentMethodAsynTask;
 import com.themallbd.workspaceit.asynctask.GetBannerImagesAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetPackagesAsynTask;
 import com.themallbd.workspaceit.asynctask.GetSpecailDiscountProductAsynTask;
@@ -159,6 +161,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             new GetBannerImagesAsyncTask(this).execute();
         }else {
             this.initializeSlider();
+        }
+
+        if(Utility.deliveryMethods.size()<1){
+            new GetAllDeliveryMethodsAsyncTask().execute();
+        }
+
+        if (Utility.paymentMethodses.size()<1){
+            new GetAllPaymentMethodAsynTask().execute();
         }
 
     }

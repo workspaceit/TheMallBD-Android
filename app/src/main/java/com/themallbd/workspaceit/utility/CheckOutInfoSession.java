@@ -65,7 +65,7 @@ public class CheckOutInfoSession {
         return pref.getString(PREF_LNAME,"");
     }
 
-    public String getCountry(){
+    public String getCity(){
         return pref.getString(PREF_COUNTRY,"");
     }
 
