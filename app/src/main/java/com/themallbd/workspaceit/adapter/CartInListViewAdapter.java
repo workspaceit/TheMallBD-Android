@@ -16,6 +16,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themallbd.workspaceit.dataModel.ShoppingCart;
 import com.themallbd.workspaceit.fragment.CartFragment;
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
+import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
@@ -100,11 +101,18 @@ public class CartInListViewAdapter extends BaseAdapter {
             viewHolder.cartItemAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Utility.shoppingCart.productCell.get(position).quantity+=1;
-                    CartInListViewAdapter.this.notifyDataSetChanged();
-                    String cart=gson.toJson(Utility.shoppingCart.productCell);
-                    localShoppintCart=new LocalShoppintCart(context);
-                    localShoppintCart.setProductCart(cart);
+                    int newQuanity=Utility.shoppingCart.productCell.get(position).quantity+1;
+
+                    if (newQuanity<=Utility.shoppingCart.productCell.get(position).product.quantity) {
+
+                        Utility.shoppingCart.productCell.get(position).quantity += 1;
+                        CartInListViewAdapter.this.notifyDataSetChanged();
+                        String cart = gson.toJson(Utility.shoppingCart.productCell);
+                        localShoppintCart = new LocalShoppintCart(context);
+                        localShoppintCart.setProductCart(cart);
+                    }else {
+                        MakeToast.showToast(context,"This quantity is not available in the stock ");
+                    }
 
                 }
             });

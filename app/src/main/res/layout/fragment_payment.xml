@@ -33,9 +33,10 @@
              <LinearLayout
                  android:layout_width="0dp"
                  android:layout_height="wrap_content"
-                 android:layout_weight=".8"
+                 android:layout_weight=".7"
                  android:layout_marginLeft="10dp"
-                 android:layout_marginBottom="10dp">
+                 android:layout_marginBottom="10dp"
+                 android:layout_marginTop="7dp">
 
                  <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                      android:layout_width="wrap_content"
@@ -54,8 +55,9 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight=".2"
-                android:orientation="vertical">
+                android:layout_weight=".3"
+                android:orientation="vertical"
+                android:layout_marginTop="7dp">
 
                 <TextView
                     android:layout_width="wrap_content"

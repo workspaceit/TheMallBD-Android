@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,13 +47,16 @@ public class AllNewProductActivity extends BaseActivityWithoutDrawer implements 
         toolBarTitle.setText("New Products");
         allNewProductListView=(ListView)findViewById(R.id.all_new_product_list_view);
         anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.newProductsForHorizontalViewList);
-        allNewProductListView.setAdapter(anyProductListAdapter);
 
+        footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
+        allNewProductListView.addFooterView(footer);
+        allNewProductListView.setAdapter(anyProductListAdapter);
+        this.footer.setVisibility(View.GONE);
         mInternetConnection=new InternetConnection(this);
         this.offset=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
 
 
-        footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
+
 
         this.allNewProductListView.setOnScrollListener(this);
         this.allNewProductListView.setOnItemClickListener(this);
@@ -74,7 +78,8 @@ public class AllNewProductActivity extends BaseActivityWithoutDrawer implements 
             loadProductFlag=false;
             if (mInternetConnection.isConnectingToInternet())
             {
-                allNewProductListView.addFooterView(footer);
+
+                this.footer.setVisibility(View.VISIBLE);
                 this.offset++;
 
 
@@ -93,7 +98,8 @@ public class AllNewProductActivity extends BaseActivityWithoutDrawer implements 
     }
 
     public void notifyDataSetChange() {
-        this.allNewProductListView.removeFooterView(footer);
+
+        this.footer.setVisibility(View.GONE);
         this.anyProductListAdapter.updateProductArrayList(MainActivity.newProductsForHorizontalViewList);
         this.anyProductListAdapter.notifyDataSetChanged();
         loadProductFlag=true;

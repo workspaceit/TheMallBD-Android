@@ -39,13 +39,17 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
         toolBarTitle.setText("Packages");
         allPackageListView =(ListView)findViewById(R.id.all_package_list_view);
         allPackageAdapter=new AllPackageAdapter(this);
+        footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
+        allPackageListView.addFooterView(footer);
+        footer.setVisibility(View.GONE);
+
         allPackageListView.setAdapter(allPackageAdapter);
 
         mInternetConnection=new InternetConnection(this);
         this.offset=((MainActivity.packgeProductForHorizontalList.size()/5)-1);
 
 
-        footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
+
 
         this.allPackageListView.setOnScrollListener(this);
         this.allPackageListView.setOnItemClickListener(this);
@@ -73,7 +77,7 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
             loadProductFlag=false;
             if (mInternetConnection.isConnectingToInternet())
             {
-                allPackageListView.addFooterView(footer);
+                this.footer.setVisibility(View.VISIBLE);
                 this.offset++;
 
 
@@ -92,7 +96,7 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
     }
 
     public void notifyDataSetChange() {
-        this.allPackageListView.removeFooterView(footer);
+        this.footer.setVisibility(View.GONE);
         this.allPackageAdapter.notifyDataSetChanged();
         loadProductFlag=true;
     }

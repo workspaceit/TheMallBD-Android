@@ -12,7 +12,7 @@ import com.themallbd.workspaceit.utility.Utility;
 public class SubmitCheckoutService extends BaseMallBDService{
     private ResponseStat responseStat;
 
-    public String submitCheckout(String first_name,String last_name,String email,String phone, String address,String city,String order_from ,
+    public boolean submitCheckout(String first_name,String last_name,String email,String phone, String address,String city,String order_from ,
                                   String shipping_address,String shipping_country, String shipping_zipcode,String shipping_city,
                                   String delivery_method_id,String payment_method_id,String currency_id,String shopping_cart){
 
@@ -47,10 +47,10 @@ public class SubmitCheckoutService extends BaseMallBDService{
 
             if(this.responseStat.status){
                 Utility.responseStat=this.responseStat;
-                return resp;
+                return true;
             }else {
                 Utility.responseStat = this.responseStat;
-                return resp;
+                return false;
             }
 
         }catch (Exception e){
@@ -59,7 +59,7 @@ public class SubmitCheckoutService extends BaseMallBDService{
         }
 
 
-        return resp;
+        return false;
 
     }
 }

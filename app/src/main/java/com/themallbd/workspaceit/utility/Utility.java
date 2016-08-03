@@ -37,5 +37,19 @@ public class Utility {
     public static ArrayList<DeliveryMethod>deliveryMethods=new ArrayList<>();
 
 
+    public static void resetShoppingCart(){
+        shoppingCart.mallBdPackageCell.clear();
+        shoppingCart.productCell.clear();
+        shoppingCart.orderTotal=0;
+        shoppingCart.productDiscountTotal=0;
+        shoppingCart.shippingCost=0;
+        shoppingCart.totalDiscount=0;
+        shoppingCart.totalPrice=0;
+        shoppingCart.totalTax=0;
+        shoppingCart.voucherDiscount=0;
+
+    }
+
+
 
 }

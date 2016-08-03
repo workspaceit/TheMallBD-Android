@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
@@ -63,7 +64,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private static int arrayListIndicator = 0;
     private int productsQuantity = 0;
     private Products products;
-    SessionManager sessionManager;
+    private SessionManager sessionManager;
     private CustomListView relatedProductListView;
     private RelatedProductAdapter relatedProductAdapter;
     private ReviewSingleRowAdapter reviewSingleRowAdapter;
@@ -97,163 +98,204 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_details);
 
-        mallBdDataBaseHelper = new MallBdDataBaseHelper(this);
 
-        loadFlag = true;
-
-        previousPrictTextView = (TextView) findViewById(R.id.tv_previous_product_price);
-        previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        previousPrictTextView.setVisibility(View.GONE);
-        nomalPreviousPrice = (TextView) findViewById(R.id.previous_normal_price);
-        nomalPreviousPrice.setVisibility(View.GONE);
-        savePriceTextViw = (TextView) findViewById(R.id.tv_save_product_price);
-        saveNormalTextView = (TextView) findViewById(R.id.save_normal_text_view);
-        saveNormalTextView.setVisibility(View.GONE);
-        savePriceTextViw.setVisibility(View.GONE);
-        ratingBar = (RatingBar) findViewById(R.id.mallBdRatingBar);
-        LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(Color.parseColor("#961C1E"), PorterDuff.Mode.SRC_ATOP);
-        loadMoreButton = (Button) findViewById(R.id.load_more_button);
-        loadMoreButton.setVisibility(View.GONE);
-        loadMoreButton.setOnClickListener(this);
-        normalRelatedProductTextView = (TextView) findViewById(R.id.related_product_normal_text_view);
-        normalRelatedProductTextView.setVisibility(View.GONE);
-        reviewNormalTextView = (TextView) findViewById(R.id.review_normal_text_view);
-        scrollView = (ScrollView) findViewById(R.id.produt_details_scroll);
-        reviewNormalTextView.setVisibility(View.GONE);
-        addReviewButton = (Button) findViewById(R.id.add_review_button);
-        addReviewButton.setOnClickListener(this);
+        try {
 
 
-        relatedProductListView = (CustomListView) findViewById(R.id.relatede_product_list__view);
+            mallBdDataBaseHelper = new MallBdDataBaseHelper(this);
 
-        relatedProductAdapter = new RelatedProductAdapter(this, 1);
-        relatedProductListView.setAdapter(relatedProductAdapter);
+            loadFlag = true;
 
-        reviewsListView = (CustomListView) findViewById(R.id.review_list__view);
-        reviewSingleRowAdapter = new ReviewSingleRowAdapter(this);
-        reviewsListView.setAdapter(reviewSingleRowAdapter);
+            previousPrictTextView = (TextView) findViewById(R.id.tv_previous_product_price);
+            previousPrictTextView.setPaintFlags(previousPrictTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            previousPrictTextView.setVisibility(View.GONE);
+            nomalPreviousPrice = (TextView) findViewById(R.id.previous_normal_price);
+            nomalPreviousPrice.setVisibility(View.GONE);
+            savePriceTextViw = (TextView) findViewById(R.id.tv_save_product_price);
+            saveNormalTextView = (TextView) findViewById(R.id.save_normal_text_view);
+            saveNormalTextView.setVisibility(View.GONE);
+            savePriceTextViw.setVisibility(View.GONE);
+            ratingBar = (RatingBar) findViewById(R.id.mallBdRatingBar);
+            LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
+            stars.getDrawable(2).setColorFilter(Color.parseColor("#961C1E"), PorterDuff.Mode.SRC_ATOP);
+            loadMoreButton = (Button) findViewById(R.id.load_more_button);
+            loadMoreButton.setVisibility(View.GONE);
+            loadMoreButton.setOnClickListener(this);
+            normalRelatedProductTextView = (TextView) findViewById(R.id.related_product_normal_text_view);
+            normalRelatedProductTextView.setVisibility(View.GONE);
+            reviewNormalTextView = (TextView) findViewById(R.id.review_normal_text_view);
+            scrollView = (ScrollView) findViewById(R.id.produt_details_scroll);
+            reviewNormalTextView.setVisibility(View.GONE);
+            addReviewButton = (Button) findViewById(R.id.add_review_button);
+            addReviewButton.setOnClickListener(this);
 
-        reviewLoadMoreButon = (Button) findViewById(R.id.load_more_review_button);
-        reviewLoadMoreButon.setOnClickListener(this);
-        reviewLoadMoreButon.setVisibility(View.GONE);
+
+            relatedProductListView = (CustomListView) findViewById(R.id.relatede_product_list__view);
+
+            relatedProductAdapter = new RelatedProductAdapter(this, 1);
+            relatedProductListView.setAdapter(relatedProductAdapter);
+
+            reviewsListView = (CustomListView) findViewById(R.id.review_list__view);
+            reviewSingleRowAdapter = new ReviewSingleRowAdapter(this);
+            reviewsListView.setAdapter(reviewSingleRowAdapter);
+
+            reviewLoadMoreButon = (Button) findViewById(R.id.load_more_review_button);
+            reviewLoadMoreButon.setOnClickListener(this);
+            reviewLoadMoreButon.setVisibility(View.GONE);
 
 
-        relatedProductListView.setOnItemClickListener(this);
-        slideShow = (SliderLayout) findViewById(R.id.slider_product_details);
-        tvProductName = (TextView) findViewById(R.id.tv_product_name_pd);
-        tvProductPrice = (TextView) findViewById(R.id.tv_product_price);
-        tvProductDescription = (TextView) findViewById(R.id.tv_product_description);
-        productQunatitySpinner = (Spinner) findViewById(R.id.et_product_quantity_pd);
+            relatedProductListView.setOnItemClickListener(this);
+            slideShow = (SliderLayout) findViewById(R.id.slider_product_details);
+            tvProductName = (TextView) findViewById(R.id.tv_product_name_pd);
+            tvProductPrice = (TextView) findViewById(R.id.tv_product_price);
+            tvProductDescription = (TextView) findViewById(R.id.tv_product_description);
+            productQunatitySpinner = (Spinner) findViewById(R.id.et_product_quantity_pd);
 
 
-        addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
-        addToCartBtn.setOnClickListener(this);
-        addToWishListBtn = (Button) findViewById(R.id.button_add_to_wishlist);
-        addToWishListBtn.setOnClickListener(this);
-        sessionManager = new SessionManager(this);
-        position = getIntent().getIntExtra("position", -1);
-        arrayListIndicator = getIntent().getIntExtra("productArray", -1);
-        if (arrayListIndicator == 1)
-            products = MainActivity.newProductsForHorizontalViewList.get(position);
-        else if (arrayListIndicator == 2)
-            products = MainActivity.featuredProductsForHorizontalViewList.get(position);
-        else if (arrayListIndicator == 3)
-            products = MainActivity.allProductsForGridViewList.get(position);
-        else if (arrayListIndicator == 4)
-            products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
-        else if (arrayListIndicator == 5)
-            products = Utility.wishlistProductArrayList.get(position);
-        else if (arrayListIndicator == 6)
-            products = Utility.relatedProductArryList.get(position);
-        else if (arrayListIndicator == 7) {
-            int productId = getIntent().getIntExtra("productId", -1);
-            new GetProductByProductIdAsynctask(this).execute(String.valueOf(productId));
-            loadFlag = false;
-        } else if (arrayListIndicator == 8) {
-            products = SearchProductListActivity.searchProductArrayList.get(position);
-        }else if(arrayListIndicator==9){
-            products=MainActivity.discountProductForHorizontalList.get(position);
-        }else if(arrayListIndicator==10){
-            products=ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
+
+
+
+            addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
+            addToCartBtn.setOnClickListener(this);
+            addToWishListBtn = (Button) findViewById(R.id.button_add_to_wishlist);
+            addToWishListBtn.setOnClickListener(this);
+            sessionManager = new SessionManager(this);
+            position = getIntent().getIntExtra("position", -1);
+            arrayListIndicator = getIntent().getIntExtra("productArray", -1);
+            if (arrayListIndicator == 1)
+                products = MainActivity.newProductsForHorizontalViewList.get(position);
+            else if (arrayListIndicator == 2)
+                products = MainActivity.featuredProductsForHorizontalViewList.get(position);
+            else if (arrayListIndicator == 3)
+                products = MainActivity.allProductsForGridViewList.get(position);
+            else if (arrayListIndicator == 4)
+                products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
+            else if (arrayListIndicator == 5)
+                products = Utility.wishlistProductArrayList.get(position);
+            else if (arrayListIndicator == 6)
+                products = Utility.relatedProductArryList.get(position);
+            else if (arrayListIndicator == 7) {
+                int productId = getIntent().getIntExtra("productId", -1);
+                new GetProductByProductIdAsynctask(this).execute(String.valueOf(productId));
+                loadFlag = false;
+            } else if (arrayListIndicator == 8) {
+                products = SearchProductListActivity.searchProductArrayList.get(position);
+            } else if (arrayListIndicator == 9) {
+                products = MainActivity.discountProductForHorizontalList.get(position);
+            } else if (arrayListIndicator == 10) {
+                products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
+            }
+
+            Integer[]qunatityArray=new Integer[products.quantity];
+            for (int i=0; i<products.quantity; i++){
+                qunatityArray[i]=i+1;
+            }
+
+
+            ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, qunatityArray);
+            productQunatitySpinner.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
+            if (arrayListIndicator != 7) {
+                initializeSlider();
+                initialize();
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
-
-
-        if (arrayListIndicator != 7) {
-            initializeSlider();
-            initialize();
-        }
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (loadFlag) {
-            initializeRelatedProductArrayList();
-            initializeReviews();
-            loadFlag = true;
+
+        try {
+            if (loadFlag) {
+                initializeRelatedProductArrayList();
+                initializeReviews();
+                loadFlag = true;
+            }
+
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
+
+
 
     }
 
 
     private void initializeReviews() {
-        Utility.reviews.clear();
-        reviewSingleRowAdapter.notifyDataSetChanged();
-        new GetReviewAsynTask(this, 1).execute(String.valueOf(products.id), String.valueOf(3),
-                String.valueOf(0));
+        try {
+            Utility.reviews.clear();
+            reviewSingleRowAdapter.notifyDataSetChanged();
+            new GetReviewAsynTask(this, 1).execute(String.valueOf(products.id), String.valueOf(3),
+                    String.valueOf(0));
 
-        new GetReviewCountAsynTask(this).execute(String.valueOf(products.id));
+            new GetReviewCountAsynTask(this).execute(String.valueOf(products.id));
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 
 
     private void initializeSlider() {
 
 
-        slideShow.removeAllSliders();
-        slideShow.stopAutoCycle();
+        try {
 
 
-        if (products.pictures.size() >= 1) {
-            for (Picture picture : products.pictures) {
-                CustomSliderView textSliderView = new CustomSliderView(this);
+            slideShow.removeAllSliders();
+            slideShow.stopAutoCycle();
+
+
+            if (products.pictures.size() >= 1) {
+                for (Picture picture : products.pictures) {
+                    CustomSliderView textSliderView = new CustomSliderView(this);
+                    // initialize a SliderLayout
+                    textSliderView
+                            .description(picture.caption)
+                            .image(Utility.IMAGE_URL + productUrl + picture.name)
+                            .setScaleType(BaseSliderView.ScaleType.Fit)
+                            .setOnSliderClickListener(this);
+
+                    slideShow.addSlider(textSliderView);
+                }
+            } else {
+                TextSliderView textSliderView = new TextSliderView(this);
                 // initialize a SliderLayout
                 textSliderView
-                        .description(picture.caption)
-                        .image(Utility.IMAGE_URL + productUrl + picture.name)
-                        .setScaleType(BaseSliderView.ScaleType.Fit)
-                        .setOnSliderClickListener(this);
+                        .description("Image not found")
+                        .image(R.drawable.image_not_found)
+                        .setScaleType(BaseSliderView.ScaleType.Fit);
+
 
                 slideShow.addSlider(textSliderView);
             }
-        } else {
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .description("Image not found")
-                    .image(R.drawable.image_not_found)
-                    .setScaleType(BaseSliderView.ScaleType.Fit);
 
 
-            slideShow.addSlider(textSliderView);
+            slideShow.setPresetTransformer(SliderLayout.Transformer.Foreground2Background);
+            slideShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+            slideShow.setCustomAnimation(new DescriptionAnimation());
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
-
-
-        slideShow.setPresetTransformer(SliderLayout.Transformer.Foreground2Background);
-        slideShow.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        slideShow.setCustomAnimation(new DescriptionAnimation());
-
 
     }
 
     public void setProductForSearch(Products product) {
-        this.products = product;
-        initializeSlider();
-        initialize();
-        initializeRelatedProductArrayList();
-        initializeReviews();
+        try {
+            this.products = product;
+            initializeSlider();
+            initialize();
+            initializeRelatedProductArrayList();
+            initializeReviews();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
 
 
     }
@@ -353,126 +395,148 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
     @Override
     public void onClick(View v) {
-        if (v == addToCartBtn) {
 
-            try {
-                this.productsQuantity = Integer.parseInt(productQunatitySpinner.getSelectedItem().toString());
-            } catch (Exception e) {
-                MakeToast.showToast(this, "Invalid Quantity");
-
-            }
-
-            if (this.productsQuantity < 1) {
-                MakeToast.showToast(this, "Quantity is not valid");
-                return;
-            }
+        try {
 
 
-            for (int i = 0; i < Utility.shoppingCart.productCell.size(); i++) {
-                if (Utility.shoppingCart.productCell.get(i).id == products.id) {
-                    Utility.shoppingCart.productCell.get(i).quantity += this.productsQuantity;
-                    this.updateCart();
-                    MakeToast.showToast(this,"Product already exist in the cart. Quantity updated..");
-                    invalidateOptionsMenu();
+            if (v == addToCartBtn) {
+
+                try {
+                    this.productsQuantity = Integer.parseInt(productQunatitySpinner.getSelectedItem().toString());
+                } catch (Exception e) {
+                    MakeToast.showToast(this, "Invalid Quantity");
+
+                }
+
+                if (this.productsQuantity < 1) {
+                    MakeToast.showToast(this, "Quantity is not valid");
                     return;
                 }
 
+
+                for (int i = 0; i < Utility.shoppingCart.productCell.size(); i++) {
+                    if (Utility.shoppingCart.productCell.get(i).id == products.id) {
+                        int newQunatity=this.productsQuantity+Utility.shoppingCart.productCell.get(i).quantity;
+                        if (newQunatity<=products.quantity) {
+                            Utility.shoppingCart.productCell.get(i).quantity += this.productsQuantity;
+                            this.updateCart();
+                            MakeToast.showToast(this, "Product already exist in the cart. Quantity updated..");
+                            invalidateOptionsMenu();
+                        }else {
+                            MakeToast.showToast(this,"This much quantity is not available in the stock");
+                        }
+                        return;
+                    }
+
+                }
+
+                ProductCell productCell = new ProductCell();
+
+                if (products.attributes.size() < 0) {
+                    SelectedAttributes selectedAttributes = new SelectedAttributes();
+                    selectedAttributes.setId(products.attributes.get(0).id);
+                    selectedAttributes.setName(products.attributes.get(0).name);
+                    selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
+                    productCell.addToSelectedAttributes(selectedAttributes);
+                }
+
+                productCell.setId(products.id);
+                productCell.setProduct(products);
+                productCell.setQuantity(this.productsQuantity);
+
+
+                Utility.shoppingCart.productCell.add(productCell);
+
+
+                this.updateCart();
+                MakeToast.showToast(this, "Succesfully added to cart...");
+                invalidateOptionsMenu();
+
+            } else if (v == addToWishListBtn) {
+
+                new WishListAsynTask(this).execute(String.valueOf(sessionManager.getUid()), String.valueOf(products.id));
+
+            } else if (v == loadMoreButton) {
+                Intent intent = new Intent(this, ShowRelatedProduct.class);
+
+                intent.putExtra("product_id", products.id);
+                intent.putExtra("category_id", products.categories.get(0).id);
+                startActivity(intent);
+            } else if (v == reviewLoadMoreButon) {
+                Intent intent = new Intent(this, ShowAllReviewActivity.class);
+                intent.putExtra("product_id", products.id);
+                intent.putExtra("review_count", reviewCount);
+                startActivity(intent);
+            } else if (v == addReviewButton) {
+                CustomDialog.addReviewCustomDailog(this, products.title, String.valueOf(products.id));
+            } else if (v == buyNowBtn) {
+                MakeToast.showToast(this, "clickrf");
+                Gson gson = new Gson();
+                Log.v("taiful", gson.toJson(Utility.shoppingCart));
+                new SubmitChectoutAsyntask(this).execute("tomal", "taiful", "v@v.vom", "12345678910", "basabo", "dhaka",
+                        "ANDROID", "basbo", "Bangladesh", "1", "shs", "1", "1", "1", gson.toJson(Utility.shoppingCart));
             }
 
-            ProductCell productCell=new ProductCell();
-
-            if (products.attributes.size() < 0) {
-                SelectedAttributes selectedAttributes = new SelectedAttributes();
-                selectedAttributes.setId(products.attributes.get(0).id);
-                selectedAttributes.setName(products.attributes.get(0).name);
-                selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
-                productCell.addToSelectedAttributes(selectedAttributes);
-            }
-
-            productCell.setId(products.id);
-            productCell.setProduct(products);
-            productCell.setQuantity(this.productsQuantity);
-
-
-            Utility.shoppingCart.productCell.add(productCell);
-
-
-
-            this.updateCart();
-            MakeToast.showToast(this, "Succesfully added to cart...");
-            invalidateOptionsMenu();
-
-        } else if (v == addToWishListBtn) {
-
-            new WishListAsynTask(this).execute(String.valueOf(sessionManager.getUid()), String.valueOf(products.id));
-
-        } else if (v == loadMoreButton) {
-            Intent intent = new Intent(this, ShowRelatedProduct.class);
-
-            intent.putExtra("product_id", products.id);
-            intent.putExtra("category_id", products.categories.get(0).id);
-            startActivity(intent);
-        } else if (v == reviewLoadMoreButon) {
-            Intent intent = new Intent(this, ShowAllReviewActivity.class);
-            intent.putExtra("product_id", products.id);
-            intent.putExtra("review_count", reviewCount);
-            startActivity(intent);
-        } else if (v == addReviewButton) {
-            CustomDialog.addReviewCustomDailog(this, products.title, String.valueOf(products.id));
-        }else if(v==buyNowBtn){
-            MakeToast.showToast(this,"clickrf");
-            Gson gson=new Gson();
-            Log.v("taiful",gson.toJson(Utility.shoppingCart));
-            new SubmitChectoutAsyntask(this).execute("tomal","taiful","v@v.vom","12345678910","basabo","dhaka",
-                    "ANDROID","basbo","Bangladesh", "1","shs","1","1","1",gson.toJson(Utility.shoppingCart));
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 
 
 
     private void updateCart(){
-        Gson gson=new Gson();
-        String cart=gson.toJson(Utility.shoppingCart.productCell);
-        LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
-        localShoppintCart.setProductCart(cart);
+        try {
+            Gson gson=new Gson();
+            String cart=gson.toJson(Utility.shoppingCart.productCell);
+            LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
+            localShoppintCart.setProductCart(cart);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        products = Utility.relatedProductArryList.get(position);
-
-        loadMoreButton.setVisibility(View.GONE);
-        normalRelatedProductTextView.setVisibility(View.GONE);
-        reviewLoadMoreButon.setVisibility(View.GONE);
-        reviewNormalTextView.setVisibility(View.GONE);
-
-        initializeSlider();
-        initialize();
-
-        ValueAnimator realSmoothScrollAnimation =
-                ValueAnimator.ofInt(scrollView.getScrollY(), 0);
-        realSmoothScrollAnimation.setDuration(500);
-        realSmoothScrollAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int scrollTo = (Integer) animation.getAnimatedValue();
-                scrollView.scrollTo(0, scrollTo);
-            }
+        try {
 
 
-        });
+            products = Utility.relatedProductArryList.get(position);
 
-        realSmoothScrollAnimation.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                initializeRelatedProductArrayList();
-                initializeReviews();
-            }
-        });
-        realSmoothScrollAnimation.start();
+            loadMoreButton.setVisibility(View.GONE);
+            normalRelatedProductTextView.setVisibility(View.GONE);
+            reviewLoadMoreButon.setVisibility(View.GONE);
+            reviewNormalTextView.setVisibility(View.GONE);
+
+            initializeSlider();
+            initialize();
+
+            ValueAnimator realSmoothScrollAnimation =
+                    ValueAnimator.ofInt(scrollView.getScrollY(), 0);
+            realSmoothScrollAnimation.setDuration(500);
+            realSmoothScrollAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    int scrollTo = (Integer) animation.getAnimatedValue();
+                    scrollView.scrollTo(0, scrollTo);
+                }
 
 
+            });
+
+            realSmoothScrollAnimation.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    initializeRelatedProductArrayList();
+                    initializeReviews();
+                }
+            });
+            realSmoothScrollAnimation.start();
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 }

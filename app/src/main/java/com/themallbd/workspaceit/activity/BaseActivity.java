@@ -382,10 +382,19 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                     CustomDialog.logoutDailog(this, sessionManager, "Logout", "Confrim Logout?");
 
                 } else {
-                    CustomDialog.showDailog(this, "You nedd to login first", "You are not logged in");
+                    CustomDialog.showDailog(this, "You need to login first", "You are not logged in");
 
                 }
                 return true;
+
+            case R.id.nav_order_history:
+                if(Utility.isLoggedInFlag){
+
+                }else {
+                    CustomDialog.showDailog(this, "You need to login first", "You are not logged in");
+                }
+                return true;
+
             default:
                 Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
                 return true;

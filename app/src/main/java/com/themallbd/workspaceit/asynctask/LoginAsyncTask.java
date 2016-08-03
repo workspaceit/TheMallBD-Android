@@ -49,6 +49,7 @@ public class LoginAsyncTask extends AsyncTask<String,String,Boolean> {
         {
             Toast.makeText(this.context,"Login Successful",Toast.LENGTH_SHORT).show();
             mSessionManager = new SessionManager(this.context);
+            Utility.isLoggedInFlag=true;
             mSessionManager.createLoginSession(
                     Utility.loggedInUser.accesstoken,
                     Utility.loggedInUser.email,Utility.loggedInUser.user.id,

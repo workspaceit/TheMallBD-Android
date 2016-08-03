@@ -61,8 +61,8 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
         }
 
         radioDeliveryMethodGroup.check(Utility.deliveryMethods.get(0).id);
-        firstDeliveryPrice.setText(Utility.deliveryMethods.get(0).deliveryPrice + "");
-        seocndDeliveryPrice.setText(Utility.deliveryMethods.get(1).deliveryPrice+"");
+        firstDeliveryPrice.setText(Utility.deliveryMethods.get(0).deliveryPrice + " BDT");
+        seocndDeliveryPrice.setText(Utility.deliveryMethods.get(1).deliveryPrice+" BDT");
 
         for (int i=0; i<Utility.paymentMethodses.size(); i++){
 
@@ -70,6 +70,9 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
             radioButton.setId(Utility.paymentMethodses.get(i).id);
             radioButton.setText(Utility.paymentMethodses.get(i).methodTitle);
             radioPaymentGroup.addView(radioButton);
+            if (i!=0){
+                radioButton.setEnabled(false);
+            }
 
         }
 
@@ -77,14 +80,7 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if(isVisibleToUser) {
-            MakeToast.showToast(getActivity(), Utility.deliveryMethods.size()+" "+Utility.paymentMethodses.size());
-        }
 
-    }
 
     @Override
     public void onClick(View v) {

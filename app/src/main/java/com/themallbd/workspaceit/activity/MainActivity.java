@@ -814,6 +814,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             this.offsetForDiscountProduct=((MainActivity.discountProductForHorizontalList.size()/5)-1);
         }
 
+        if (allProductsForGridViewList.size()>0){
+            this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
+        }
+
 
     }
 

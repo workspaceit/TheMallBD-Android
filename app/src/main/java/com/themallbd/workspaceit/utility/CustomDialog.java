@@ -17,6 +17,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.themallbd.workspaceit.activity.CheckoutActivity;
+import com.themallbd.workspaceit.activity.MainActivity;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.activity.LoginActivity;
 import com.themallbd.workspaceit.asynctask.AddNewReviewAsynTask;
@@ -25,6 +27,37 @@ import com.themallbd.workspaceit.asynctask.AddNewReviewAsynTask;
  * Created by Mausum on 4/5/2016.
  */
 public class CustomDialog {
+
+    public static void orderPlaceDiolog(final Context context,String title,String body){
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder
+                .setMessage(body)
+                .setCancelable(false)
+                .setPositiveButton("Previous Order", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+
+
+                    }
+                }).setNegativeButton("Continue", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                Intent intent=new Intent(context, MainActivity.class);
+                context.startActivity(intent);
+                if (context instanceof CheckoutActivity){
+                    ((CheckoutActivity)context).finish();
+                }
+            }
+        });
+
+        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+        alertDialog.show();
+
+    }
+
     public static void showDailog(final Context context,String title, String body){
 
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);

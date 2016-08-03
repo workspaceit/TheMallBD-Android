@@ -38,8 +38,6 @@ public class AuthenticationService extends BaseMallBDService {
             {
                 appCredential = gson.fromJson(jsonObject.get("responseData"),AppCredential.class);
                 Utility.loggedInUser = appCredential;
-                System.out.println("isLogin: " + this.responseStat.isLogin);
-                Log.i("Check", "true");
                 return true;
 
             }

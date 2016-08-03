@@ -11,6 +11,8 @@
         layout="@layout/toolbar" />
 
 
+
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -19,4 +21,12 @@
     </ListView>
 
 
-    </LinearLayout>
+    <ProgressBar
+        android:layout_margin="5dp"
+        android:id="@+id/progressBarPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+
+</LinearLayout>

@@ -40,14 +40,17 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
         toolBarTitle.setText("Features Product");
         allFeatureProductListView=(ListView)findViewById(R.id.all_feature_product_list_view);
         anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.featuredProductsForHorizontalViewList);
-        allFeatureProductListView.setAdapter(anyProductListAdapter);
-
-        mInternetConnection=new InternetConnection(this);
-        this.offset=((MainActivity.featuredProductsForHorizontalViewList.size()/5)-1);
-        MakeToast.showToast(this,this.offset+"");
-
 
         footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
+        allFeatureProductListView.addFooterView(footer);
+        allFeatureProductListView.setAdapter(anyProductListAdapter);
+        this.footer.setVisibility(View.GONE);
+        mInternetConnection=new InternetConnection(this);
+        this.offset=((MainActivity.featuredProductsForHorizontalViewList.size()/5)-1);
+
+
+
+
         this.allFeatureProductListView.setOnScrollListener(this);
         this.allFeatureProductListView.setOnItemClickListener(this);
     }
@@ -65,7 +68,7 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
             loadProductFlag=false;
             if (mInternetConnection.isConnectingToInternet())
             {
-                allFeatureProductListView.addFooterView(footer);
+                this.footer.setVisibility(View.VISIBLE);
                 this.offset++;
 
                 System.out.println("before call : "+this.offset+" limit "+this.limit+" size "+MainActivity.packgeProductForHorizontalList.size());
@@ -85,7 +88,7 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
     }
 
     public void notifyDataSetChange() {
-        System.out.println("size " + MainActivity.featuredProductsForHorizontalViewList.size());
+        this.footer.setVisibility(View.GONE);
         this.allFeatureProductListView.removeFooterView(footer);
 
         this.anyProductListAdapter.updateProductArrayList(MainActivity.featuredProductsForHorizontalViewList);
@@ -94,7 +97,7 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
     }
 
     public void featureProductError(){
-        allFeatureProductListView.removeFooterView(footer);
+       this.allFeatureProductListView.removeFooterView(footer);
         loadProductFlag=false;
         MainActivity.moreItemFeatureProduct=false;
         MakeToast.showToast(this,"No More Feauture Product...");

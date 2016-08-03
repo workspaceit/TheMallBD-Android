@@ -34,29 +34,41 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_discount_product);
 
-        toolbar=(Toolbar)findViewById(R.id.toolbar);
-        toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
-        toolBarTitle.setText("Special Discount Product");
-        allDiscountProductListView=(ListView)findViewById(R.id.all_discount_product_list_view);
-        anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.discountProductForHorizontalList);
-        allDiscountProductListView.setAdapter(anyProductListAdapter);
+        try {
+            toolbar=(Toolbar)findViewById(R.id.toolbar);
+            toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
+            toolBarTitle.setText("Special Discount Product");
+            allDiscountProductListView=(ListView)findViewById(R.id.all_discount_product_list_view);
+            anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.discountProductForHorizontalList);
+            footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
+            this.allDiscountProductListView.addFooterView(footer);
+            allDiscountProductListView.setAdapter(anyProductListAdapter);
+            this.footer.setVisibility(View.GONE);
+            mInternetConnection=new InternetConnection(this);
+            this.offset=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
 
-        mInternetConnection=new InternetConnection(this);
-        this.offset=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
 
 
-        footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
 
-        this.allDiscountProductListView.setOnScrollListener(this);
-        this.allDiscountProductListView.setOnItemClickListener(this);
+            this.allDiscountProductListView.setOnScrollListener(this);
+            this.allDiscountProductListView.setOnItemClickListener(this);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, ProductDetailsActivity.class);
-        intent.putExtra("position", position);
-        intent.putExtra("productArray", 9);
-        startActivity(intent);
+        try {
+            Intent intent = new Intent(this, ProductDetailsActivity.class);
+            intent.putExtra("position", position);
+            intent.putExtra("productArray", 9);
+            startActivity(intent);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 
     @Override
@@ -66,13 +78,17 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
 
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        try {
+
+
+
         if(firstVisibleItem+visibleItemCount>=totalItemCount && loadProductFlag && MainActivity.moreItemNewProduct){
 
 
             loadProductFlag=false;
             if (mInternetConnection.isConnectingToInternet())
             {
-                allDiscountProductListView.addFooterView(footer);
+                this.footer.setVisibility(View.VISIBLE);
                 this.offset++;
 
 
@@ -88,10 +104,14 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
 
         }
 
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 
     public void notifyDataSetChange() {
-        this.allDiscountProductListView.removeFooterView(footer);
+        this.footer.setVisibility(View.GONE);
         this.anyProductListAdapter.updateProductArrayList(MainActivity.discountProductForHorizontalList);
         this.anyProductListAdapter.notifyDataSetChanged();
         loadProductFlag=true;
@@ -101,6 +121,6 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
         this.allDiscountProductListView.removeFooterView(footer);
         loadProductFlag=false;
         MainActivity.moreDiscountProduct=false;
-        MakeToast.showToast(this, "No More New Product...");
+        MakeToast.showToast(this, "No More Special discount product Product...");
     }
 }

@@ -29,6 +29,14 @@
             android:icon="@drawable/nd_wishlist"
             android:title="@string/nav_item_wishlist" />
 
+        <item
+            android:id="@+id/nav_order_history"
+            android:checked="false"
+            android:icon="@drawable/nd_cart"
+            android:title="Order History"
+            />
+
+
 
 
     </group>
