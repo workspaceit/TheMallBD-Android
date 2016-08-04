@@ -73,6 +73,8 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.PrevoiusOrderActivity" >
         </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.OrderHistoryDetailsPage" >
+        </activity>
     </application>
 
 </manifest>

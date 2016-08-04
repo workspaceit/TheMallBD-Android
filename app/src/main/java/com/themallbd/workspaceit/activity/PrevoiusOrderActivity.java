@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,11 +14,12 @@ import com.themallbd.workspaceit.asynctask.GetNewProductsAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetPreViousOrderProductAsyncTask;
 import com.themallbd.workspaceit.dataModel.Orders;
 import com.themallbd.workspaceit.service.InternetConnection;
+import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
 
 import java.util.ArrayList;
 
-public class PrevoiusOrderActivity extends BaseActivityWithoutDrawer {
+public class PrevoiusOrderActivity extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener {
 
     private Toolbar toolbar;
     private TextView toolBarTitle;
@@ -37,6 +39,7 @@ public class PrevoiusOrderActivity extends BaseActivityWithoutDrawer {
 
         orederHistoryListView = (ListView) findViewById(R.id.all_order_history_list_view);
         orderHistoryAdapter = new OrderHistoryAdapter(this);
+        orederHistoryListView.setOnItemClickListener(this);
         orederHistoryListView.setAdapter(orderHistoryAdapter);
 
 
@@ -60,4 +63,12 @@ public class PrevoiusOrderActivity extends BaseActivityWithoutDrawer {
         orderHistoryAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent=new Intent(this,OrderHistoryDetailsPage.class);
+        intent.putExtra("position", position);
+        startActivity(intent);
+
+
+    }
 }
