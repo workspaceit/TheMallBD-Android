@@ -19,8 +19,8 @@ import com.workspaceit.themall.R;
 
 public class PaymentFragment extends Fragment implements View.OnClickListener {
     private CheckOutInfoSession checkOutInfoSession;
-    private RadioGroup radioDeliveryMethodGroup,radioPaymentGroup;
-    private TextView firstDeliveryPrice,seocndDeliveryPrice;
+    private RadioGroup radioPaymentGroup;
+
     private Button confrimOrderButton;
     private Gson gson;
 
@@ -38,9 +38,8 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_payment, container, false);
         // Inflate the layout for this fragment
         checkOutInfoSession=new CheckOutInfoSession(getActivity());
-        radioDeliveryMethodGroup=(RadioGroup)view.findViewById(R.id.radio_delivery_method_group);
-        firstDeliveryPrice=(TextView)view.findViewById(R.id.delivery_price_first);
-        seocndDeliveryPrice=(TextView)view.findViewById(R.id.dekivery_payment_second);
+
+
         confrimOrderButton=(Button)view.findViewById(R.id.confrim_final_order_button);
 
         confrimOrderButton.setOnClickListener(this);
@@ -53,16 +52,7 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initializeRadioButton(){
-        for (int i=0; i<Utility.deliveryMethods.size(); i++) {
-            RadioButton radioButton = new RadioButton(getActivity());
-            radioButton.setId(Utility.deliveryMethods.get(i).id);
-            radioButton.setText(Utility.deliveryMethods.get(i).title);
-            radioDeliveryMethodGroup.addView(radioButton);
-        }
 
-        radioDeliveryMethodGroup.check(Utility.deliveryMethods.get(0).id);
-        firstDeliveryPrice.setText(Utility.deliveryMethods.get(0).deliveryPrice + " BDT");
-        seocndDeliveryPrice.setText(Utility.deliveryMethods.get(1).deliveryPrice+" BDT");
 
         for (int i=0; i<Utility.paymentMethodses.size(); i++){
 
@@ -88,7 +78,7 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
                 new SubmitChectoutAsyntask(getActivity()).execute(checkOutInfoSession.getFname(),checkOutInfoSession.getLname(),
                         checkOutInfoSession.getEmail(),checkOutInfoSession.getTelephone(),checkOutInfoSession.getAddress(),
                         checkOutInfoSession.getCity(), "ANDROID",checkOutInfoSession.getAddress(),"Bangladesh", "",
-                        checkOutInfoSession.getCity(),String.valueOf(radioDeliveryMethodGroup.getCheckedRadioButtonId()),
+                        checkOutInfoSession.getCity(),String.valueOf(CheckoutViewFragment.DELIVEY_METHOD),
                         String.valueOf(radioPaymentGroup.getCheckedRadioButtonId()),"1",gson.toJson(Utility.shoppingCart));
 
 

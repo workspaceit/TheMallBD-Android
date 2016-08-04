@@ -389,9 +389,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.nav_order_history:
                 if(Utility.isLoggedInFlag){
+                    Intent orderInten=new Intent(getApplicationContext(),PrevoiusOrderActivity.class);
+                    startActivity(orderInten);
 
                 }else {
-                    CustomDialog.showDailog(this, "You need to login first", "You are not logged in");
+                    CustomDialog.showDailog(this, "You Need to Login First", "You need to do login to see your previous order history");
                 }
                 return true;
 

@@ -23,7 +23,7 @@
         android:id="@+id/separator"
         android:layout_below="@+id/rateHeader"
         android:layout_marginTop="5dp" />
-    <RatingBar
+    <android.widget.RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ratingsBar"

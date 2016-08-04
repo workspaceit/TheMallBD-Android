@@ -71,6 +71,8 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.AllDiscountProductActivity" >
         </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.PrevoiusOrderActivity" >
+        </activity>
     </application>
 
 </manifest>

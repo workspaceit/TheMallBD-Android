@@ -41,6 +41,8 @@
                     android:textColor="#FFFFFF"
                     android:textSize="14sp" />
 
+
+
                 <LinearLayout
                     android:id="@+id/checkout_info_layout"
                     android:layout_width="match_parent"
@@ -49,6 +51,91 @@
                     android:orientation="vertical"
                     android:layout_margin="10dp"
                     android:background="@drawable/custom_border">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:orientation="vertical"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Choose Your Delivery Method"
+                            android:background="#412E2E"
+                            android:textColor="#FFFFFF"
+                            android:paddingLeft="20dp"
+                            android:padding="5dp"
+                            android:textSize="14dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:background="@drawable/custom_border"
+                            android:weightSum="1"
+                            android:layout_marginBottom="10dp"
+                            >
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".68"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="7dp">
+
+                                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical"
+                                    android:id="@+id/radio_delivery_method_group">
+
+                                </RadioGroup>
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="#c1c1c1"></View>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".32"
+                                android:orientation="vertical"
+                                android:layout_marginTop="7dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="40 BDT"
+                                    android:id="@+id/delivery_price_first"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:textSize="16sp"
+                                    android:textColor="#4C4C4C"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="70 BDT"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginLeft="10dp"
+                                    android:textColor="#4C4C4C"
+                                    android:textSize="16sp"
+                                    android:id="@+id/dekivery_payment_second"/>
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
 
                     <View
                         android:layout_width="match_parent"

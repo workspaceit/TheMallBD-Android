@@ -9,6 +9,7 @@ public class DeliveryMethod {
     public String icon ;
     public float deliveryPrice;
     public String createdOn ;
+    public float delivery_price_limit;
 
     public DeliveryMethod(){
         this.id=0;
@@ -16,6 +17,7 @@ public class DeliveryMethod {
         this.icon="";
         this.deliveryPrice=0;
         this.createdOn="";
+        this.delivery_price_limit=0;
 
     }
 }

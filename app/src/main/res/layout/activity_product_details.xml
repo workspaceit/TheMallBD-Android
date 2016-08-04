@@ -181,7 +181,8 @@
                             android:text="@string/quantity"
                             android:textAllCaps="true"
                             android:textColor="#961C1E"
-                            android:textSize="@dimen/material_text_subhead" />
+                            android:textSize="@dimen/material_text_subhead"
+                            android:id="@+id/quantity_plain_textview"/>
 
                         <Spinner
                             android:id="@+id/et_product_quantity_pd"
@@ -211,6 +212,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/out_of_stock_text"
+                        android:layout_marginBottom="3dp"
+                        android:textColor="#ff1919"
+                        android:textSize="16sp"
+                        android:id="@+id/out_of_stock_text_view"/>
 
                     <RatingBar
                         android:id="@+id/mallBdRatingBar"
@@ -280,21 +290,7 @@
                         android:textAlignment="textStart"
                         android:paddingLeft="15dp"/>
 
-                    <Button
-                        android:id="@+id/button_buy_now"
-                        style="?android:attr/buttonBarButtonStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:textAlignment="textStart"
-                        android:layout_marginBottom="10dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/buttonshape_pink"
-                        android:padding="10dp"
-                        android:text="@string/buy_now"
-                        android:textAllCaps="true"
-                        android:textColor="#FFFFFF"
-                        android:textSize="@dimen/material_text_button"
-                        android:paddingLeft="15dp"/>
+
                 </LinearLayout>
 
                 <LinearLayout

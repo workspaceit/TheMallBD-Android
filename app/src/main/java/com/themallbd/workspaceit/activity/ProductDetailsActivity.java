@@ -10,7 +10,6 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +25,6 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.themallbd.workspaceit.asynctask.GetProductByProductIdAsynctask;
-import com.themallbd.workspaceit.asynctask.SubmitChectoutAsyntask;
 import com.themallbd.workspaceit.dataModel.Picture;
 import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.dataModel.Products;
@@ -34,7 +32,6 @@ import com.themallbd.workspaceit.dataModel.SelectedAttributes;
 import com.themallbd.workspaceit.utility.CustomDialog;
 import com.themallbd.workspaceit.utility.CustomSliderView;
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
-import com.themallbd.workspaceit.utility.MallBdDataBaseHelper;
 import com.themallbd.workspaceit.utility.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
@@ -54,7 +51,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private Spinner productQunatitySpinner;
     private Toolbar toolbar;
 
-    private Button addToCartBtn, addToWishListBtn, buyNowBtn;
+    private Button addToCartBtn, addToWishListBtn;
     private RatingBar ratingBar;
     private TextView normalRelatedProductTextView;
     private SliderLayout slideShow;
@@ -81,7 +78,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private TextView nomalPreviousPrice;
     private TextView saveNormalTextView;
     private boolean loadFlag;
-    private MallBdDataBaseHelper mallBdDataBaseHelper;
+    private TextView quantityPlainTextView, outOfStockTextView;
 
 
     private static String productUrl = "/product/general/";
@@ -102,7 +99,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         try {
 
 
-            mallBdDataBaseHelper = new MallBdDataBaseHelper(this);
+
 
             loadFlag = true;
 
@@ -128,6 +125,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             reviewNormalTextView.setVisibility(View.GONE);
             addReviewButton = (Button) findViewById(R.id.add_review_button);
             addReviewButton.setOnClickListener(this);
+
+            quantityPlainTextView=(TextView)findViewById(R.id.quantity_plain_textview);
+            outOfStockTextView =(TextView)findViewById(R.id.out_of_stock_text_view);
 
 
             relatedProductListView = (CustomListView) findViewById(R.id.relatede_product_list__view);
@@ -186,15 +186,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
                 products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
             }
 
-            Integer[]qunatityArray=new Integer[products.quantity];
-            for (int i=0; i<products.quantity; i++){
-                qunatityArray[i]=i+1;
-            }
 
-
-            ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, qunatityArray);
-            productQunatitySpinner.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
 
             if (arrayListIndicator != 7) {
                 initializeSlider();
@@ -301,6 +293,29 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     }
 
     private void initialize() {
+
+        if (products.quantity<1){
+            quantityPlainTextView.setVisibility(View.GONE);
+            productQunatitySpinner.setVisibility(View.GONE);
+            addToCartBtn.setVisibility(View.GONE);
+            outOfStockTextView.setVisibility(View.VISIBLE);
+        }else {
+            quantityPlainTextView.setVisibility(View.VISIBLE);
+            productQunatitySpinner.setVisibility(View.VISIBLE);
+            addToCartBtn.setVisibility(View.VISIBLE);
+            outOfStockTextView.setVisibility(View.GONE);
+        }
+
+        Integer[]qunatityArray=new Integer[products.quantity];
+        for (int i=0; i<products.quantity; i++){
+            qunatityArray[i]=i+1;
+        }
+
+
+        ArrayAdapter<Integer> adapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_spinner_item, qunatityArray);
+        productQunatitySpinner.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
         tvProductName.setText(products.title);
 
 
@@ -309,8 +324,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
         addToCartBtn = (Button) findViewById(R.id.button_add_to_cart);
         addToWishListBtn = (Button) findViewById(R.id.button_add_to_wishlist);
-        buyNowBtn = (Button) findViewById(R.id.button_buy_now);
-        buyNowBtn.setOnClickListener(this);
+
+
+
         ratingBar.setRating(products.avgRating);
 
         if (products.discountActiveFlag) {
@@ -469,12 +485,6 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
                 startActivity(intent);
             } else if (v == addReviewButton) {
                 CustomDialog.addReviewCustomDailog(this, products.title, String.valueOf(products.id));
-            } else if (v == buyNowBtn) {
-                MakeToast.showToast(this, "clickrf");
-                Gson gson = new Gson();
-                Log.v("taiful", gson.toJson(Utility.shoppingCart));
-                new SubmitChectoutAsyntask(this).execute("tomal", "taiful", "v@v.vom", "12345678910", "basabo", "dhaka",
-                        "ANDROID", "basbo", "Bangladesh", "1", "shs", "1", "1", "1", gson.toJson(Utility.shoppingCart));
             }
 
         }catch (Exception ex){
