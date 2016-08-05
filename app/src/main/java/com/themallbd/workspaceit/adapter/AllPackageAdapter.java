@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themallbd.workspaceit.activity.MainActivity;
-import com.themallbd.workspaceit.dataModel.Products;
+
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 

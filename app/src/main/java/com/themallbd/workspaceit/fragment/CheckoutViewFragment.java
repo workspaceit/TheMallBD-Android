@@ -2,13 +2,14 @@ package com.themallbd.workspaceit.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -16,12 +17,15 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.themallbd.workspaceit.asynctask.GetVoucherDiscountAsynTask;
+import com.themallbd.workspaceit.dataModel.Voucher;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.activity.CheckoutActivity;
 import com.themallbd.workspaceit.utility.CheckOutInfoSession;
 import com.themallbd.workspaceit.utility.MakeToast;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,8 +46,12 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
     private TextView subTotalTextView, productDiscountTextView, voucherDiscountTextView, shipmentFeeTextView, totalPaybleTextView;
     private TextView firstDeliveryPrice, seocndDeliveryPrice;
     private RadioGroup radioDeliveryMethodGroup;
-    private double subTotal = 0, discount = 0, shipmentFee, total = 0, voucher = 0;
+    private double subTotal = 0, discount = 0, shipmentFee, total = 0, voucherTotal = 0;
     public static int DELIVEY_METHOD;
+    private Button addVoucherButton;
+    private LinearLayout voucherLayout;
+    private EditText voucherCodeTextView;
+    private ArrayList<Voucher> voucherArrayList;
 
 
     public CheckoutViewFragment() {
@@ -63,23 +71,25 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         citySpinner = (Spinner) view.findViewById(R.id.city_spinner);
         addressText = (EditText) view.findViewById(R.id.checkout_address);
         telephoneText = (EditText) view.findViewById(R.id.checkout_telephone);
+        voucherCodeTextView = (EditText) view.findViewById(R.id.voucher_code_text_view);
 
         firstDeliveryPrice = (TextView) view.findViewById(R.id.delivery_price_first);
         seocndDeliveryPrice = (TextView) view.findViewById(R.id.dekivery_payment_second);
 
         radioDeliveryMethodGroup = (RadioGroup) view.findViewById(R.id.radio_delivery_method_group);
-
-
+        voucherArrayList=new ArrayList<>();
+        voucherLayout = (LinearLayout) view.findViewById(R.id.voucher_layout);
         cartInfoExpandButton = (Button) view.findViewById(R.id.cart_info_expand_button);
         expandNewCustomerInfoButton = (Button) view.findViewById(R.id.add_shipping_infromation_expand_button);
 
         checkoutInfoLayout = (LinearLayout) view.findViewById(R.id.checkout_info_layout);
         newCustomerInfoLayout = (LinearLayout) view.findViewById(R.id.new_customer_info_layout);
-
+        addVoucherButton = (Button) view.findViewById(R.id.add_voucher_button);
+        addVoucherButton.setOnClickListener(this);
 
         expandNewCustomerInfoButton.setOnClickListener(this);
         cartInfoExpandButton.setOnClickListener(this);
-        DELIVEY_METHOD=Utility.deliveryMethods.get(0).id;
+        DELIVEY_METHOD = Utility.deliveryMethods.get(0).id;
 
         imageDownArrow = R.drawable.arrow_down;
         imageUpArrow = R.drawable.arrow_up;
@@ -159,7 +169,17 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
 
     private void initializeValue() {
 
-        subTotal=0; discount=0;
+        subTotal = 0;
+        discount = 0;
+        float voucher=0;
+
+        for (Voucher v:voucherArrayList){
+            v.discountAmount=Utility.shoppingCart.orderTotal*v.percentage;
+            voucher+=v.discountAmount;
+        }
+
+        this.voucherTotal=voucher;
+
         for (int i = 0; i < Utility.shoppingCart.productCell.size(); i++) {
             double productPrie = Utility.shoppingCart.productCell.get(i).quantity * Utility.shoppingCart.productCell.get(i).product.prices.get(0).retailPrice;
             subTotal += productPrie;
@@ -178,7 +198,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         else
             shipmentFee = Utility.deliveryMethods.get(0).deliveryPrice;
 
-        total = (subTotal + shipmentFee) - (discount + voucher);
+        total = (subTotal + shipmentFee) - (discount + voucherTotal);
 
 
         subTotalTextView.setText(subTotal + " BDT");
@@ -186,12 +206,15 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
 
         totalPaybleTextView.setText(total + " BDT");
         shipmentFeeTextView.setText(shipmentFee + " BDT");
-        voucherDiscountTextView.setText(voucher + " BDT");
+        voucherDiscountTextView.setText(voucherTotal + " BDT");
+        voucherDiscountTextView.setText(voucherTotal+" BDT");
 
 
         Utility.shoppingCart.orderTotal = (float) subTotal;
         Utility.shoppingCart.totalPrice = (float) total;
         Utility.shoppingCart.productDiscountTotal = (float) discount;
+        Utility.shoppingCart.shippingCost = (float) shipmentFee;
+        Utility.shoppingCart.voucherDiscount= (float) voucherTotal;
     }
 
     @Override
@@ -246,10 +269,61 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             CheckoutActivity.tabFlag = 0;
             CheckoutActivity.mViewPager.setCurrentItem(0);
 
-        }
+        } else if (v == addVoucherButton) {
 
+
+
+            String voucherCode = voucherCodeTextView.getText().toString();
+            if (voucherCode.isEmpty()) {
+                MakeToast.showToast(getActivity(), "Voucher Code is empty!");
+
+            } else {
+
+                for (Voucher vou:voucherArrayList){
+                    if(vou.voucher_code.equals(voucherCode)){
+                        MakeToast.showToast(getActivity(),"You have already added this voucher code");
+                        return;
+                    }
+                }
+
+
+                View view = getActivity().getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+                new GetVoucherDiscountAsynTask(getActivity(),this).execute(voucherCode);
+            }
+        }
     }
 
+
+    public void doAllModificationOnValidVoucherCode(Voucher voucher){
+
+        voucherCodeTextView.setText("");
+        voucher.percentage=voucher.discount/100;
+        voucher.discountAmount=Utility.shoppingCart.orderTotal*voucher.percentage;
+        voucherArrayList.add(voucher);
+
+        TextView textView=new TextView(getActivity());
+        textView.setText("Voucher: " + voucher.voucher_code + " Amout: " + voucher.discountAmount);
+        voucherLayout.addView(textView);
+
+        float voucherSum=0;
+        for ( Voucher v:voucherArrayList){
+            voucherSum+=v.discountAmount;
+        }
+
+        this.voucherTotal =voucherSum;
+        voucherDiscountTextView.setText(voucherTotal+" BDT");
+        total = (subTotal + shipmentFee) - (discount + voucherTotal);
+        totalPaybleTextView.setText(total+"");
+
+        Utility.shoppingCart.voucherDiscount=(float)voucherTotal;
+        Utility.shoppingCart.totalPrice= (float) total;
+
+
+    }
 
     private void hideLayout(final LinearLayout linearLayout, int duration) {
 
@@ -344,12 +418,13 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
                 shipmentFee = Utility.deliveryMethods.get(0).deliveryPrice;
             }
 
-            total = (subTotal + shipmentFee) - (discount + voucher);
+            total = (subTotal + shipmentFee) - (discount + voucherTotal);
             shipmentFeeTextView.setText(shipmentFee + " BDT");
             totalPaybleTextView.setText(total + " BDT");
 
             Utility.shoppingCart.orderTotal = (float) total;
-            DELIVEY_METHOD=checkedId;
+            Utility.shoppingCart.shippingCost = (float) shipmentFee;
+            DELIVEY_METHOD = checkedId;
 
 
         } else if (checkedId == Utility.deliveryMethods.get(1).id) {
@@ -360,11 +435,12 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
                 shipmentFee = Utility.deliveryMethods.get(1).deliveryPrice;
             }
 
-            total = (subTotal + shipmentFee) - (discount + voucher);
+            total = (subTotal + shipmentFee) - (discount + voucherTotal);
             shipmentFeeTextView.setText(shipmentFee + " BDT");
             totalPaybleTextView.setText(total + " BDT");
             Utility.shoppingCart.orderTotal = (float) total;
-            DELIVEY_METHOD=checkedId;
+            Utility.shoppingCart.shippingCost = (float) shipmentFee;
+            DELIVEY_METHOD = checkedId;
 
         }
 

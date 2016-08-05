@@ -49,7 +49,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
     private SearchView searchView = null;
     private SearchProductAdapter searchProductAdapter;
     SearchView.SearchAutoComplete searchAutoComplete;
-
+    private TextView toolBarTitle;
 
     public static boolean otherPageSearchCallFlag = true;
 
@@ -78,6 +78,16 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
+
+        toolBarTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainIntent=new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(mainIntent);
+            }
+        });
+
         setSupportActionBar(toolbar);
         //  getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -163,10 +173,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
         return super.onOptionsItemSelected(item);
     }
 
-  /*  public void setNotifCount(int count){
-        BaseActivity.mCARTCOUNT = count;
-        invalidateOptionsMenu();
-    }*/
+
 
     @Override
     public void onBackPressed() {

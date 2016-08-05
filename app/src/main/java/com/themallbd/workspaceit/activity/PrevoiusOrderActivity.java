@@ -1,7 +1,7 @@
 package com.themallbd.workspaceit.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,11 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.themallbd.workspaceit.adapter.OrderHistoryAdapter;
-import com.themallbd.workspaceit.asynctask.GetNewProductsAsyncTask;
+
 import com.themallbd.workspaceit.asynctask.GetPreViousOrderProductAsyncTask;
 import com.themallbd.workspaceit.dataModel.Orders;
 import com.themallbd.workspaceit.service.InternetConnection;
-import com.themallbd.workspaceit.utility.MakeToast;
+
 import com.workspaceit.themall.R;
 
 import java.util.ArrayList;

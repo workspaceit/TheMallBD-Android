@@ -70,7 +70,7 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer implements TabLa
     private void setupViewPager(ViewPager mViewPager) {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new CartFragment(), "Cart");
+        adapter.addFragment(new CartFragment(), "Basket");
         adapter.addFragment(new CheckoutViewFragment(), "Checkout");
         adapter.addFragment(new PaymentFragment(), "Payment");
         mViewPager.setAdapter(adapter);
@@ -147,7 +147,7 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer implements TabLa
                 tab = tabLayout.getTabAt(1);
                 tab.select();
                 mViewPager.setCurrentItem(1);
-                MakeToast.showToast(this, "Confrim Payment Method First");
+                MakeToast.showToast(this, "Please Confirm your shipping information from below...");
 
             }
 

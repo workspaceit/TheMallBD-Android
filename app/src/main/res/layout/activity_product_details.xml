@@ -267,6 +267,7 @@
                         android:background="@drawable/selector_button_state"
                         android:padding="10dp"
                         android:text="@string/add_to_cart"
+
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
                         android:paddingLeft="15dp"

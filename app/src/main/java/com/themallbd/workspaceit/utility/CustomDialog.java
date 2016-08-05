@@ -29,6 +29,26 @@ import com.themallbd.workspaceit.asynctask.AddNewReviewAsynTask;
  */
 public class CustomDialog {
 
+
+    public static void orderPlaceWithoutLogin(final Context context,String title,String body){
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder
+                .setMessage(body)
+                .setCancelable(false)
+                .setPositiveButton("Continue Shopping", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Intent intent = new Intent(context, MainActivity.class);
+                        context.startActivity(intent);
+                    }
+                });
+
+        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+        alertDialog.show();
+    }
+
     public static void orderPlaceDiolog(final Context context,String title,String body){
 
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
@@ -50,9 +70,6 @@ public class CustomDialog {
 
                 Intent intent = new Intent(context, MainActivity.class);
                 context.startActivity(intent);
-                if (context instanceof CheckoutActivity) {
-                    ((CheckoutActivity) context).finish();
-                }
             }
         });
 

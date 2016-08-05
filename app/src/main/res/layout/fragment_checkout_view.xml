@@ -156,7 +156,8 @@
                             android:textSize="16sp"
                             android:layout_weight=".7"
                             android:layout_margin="5dp"
-                            android:gravity="right"/>
+                            android:gravity="right"
+                            android:textStyle="bold"/>
 
                         <View
                             android:layout_width="1dp"
@@ -171,6 +172,7 @@
                             android:layout_margin="5dp"
                             android:textSize="16sp"
                             android:id="@+id/subtotal_checkout_text_view"
+                            android:textStyle="bold"
                             />
 
 
@@ -250,9 +252,11 @@
                                     android:hint="Voucher Code"
                                     android:textSize="16sp"
                                     android:textColorHint="#c1c1c1"
+                                    android:id="@+id/voucher_code_text_view"
+                                    android:singleLine="true"
                                     />
                                 <Button
-                                    android:id="@+id/more_new_product_button"
+                                    android:id="@+id/add_voucher_button"
                                     android:layout_width="54dp"
                                     android:layout_height="25dp"
 
@@ -263,6 +267,15 @@
                                     android:textSize="14sp"
 
                                     />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:id="@+id/voucher_layout">
 
 
                             </LinearLayout>
@@ -346,7 +359,9 @@
                             android:textSize="16sp"
                             android:layout_weight=".7"
                             android:layout_margin="5dp"
-                            android:gravity="right"/>
+                            android:gravity="right"
+                            android:textColor="#911414"
+                            android:textStyle="bold"/>
 
                         <View
                             android:layout_width="1dp"
@@ -360,7 +375,9 @@
                             android:layout_weight=".3"
                             android:layout_margin="5dp"
                             android:textSize="16sp"
-                            android:id="@+id/total_payable_text_view"/>
+                            android:id="@+id/total_payable_text_view"
+                            android:textStyle="bold"
+                            android:textColor="#911414"/>
 
 
                     </LinearLayout>

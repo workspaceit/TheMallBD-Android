@@ -63,7 +63,8 @@ public class OrderHistoryAdapter extends BaseAdapter {
 
            viewHolder.counterTextView.setText((position+1)+"");
             viewHolder.invoiceNymberTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).invoiceNo);
-            viewHolder.orderTotalTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).orderTotal+"");
+            viewHolder.orderTotalTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).orderTotal+" "+
+                    PrevoiusOrderActivity.ordersArrayList.get(position).currencyCode);
             viewHolder.shippingAdressTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).shippingAddress);
 
         } catch (Exception e) {

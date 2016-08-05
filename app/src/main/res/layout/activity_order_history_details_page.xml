@@ -11,13 +11,243 @@
         layout="@layout/toolbar" />
 
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/all_order_history_list_view"
-        android:dividerHeight="3dp">
+ <ScrollView
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:fillViewport="true">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    </ListView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:background="#e6e6e6"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Subtotal:"
+                android:gravity="right"
+                android:layout_marginRight="8dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="1276123 BDT"
+                android:textSize="15sp"
+                android:id="@+id/subtotal_order_details_text_view"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:background="#f2f2f2"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Shipment Fee:"
+                android:gravity="right"
+                android:layout_marginRight="8dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="1276123 BDT"
+                android:textSize="15sp"
+                android:id="@+id/shipment_fee_order_details_text_view"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:background="#e6e6e6"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Voucher Discount:"
+                android:gravity="right"
+                android:layout_marginRight="8dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="1276123 BDT"
+                android:textSize="15sp"
+                android:id="@+id/voucher_discount_order_details_text_view"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:background="#f2f2f2"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Product Discount:"
+                android:gravity="right"
+                android:layout_marginRight="8dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="1276123 BDT"
+                android:textSize="15sp"
+                android:id="@+id/product_discount_order_details_text_view"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:background="#e6e6e6"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Special Discount:"
+                android:gravity="right"
+                android:layout_marginRight="8dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="1276123 BDT"
+                android:textSize="15sp"
+                android:id="@+id/specail_discount_order_details_text_view"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:background="#f2f2f2"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Employee Discount:"
+                android:gravity="right"
+                android:layout_marginRight="8dp"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="1276123 BDT"
+                android:textSize="15sp"
+                android:id="@+id/employee_discount_order_details_text_view"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:background="#e6e6e6">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                android:text="Total:"
+                android:gravity="right"
+                android:layout_marginRight="8dp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#961C1E"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".3"
+                android:text="1276123 BDT"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#961C1E"
+                android:id="@+id/total_order_text_view"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp"
+        android:padding="10dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Order Product Details"
+            android:background="#412E2E"
+            android:textColor="#FFFFFF"
+            android:paddingLeft="20dp"
+            android:padding="5dp"
+            android:textSize="14dp"/>
+
+
+        <com.themallbd.workspaceit.utility.CustomListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/products_in_order_list_view"
+            android:paddingBottom="20dp">
+        </com.themallbd.workspaceit.utility.CustomListView>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+
+ </ScrollView>
 
 
 </LinearLayout>

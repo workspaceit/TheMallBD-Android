@@ -208,8 +208,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initializePackageProductForHorizontalList();
 
 
-        //countries=getResources().getStringArray(R.array.countries_array);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,countries);
+
         this.homeSearcTextView = (CustomAutoCompleteTextView) findViewById(R.id.search_in_home);
 
         homeSearcTextView.setThreshold(3);

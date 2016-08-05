@@ -22,6 +22,7 @@ public class OrderProducts {
 
     public OrderProducts(){
         this.id=0;
+        this.productQuantity=0;
         this.packageQuantity=0;
         this.price=0;
         this.total=0;

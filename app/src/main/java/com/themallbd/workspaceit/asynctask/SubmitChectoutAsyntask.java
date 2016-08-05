@@ -3,19 +3,18 @@ package com.themallbd.workspaceit.asynctask;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.os.AsyncTask;
-import android.widget.Toast;
+
 
 import com.google.gson.Gson;
 import com.themallbd.workspaceit.activity.CheckoutActivity;
-import com.themallbd.workspaceit.activity.LoginActivity;
-import com.themallbd.workspaceit.activity.MainActivity;
-import com.themallbd.workspaceit.activity.ProductDetailsActivity;
+
 import com.themallbd.workspaceit.service.SubmitCheckoutService;
 import com.themallbd.workspaceit.utility.CustomDialog;
+
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
-import com.themallbd.workspaceit.utility.MakeToast;
+
 import com.themallbd.workspaceit.utility.Utility;
 
 /**
@@ -80,7 +79,17 @@ public class SubmitChectoutAsyntask extends AsyncTask<String, String, Boolean> {
                 localShoppintCart.setProductCart(cartProdut);
                 localShoppintCart.setPackageCart(cartPackage);
                 CheckoutActivity.tabFlag=0;
-                CustomDialog.orderPlaceDiolog(context, "Thanks for shopping with us", "Your order has been placed successfully");
+
+
+
+
+                if (Utility.isLoggedInFlag) {
+
+                    CustomDialog.orderPlaceDiolog(context, "Thanks for shopping with us", "Your order has been placed successfully");
+                }else {
+                    CustomDialog.orderPlaceWithoutLogin(context,"Thanks for shopping with us","Your order has been placed successfully");
+                }
+
             } else {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);
                 alertDialogBuilder.setTitle("Order Place");
