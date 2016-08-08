@@ -10,11 +10,13 @@ import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.themallbd.workspaceit.activity.CheckoutActivity;
 
+import com.themallbd.workspaceit.fragment.PaymentFragment;
 import com.themallbd.workspaceit.service.SubmitCheckoutService;
 import com.themallbd.workspaceit.utility.CustomDialog;
 
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
 
+import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.Utility;
 
 /**
@@ -71,24 +73,35 @@ public class SubmitChectoutAsyntask extends AsyncTask<String, String, Boolean> {
 
             if (aBoolean) {
 
-                Utility.resetShoppingCart();
-                Gson gson = new Gson();
-                String cartProdut = gson.toJson(Utility.shoppingCart.productCell);
-                String cartPackage = gson.toJson(Utility.shoppingCart.mallBdPackageCell);
-                LocalShoppintCart localShoppintCart = new LocalShoppintCart(context);
-                localShoppintCart.setProductCart(cartProdut);
-                localShoppintCart.setPackageCart(cartPackage);
-                CheckoutActivity.tabFlag=0;
 
 
 
+                if (PaymentFragment.PAYMENT_ID==1){
+                    Utility.resetShoppingCart();
+                    Gson gson = new Gson();
+                    String cartProdut = gson.toJson(Utility.shoppingCart.productCell);
+                    String cartPackage = gson.toJson(Utility.shoppingCart.mallBdPackageCell);
+                    LocalShoppintCart localShoppintCart = new LocalShoppintCart(context);
+                    localShoppintCart.setProductCart(cartProdut);
+                    localShoppintCart.setPackageCart(cartPackage);
+                    CheckoutActivity.tabFlag=0;
+                    if (Utility.isLoggedInFlag) {
 
-                if (Utility.isLoggedInFlag) {
+                        CustomDialog.orderPlaceDiolog(context, "Thanks for shopping with us", "Your order has been placed successfully");
+                    }else {
+                        CustomDialog.orderPlaceWithoutLogin(context,"Thanks for shopping with us","Your order has been placed successfully");
+                    }
 
-                    CustomDialog.orderPlaceDiolog(context, "Thanks for shopping with us", "Your order has been placed successfully");
-                }else {
-                    CustomDialog.orderPlaceWithoutLogin(context,"Thanks for shopping with us","Your order has been placed successfully");
+                }else if (PaymentFragment.PAYMENT_ID==2){
+                    CustomDialog.paypalPayment(context,"Paypal","Go to paypal payment page",Utility.finishOrderSummary.order_id);
+                }else if (PaymentFragment.PAYMENT_ID==3){
+                    MakeToast.showToast(context,"Bkash");
+                }else if(PaymentFragment.PAYMENT_ID==4){
+                    CustomDialog.walletMixPayment(context,"Payment","Now You will redirect to payment gateway",Utility.finishOrderSummary.order_id);
+
+
                 }
+
 
             } else {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);

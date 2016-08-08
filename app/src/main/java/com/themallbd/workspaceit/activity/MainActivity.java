@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themallbd.workspaceit.adapter.DiscountProductRecyleViewAdapter;
 import com.themallbd.workspaceit.adapter.PackageInHorizontalListAdapter;
 import com.themallbd.workspaceit.asynctask.GetAllDeliveryMethodsAsyncTask;
@@ -250,8 +251,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.categoryAllView = (ImageView) findViewById(R.id.iv_home_all);
         this.categoryAllView.setOnClickListener(this);
         firstCategoryText = (TextView) findViewById(R.id.tv_home_cat_first);
+        firstCategoryText.setOnClickListener(this);
         secondCategoryText = (TextView) findViewById(R.id.tv_home_second);
+        secondCategoryText.setOnClickListener(this);
         thirdCategoryText = (TextView) findViewById(R.id.tv_home_third);
+        thirdCategoryText.setOnClickListener(this);
 
     }
 
@@ -542,13 +546,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void initializeCategoryView() {
+        String icon="category/banner/";
         int count = Utility.parentsCategoryArraylist.size();
         count--;
         firstCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
+        ImageLoader.getInstance().displayImage(Utility.IMAGE_URL + icon + Utility.parentsCategoryArraylist.get(count).icon,
+                categoryBabyView);
+
         count--;
         secondCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
+        ImageLoader.getInstance().displayImage(Utility.IMAGE_URL + icon + Utility.parentsCategoryArraylist.get(count).icon,
+                categoryMenView);
         count--;
         thirdCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
+        ImageLoader.getInstance().displayImage(Utility.IMAGE_URL + icon + Utility.parentsCategoryArraylist.get(count).icon,
+                categoryWomenView);
 
     }
 
@@ -845,19 +857,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         count--;
 
-        if (v == categoryWomenView) {
+        if (v == categoryWomenView || v==secondCategoryText) {
             Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
             intent.putExtra("position", count - 1);
             intent.putExtra("title", Utility.parentsCategoryArraylist.get(count - 1).title);
             startActivity(intent);
 
-        } else if (v == categoryBabyView) {
+        } else if (v == categoryBabyView || v==firstCategoryText) {
             Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
             intent.putExtra("position", count);
             intent.putExtra("title", Utility.parentsCategoryArraylist.get(count).title);
             startActivity(intent);
 
-        } else if (v == categoryMenView) {
+        } else if (v == categoryMenView || v==thirdCategoryText) {
             Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
             intent.putExtra("position", count - 2);
             intent.putExtra("title", Utility.parentsCategoryArraylist.get(count - 2).title);

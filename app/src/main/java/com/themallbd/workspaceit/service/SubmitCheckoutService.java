@@ -3,6 +3,8 @@ package com.themallbd.workspaceit.service;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.themallbd.workspaceit.dataModel.FinishOrderSummary;
+import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
 import com.themallbd.workspaceit.utility.Utility;
 
@@ -46,6 +48,8 @@ public class SubmitCheckoutService extends BaseMallBDService{
             this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
 
             if(this.responseStat.status){
+                FinishOrderSummary finishOrderSummary = gson.fromJson(jsonObject.get("responseData"),FinishOrderSummary.class);
+                Utility.finishOrderSummary=finishOrderSummary;
                 Utility.responseStat=this.responseStat;
                 return true;
             }else {

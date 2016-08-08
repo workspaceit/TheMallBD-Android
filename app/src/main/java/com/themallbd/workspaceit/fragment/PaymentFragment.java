@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -17,13 +18,13 @@ import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
-public class PaymentFragment extends Fragment implements View.OnClickListener {
+public class PaymentFragment extends Fragment implements View.OnClickListener,RadioGroup.OnCheckedChangeListener {
     private CheckOutInfoSession checkOutInfoSession;
     private RadioGroup radioPaymentGroup;
 
     private Button confrimOrderButton;
     private Gson gson;
-
+    public static int PAYMENT_ID;
 
 
 
@@ -45,6 +46,7 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
         confrimOrderButton.setOnClickListener(this);
         gson=new Gson();
         radioPaymentGroup=(RadioGroup)view.findViewById(R.id.radio_payment_method_group);
+        radioPaymentGroup.setOnCheckedChangeListener(this);
 
 
         initializeRadioButton();
@@ -60,13 +62,12 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
             radioButton.setId(Utility.paymentMethodses.get(i).id);
             radioButton.setText(Utility.paymentMethodses.get(i).methodTitle);
             radioPaymentGroup.addView(radioButton);
-            if (i!=0){
-                radioButton.setEnabled(false);
-            }
+
 
         }
 
         radioPaymentGroup.check(Utility.paymentMethodses.get(0).id);
+        PAYMENT_ID=1;
     }
 
 
@@ -88,5 +89,9 @@ public class PaymentFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        PAYMENT_ID=checkedId;
 
+    }
 }
