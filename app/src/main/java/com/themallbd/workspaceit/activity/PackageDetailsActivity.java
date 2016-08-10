@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.themallbd.workspaceit.adapter.ProductsInPackageAdapter;
 import com.themallbd.workspaceit.dataModel.MallBdPackage;
 import com.themallbd.workspaceit.dataModel.MallBdPackageCell;
+import com.themallbd.workspaceit.utility.CustomDialog;
 import com.themallbd.workspaceit.utility.CustomListView;
 import com.themallbd.workspaceit.utility.CustomSliderView;
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
@@ -154,8 +155,9 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements
                 if (Utility.shoppingCart.mallBdPackageCell.get(i).mallBdPackage.id == mallBdPackage.id) {
                     Utility.shoppingCart.mallBdPackageCell.get(i).quantity += this.packageQuantity;
                     this.updateCart();
-                    MakeToast.showToast(this,"Product already exist in the cart. Quantity updated..");
                     invalidateOptionsMenu();
+                    CustomDialog.goToCheckOutDailog(this, "Checkout", "This Package already exist in your cart. Quantity Updated ");
+
                     return;
                 }
 
@@ -170,8 +172,9 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements
             Utility.shoppingCart.mallBdPackageCell.add(mallBdPackageCell);
 
             this.updateCart();
-            MakeToast.showToast(this, "Succesfully added to cart...");
             invalidateOptionsMenu();
+            CustomDialog.goToCheckOutDailog(this, "Checkout", "Package has been successfully added to the cart");
+
         }else if (v==buyNow){
             Intent intent=new Intent(this,CheckoutActivity.class);
             startActivity(intent);

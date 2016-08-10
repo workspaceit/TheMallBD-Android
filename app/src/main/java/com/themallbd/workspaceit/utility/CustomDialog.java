@@ -32,6 +32,33 @@ import com.themallbd.workspaceit.asynctask.AddNewReviewAsynTask;
  */
 public class CustomDialog {
 
+    public static void goToCheckOutDailog(final Context context,String title,String body){
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder
+                .setCancelable(true)
+                .setMessage(body)
+                .setPositiveButton("Got to Checkout", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        Intent intent=new Intent(context, CheckoutActivity.class);
+                        context.startActivity(intent);
+
+                    }
+                }).setNegativeButton("Continue", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
+                dialog.cancel();
+            }
+        });
+
+        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+        alertDialog.show();
+
+    }
+
     public static void BkashPaymentDialog(final Context context,String title,String body, final String transId){
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
         alertDialogBuilder.setTitle(title);

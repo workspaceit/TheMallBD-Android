@@ -342,15 +342,26 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(cartIntent);
                 return true;
             case R.id.nav_about_id:
-                Intent contactUs = new Intent(this, ContactUsActivity.class);
-                startActivity(contactUs);
-                return true;
-            case R.id.nav_app_id:
-                if (sessionManager.checkLogin()) {
+                if (Utility.isLoggedInFlag) {
 
+                    return true;
                 } else {
                     CustomDialog.showDailog(this, "You Need to Login First", "You need to do login to see this feature");
+
                 }
+
+                return true;
+
+            case R.id.nav_app_id:
+                if (Utility.isLoggedInFlag) {
+                    Intent contactUs=new Intent(this,ContactUsActivity.class);
+                    startActivity(contactUs);
+                    return true;
+                } else {
+                    CustomDialog.showDailog(this, "You Need to Login First", "You need to do login to see this feature");
+
+                }
+
                 return true;
 
 
@@ -359,6 +370,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 if (Utility.isLoggedInFlag) {
                     Intent myAccount = new Intent(getApplicationContext(), MyAccountActivity.class);
                     startActivity(myAccount);
+                    return true;
 
                 } else {
                     CustomDialog.showDailog(this, "You Need to Login First", "You need to do login to see this feature");

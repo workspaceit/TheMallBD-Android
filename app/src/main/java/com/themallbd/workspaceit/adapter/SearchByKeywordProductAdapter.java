@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class SearchByKeywordProductAdapter extends BaseAdapter {
         public TextView productName;
         public TextView priceView;
         public TextView manufraturer;
+        public TextView discountPrice;
     }
 
     @Override
@@ -66,6 +68,7 @@ public class SearchByKeywordProductAdapter extends BaseAdapter {
             viewHolder.productName = (TextView) convertView.findViewById(R.id.product_category_name);
             viewHolder.priceView = (TextView) convertView.findViewById(R.id.product_category_price);
             viewHolder.manufraturer=(TextView)convertView.findViewById(R.id.any_product_manufracturer_text_view);
+            viewHolder.discountPrice=(TextView)convertView.findViewById(R.id.product_discount_price);
 
             convertView.setTag(viewHolder);
         } else {
@@ -94,10 +97,26 @@ public class SearchByKeywordProductAdapter extends BaseAdapter {
             }
             viewHolder.productName.setText(SearchProductListActivity.searchProductArrayList.get(position).title);
             viewHolder.manufraturer.setText(SearchProductListActivity.searchProductArrayList.get(position).manufacturer.name);
-            if (SearchProductListActivity.searchProductArrayList.get(position).prices.size()>0)
-                viewHolder.priceView.setText(""+SearchProductListActivity.searchProductArrayList.get(position).prices.get(0).retailPrice);
-            else
-                viewHolder.priceView.setText("No price");
+
+
+            viewHolder.discountPrice.setVisibility(View.VISIBLE);
+            viewHolder.priceView.setPaintFlags(viewHolder.priceView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            if (SearchProductListActivity.searchProductArrayList.get(position).discountActiveFlag) {
+
+                viewHolder.priceView.setText(SearchProductListActivity.searchProductArrayList.get(position).prices.get(0).retailPrice + " " + Utility.CURRENCY_CODE);
+                viewHolder.priceView.setPaintFlags(viewHolder.priceView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                float currentPrice = (float) (SearchProductListActivity.searchProductArrayList.get(position).prices.get(0).retailPrice - SearchProductListActivity.searchProductArrayList.get(position).discountAmount);
+
+                viewHolder.discountPrice.setText(currentPrice + " "+Utility.CURRENCY_CODE);
+            } else {
+                viewHolder.discountPrice.setVisibility(View.GONE);
+
+
+                viewHolder.priceView.setText(SearchProductListActivity.searchProductArrayList.get(position).prices.get(0).retailPrice+" "+Utility.CURRENCY_CODE);
+            }
+
+
+
         }
         catch (Exception e)
         {

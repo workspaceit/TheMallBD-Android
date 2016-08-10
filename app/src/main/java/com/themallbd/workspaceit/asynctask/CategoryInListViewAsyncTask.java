@@ -26,7 +26,7 @@ public class CategoryInListViewAsyncTask extends AsyncTask<String,String,ArrayLi
     protected void onPreExecute() {
         mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setMessage("Loading categories");
+        mProgressDialog.setMessage("Mall BD is loading. Please wait...");
         mProgressDialog.setCancelable(false);
         mProgressDialog.show();
         super.onPreExecute();

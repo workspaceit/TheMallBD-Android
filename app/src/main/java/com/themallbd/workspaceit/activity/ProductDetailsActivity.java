@@ -437,8 +437,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
                         if (newQunatity<=products.quantity) {
                             Utility.shoppingCart.productCell.get(i).quantity += this.productsQuantity;
                             this.updateCart();
-                            MakeToast.showToast(this, "Product already exist in the cart. Quantity updated..");
                             invalidateOptionsMenu();
+                            CustomDialog.goToCheckOutDailog(this, "Checkout", "This Product already exist in your cart. Quantity Updated ");
+
                         }else {
                             MakeToast.showToast(this,"This much quantity is not available in the stock");
                         }
@@ -466,8 +467,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
 
 
                 this.updateCart();
-                MakeToast.showToast(this, "Succesfully added to cart...");
                 invalidateOptionsMenu();
+                CustomDialog.goToCheckOutDailog(this, "Checkout", "Product has been successfully added to the cart");
+
 
             } else if (v == addToWishListBtn) {
 
