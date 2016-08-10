@@ -9,91 +9,69 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
-import com.paypal.android.MEP.CheckoutButton;
-import com.paypal.android.MEP.PayPal;
-import com.paypal.android.MEP.PayPalActivity;
-import com.paypal.android.MEP.PayPalInvoiceData;
-import com.paypal.android.MEP.PayPalPayment;
+
 import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
 import com.paypal.android.sdk.payments.PayPalService;
 import com.paypal.android.sdk.payments.PaymentActivity;
+import com.themallbd.workspaceit.asynctask.CancelOrderAyncTask;
+import com.themallbd.workspaceit.asynctask.SuccessOrderAsynTask;
 import com.themallbd.workspaceit.utility.MakeToast;
+import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
 import java.math.BigDecimal;
 
-public class PaypalPaymentActivity extends AppCompatActivity implements View.OnClickListener {
-    private static final String CONFIG_ENVIRONMENT = PayPalConfiguration.ENVIRONMENT_NO_NETWORK;
-    private static final String CONFIG_CLIENT_ID = "credentials from developer.paypal.com";
-    private static final int PAYPAL_BUTTON_ID =1 ;
-    private CheckoutButton launchPayPalButton;
-    private static final int REQUEST_CODE_PAYMENT = 1;
-    private static final int REQUEST_CODE_FUTURE_PAYMENT = 2;
-    private static final int REQUEST_CODE_PROFILE_SHARING = 3;
+public class PaypalPaymentActivity extends BaseActivityWithoutDrawer implements View.OnClickListener {
 
+    private Button paypalButton;
+    private TextView totalTextView,usdTextView;
     private static PayPalConfiguration config = new PayPalConfiguration()
-            .environment(CONFIG_ENVIRONMENT)
-            .clientId(CONFIG_CLIENT_ID)
-                    // The following are only used in PayPalFuturePaymentActivity.
-            .merchantName("Example Merchant")
-            .merchantPrivacyPolicyUri(Uri.parse("https://www.example.com/privacy"))
-            .merchantUserAgreementUri(Uri.parse("https://www.example.com/legal"));
+
+            // Start with mock environment.  When ready, switch to sandbox (ENVIRONMENT_SANDBOX)
+            // or live (ENVIRONMENT_PRODUCTION)
+            .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK)
+            .clientId("<Clienr ID>");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paypal_payment);
-        this.initLibrary();
-        this.showPayPalButton();
+
+        totalTextView=(TextView)findViewById(R.id.amount_paypal_text_view);
+        usdTextView=(TextView)findViewById(R.id.paypal_usd_text_view);
+
+        totalTextView.setText(Utility.finishOrderSummary.order_grand_total+" BDT");
+        usdTextView.setText(Utility.finishOrderSummary.paypal_pay_amount+" USD");
+        paypalButton=(Button)findViewById(R.id.paypal_button);
+        paypalButton.setOnClickListener(this);
+        Intent intent = new Intent(this, PayPalService.class);
+
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
+
+        startService(intent);
+
+
 
 
     }
 
-    public void initLibrary() {
-        PayPal pp = PayPal.getInstance();
 
-        if (pp == null) {  // Test to see if the library is already initialized
-
-            // This main initialization call takes your Context, AppID, and target server
-            pp = PayPal.initWithAppID(this, "APP-80W284485P519543T", PayPal.ENV_NONE);
-
-            // Required settings:
-
-            // Set the language for the library
-            pp.setLanguage("en_US");
-
-            // Some Optional settings:
-
-            // Sets who pays any transaction fees. Possible values are:
-            // FEEPAYER_SENDER, FEEPAYER_PRIMARYRECEIVER, FEEPAYER_EACHRECEIVER, and FEEPAYER_SECONDARYONLY
-            pp.setFeesPayer(PayPal.FEEPAYER_EACHRECEIVER);
-
-            // true = transaction requires shipping
-            pp.setShippingEnabled(true);
-        }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        new CancelOrderAyncTask().execute(String.valueOf(Utility.finishOrderSummary.order_id));
     }
 
-
-    private void showPayPalButton() {
-
-        // Generate the PayPal checkout button and save it for later use
-        PayPal pp = PayPal.getInstance();
-        launchPayPalButton = pp.getCheckoutButton(this, PayPal.BUTTON_278x43, CheckoutButton.TEXT_PAY);
-
-        // The OnClick listener for the checkout button
-        launchPayPalButton.setOnClickListener(this);
-
-        // Add the listener to the layout
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams (RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        params.bottomMargin = 10;
-        launchPayPalButton.setLayoutParams(params);
-        //launchPayPalButton.setId(PAYPAL_BUTTON_ID);
-        ((RelativeLayout) findViewById(R.id.RelativeLayout01)).addView(launchPayPalButton);
-        ((RelativeLayout) findViewById(R.id.RelativeLayout01)).setGravity(Gravity.CENTER_HORIZONTAL);
+    @Override
+    protected void onDestroy() {
+        stopService(new Intent(this, PayPalService.class));
+        super.onDestroy();
     }
+
 
 
 
@@ -101,35 +79,18 @@ public class PaypalPaymentActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-        MakeToast.showToast(this,"clicked");
-        // Create a basic PayPal payment
-        PayPalPayment payment = new PayPalPayment();
+        if (v==paypalButton){
+            PayPalPayment payment = new PayPalPayment(new BigDecimal(Utility.finishOrderSummary.paypal_pay_amount), "USD", "The Mall BD",
+                    PayPalPayment.PAYMENT_INTENT_SALE);
 
-        // Set the currency type
-        payment.setCurrencyType("USD");
+            Intent intent = new Intent(this, PaymentActivity.class);
+            intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, config);
 
-        // Set the recipient for the payment (can be a phone number)
-        payment.setRecipient("ppalav_1285013097_biz@yahoo.com");
+            intent.putExtra(PaymentActivity.EXTRA_PAYMENT, payment);
 
-        // Set the payment amount, excluding tax and shipping costs
-        payment.setSubtotal(new BigDecimal(1.2));
+            startActivityForResult(intent, 0);
 
-        // Set the payment type--his can be PAYMENT_TYPE_GOODS,
-        // PAYMENT_TYPE_SERVICE, PAYMENT_TYPE_PERSONAL, or PAYMENT_TYPE_NONE
-        payment.setPaymentType(PayPal.PAYMENT_TYPE_GOODS);
-
-        // PayPalInvoiceData can contain tax and shipping amounts, and an
-        // ArrayList of PayPalInvoiceItem that you can fill out.
-        // These are not required for any transaction.
-        PayPalInvoiceData invoice = new PayPalInvoiceData();
-
-        // Set the tax amount
-        invoice.setTax(new BigDecimal(0.0));
-
-        Intent checkoutIntent =new Intent(this,PaymentActivity.class);
-
-        startActivityForResult(checkoutIntent, 1);
-
+        }
     }
 
 
@@ -139,7 +100,7 @@ public class PaypalPaymentActivity extends AppCompatActivity implements View.OnC
             // The payment succeeded
             case Activity.RESULT_OK:
 
-                MakeToast.showToast(this,"succes");
+                new SuccessOrderAsynTask().execute(String.valueOf(Utility.finishOrderSummary.order_id));
                 break;
 
             // The payment was canceled
@@ -148,8 +109,9 @@ public class PaypalPaymentActivity extends AppCompatActivity implements View.OnC
                 break;
 
             // The payment failed, get the error from the EXTRA_ERROR_ID and EXTRA_ERROR_MESSAGE
-            case PayPalActivity.RESULT_FAILURE:
-                MakeToast.showToast(this,"Failure");
+            case PaymentActivity.RESULT_EXTRAS_INVALID:
+                MakeToast.showToast(this,"Invalid");
+                break;
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

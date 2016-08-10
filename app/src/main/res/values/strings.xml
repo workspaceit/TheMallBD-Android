@@ -58,6 +58,14 @@
     <string name="shipping_info">Shipping Infromation</string>
     <string name="previous_price">PRP:  </string>
     <string name="save_price">You Save: </string>
+    <string name="bkash_ins_1">"Step : 1     Dial *247#"</string>
+    <string name="bkash_ins_2">"Step : 2     Choose Option: "Payment""</string>
+    <string name="bkash_ins_3">"Step : 3     Enter Merchant bKash Account No: 01710300648"</string>
+    <string name="bkash_ins_4">"Step : 4     Enter Amount: 15300"</string>
+    <string name="bkash_ins_5">"Step : 5     Enter Reference: 1"</string>
+    <string name="bkash_ins_6">"Step : 6     Enter Counter No: 1"</string>
+    <string name="bkash_ins_7">"Step : 7     Enter Your Pin to Confirm the Transaction: XXXX"</string>
+    <string name="bkash_ins_8">"Step : 8     Enter Your Mobile Number and TrxID to complete your Transaction"</string>
 
     <string-array name="countries_array">
         <item>Country</item>

@@ -85,6 +85,8 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.PaypalPaymentActivity" >
         </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.BKashPaymentActivity" >
+        </activity>
     </application>
 
 </manifest>

@@ -93,9 +93,10 @@ public class SubmitChectoutAsyntask extends AsyncTask<String, String, Boolean> {
                     }
 
                 }else if (PaymentFragment.PAYMENT_ID==2){
-                    CustomDialog.paypalPayment(context,"Paypal","Go to paypal payment page",Utility.finishOrderSummary.order_id);
+                    CustomDialog.BkashPaymentDialog(context,"Bkash","Go to Bkash Payment page",Utility.finishOrderSummary.unique_code);
                 }else if (PaymentFragment.PAYMENT_ID==3){
-                    MakeToast.showToast(context,"Bkash");
+                    CustomDialog.paypalPayment(context, "Paypal", "Go to paypal payment page");
+
                 }else if(PaymentFragment.PAYMENT_ID==4){
                     CustomDialog.walletMixPayment(context,"Payment","Now You will redirect to payment gateway",Utility.finishOrderSummary.order_id);
 

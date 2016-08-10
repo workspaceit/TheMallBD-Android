@@ -17,6 +17,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.themallbd.workspaceit.activity.BKashPaymentActivity;
 import com.themallbd.workspaceit.activity.CheckoutActivity;
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.activity.PaypalPaymentActivity;
@@ -31,8 +32,31 @@ import com.themallbd.workspaceit.asynctask.AddNewReviewAsynTask;
  */
 public class CustomDialog {
 
+    public static void BkashPaymentDialog(final Context context,String title,String body, final String transId){
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        alertDialogBuilder.setTitle(title);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setMessage(body)
+                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
-    public static void paypalPayment(final Context context,String title, String body, final int orderId){
+                        Intent intent=new Intent(context, BKashPaymentActivity.class);
+                        intent.putExtra("trnx_Id",transId);
+                        context.startActivity(intent);
+
+                    }
+                });
+
+        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+        alertDialog.show();
+
+    }
+
+
+    public static void paypalPayment(final Context context,String title, String body){
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
@@ -42,7 +66,6 @@ public class CustomDialog {
                     public void onClick(DialogInterface dialog, int id) {
 
                         Intent intent=new Intent(context, PaypalPaymentActivity.class);
-                        intent.putExtra("order_id",orderId);
                         context.startActivity(intent);
 
                     }

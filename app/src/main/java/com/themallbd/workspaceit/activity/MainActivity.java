@@ -803,33 +803,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-        if(newProductsForHorizontalViewList.size()>0){
-            this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
-            this.offsetForNewProductsHorizontalScrolling=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
+        if (mInternetConnection.isInternetAvailable()) {
+            if (newProductsForHorizontalViewList.size() > 0) {
+                this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
+                this.offsetForNewProductsHorizontalScrolling = ((MainActivity.newProductsForHorizontalViewList.size() / 5) - 1);
+
+            }
+
+            if (featuredProductsForHorizontalViewList.size() > 0) {
+                this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
+                this.offsetForFeaturedProductsHorizontalScrolling = ((MainActivity.featuredProductsForHorizontalViewList.size() / 5) - 1);
+
+            }
+
+            if (packgeProductForHorizontalList.size() > 0) {
+                this.packageInHorizontalListAdapter.notifyDataSetChanged();
+                this.offsetForPackage = ((MainActivity.packgeProductForHorizontalList.size() / 5) - 1);
+            }
+
+            if (discountProductForHorizontalList.size() > 0) {
+                this.discountProductRecyleViewAdapter.notifyDataSetChanged();
+                this.offsetForDiscountProduct = ((MainActivity.discountProductForHorizontalList.size() / 5) - 1);
+            }
+
+            if (allProductsForGridViewList.size() > 0) {
+                this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
+            }
 
         }
-
-        if(featuredProductsForHorizontalViewList.size()>0){
-            this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
-            this.offsetForFeaturedProductsHorizontalScrolling=((MainActivity.featuredProductsForHorizontalViewList.size()/5)-1);
-
-        }
-
-        if(packgeProductForHorizontalList.size()>0){
-            this.packageInHorizontalListAdapter.notifyDataSetChanged();
-            this.offsetForPackage=((MainActivity.packgeProductForHorizontalList.size()/5)-1);
-        }
-
-        if(discountProductForHorizontalList.size()>0){
-            this.discountProductRecyleViewAdapter.notifyDataSetChanged();
-            this.offsetForDiscountProduct=((MainActivity.discountProductForHorizontalList.size()/5)-1);
-        }
-
-        if (allProductsForGridViewList.size()>0){
-            this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
-        }
-
-
     }
 
     @Override

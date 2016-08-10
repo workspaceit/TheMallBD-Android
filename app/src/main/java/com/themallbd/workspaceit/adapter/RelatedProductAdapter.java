@@ -92,9 +92,9 @@ public class RelatedProductAdapter extends BaseAdapter {
             }
 
             viewHolder.productName.setText(Utility.relatedProductArryList.get(position).title);
-            viewHolder.priceTextView.setText("$" + String.valueOf(Utility.relatedProductArryList.get(position).prices.get(0).retailPrice));
+            viewHolder.priceTextView.setText(String.valueOf(Utility.relatedProductArryList.get(position).prices.get(0).retailPrice+" BDT"));
             viewHolder.ratingRelatedProduct.setRating(Utility.relatedProductArryList.get(position).avgRating);
-            viewHolder.reviewsTextView.setText("345 reviews");
+            viewHolder.reviewsTextView.setText(Utility.relatedProductArryList.get(position).manufacturer.name);
 
         } catch (Exception e) {
 

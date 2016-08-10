@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import com.themallbd.workspaceit.activity.WalletMixPaymentWebViewActivity;
-import com.themallbd.workspaceit.service.GetWalletMixUrlService;
+import com.themallbd.workspaceit.service.PaymentService;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.Utility;
 
@@ -35,7 +35,7 @@ public class GetWalletMixURLAsynTask extends AsyncTask<String,String,String> {
     @Override
     protected String doInBackground(String... params) {
         String orderId=params[0];
-        return new GetWalletMixUrlService().getWalletMixConfrimation(orderId);
+        return new PaymentService().getWalletMixConfrimation(orderId);
     }
 
 

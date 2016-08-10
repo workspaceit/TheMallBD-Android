@@ -1,5 +1,7 @@
 package com.themallbd.workspaceit.fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,6 +14,9 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.themallbd.workspaceit.activity.BKashPaymentActivity;
+import com.themallbd.workspaceit.activity.MainActivity;
+import com.themallbd.workspaceit.activity.PrevoiusOrderActivity;
 import com.themallbd.workspaceit.asynctask.SubmitChectoutAsyntask;
 import com.themallbd.workspaceit.utility.CheckOutInfoSession;
 import com.themallbd.workspaceit.utility.MakeToast;
@@ -75,12 +80,57 @@ public class PaymentFragment extends Fragment implements View.OnClickListener,Ra
 
     @Override
     public void onClick(View v) {
+
+
+
+
             if (v==confrimOrderButton){
-                new SubmitChectoutAsyntask(getActivity()).execute(checkOutInfoSession.getFname(),checkOutInfoSession.getLname(),
-                        checkOutInfoSession.getEmail(),checkOutInfoSession.getTelephone(),checkOutInfoSession.getAddress(),
-                        checkOutInfoSession.getCity(), "ANDROID",checkOutInfoSession.getAddress(),"Bangladesh", "",
-                        checkOutInfoSession.getCity(),String.valueOf(CheckoutViewFragment.DELIVEY_METHOD),
-                        String.valueOf(radioPaymentGroup.getCheckedRadioButtonId()),"1",gson.toJson(Utility.shoppingCart));
+
+                String message="";
+                int id=radioPaymentGroup.getCheckedRadioButtonId();
+                if (id==1){
+                    message="Are you Confirming Cash On Delivery?";
+                }else if(id==2){
+                    message="Are you sure to pay with Bkash?";
+                }else if (id==3){
+                    message="Are you sure to pay with Paypal?";
+                }else if (id==4){
+                    message="Are you sure to pay with Walletmix?";
+                }
+
+
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(getActivity(), android.R.style.Theme_Material_Light_Dialog_Alert);
+                alertDialogBuilder.setTitle("Payment");
+                alertDialogBuilder
+                        .setMessage(message)
+                        .setCancelable(false)
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                new SubmitChectoutAsyntask(getActivity()).execute(checkOutInfoSession.getFname(),checkOutInfoSession.getLname(),
+                                        checkOutInfoSession.getEmail(),checkOutInfoSession.getTelephone(),checkOutInfoSession.getAddress(),
+                                        checkOutInfoSession.getCity(), "ANDROID",checkOutInfoSession.getAddress(),"Bangladesh", "",
+                                        checkOutInfoSession.getCity(),String.valueOf(CheckoutViewFragment.DELIVEY_METHOD),
+                                        String.valueOf(radioPaymentGroup.getCheckedRadioButtonId()),"1",gson.toJson(Utility.shoppingCart));
+
+
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                    }
+                });
+
+                android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+
+
+                alertDialog.show();
+
+
+
+
+
 
 
             }

@@ -17,6 +17,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.themallbd.workspaceit.asynctask.ConfrimWalletMixPaymentAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetWalletMixURLAsynTask;
 import com.themallbd.workspaceit.service.InternetConnection;
 import com.themallbd.workspaceit.utility.MakeToast;
@@ -45,7 +46,7 @@ public class WalletMixPaymentWebViewActivity extends BaseActivityWithoutDrawer {
         browser = (WebView) findViewById(R.id.webview);
         browser.setWebViewClient(new MyBrowser());
 
-
+        flag=false;
         orderId = getIntent().getIntExtra("order_id", -1);
 
         internetConnection = new InternetConnection(this);
@@ -90,16 +91,13 @@ public class WalletMixPaymentWebViewActivity extends BaseActivityWithoutDrawer {
         @Override
         public void onPageFinished(WebView view, String url) {
 
-
+            if (url.contains("http://188.166.214.41/mallbdweb/public/walletmix/mobilecallback")){
+                flag=true;
+                new ConfrimWalletMixPaymentAsyncTask(WalletMixPaymentWebViewActivity.this).execute(String.valueOf(orderId));
+            }
             super.onPageFinished(view, url);
         }
 
-
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
-            super.onPageStarted(view, url, favicon);
-        }
     }
 
     @Override
@@ -107,6 +105,8 @@ public class WalletMixPaymentWebViewActivity extends BaseActivityWithoutDrawer {
         if (browser.canGoBack()) {
             browser.goBack();
         } else {
+
+            this.finish();
             super.onBackPressed();
         }
     }
