@@ -47,7 +47,7 @@ public class CategoryActivity extends BaseActivityWithoutDrawer implements Adapt
     }
 
     private void initialize() {
-        if (mInternetConnection.isConnectingToInternet())
+        if (mInternetConnection.checkInternet())
         {
             CategoryActivity.newCategoryArrayList.clear();
             new GetSubCategoryOfParentsAsyncTask(this).execute(String.valueOf(parentId));

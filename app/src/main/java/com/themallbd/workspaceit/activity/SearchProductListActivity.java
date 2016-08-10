@@ -62,7 +62,7 @@ public class SearchProductListActivity extends BaseActivityWithoutDrawer impleme
 
 
 
-        if (mInternetConnection.isConnectingToInternet())
+        if (mInternetConnection.checkInternet())
         {
 
             new GetSearchProductByKeywordAsynTask(this).execute(keyword,String.valueOf(limit),String.valueOf(offset));
@@ -110,7 +110,7 @@ public class SearchProductListActivity extends BaseActivityWithoutDrawer impleme
 
 
             loadSerachFlag=false;
-            if (mInternetConnection.isConnectingToInternet())
+            if (mInternetConnection.checkInternet())
             {
 
                 new GetSearchProductByKeywordAsynTask(this).execute(keyword,String.valueOf(limit),String.valueOf(offset));

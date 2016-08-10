@@ -51,7 +51,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private Spinner productQunatitySpinner;
     private Toolbar toolbar;
 
-    private Button addToCartBtn, addToWishListBtn;
+    private Button addToCartBtn, addToWishListBtn,buyNow;
     private RatingBar ratingBar;
     private TextView normalRelatedProductTextView;
     private SliderLayout slideShow;
@@ -125,7 +125,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             reviewNormalTextView.setVisibility(View.GONE);
             addReviewButton = (Button) findViewById(R.id.add_review_button);
             addReviewButton.setOnClickListener(this);
-
+            buyNow=(Button)findViewById(R.id.button_product_buy_now);
+            buyNow.setOnClickListener(this);
             quantityPlainTextView=(TextView)findViewById(R.id.quantity_plain_textview);
             outOfStockTextView =(TextView)findViewById(R.id.out_of_stock_text_view);
 
@@ -333,18 +334,18 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             nomalPreviousPrice.setVisibility(View.VISIBLE);
             previousPrictTextView.setVisibility(View.VISIBLE);
             saveNormalTextView.setVisibility(View.VISIBLE);
-            previousPrictTextView.setText(products.prices.get(0).retailPrice + " Tk");
+            previousPrictTextView.setText(products.prices.get(0).retailPrice + " "+Utility.CURRENCY_CODE);
             float currentPrice = (float) (products.prices.get(0).retailPrice - products.discountAmount);
-            tvProductPrice.setText(currentPrice + " Tk");
+            tvProductPrice.setText(currentPrice + " "+Utility.CURRENCY_CODE);
             savePriceTextViw.setVisibility(View.VISIBLE);
-            savePriceTextViw.setText(products.discountAmount + " Tk");
+            savePriceTextViw.setText(products.discountAmount + " "+Utility.CURRENCY_CODE);
 
         } else {
             nomalPreviousPrice.setVisibility(View.GONE);
             previousPrictTextView.setVisibility(View.GONE);
             savePriceTextViw.setVisibility(View.GONE);
             saveNormalTextView.setVisibility(View.GONE);
-            tvProductPrice.setText(products.prices.get(0).retailPrice + " Tk");
+            tvProductPrice.setText(products.prices.get(0).retailPrice + " "+Utility.CURRENCY_CODE);
         }
 
 
@@ -485,6 +486,10 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
                 startActivity(intent);
             } else if (v == addReviewButton) {
                 CustomDialog.addReviewCustomDailog(this, products.title, String.valueOf(products.id));
+            }else if (v==buyNow){
+                Intent intent=new Intent(this,CheckoutActivity.class);
+                startActivity(intent);
+                finish();
             }
 
         }catch (Exception ex){

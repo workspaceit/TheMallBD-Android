@@ -18,6 +18,7 @@ public class Orders {
     public float voucher_discount;
     public float discount_total;
     public float shipping_cost;
+    public String orderDate;
     public float employee_discount;
     public float special_discount;
     public String packageSize;
@@ -45,6 +46,7 @@ public class Orders {
         this.currencyValue="";
         this.orderTotal=0;
         this.orderFrom="";
+        this.orderDate="";
         this.voucher_discount=0;
         this.discount_total=0;
         this.shipping_cost=0;

@@ -12,7 +12,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.themallbd.workspaceit.adapter.AllPackageAdapter;
-import com.themallbd.workspaceit.asynctask.GetNewProductsAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetPackagesAsynTask;
 import com.themallbd.workspaceit.service.InternetConnection;
 import com.themallbd.workspaceit.utility.MakeToast;
@@ -75,7 +74,7 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
 
 
             loadProductFlag=false;
-            if (mInternetConnection.isConnectingToInternet())
+            if (mInternetConnection.checkInternet())
             {
                 this.footer.setVisibility(View.VISIBLE);
                 this.offset++;

@@ -51,7 +51,7 @@ public class CategoryListViewActivity extends BaseActivityWithoutDrawer implemen
             setParentCategoryArrayList();
         }
         else {
-            if (mInternetConnection.isConnectingToInternet()) {
+            if (mInternetConnection.checkInternet()) {
                // new CategoryInListViewAsyncTask(this).execute();
             }
         }

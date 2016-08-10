@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:id="@+id/wish_list_listview"
         android:layout_weight="1"
-        android:dividerHeight="5dp"
+        android:dividerHeight="2dp"
         >
         </ListView>
 

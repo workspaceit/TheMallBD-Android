@@ -1,5 +1,6 @@
 package com.themallbd.workspaceit.activity;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +27,7 @@ import com.workspaceit.themall.R;
 public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements View.OnClickListener {
     private TextView tvPackageName, tvPackagePrice, tvPackageDescription, prevoiusPackagePrice,savePackagePrice;
     private Spinner packageQunatitySpinner;
-    private Button addToCart,BuyNow;
+    private Button addToCart,buyNow;
     private static int position;
     private static int arrayListIndicator = 0;
 
@@ -55,6 +56,8 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements
         addToCart=(Button)findViewById(R.id.button_add_package_to_cart);
         packageProductListView=(CustomListView)findViewById(R.id.package_product_list_view);
 
+        buyNow=(Button)findViewById(R.id.button_package_buy_now);
+        buyNow.setOnClickListener(this);
         sessionManager=new SessionManager(this);
 
         position = getIntent().getIntExtra("position", -1);
@@ -73,9 +76,9 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements
     private void initialize(){
         tvPackageName.setText(mallBdPackage.packageTitle);
         tvPackageDescription.setText(mallBdPackage.description);
-        prevoiusPackagePrice.setText(mallBdPackage.originalPriceTotal+" Tk");
-        tvPackagePrice.setText(mallBdPackage.packagePriceTotal + " Tk");
-        savePackagePrice.setText((mallBdPackage.originalPriceTotal-mallBdPackage.packagePriceTotal)+" Tk");
+        prevoiusPackagePrice.setText(mallBdPackage.originalPriceTotal+" "+Utility.CURRENCY_CODE);
+        tvPackagePrice.setText(mallBdPackage.packagePriceTotal + " "+Utility.CURRENCY_CODE);
+        savePackagePrice.setText((mallBdPackage.originalPriceTotal-mallBdPackage.packagePriceTotal)+" "+Utility.CURRENCY_CODE);
         addToCart.setOnClickListener(this);
 
 
@@ -169,6 +172,10 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements
             this.updateCart();
             MakeToast.showToast(this, "Succesfully added to cart...");
             invalidateOptionsMenu();
+        }else if (v==buyNow){
+            Intent intent=new Intent(this,CheckoutActivity.class);
+            startActivity(intent);
+            this.finish();
         }
 
     }

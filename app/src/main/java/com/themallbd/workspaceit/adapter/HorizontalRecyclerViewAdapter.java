@@ -1,8 +1,8 @@
 package com.themallbd.workspaceit.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.dataModel.Products;
@@ -25,13 +24,12 @@ import java.util.List;
 public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_ITEM = 1;
-    private final int VIEW_PROG  = 0;
+    private final int VIEW_PROG = 0;
 
     private List<Products> productsList;
 
     private String productUrl = "product/general/";
     private MainActivity mainActivity;
-
 
 
     // Pass in the contact array into the constructor
@@ -45,15 +43,15 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         RecyclerView.ViewHolder vh;
-        if(viewType==VIEW_ITEM){
+        if (viewType == VIEW_ITEM) {
             // Inflate the custom layout
             View productView = inflater.inflate(R.layout.custom_horizontal_product_list, parent, false);
 
             // Return a new holder instance
             ViewHolder viewHolder = new ViewHolder(productView);
-            vh=viewHolder;
+            vh = viewHolder;
 
-        }else {
+        } else {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.list_view_loader, parent, false);
 
@@ -70,13 +68,26 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         // Set item views based on the data model
 
-        if(holder instanceof ViewHolder){
-            HorizontalRecyclerViewAdapter.ViewHolder viewHolder=(HorizontalRecyclerViewAdapter.ViewHolder)holder;
+        if (holder instanceof ViewHolder) {
+            HorizontalRecyclerViewAdapter.ViewHolder viewHolder = (HorizontalRecyclerViewAdapter.ViewHolder) holder;
             viewHolder.nameTextView.setText(MainActivity.newProductsForHorizontalViewList.get(position).title);
-            if (MainActivity.newProductsForHorizontalViewList.get(position).prices.size() > 0)
-                viewHolder.priceTextView.setText("" + MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
-            else
-                viewHolder.priceTextView.setText("no prices");
+
+            viewHolder.discointTextView.setVisibility(View.VISIBLE);
+            viewHolder.priceTextView.setPaintFlags(viewHolder.priceTextView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+            if (MainActivity.newProductsForHorizontalViewList.get(position).discountActiveFlag) {
+
+                viewHolder.priceTextView.setText(MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice + " " + Utility.CURRENCY_CODE);
+                viewHolder.priceTextView.setPaintFlags(viewHolder.priceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                float currentPrice = (float) (MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice - MainActivity.newProductsForHorizontalViewList.get(position).discountAmount);
+
+                viewHolder.discointTextView.setText(currentPrice + " "+Utility.CURRENCY_CODE);
+            } else {
+                viewHolder.discointTextView.setVisibility(View.GONE);
+
+
+                viewHolder.priceTextView.setText( MainActivity.newProductsForHorizontalViewList.get(position).prices.get(0).retailPrice+" "+Utility.CURRENCY_CODE);
+
+            }
 
             int size = MainActivity.newProductsForHorizontalViewList.get(position).pictures.size();
             if (size >= 1) {
@@ -90,10 +101,10 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 viewHolder.imageView.setImageResource(R.drawable.image_not_found);
             }
 
-        }else {
+        } else {
 
-            ((ProgressViewHolder)holder).progressBar.setIndeterminate(true);
-            ((ProgressViewHolder)holder).progressBar.setVisibility(View.VISIBLE);
+            ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
+            ((ProgressViewHolder) holder).progressBar.setVisibility(View.VISIBLE);
         }
 
 
@@ -101,7 +112,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemViewType(int position) {
-        return MainActivity.newProductsForHorizontalViewList.get(position)!=null? VIEW_ITEM: VIEW_PROG;
+        return MainActivity.newProductsForHorizontalViewList.get(position) != null ? VIEW_ITEM : VIEW_PROG;
     }
 
     @Override
@@ -115,6 +126,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         public ImageView imageView;
         public TextView nameTextView;
         public TextView priceTextView;
+        public TextView discointTextView;
 
 
         // We also create a constructor that accepts the entire item row
@@ -127,15 +139,17 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             imageView = (ImageView) itemView.findViewById(R.id.iv_productImage_hl);
             nameTextView = (TextView) itemView.findViewById(R.id.tv_productName_hl);
             priceTextView = (TextView) itemView.findViewById(R.id.tv_productPrice_hl);
+            discointTextView = (TextView) itemView.findViewById(R.id.tv_productPrice_discount_text_view);
         }
     }
 
 
     public static class ProgressViewHolder extends RecyclerView.ViewHolder {
         public ProgressBar progressBar;
+
         public ProgressViewHolder(View v) {
             super(v);
-            progressBar = (ProgressBar)v.findViewById(R.id.progressBar);
+            progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         }
     }
 }

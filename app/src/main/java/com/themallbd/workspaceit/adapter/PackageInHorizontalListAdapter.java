@@ -2,7 +2,9 @@ package com.themallbd.workspaceit.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,10 +67,11 @@ public class PackageInHorizontalListAdapter extends RecyclerView.Adapter<Recycle
             PackageInHorizontalListAdapter.ViewHolder viewHolder=(PackageInHorizontalListAdapter.ViewHolder)holder;
 
 
-// Set item views based on the data model
+            viewHolder.discointTextView.setVisibility(View.GONE);
+            viewHolder.priceTextView.setGravity(Gravity.CENTER);
             viewHolder.nameTextView.setText(MainActivity.packgeProductForHorizontalList.get(position).packageTitle);
 
-            viewHolder.priceTextView.setText("" + MainActivity.packgeProductForHorizontalList.get(position).originalPriceTotal);
+            viewHolder.priceTextView.setText( MainActivity.packgeProductForHorizontalList.get(position).packagePriceTotal+" "+Utility.CURRENCY_CODE);
 
 
             ImageLoader imageLoader = ImageLoader.getInstance();
@@ -95,6 +98,7 @@ public class PackageInHorizontalListAdapter extends RecyclerView.Adapter<Recycle
         public ImageView imageView;
         public TextView nameTextView;
         public TextView priceTextView;
+        public TextView discointTextView;
 
 
         // We also create a constructor that accepts the entire item row
@@ -107,6 +111,7 @@ public class PackageInHorizontalListAdapter extends RecyclerView.Adapter<Recycle
             imageView = (ImageView) itemView.findViewById(R.id.iv_productImage_hl);
             nameTextView = (TextView) itemView.findViewById(R.id.tv_productName_hl);
             priceTextView = (TextView) itemView.findViewById(R.id.tv_productPrice_hl);
+            discointTextView = (TextView) itemView.findViewById(R.id.tv_productPrice_discount_text_view);
         }
     }
 }

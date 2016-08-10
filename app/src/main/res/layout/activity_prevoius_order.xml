@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/all_order_history_list_view"
-        android:dividerHeight="3dp">
+      >
 
     </ListView>
 

@@ -2,6 +2,7 @@ package com.themallbd.workspaceit.service;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import java.net.InetAddress;
 
@@ -16,9 +17,21 @@ public class InternetConnection {
         this.context = context;
     }
 
-    public boolean isConnectingToInternet() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return connectivityManager != null && connectivityManager.getActiveNetworkInfo() != null;
+
+
+    public boolean checkInternet() {
+        ConnectivityManager conMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+        if (netInfo==null)
+            return false;
+        else {
+            if (netInfo.isConnectedOrConnecting()){
+                return true;
+            }else {
+                return false;
+            }
+
+        }
     }
     public boolean isInternetAvailable() {
         try {

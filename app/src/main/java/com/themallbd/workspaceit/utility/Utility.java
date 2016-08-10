@@ -37,6 +37,7 @@ public class Utility {
 
     public static ArrayList<PaymentMethods>paymentMethodses=new ArrayList<>();
     public static ArrayList<DeliveryMethod>deliveryMethods=new ArrayList<>();
+    public static String CURRENCY_CODE ="BDT";
 
 
     public static void resetShoppingCart(){

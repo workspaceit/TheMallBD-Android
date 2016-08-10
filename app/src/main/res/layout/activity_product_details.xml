@@ -291,6 +291,22 @@
                         android:textAlignment="textStart"
                         android:paddingLeft="15dp"/>
 
+                    <Button
+                        android:id="@+id/button_product_buy_now"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:textAlignment="textStart"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/buttonshape_pink"
+                        android:padding="10dp"
+                        android:text="@string/buy_now"
+                        android:textAllCaps="true"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/material_text_button"
+                        android:paddingLeft="15dp"/>
+
 
                 </LinearLayout>
 

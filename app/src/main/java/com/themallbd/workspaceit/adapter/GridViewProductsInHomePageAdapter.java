@@ -1,6 +1,7 @@
 package com.themallbd.workspaceit.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
         public ImageView productImage;
         public TextView productName;
         public TextView priceView;
+        public TextView discointTextView;
 
     }
 
@@ -72,12 +74,15 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
             viewHolder.productImage = (ImageView) convertView.findViewById(R.id.iv_productImage_gv);
             viewHolder.productName = (TextView) convertView.findViewById(R.id.tv_productName_gv);
             viewHolder.priceView = (TextView) convertView.findViewById(R.id.tv_productPrice_gv);
+            viewHolder.discointTextView = (TextView) convertView.findViewById(R.id.tv_product_discount_price);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         try {
+
+
             int size = MainActivity.allProductsForGridViewList.get(position).pictures.size();
             if (size>=1) {
 
@@ -91,10 +96,28 @@ public class GridViewProductsInHomePageAdapter extends BaseAdapter {
                 viewHolder.productImage.setImageResource(R.drawable.image_not_found);
             }
             viewHolder.productName.setText(MainActivity.allProductsForGridViewList.get(position).title);
-            if (MainActivity.allProductsForGridViewList.get(position).prices.size()>0)
-                viewHolder.priceView.setText(""+MainActivity.allProductsForGridViewList.get(position).prices.get(0).retailPrice);
-            else
-                viewHolder.priceView.setText("No price");
+
+            viewHolder.discointTextView.setVisibility(View.VISIBLE);
+            viewHolder.priceView.setPaintFlags(viewHolder.priceView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            if (MainActivity.allProductsForGridViewList.get(position).discountActiveFlag) {
+
+                viewHolder.priceView.setText(MainActivity.allProductsForGridViewList.get(position).prices.get(0).retailPrice + " " + Utility.CURRENCY_CODE);
+                viewHolder.priceView.setPaintFlags(viewHolder.priceView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                float currentPrice = (float) (MainActivity.allProductsForGridViewList.get(position).prices.get(0).retailPrice - MainActivity.allProductsForGridViewList.get(position).discountAmount);
+
+                viewHolder.discointTextView.setText(currentPrice + " "+Utility.CURRENCY_CODE);
+            } else {
+                viewHolder.discointTextView.setVisibility(View.GONE);
+
+                viewHolder.priceView.setText("" + MainActivity.allProductsForGridViewList.get(position).prices.get(0).retailPrice+" "+Utility.CURRENCY_CODE);
+
+
+            }
+
+
+
+
+
         }
         catch (Exception e)
         {

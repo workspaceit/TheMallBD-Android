@@ -3,7 +3,6 @@ package com.themallbd.workspaceit.activity;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +10,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -142,9 +140,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         mInternetConnection = new InternetConnection(this);
 
-        if(!mInternetConnection.isConnectingToInternet()){
+        if(!mInternetConnection.checkInternet()){
             Intent intent=new Intent(this,NoInternetActiviy.class);
             startActivity(intent);
+            this.finish();
             return;
         }
 
@@ -276,7 +275,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
         if (MainActivity.packgeProductForHorizontalList.size() < 1) {
-            if (mInternetConnection.isConnectingToInternet())
+            if (mInternetConnection.checkInternet())
 
             {
                 MainActivity.packgeProductForHorizontalList.clear();
@@ -338,7 +337,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         // Set layout manager to position the items
 
         if (MainActivity.discountProductForHorizontalList.size() < 1) {
-            if (mInternetConnection.isConnectingToInternet())
+            if (mInternetConnection.checkInternet())
 
             {
                 MainActivity.discountProductForHorizontalList.clear();
@@ -414,7 +413,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         // Set layout manager to position the items
 
         if (MainActivity.newProductsForHorizontalViewList.size() < 1) {
-            if (mInternetConnection.isConnectingToInternet())
+            if (mInternetConnection.checkInternet())
 
             {
                 MainActivity.newProductsForHorizontalViewList.clear();
@@ -475,7 +474,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.featuredProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
 
 
-        if (mInternetConnection.isConnectingToInternet()) {
+        if (mInternetConnection.checkInternet()) {
             MainActivity.featuredProductsForHorizontalViewList.clear();
             new GetFeaturedProductsAsyncTask(this).execute(
                     String.valueOf(offsetForFeaturedProductsHorizontalScrolling),
@@ -524,7 +523,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void loadMoreAllProduct() {
             this.gridViewProgressBar.setVisibility(View.VISIBLE);
-        if (mInternetConnection.isConnectingToInternet()) {
+        if (mInternetConnection.checkInternet()) {
             this.offsetForAllProductsInGridView++;
             new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
                     String.valueOf(limitForProductsInGridView));
@@ -535,7 +534,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         MainActivity.featuredProductsForHorizontalViewList.add(null);
         this.horizontalRVAFeaturedProductsAdapter.notifyItemInserted(MainActivity.featuredProductsForHorizontalViewList.size()-1);
 
-        if (mInternetConnection.isConnectingToInternet()) {
+        if (mInternetConnection.checkInternet()) {
             this.offsetForFeaturedProductsHorizontalScrolling += 1;
 
             new GetFeaturedProductsAsyncTask(this).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
@@ -580,7 +579,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         gridViewForAllProducts.setAdapter(gridViewProductsInHomePageAdapter);
 
 
-        if (mInternetConnection.isConnectingToInternet()) {
+        if (mInternetConnection.checkInternet()) {
             MainActivity.allProductsForGridViewList.clear();
             new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
                     String.valueOf(limitForProductsInGridView));
@@ -637,7 +636,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         MainActivity.packgeProductForHorizontalList.add(null);
         this.packageInHorizontalListAdapter.notifyItemInserted(packgeProductForHorizontalList.size()-1);
 
-        if (mInternetConnection.isConnectingToInternet()){
+        if (mInternetConnection.checkInternet()){
             this.offsetForPackage++;
             new GetPackagesAsynTask(this).execute(String.valueOf(this.limit),String.valueOf(this.offsetForPackage));
         }
@@ -646,7 +645,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private void loadMoreDiscountProducts(){
         MainActivity.discountProductForHorizontalList.add(null);
         this.discountProductRecyleViewAdapter.notifyItemInserted(discountProductForHorizontalList.size()-1);
-        if(mInternetConnection.isConnectingToInternet()){
+        if(mInternetConnection.checkInternet()){
             this.offsetForDiscountProduct++;
             new GetSpecailDiscountProductAsynTask(this).execute(String.valueOf(this.limit), String.valueOf(this.offsetForDiscountProduct));
         }
@@ -656,7 +655,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         MainActivity.newProductsForHorizontalViewList.add(null);
         this.horizontalRecyclerViewAdapter.notifyItemInserted(newProductsForHorizontalViewList.size()-1);
-        if (mInternetConnection.isConnectingToInternet()) {
+        if (mInternetConnection.checkInternet()) {
             offsetForNewProductsHorizontalScrolling += 1;
 
             new GetNewProductsAsyncTask(this).execute(String.valueOf(offsetForNewProductsHorizontalScrolling), String.valueOf(limit));
@@ -803,7 +802,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-        if (mInternetConnection.isInternetAvailable()) {
+        if (mInternetConnection.checkInternet()) {
             if (newProductsForHorizontalViewList.size() > 0) {
                 this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
                 this.offsetForNewProductsHorizontalScrolling = ((MainActivity.newProductsForHorizontalViewList.size() / 5) - 1);
@@ -830,6 +829,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
             }
 
+        }else {
+            Intent intent=new Intent(this,NoInternetActiviy.class);
+            startActivity(intent);
+            this.finish();
         }
     }
 

@@ -28,6 +28,7 @@ import com.squareup.picasso.Picasso;
 import com.themallbd.workspaceit.asynctask.LoginByAccesTokenAsynTask;
 import com.themallbd.workspaceit.dataModel.MallBdPackageCell;
 import com.themallbd.workspaceit.dataModel.ProductCell;
+import com.themallbd.workspaceit.service.InternetConnection;
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.SessionManager;
 import com.workspaceit.themall.R;
@@ -59,6 +60,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private TextView userNameTextView;
     private static final int SELECT_PICTURE = 1;
     private static boolean IMAGE_LOADER_FLAG=true;
+    private InternetConnection internetConnection;
 
 
 
@@ -69,12 +71,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         sessionManager = new SessionManager(getApplicationContext());
         sessionManager = new SessionManager(this);
         accessToken = sessionManager.getAccessToken();
+        internetConnection=new InternetConnection(this);
 
 
 
         if(true) {
 
-            if(sessionManager.checkLogin()) {
+            if(sessionManager.checkLogin() && internetConnection.checkInternet() ) {
                 System.out.println("calling " + accessToken);
                 new LoginByAccesTokenAsynTask().execute(accessToken);
             }
@@ -223,7 +226,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         userNameTextView = (TextView) header.findViewById(R.id.username_in_navigation);
         profileImage = (CircleImageView) header.findViewById(R.id.profile_image);
 
-        if (sessionManager.checkLogin()) {
+        if (Utility.isLoggedInFlag) {
             userNameTextView.setText(sessionManager.getFullName());
             navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(true);
 
@@ -353,7 +356,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
 
             case R.id.nav_my_mallbd_id:
-                if (sessionManager.checkLogin()) {
+                if (Utility.isLoggedInFlag) {
                     Intent myAccount = new Intent(getApplicationContext(), MyAccountActivity.class);
                     startActivity(myAccount);
 
@@ -365,7 +368,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
 
             case R.id.nav_wishlist_id:
-                if (sessionManager.checkLogin()) {
+                if (Utility.isLoggedInFlag) {
                     Utility.wishlistProductArrayList.clear();
                     Intent wishIntent = new Intent(getApplicationContext(), WishListActivity.class);
                     startActivity(wishIntent);
@@ -376,7 +379,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
                 return true;
             case R.id.nav_logout_id:
-                if (sessionManager.checkLogin()) {
+                if (Utility.isLoggedInFlag) {
                     sessionManager.logoutUser();
 
                     CustomDialog.logoutDailog(this, sessionManager, "Logout", "Confrim Logout?");

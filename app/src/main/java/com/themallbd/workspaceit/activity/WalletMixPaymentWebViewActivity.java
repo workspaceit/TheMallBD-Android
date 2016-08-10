@@ -1,15 +1,7 @@
 package com.themallbd.workspaceit.activity;
 
 import android.content.Intent;
-import android.content.SyncAdapterType;
-import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Message;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebResourceError;
@@ -20,18 +12,7 @@ import android.webkit.WebViewClient;
 import com.themallbd.workspaceit.asynctask.ConfrimWalletMixPaymentAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetWalletMixURLAsynTask;
 import com.themallbd.workspaceit.service.InternetConnection;
-import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 
 public class WalletMixPaymentWebViewActivity extends BaseActivityWithoutDrawer {
     private int orderId;
@@ -51,7 +32,7 @@ public class WalletMixPaymentWebViewActivity extends BaseActivityWithoutDrawer {
 
         internetConnection = new InternetConnection(this);
 
-        if (internetConnection.isConnectingToInternet()) {
+        if (internetConnection.checkInternet()) {
             new GetWalletMixURLAsynTask(this).execute(String.valueOf(orderId));
         } else {
             Intent intent = new Intent(this, NoInternetActiviy.class);

@@ -1,6 +1,7 @@
 package com.themallbd.workspaceit.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,10 +70,27 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<R
             HorizontalRVAFeaturedProductsAdapter.ViewHolder viewHolder=(HorizontalRVAFeaturedProductsAdapter.ViewHolder)holder;
             // Set item views based on the data model
             viewHolder.nameTextView.setText(MainActivity.featuredProductsForHorizontalViewList.get(position).title);
-            if (MainActivity.featuredProductsForHorizontalViewList.get(position).prices.size() > 0)
-                viewHolder.priceTextView.setText("" + MainActivity.featuredProductsForHorizontalViewList.get(position).prices.get(0).retailPrice);
-            else
-                viewHolder.priceTextView.setText("no prices");
+
+            viewHolder.discointTextView.setVisibility(View.VISIBLE);
+            viewHolder.priceTextView.setPaintFlags(viewHolder.priceTextView.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            if (MainActivity.featuredProductsForHorizontalViewList.get(position).discountActiveFlag) {
+
+                viewHolder.priceTextView.setText(MainActivity.featuredProductsForHorizontalViewList.get(position).prices.get(0).retailPrice + " " + Utility.CURRENCY_CODE);
+                viewHolder.priceTextView.setPaintFlags(viewHolder.priceTextView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                float currentPrice = (float) (MainActivity.featuredProductsForHorizontalViewList.get(position).prices.get(0).retailPrice - MainActivity.featuredProductsForHorizontalViewList.get(position).discountAmount);
+
+                viewHolder.discointTextView.setText(currentPrice + " "+Utility.CURRENCY_CODE);
+            } else {
+                viewHolder.discointTextView.setVisibility(View.GONE);
+
+
+                viewHolder.priceTextView.setText( MainActivity.featuredProductsForHorizontalViewList.get(position).prices.get(0).retailPrice+" "+Utility.CURRENCY_CODE);
+
+            }
+
+
+
+
             int size = MainActivity.featuredProductsForHorizontalViewList.get(position).pictures.size();
             if (size >= 1) {
                 ImageLoader imageLoader = ImageLoader.getInstance();
@@ -101,23 +119,22 @@ public class HorizontalRVAFeaturedProductsAdapter extends RecyclerView.Adapter<R
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        // Your holder should contain a member variable
-        // for any view that will be set as you render a row
+
         public ImageView imageView;
         public TextView nameTextView;
         public TextView priceTextView;
+        public TextView discointTextView;
 
 
-        // We also create a constructor that accepts the entire item row
-        // and does the view lookups to find each subview
+
         public ViewHolder(View itemView) {
-            // Stores the itemView in a public final member variable that can be used
-            // to access the context from any ViewHolder instance.
+
             super(itemView);
 
             imageView = (ImageView) itemView.findViewById(R.id.iv_productImage_hl);
             nameTextView = (TextView) itemView.findViewById(R.id.tv_productName_hl);
             priceTextView = (TextView) itemView.findViewById(R.id.tv_productPrice_hl);
+            discointTextView = (TextView) itemView.findViewById(R.id.tv_productPrice_discount_text_view);
         }
     }
 

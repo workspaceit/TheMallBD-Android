@@ -46,7 +46,7 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer imple
         this.categoryWiseProductsAdapter = new CategoryWiseProductsAdapter(this);
         productCategoryListView.setAdapter(categoryWiseProductsAdapter);
 
-        if (mInternetConnection.isConnectingToInternet())
+        if (mInternetConnection.checkInternet())
         {
 
             ProductFromCategoryActivity.categoryWiseProductsArrayList.clear();

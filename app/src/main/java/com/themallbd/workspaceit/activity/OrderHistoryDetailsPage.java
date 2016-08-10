@@ -2,6 +2,9 @@ package com.themallbd.workspaceit.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.widget.TextView;
 import com.themallbd.workspaceit.adapter.ProducstInOrderAdapter;
 import com.themallbd.workspaceit.dataModel.Orders;
@@ -22,6 +25,8 @@ public class OrderHistoryDetailsPage extends BaseActivityWithoutDrawer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_history_details_page);
+
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolBarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);

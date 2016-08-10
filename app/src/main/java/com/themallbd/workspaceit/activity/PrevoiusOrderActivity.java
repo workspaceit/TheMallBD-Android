@@ -45,7 +45,7 @@ public class PrevoiusOrderActivity extends BaseActivityWithoutDrawer implements 
 
         mInternetConnection = new InternetConnection(this);
 
-        if (mInternetConnection.isConnectingToInternet()) {
+        if (mInternetConnection.checkInternet()) {
             ordersArrayList.clear();
             new GetPreViousOrderProductAsyncTask(this).execute();
 

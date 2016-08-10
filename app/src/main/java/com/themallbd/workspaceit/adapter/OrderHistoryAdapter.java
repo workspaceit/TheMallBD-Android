@@ -1,6 +1,7 @@
 package com.themallbd.workspaceit.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class OrderHistoryAdapter extends BaseAdapter {
             viewHolder.invoiceNymberTextView = (TextView) convertView.findViewById(R.id.invoice_number_text_view);
             viewHolder.orderTotalTextView = (TextView) convertView.findViewById(R.id.order_total_price_text_view);
             viewHolder.shippingAdressTextView=(TextView)convertView.findViewById(R.id.order_history_shipping_address);
+            viewHolder.orderDate=(TextView)convertView.findViewById(R.id.order_date_text_view);
 
 
             convertView.setTag(viewHolder);
@@ -66,10 +68,17 @@ public class OrderHistoryAdapter extends BaseAdapter {
             viewHolder.orderTotalTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).orderTotal+" "+
                     PrevoiusOrderActivity.ordersArrayList.get(position).currencyCode);
             viewHolder.shippingAdressTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).shippingAddress);
+            viewHolder.orderDate.setText(PrevoiusOrderActivity.ordersArrayList.get(position).orderDate);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
+        }
+
+        if (position%2==0){
+            convertView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }else {
+            convertView.setBackgroundColor(Color.parseColor("#e6e6e6"));
         }
         return convertView;
     }
@@ -82,6 +91,7 @@ public class OrderHistoryAdapter extends BaseAdapter {
         public TextView invoiceNymberTextView;
         public TextView orderTotalTextView;
         public TextView shippingAdressTextView;
+        public TextView orderDate;
 
     }
 }

@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="15dp">
+             >
 
                 <Button
                     android:layout_width="match_parent"
@@ -55,7 +55,8 @@
                     android:textColor="#FFFFFF"
                     android:textSize="14sp"
 
-                    android:drawableRight="@drawable/arrow_down"
+
+
                     android:id="@+id/acc_info_expand_button"/>
 
                 <LinearLayout
@@ -374,164 +375,9 @@
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#EAEAEA"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        >
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/shipping_address_expand_button"
-            android:background="#911414"
-            android:gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:text="@string/shipping_info"
-            android:textAllCaps="true"
-            android:textColor="#FFFFFF"
-            android:textSize="14sp"
-            android:drawableRight="@drawable/arrow_down"/>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:animateLayoutChanges="true"
-            android:id="@+id/shipping_info_layout">
-
-
-        <Button
-            android:layout_width="120dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:text="ADD NEW"
-            android:background="#343434"
-            android:textColor="#FFFFFF"
-            android:layout_marginLeft="20dp"
-            android:id="@+id/addnew_myacc_button"
-            />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:layout_marginTop="15dp"
-            android:orientation="vertical">
-        <TextView
-            android:id="@+id/counter_myacc_textview"
-            android:layout_width="35dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:background="#EAEAEA"
-            android:text="1"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="20dp"
-            />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingBottom="5dp"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="First Name"/>
-
-                <EditText
-                    android:id="@+id/firstname_myacc_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:background="@android:color/transparent"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingBottom="5dp"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:text="Last Name"/>
-
-                <EditText
-                    android:id="@+id/lastname_myacc_edittext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:background="@android:color/transparent"
-                    android:inputType="text"
-                    android:textColor="#000000"
-                    android:textSize="14sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:paddingBottom="5dp"
-                    android:text="Address"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:layout_marginLeft="20dp"
-                    android:background="@android:color/transparent"
-                    android:inputType="textMultiLine"
-                    android:lines="4"
-                    android:textColor="#000000"
-                    android:gravity="top"
-                    android:textSize="14sp"
-                    android:id="@+id/shipping_info_address_edittxet"/>
-                </LinearLayout>
-
-        </LinearLayout>
-
-
-        </LinearLayout>
 
 
 
-        </LinearLayout>
 
 
 

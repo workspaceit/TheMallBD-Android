@@ -2,7 +2,6 @@ package com.themallbd.workspaceit.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.themallbd.workspaceit.adapter.AnyProductListAdapter;
 import com.themallbd.workspaceit.asynctask.GetFeaturedProductsAsyncTask;
-import com.themallbd.workspaceit.asynctask.GetNewProductsAsyncTask;
 import com.themallbd.workspaceit.service.InternetConnection;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
@@ -66,7 +64,7 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
 
 
             loadProductFlag=false;
-            if (mInternetConnection.isConnectingToInternet())
+            if (mInternetConnection.checkInternet())
             {
                 this.footer.setVisibility(View.VISIBLE);
                 this.offset++;

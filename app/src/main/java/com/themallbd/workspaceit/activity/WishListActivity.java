@@ -8,8 +8,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.dataModel.SelectedAttributes;
+import com.themallbd.workspaceit.utility.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.WishInListViewAdapter;
@@ -44,6 +46,7 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
             if(Utility.shoppingCart.productCell.get(i).id==Utility.wishlistProductArrayList.get(position).id){
                 Utility.shoppingCart.productCell.get(i).quantity+=1;
                 invalidateOptionsMenu();
+                updateCart();
                 return false;
             }
 
@@ -68,7 +71,23 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
 
         Utility.shoppingCart.productCell.add(productCell);
         invalidateOptionsMenu();
+        updateCart();
         return true;
+    }
+
+
+
+    private void updateCart(){
+        try {
+            Gson gson=new Gson();
+            String cart=gson.toJson(Utility.shoppingCart.productCell);
+            LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
+            localShoppintCart.setProductCart(cart);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+
     }
 
     public void changeAdapterState(){

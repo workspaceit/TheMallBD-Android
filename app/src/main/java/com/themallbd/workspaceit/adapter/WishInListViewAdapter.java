@@ -62,7 +62,7 @@ public class WishInListViewAdapter extends BaseAdapter {
                         MakeToast.showToast(context, "Successfully added to the cart");
 
                     }else {
-
+                        MakeToast.showToast(context,"Product already exist in the cart, Quantity Updated by 1");
                     }
 
                 }
@@ -89,7 +89,7 @@ public class WishInListViewAdapter extends BaseAdapter {
             }
 
             viewHolder.productName.setText(Utility.wishlistProductArrayList.get(position).title);
-            viewHolder.productPrice.setText("$"+String.valueOf(Utility.wishlistProductArrayList.get(position).prices.get(0).retailPrice));
+            viewHolder.productPrice.setText(Utility.wishlistProductArrayList.get(position).prices.get(0).retailPrice+" "+Utility.CURRENCY_CODE);
 
 
         }catch (Exception e){

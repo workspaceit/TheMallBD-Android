@@ -5,6 +5,7 @@
     android:baselineAligned="false"
     android:descendantFocusability="blocksDescendants"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFFFFF"
     >
 
     <LinearLayout
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="2400"
                 android:id="@+id/pprice_wishlist_textview"
-                android:textSize="24sp"
+                android:textSize="14sp"
                 android:textColor="#911414"/>
 
         </LinearLayout>

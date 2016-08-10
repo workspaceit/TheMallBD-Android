@@ -88,7 +88,7 @@ public class AllPackageAdapter extends BaseAdapter {
             }
             viewHolder.productName.setText(MainActivity.packgeProductForHorizontalList.get(position).packageTitle);
 
-            viewHolder.priceView.setText(MainActivity.packgeProductForHorizontalList.get(position).packagePriceTotal+"");
+            viewHolder.priceView.setText(MainActivity.packgeProductForHorizontalList.get(position).packagePriceTotal+" "+Utility.CURRENCY_CODE);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
