@@ -17,7 +17,7 @@ import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
-import java.util.ArrayList;
+
 
 /**
  * Created by Tomal on 7/28/2016.

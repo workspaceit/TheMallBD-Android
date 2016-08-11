@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 
+import com.themallbd.workspaceit.utility.CustomDialog;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.asynctask.UpdateMyAccountAsynTask;
 import com.themallbd.workspaceit.utility.CheckOutInfoSession;
@@ -165,6 +166,8 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
             }
 
 
+        }else if (v==lockFab){
+            CustomDialog.resetPasswordCustomDaiog(this);
         }
     }
 

@@ -20,9 +20,11 @@ import com.squareup.picasso.Picasso;
 import com.themallbd.workspaceit.activity.BKashPaymentActivity;
 import com.themallbd.workspaceit.activity.CheckoutActivity;
 import com.themallbd.workspaceit.activity.MainActivity;
+import com.themallbd.workspaceit.activity.MyAccountActivity;
 import com.themallbd.workspaceit.activity.PaypalPaymentActivity;
 import com.themallbd.workspaceit.activity.PrevoiusOrderActivity;
 import com.themallbd.workspaceit.activity.WalletMixPaymentWebViewActivity;
+import com.themallbd.workspaceit.asynctask.ChangePasswordAsynTask;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.activity.LoginActivity;
 import com.themallbd.workspaceit.asynctask.AddNewReviewAsynTask;
@@ -68,8 +70,8 @@ public class CustomDialog {
                 .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Intent intent=new Intent(context, BKashPaymentActivity.class);
-                        intent.putExtra("trnx_Id",transId);
+                        Intent intent = new Intent(context, BKashPaymentActivity.class);
+                        intent.putExtra("trnx_Id", transId);
                         context.startActivity(intent);
 
                     }
@@ -155,9 +157,8 @@ public class CustomDialog {
                 .setPositiveButton("Prevoius Order", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                            Intent orderIntent = new Intent(context, PrevoiusOrderActivity.class);
-                            context.startActivity(orderIntent);
-
+                        Intent orderIntent = new Intent(context, PrevoiusOrderActivity.class);
+                        context.startActivity(orderIntent);
 
 
                     }
@@ -301,11 +302,11 @@ public static void addReviewCustomDailog(final Context context,String title, fin
     submitBtn.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(reviewED.getText().toString().equals("")){
-                MakeToast.showToast(context,"Please add some review");
-            }else {
+            if (reviewED.getText().toString().equals("")) {
+                MakeToast.showToast(context, "Please add some review");
+            } else {
                 dialog.dismiss();
-                new AddNewReviewAsynTask(context).execute(productId,reviewED.getText().toString(),String.valueOf(ratingBar.getRating()));
+                new AddNewReviewAsynTask(context).execute(productId, reviewED.getText().toString(), String.valueOf(ratingBar.getRating()));
             }
 
         }
@@ -319,4 +320,34 @@ public static void addReviewCustomDailog(final Context context,String title, fin
     });
 
 }
+
+
+    public static void resetPasswordCustomDaiog(final Context context){
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.reset_password_custom_dialog);
+        final EditText oldPasswordEditText=(EditText)dialog.findViewById(R.id.old_password_reset_edit_text);
+        final EditText newPasswordEdiTexr=(EditText)dialog.findViewById(R.id.new_password_reset_edit_text);
+        final EditText confirmEditText=(EditText)dialog.findViewById(R.id.confirm_password_reset_edit_text);
+        final Button changePasswordButton=(Button)dialog.findViewById(R.id.reset_password_button);
+
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (oldPasswordEditText.getText().toString().equals("") || oldPasswordEditText.getText().length()<6){
+                    MakeToast.showToast(context,"Old Password is too short");
+                }else if (newPasswordEdiTexr.getText().equals("")||newPasswordEdiTexr.getText().length()<6){
+                    MakeToast.showToast(context,"New Password must be of at least 6 characters");
+                }else if (!confirmEditText.getText().toString().equals(newPasswordEdiTexr.getText().toString())){
+                    MakeToast.showToast(context,"Confirm password mismatched");
+                }else {
+                    new ChangePasswordAsynTask(context).execute(oldPasswordEditText.getText().toString(),newPasswordEdiTexr.getText().toString());
+                    dialog.cancel();
+
+                }
+            }
+        });
+        dialog.show();
+
+    }
 }

@@ -392,7 +392,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 return true;
             case R.id.nav_logout_id:
                 if (Utility.isLoggedInFlag) {
-                    sessionManager.logoutUser();
+
 
                     CustomDialog.logoutDailog(this, sessionManager, "Logout", "Confrim Logout?");
 

@@ -17,6 +17,44 @@ public class AuthenticationService extends BaseMallBDService {
     private ResponseStat responseStat;
     private AppCredential appCredential;
 
+
+    public boolean changePassword(String oldPassword,String newPassword){
+        this.responseStat=new ResponseStat();
+        this.setController("api/pass/reset");
+        this.setParams("o_password", oldPassword);
+        this.setParams("n_password", newPassword);
+
+        String resp = this.getData("POST");
+
+
+
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+            if (this.responseStat.status && this.responseStat.isLogin)
+            {
+               Utility.responseStat=this.responseStat;
+                return true;
+
+            }
+            else {
+                Utility.responseStat = this.responseStat;
+                return false;
+            }
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return  false;
+
+
+    }
+
+
     public boolean loginWithPassword(String email,String password)
     {
         this.responseStat = new ResponseStat();
