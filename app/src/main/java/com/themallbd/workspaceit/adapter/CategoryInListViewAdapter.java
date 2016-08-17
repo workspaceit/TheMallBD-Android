@@ -20,6 +20,7 @@ import java.util.ArrayList;
  */
 public class CategoryInListViewAdapter extends BaseAdapter {
 
+    
     private static String productUrl = "category/banner/";
 
     private CategoryListViewActivity categoryListViewActivity;
