@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,6 +31,7 @@ import com.themallbd.workspaceit.dataModel.MallBdPackageCell;
 import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.service.InternetConnection;
 import com.themallbd.workspaceit.utility.LocalShoppintCart;
+import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.SessionManager;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.utility.CustomDialog;
@@ -173,10 +175,49 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.action_bar_gradient));
         }
 
-        initializeNavigationView();
+       initializeNavigationView();
+        initializeRightNavigationView();
 
         //customization in header view of navigation drawer
             //customizationOfHeaderView();
+
+    }
+
+    public void initializeRightNavigationView(){
+        NavigationView rightNavigationView = (NavigationView) findViewById(R.id.nav_right_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
+                drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as
+                // we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as
+                // we dont want anything to happen so we leave this blank
+                customizationOfHeaderView();
+                super.onDrawerOpened(drawerView);
+            }
+
+            @Override
+            public void onDrawerSlide(View arg0, float arg1) {
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int arg0) {
+
+            }
+        };
+        //Setting the actionbarToggle to drawer layout
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        //calling sync state is necessary or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
 
     }
 

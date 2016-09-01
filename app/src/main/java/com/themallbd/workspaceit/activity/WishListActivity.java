@@ -29,7 +29,7 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
 
 
         Toolbar toolbarTop = (Toolbar) findViewById(R.id.toolbar);
-        TextView mTitle = (TextView) toolbarTop.findViewById(R.id.toolbar_title);
+       TextView mTitle = (TextView) toolbarTop.findViewById(R.id.toolbar_title);
         mTitle.setText("Wishlist");
 
 

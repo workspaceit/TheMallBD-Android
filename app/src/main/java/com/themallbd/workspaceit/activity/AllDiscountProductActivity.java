@@ -34,7 +34,7 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
 
         try {
             toolbar=(Toolbar)findViewById(R.id.toolbar);
-            toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
+            //toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
             toolBarTitle.setText("Special Discount Product");
             allDiscountProductListView=(ListView)findViewById(R.id.all_discount_product_list_view);
             anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.discountProductForHorizontalList);

@@ -78,7 +78,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
+       /* toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
 
         toolBarTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +86,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
                 Intent mainIntent=new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(mainIntent);
             }
-        });
+        });*/
 
         setSupportActionBar(toolbar);
         //  getSupportActionBar().setDisplayShowHomeEnabled(true);

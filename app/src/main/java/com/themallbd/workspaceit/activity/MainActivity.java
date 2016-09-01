@@ -6,7 +6,10 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -24,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
@@ -76,7 +80,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private DiscountProductRecyleViewAdapter discountProductRecyleViewAdapter;
     private PackageInHorizontalListAdapter packageInHorizontalListAdapter;
 
-    private Button showAllNewProductButton,showAllFeatureProductButton,showAllPackageButton,showAllDiscountButton;
+    private DrawerLayout drawerLayout;
+
+    private Button showAllNewProductButton, showAllFeatureProductButton, showAllPackageButton, showAllDiscountButton;
     private ProgressBar gridViewProgressBar;
 
 
@@ -94,21 +100,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public static ArrayList<Products> discountProductForHorizontalList;
 
 
-
     private InternetConnection mInternetConnection;
 
 
     private int offsetForNewProductsHorizontalScrolling = 0;
     private int offsetForFeaturedProductsHorizontalScrolling = 0;
     private int offsetForAllProductsInGridView = 0;
-    private int offsetForDiscountProduct=0;
-    private int offsetForPackage=0;
+    private int offsetForDiscountProduct = 0;
+    private int offsetForPackage = 0;
 
     int limit = 5;
     int limitForProductsInGridView = 4;
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
-   
+
 
     private boolean userScrolledForNewProduct;
     private boolean userScrollForFeatureProduct;
@@ -128,7 +133,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private ScrollView mainScroll;
     public SearchProductAdapter searchProductAdapter;
     public String[] countries;
-    private boolean gridAllFlag=true;
+    private boolean gridAllFlag = true;
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
 
 
@@ -140,12 +145,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         mInternetConnection = new InternetConnection(this);
 
-        if(!mInternetConnection.checkInternet()){
-            Intent intent=new Intent(this,NoInternetActiviy.class);
+        if (!mInternetConnection.checkInternet()) {
+            Intent intent = new Intent(this, NoInternetActiviy.class);
             startActivity(intent);
             this.finish();
             return;
         }
+
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
 
         this.initialize();
         this.getNecessaryData();
@@ -155,19 +162,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    private void getNecessaryData(){
+    private void getNecessaryData() {
 
-        if(Utility.banners.size()<1) {
+        if (Utility.banners.size() < 1) {
             new GetBannerImagesAsyncTask(this).execute();
-        }else {
+        } else {
             this.initializeSlider();
         }
 
-        if(Utility.deliveryMethods.size()<1){
+        if (Utility.deliveryMethods.size() < 1) {
             new GetAllDeliveryMethodsAsyncTask().execute();
         }
 
-        if (Utility.paymentMethodses.size()<1){
+        if (Utility.paymentMethodses.size() < 1) {
             new GetAllPaymentMethodAsynTask().execute();
         }
 
@@ -176,22 +183,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private void initialize() {
 
 
-        this.gridViewProgressBar=(ProgressBar)findViewById(R.id.grid_view_progress_bar);
+        this.gridViewProgressBar = (ProgressBar) findViewById(R.id.grid_view_progress_bar);
         newProductsForHorizontalViewList = new ArrayList<>();
         featuredProductsForHorizontalViewList = new ArrayList<>();
         allProductsForGridViewList = new ArrayList<>();
-        packgeProductForHorizontalList =new ArrayList<>();
-        discountProductForHorizontalList=new ArrayList<>();
+        packgeProductForHorizontalList = new ArrayList<>();
+        discountProductForHorizontalList = new ArrayList<>();
 
         this.userScrolledForNewProduct = true;
         this.userScrollForFeatureProduct = true;
-        this.userScrollForPackge=true;
-        this.userScrollForDiscountProduct=true;
+        this.userScrollForPackge = true;
+        this.userScrollForDiscountProduct = true;
 
         moreItemFeatureProduct = true;
         moreItemNewProduct = true;
-        morePackage=true;
-        moreDiscountProduct=true;
+        morePackage = true;
+        moreDiscountProduct = true;
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
         //initializing new product horizontal scrolling section
@@ -206,7 +213,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initializeDiscountProductForHorizontalSection();
 
         initializePackageProductForHorizontalList();
-
 
 
         this.homeSearcTextView = (CustomAutoCompleteTextView) findViewById(R.id.search_in_home);
@@ -228,10 +234,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         });
 
 
-        this.showAllNewProductButton=(Button)findViewById(R.id.more_new_product_button);
-        this.showAllFeatureProductButton=(Button)findViewById(R.id.more_feature_product_button);
-        this.showAllPackageButton=(Button)findViewById(R.id.more_package_list_button);
-        this.showAllDiscountButton=(Button)findViewById(R.id.discount_prouct_more_button);
+        this.showAllNewProductButton = (Button) findViewById(R.id.more_new_product_button);
+        this.showAllFeatureProductButton = (Button) findViewById(R.id.more_feature_product_button);
+        this.showAllPackageButton = (Button) findViewById(R.id.more_package_list_button);
+        this.showAllDiscountButton = (Button) findViewById(R.id.discount_prouct_more_button);
         showAllNewProductButton.setOnClickListener(this);
         showAllFeatureProductButton.setOnClickListener(this);
         showAllPackageButton.setOnClickListener(this);
@@ -259,10 +265,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    private void initializePackageProductForHorizontalList(){
+    private void initializePackageProductForHorizontalList() {
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        packgeProductHorizontalListRV= (RecyclerView) findViewById(R.id.packge_list_reclyeview);
+        packgeProductHorizontalListRV = (RecyclerView) findViewById(R.id.packge_list_reclyeview);
         packgeProductHorizontalListRV.setLayoutManager(layoutManager);
         // Create adapter passing in the sample user data
         this.packageInHorizontalListAdapter = new PackageInHorizontalListAdapter(this);
@@ -270,8 +276,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.packgeProductHorizontalListRV.setAdapter(packageInHorizontalListAdapter);
         this.packgeProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));
         // Set layout manager to position the items
-
-
 
 
         if (MainActivity.packgeProductForHorizontalList.size() < 1) {
@@ -325,9 +329,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    private void initializeDiscountProductForHorizontalSection(){
+    private void initializeDiscountProductForHorizontalSection() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        specailDiscountProductHorizonatlRV= (RecyclerView) findViewById(R.id.specail_product_recyleiew);
+        specailDiscountProductHorizonatlRV = (RecyclerView) findViewById(R.id.specail_product_recyleiew);
         specailDiscountProductHorizonatlRV.setLayoutManager(layoutManager);
         // Create adapter passing in the sample user data
         this.discountProductRecyleViewAdapter = new DiscountProductRecyleViewAdapter(this);
@@ -341,7 +345,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
             {
                 MainActivity.discountProductForHorizontalList.clear();
-               new GetSpecailDiscountProductAsynTask(this).execute(String.valueOf(this.limit),String.valueOf(offsetForDiscountProduct));
+                new GetSpecailDiscountProductAsynTask(this).execute(String.valueOf(this.limit), String.valueOf(offsetForDiscountProduct));
             }
         }
 
@@ -389,10 +393,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void initilizeParentCategoryList() {
 
-        if(Utility.parentsCategoryArraylist.size()<1) {
+        if (Utility.parentsCategoryArraylist.size() < 1) {
 
             new CategoryInListViewAsyncTask(this).execute();
-        }else {
+        } else {
             this.initializeCategoryView();
         }
 
@@ -402,7 +406,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private void initializeNewProductHorizontalSection() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         newProductHorizontalListRV = (RecyclerView) findViewById(R.id.rv_horizontal);
-       newProductHorizontalListRV.getItemAnimator().setChangeDuration(0);
+        newProductHorizontalListRV.getItemAnimator().setChangeDuration(0);
         newProductHorizontalListRV.setLayoutManager(layoutManager);
 
         // Create adapter passing in the sample user data
@@ -522,7 +526,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     private void loadMoreAllProduct() {
-            this.gridViewProgressBar.setVisibility(View.VISIBLE);
+        this.gridViewProgressBar.setVisibility(View.VISIBLE);
         if (mInternetConnection.checkInternet()) {
             this.offsetForAllProductsInGridView++;
             new GetAllProductForGridViewAsyncTask(this).execute(String.valueOf(offsetForAllProductsInGridView),
@@ -532,7 +536,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void loadFeatureProductMore() {
         MainActivity.featuredProductsForHorizontalViewList.add(null);
-        this.horizontalRVAFeaturedProductsAdapter.notifyItemInserted(MainActivity.featuredProductsForHorizontalViewList.size()-1);
+        this.horizontalRVAFeaturedProductsAdapter.notifyItemInserted(MainActivity.featuredProductsForHorizontalViewList.size() - 1);
 
         if (mInternetConnection.checkInternet()) {
             this.offsetForFeaturedProductsHorizontalScrolling += 1;
@@ -545,7 +549,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void initializeCategoryView() {
-        String icon="category/banner/";
+        String icon = "category/banner/";
         int count = Utility.parentsCategoryArraylist.size();
         count--;
         firstCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
@@ -585,26 +589,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                     String.valueOf(limitForProductsInGridView));
         }
 
-      gridViewForAllProducts.setOnTouchListener(new View.OnTouchListener() {
-          @Override
-          public boolean onTouch(View v, MotionEvent event) {
+        gridViewForAllProducts.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
 
 
-              if(event.getActionMasked()==MotionEvent.ACTION_DOWN){
-                  if(gridAllFlag && !noMoreItemInGridView) {
-                        gridAllFlag=false;
-                     loadMoreAllProduct();
-                  }
-              }
-              return false;
-          }
-      });
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    if (gridAllFlag && !noMoreItemInGridView) {
+                        gridAllFlag = false;
+                        loadMoreAllProduct();
+                    }
+                }
+                return false;
+            }
+        });
 
 
     }
 
     public void initializeSlider() {
-
 
 
         if (Utility.banners.size() >= 1) {
@@ -632,20 +635,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    private void loadMorePackages(){
+    private void loadMorePackages() {
         MainActivity.packgeProductForHorizontalList.add(null);
-        this.packageInHorizontalListAdapter.notifyItemInserted(packgeProductForHorizontalList.size()-1);
+        this.packageInHorizontalListAdapter.notifyItemInserted(packgeProductForHorizontalList.size() - 1);
 
-        if (mInternetConnection.checkInternet()){
+        if (mInternetConnection.checkInternet()) {
             this.offsetForPackage++;
-            new GetPackagesAsynTask(this).execute(String.valueOf(this.limit),String.valueOf(this.offsetForPackage));
+            new GetPackagesAsynTask(this).execute(String.valueOf(this.limit), String.valueOf(this.offsetForPackage));
         }
     }
 
-    private void loadMoreDiscountProducts(){
+    private void loadMoreDiscountProducts() {
         MainActivity.discountProductForHorizontalList.add(null);
-        this.discountProductRecyleViewAdapter.notifyItemInserted(discountProductForHorizontalList.size()-1);
-        if(mInternetConnection.checkInternet()){
+        this.discountProductRecyleViewAdapter.notifyItemInserted(discountProductForHorizontalList.size() - 1);
+        if (mInternetConnection.checkInternet()) {
             this.offsetForDiscountProduct++;
             new GetSpecailDiscountProductAsynTask(this).execute(String.valueOf(this.limit), String.valueOf(this.offsetForDiscountProduct));
         }
@@ -654,7 +657,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private void loadNewProductMore() {
 
         MainActivity.newProductsForHorizontalViewList.add(null);
-        this.horizontalRecyclerViewAdapter.notifyItemInserted(newProductsForHorizontalViewList.size()-1);
+        this.horizontalRecyclerViewAdapter.notifyItemInserted(newProductsForHorizontalViewList.size() - 1);
         if (mInternetConnection.checkInternet()) {
             offsetForNewProductsHorizontalScrolling += 1;
 
@@ -664,21 +667,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    public void notifyDiscountProductDataSet(){
-        this.userScrollForDiscountProduct=true;
+    public void notifyDiscountProductDataSet() {
+        this.userScrollForDiscountProduct = true;
         discountProductRecyleViewAdapter.notifyDataSetChanged();
     }
 
-    public void notifyPackageDataSet(){
-        this.userScrollForPackge=true;
+    public void notifyPackageDataSet() {
+        this.userScrollForPackge = true;
         packageInHorizontalListAdapter.notifyDataSetChanged();
     }
 
     public void setNewProductsList() {
 
-        this.userScrolledForNewProduct=true;
+        this.userScrolledForNewProduct = true;
         this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
-
 
 
     }
@@ -699,40 +701,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    public void setDiscountProductError(){
-        this.discountProductRecyleViewAdapter.notifyItemRemoved(MainActivity.discountProductForHorizontalList.size()-1);
-        moreDiscountProduct =false;
-        this.userScrollForDiscountProduct=false;
-        MakeToast.showToast(this,"No More Discount Product...");
+    public void setDiscountProductError() {
+        this.discountProductRecyleViewAdapter.notifyItemRemoved(MainActivity.discountProductForHorizontalList.size() - 1);
+        moreDiscountProduct = false;
+        this.userScrollForDiscountProduct = false;
+        MakeToast.showToast(this, "No More Discount Product...");
     }
 
-    public void setPackageListError(){
-        this.packageInHorizontalListAdapter.notifyItemRemoved(MainActivity.packgeProductForHorizontalList.size()-1);
-        this.userScrollForPackge=false;
-        morePackage=false;
-        MakeToast.showToast(this,"No More Package...");
+    public void setPackageListError() {
+        this.packageInHorizontalListAdapter.notifyItemRemoved(MainActivity.packgeProductForHorizontalList.size() - 1);
+        this.userScrollForPackge = false;
+        morePackage = false;
+        MakeToast.showToast(this, "No More Package...");
     }
 
     public void setNewProductListError() {
-        this.horizontalRecyclerViewAdapter.notifyItemRemoved(MainActivity.newProductsForHorizontalViewList.size()-1);
+        this.horizontalRecyclerViewAdapter.notifyItemRemoved(MainActivity.newProductsForHorizontalViewList.size() - 1);
         userScrolledForNewProduct = false;
         moreItemNewProduct = false;
-        MakeToast.showToast(this,"No More New Products...");
+        MakeToast.showToast(this, "No More New Products...");
 
     }
 
     public void setFeaturedProductsList() {
 
-        this.userScrollForFeatureProduct=true;
+        this.userScrollForFeatureProduct = true;
         this.horizontalRVAFeaturedProductsAdapter.notifyDataSetChanged();
 
     }
 
     public void setFeaturedProductListError() {
-        this.horizontalRVAFeaturedProductsAdapter.notifyItemRemoved(MainActivity.featuredProductsForHorizontalViewList.size()-1);
+        this.horizontalRVAFeaturedProductsAdapter.notifyItemRemoved(MainActivity.featuredProductsForHorizontalViewList.size() - 1);
         userScrollForFeatureProduct = false;
         moreItemFeatureProduct = false;
-        MakeToast.showToast(this,"No More Feature Products...");
+        MakeToast.showToast(this, "No More Feature Products...");
 
     }
 
@@ -749,7 +751,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
         userScrolledInGridView = true;
         noMoreItemInGridView = false;
-        gridAllFlag=true;
+        gridAllFlag = true;
 
         this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
 
@@ -759,12 +761,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.gridViewProgressBar.setVisibility(View.GONE);
         userScrolledInGridView = false;
         noMoreItemInGridView = true;
-        gridAllFlag=false;
+        gridAllFlag = false;
 
     }
-
-
-
 
 
     @Override
@@ -779,6 +778,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         inflater.inflate(R.menu.menu_main, menu);
         MenuItem item = menu.findItem(R.id.action_cart);
         MenuItem item1 = menu.findItem(R.id.action_search);
+        MenuItem drawerIcon = menu.findItem(R.id.action_openRight);
+
+        drawerIcon.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                drawerLayout.openDrawer(GravityCompat.START);
+
+                return true;
+
+            }
+        });
 
         MenuItemCompat.setActionView(item1, R.layout.toolbar_search_icon);
         MenuItemCompat.setActionView(item, R.layout.cart_update_count);
@@ -793,7 +804,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
         cartButton = (Button) view.findViewById(R.id.notif_count);
-        cartButton.setText(String.valueOf((Utility.shoppingCart.productCell.size() + Utility.shoppingCart.mallBdPackageCell.size())+""));
+        cartButton.setText(String.valueOf((Utility.shoppingCart.productCell.size() + Utility.shoppingCart.mallBdPackageCell.size()) + ""));
         cartButton.setOnClickListener(this);
 
         return true;
@@ -829,8 +840,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
             }
 
-        }else {
-            Intent intent=new Intent(this,NoInternetActiviy.class);
+        } else {
+            Intent intent = new Intent(this, NoInternetActiviy.class);
             startActivity(intent);
             this.finish();
         }
@@ -839,20 +850,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
 
-        if (v==showAllNewProductButton){
-            Intent intent=new Intent(this,AllNewProductActivity.class);
+        if (v == showAllNewProductButton) {
+            Intent intent = new Intent(this, AllNewProductActivity.class);
             startActivity(intent);
             return;
-        }else if(v==showAllFeatureProductButton){
-            Intent intent=new Intent(this,AllFeaturesProductActivity.class);
+        } else if (v == showAllFeatureProductButton) {
+            Intent intent = new Intent(this, AllFeaturesProductActivity.class);
             startActivity(intent);
             return;
-        }else if(v==showAllPackageButton){
-            Intent intent=new Intent(this,AllPacakgeActivity.class);
+        } else if (v == showAllPackageButton) {
+            Intent intent = new Intent(this, AllPacakgeActivity.class);
             startActivity(intent);
             return;
-        }else if(v==showAllDiscountButton){
-            Intent intent=new Intent(this,AllDiscountProductActivity.class);
+        } else if (v == showAllDiscountButton) {
+            Intent intent = new Intent(this, AllDiscountProductActivity.class);
             startActivity(intent);
             return;
         }
@@ -861,19 +872,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         count--;
 
-        if (v == categoryWomenView || v==secondCategoryText) {
+        if (v == categoryWomenView || v == secondCategoryText) {
             Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
             intent.putExtra("position", count - 1);
             intent.putExtra("title", Utility.parentsCategoryArraylist.get(count - 1).title);
             startActivity(intent);
 
-        } else if (v == categoryBabyView || v==firstCategoryText) {
+        } else if (v == categoryBabyView || v == firstCategoryText) {
             Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
             intent.putExtra("position", count);
             intent.putExtra("title", Utility.parentsCategoryArraylist.get(count).title);
             startActivity(intent);
 
-        } else if (v == categoryMenView || v==thirdCategoryText) {
+        } else if (v == categoryMenView || v == thirdCategoryText) {
             Intent intent = new Intent(this, CategoryInExpandableListViewActivity.class);
             intent.putExtra("position", count - 2);
             intent.putExtra("title", Utility.parentsCategoryArraylist.get(count - 2).title);
@@ -938,7 +949,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             }
         }, 0);
     }
-
 
 
 }
