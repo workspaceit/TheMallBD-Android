@@ -43,6 +43,7 @@ import com.themallbd.workspaceit.asynctask.GetSpecailDiscountProductAsynTask;
 import com.themallbd.workspaceit.dataModel.Banner;
 
 import com.themallbd.workspaceit.dataModel.MallBdPackage;
+import com.themallbd.workspaceit.fragment.NavaigationDrawerFragment;
 import com.themallbd.workspaceit.utility.CustomSliderView;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
@@ -72,6 +73,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener, Serializable {
 
     private SliderLayout sliderShow;
+    private NavaigationDrawerFragment navaigationDrawerFragment;
 
     //  Adapters
     private HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter;
@@ -153,6 +155,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        navaigationDrawerFragment=(NavaigationDrawerFragment)getFragmentManager().findFragmentById(R.id.nav_drawer_fragment);
 
         this.initialize();
         this.getNecessaryData();
@@ -549,6 +552,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void initializeCategoryView() {
+        navaigationDrawerFragment.notifyDataSet();
+
+
         String icon = "category/banner/";
         int count = Utility.parentsCategoryArraylist.size();
         count--;
@@ -784,7 +790,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                drawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.END);
 
                 return true;
 

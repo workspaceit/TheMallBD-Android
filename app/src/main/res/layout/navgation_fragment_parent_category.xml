@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:weightSum="1"
+
+
+
+   >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:text="Woman"
+        android:textStyle="bold"
+        android:layout_weight=".9"
+        android:id="@+id/fragment_parent_category_title_text_view"
+        android:textSize="14sp"
+        android:layout_marginLeft="15dp"/>
+<ImageView
+    android:layout_width="0dp"
+    android:layout_height="20dp"
+    android:src="@drawable/right_arrow_parent_category"
+    android:layout_weight=".1"
+    android:id="@+id/fragment_arrow_image"
+    android:layout_marginRight="10dp"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"/>
+</LinearLayout>

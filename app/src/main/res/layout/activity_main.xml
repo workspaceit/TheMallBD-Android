@@ -582,7 +582,7 @@
 
     <fragment android:name="com.themallbd.workspaceit.fragment.NavaigationDrawerFragment"
         android:layout_gravity="start"
-        android:id="@+id/fragment"
+        android:id="@+id/nav_drawer_fragment"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         />
