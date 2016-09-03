@@ -1,20 +1,16 @@
 package com.themallbd.workspaceit.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.themallbd.workspaceit.activity.ProductFromCategoryActivity;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by Tomal on 9/2/2016.
@@ -57,7 +53,8 @@ public class NavgationDrawerParentCategoryAdapter extends BaseAdapter {
 
             viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.fragment_parent_category_title_text_view);
             viewHolder.rightArrow=(ImageView)convertView.findViewById(R.id.fragment_arrow_image);
-
+            Typeface face= Typeface.createFromAsset(activity.getAssets(), "fonts/Whitney-Semibold-Bas.otf");
+            viewHolder.titleTextView.setTypeface(face);
 
 
 

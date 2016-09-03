@@ -2,5 +2,7 @@
     <item
         android:state_expanded="true"
         android:drawable="@drawable/ic_remove_black_18dp" />
-    <item android:drawable="@drawable/ic_add_black_18dp" />
+    <item
+        android:drawable="@drawable/ic_add_black_18dp" />
+
 </selector>
