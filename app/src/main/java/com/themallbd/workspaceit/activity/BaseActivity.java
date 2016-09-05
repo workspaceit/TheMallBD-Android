@@ -240,7 +240,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             public void onDrawerOpened(View drawerView) {
                 // Code here will be triggered once the drawer open as
                 // we dont want anything to happen so we leave this blank
-                customizationOfHeaderView();
+               // customizationOfHeaderView();
                 super.onDrawerOpened(drawerView);
             }
 

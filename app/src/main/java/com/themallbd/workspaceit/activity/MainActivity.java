@@ -418,6 +418,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         // Create adapter passing in the sample user data
         this.horizontalRecyclerViewAdapter = new HorizontalRecyclerViewAdapter(this);
+
         // Attach the adapter to the recyclerview to populate items
         this.newProductHorizontalListRV.setAdapter(horizontalRecyclerViewAdapter);
         this.newProductHorizontalListRV.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.HORIZONTAL));

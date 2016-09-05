@@ -5,6 +5,7 @@
         android:id="@+id/group1"
         android:checkableBehavior="single">
 
+
         <item
             android:id="@+id/nav_home_id"
             android:checked="false"
