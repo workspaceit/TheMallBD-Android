@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.MatrixCursor;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SimpleCursorAdapter;
@@ -25,6 +27,7 @@ import android.support.v7.widget.SearchView;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -50,7 +53,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
     private SearchProductAdapter searchProductAdapter;
     SearchView.SearchAutoComplete searchAutoComplete;
     private TextView toolBarTitle;
-
+    private SearchView mSearchView;
     public static boolean otherPageSearchCallFlag = true;
 
 
@@ -96,6 +99,7 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.action_bar_gradient));
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.short_arrow_left);
         }
 
     }
@@ -108,10 +112,17 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
         MenuItem item = menu.findItem(R.id.action_cart);
         MenuItemCompat.setActionView(item, R.layout.cart_update_count);
 
+        MenuItem drawerIcon=menu.findItem(R.id.action_openRight);
+        drawerIcon.setVisible(false);
+
 
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
         SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+
+
+
 
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
@@ -120,6 +131,9 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
             searchView.setOnQueryTextListener(this);
 
             searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+            searchAutoComplete.setTextColor(Color.parseColor("#000000"));
+            searchView.setBackgroundColor(Color.parseColor("#D5D6D9"));
+            searchAutoComplete.setHintTextColor(Color.parseColor("#4c4c4c"));
             searchAutoComplete.setThreshold(3);
 
 
@@ -208,8 +222,6 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
 
         return true;
     }
-
-
 
 
 

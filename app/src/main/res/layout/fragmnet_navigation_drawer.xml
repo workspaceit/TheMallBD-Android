@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:inAnimation="@anim/slide_in_right"
         android:outAnimation="@anim/slide_out_right">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,6 +38,7 @@
 
         </LinearLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,26 +53,30 @@
 
                 <ImageButton
                     android:id="@+id/back_button_nav_fragment"
-                    android:layout_width="30dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp"
+                    android:padding="9dp"
                     android:background="@null"
                     android:src="@drawable/long_arrow_left"
                     android:adjustViewBounds="true"
                     android:scaleType="fitCenter"
+
+
                    />
 
                 <TextView
                     android:id="@+id/nav_category_second_page_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="10dp"
                     android:text="Men"
                     android:textColor="#000000"
                     android:textStyle="bold"
-                    android:fontFamily="sans-serif-light"/>
+                    android:fontFamily="sans-serif-light"
+                    android:layout_weight=".8"/>
             </LinearLayout>
 
 

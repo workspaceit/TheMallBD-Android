@@ -5,7 +5,7 @@
     android:background="#FFFFFF"
     android:orientation="vertical" >
 
-    <TextView
+    <com.themallbd.workspaceit.view.CustomFontTextView
         android:id="@+id/child_of_child"
         android:layout_width="fill_parent"
         android:layout_height="55dp"

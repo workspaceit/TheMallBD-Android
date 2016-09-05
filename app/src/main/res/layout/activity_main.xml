@@ -19,7 +19,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#EEE">
+        android:background="#888">
 
         <include
             android:id="@+id/toolbar"
@@ -30,13 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
-            android:background="#EEE">
+            android:background="#888">
 
             <LinearLayout
                 android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F6F6F6"
+                android:background="#D5D6D9"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:orientation="vertical"
@@ -46,11 +46,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
-                    android:background="#8C1C1E"
+                    android:background="#f2f2f2"
                     android:descendantFocusability="beforeDescendants"
                     android:focusableInTouchMode="true"
                     android:orientation="vertical"
-                    android:paddingBottom="5dp">`
+                    android:paddingBottom="0dp"
+                    >
 
                     <com.themallbd.workspaceit.utility.CustomAutoCompleteTextView
                         android:id="@+id/search_in_home"
@@ -72,7 +73,9 @@
                 <LinearLayout
                     android:id="@+id/linearLayoutMainSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    >
 
                     <com.daimajia.slider.library.SliderLayout
                         android:id="@+id/slider"
@@ -84,7 +87,7 @@
                 <LinearLayout
                     android:id="@+id/linearLayoutMainCategory"
                     android:layout_width="match_parent"
-                    android:layout_height="65dp"
+                    android:layout_height="110dp"
                     android:orientation="horizontal">
 
 
@@ -96,13 +99,14 @@
                         android:orientation="vertical"
                         android:padding="10dp">
 
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/imageView_babyCare"
-                            android:layout_width="46dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="center"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="10dp"
                             android:contentDescription="@string/baby_care"
-                            android:src="@drawable/category_baby" />
+
+                            />
 
                         <TextView
                             android:id="@+id/tv_home_cat_first"
@@ -111,15 +115,12 @@
                             android:layout_gravity="center"
                             android:paddingTop="5dp"
                             android:singleLine="true"
-                            android:textSize="@dimen/material_text_caption" />
+                            android:textSize="@dimen/material_text_caption"
+                            />
 
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:background="#EEE"
-                        android:orientation="horizontal" />
+
 
                     <LinearLayout
                         android:layout_width="0dip"
@@ -129,12 +130,12 @@
                         android:orientation="vertical"
                         android:padding="10dp">
 
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_home_women"
-                            android:layout_width="46dp"
-                            android:layout_height="25dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/category_women" />
+                            />
 
                         <TextView
                             android:id="@+id/tv_home_second"
@@ -145,11 +146,7 @@
                             android:textSize="@dimen/material_text_caption" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:background="#EEE"
-                        android:orientation="horizontal" />
+
 
                     <LinearLayout
                         android:layout_width="0dip"
@@ -159,12 +156,12 @@
                         android:orientation="vertical"
                         android:padding="10dp">
 
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_home_men"
-                            android:layout_width="46dp"
-                            android:layout_height="25dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/category_menmen" />
+                             />
 
                         <TextView
                             android:id="@+id/tv_home_third"
@@ -175,11 +172,8 @@
                             android:textSize="@dimen/material_text_caption" />
                     </LinearLayout>
 
-                    <View
-                        android:layout_width="2dp"
-                        android:layout_height="match_parent"
-                        android:background="#EEE"
-                        android:orientation="horizontal" />
+
+
 
                     <LinearLayout
                         android:layout_width="0dip"
@@ -189,10 +183,10 @@
                         android:orientation="vertical"
                         android:padding="10dp">
 
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:id="@+id/iv_home_all"
-                            android:layout_width="46dp"
-                            android:layout_height="25dp"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:contentDescription="@string/all_category"
                             android:src="@drawable/category_all" />
@@ -259,13 +253,15 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="175dp"
-                    android:background="#FFFFFF">
+                    android:layout_height="300dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="6dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+
                         ></android.support.v7.widget.RecyclerView>
 
                 </LinearLayout>
@@ -344,13 +340,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF">
+                    android:layout_height="300dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="6dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_featured_horizontalProducts"
                         android:layout_width="match_parent"
-                        android:layout_height="175dp" />
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
                 <!-- Feature Product List END -->
@@ -427,13 +424,14 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF">
+                    android:layout_height="300dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="6dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/packge_list_reclyeview"
                         android:layout_width="match_parent"
-                        android:layout_height="175dp" />
+                        android:layout_height="match_parent" />
                 </LinearLayout>
 
 
@@ -484,18 +482,20 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
-                    android:background="#EEE"
+                    android:background="#D5D6D9"
                     android:orientation="horizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#FFFFFF">
+                    android:layout_height="300dp"
+                    android:background="#FFFFFF"
+                    android:layout_marginTop="6dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/specail_product_recyleiew"
                         android:layout_width="match_parent"
-                        android:layout_height="175dp" />
+                        android:layout_height="match_parent"
+                        />
                 </LinearLayout>
 
 
@@ -578,14 +578,10 @@
         android:layout_gravity="end"
         app:headerLayout="@layout/header"
         app:menu="@menu/nav_drawer" />
-
-
     <fragment android:name="com.themallbd.workspaceit.fragment.NavaigationDrawerFragment"
         android:layout_gravity="start"
         android:id="@+id/nav_drawer_fragment"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         />
-
-
 </android.support.v4.widget.DrawerLayout>

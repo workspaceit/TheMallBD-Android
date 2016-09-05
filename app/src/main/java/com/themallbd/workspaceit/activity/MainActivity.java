@@ -33,6 +33,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.squareup.picasso.Picasso;
 import com.themallbd.workspaceit.adapter.DiscountProductRecyleViewAdapter;
 import com.themallbd.workspaceit.adapter.PackageInHorizontalListAdapter;
 import com.themallbd.workspaceit.asynctask.GetAllDeliveryMethodsAsyncTask;
@@ -69,6 +70,8 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends BaseActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener, Serializable {
 
@@ -89,7 +92,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     //Imageview
-    private ImageView categoryWomenView, categoryBabyView, categoryMenView, categoryAllView;
+    private CircleImageView  categoryBabyView;
+    private ImageView categoryWomenView, categoryMenView, categoryAllView;
 
     //recycler view variables for horizontal scrolling
     private RecyclerView newProductHorizontalListRV, featuredProductHorizontalListRV, packgeProductHorizontalListRV, specailDiscountProductHorizonatlRV;
@@ -250,7 +254,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.categoryWomenView = (ImageView) findViewById(R.id.iv_home_women);
         this.categoryWomenView.setOnClickListener(this);
 
-        this.categoryBabyView = (ImageView) findViewById(R.id.imageView_babyCare);
+        this.categoryBabyView = (CircleImageView) findViewById(R.id.imageView_babyCare);
         this.categoryBabyView.setOnClickListener(this);
 
         this.categoryMenView = (ImageView) findViewById(R.id.iv_home_men);
@@ -562,14 +566,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         ImageLoader.getInstance().displayImage(Utility.IMAGE_URL + icon + Utility.parentsCategoryArraylist.get(count).icon,
                 categoryBabyView);
 
+
         count--;
         secondCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
         ImageLoader.getInstance().displayImage(Utility.IMAGE_URL + icon + Utility.parentsCategoryArraylist.get(count).icon,
                 categoryMenView);
+
         count--;
         thirdCategoryText.setText(Utility.parentsCategoryArraylist.get(count).title);
         ImageLoader.getInstance().displayImage(Utility.IMAGE_URL + icon + Utility.parentsCategoryArraylist.get(count).icon,
                 categoryWomenView);
+
 
     }
 

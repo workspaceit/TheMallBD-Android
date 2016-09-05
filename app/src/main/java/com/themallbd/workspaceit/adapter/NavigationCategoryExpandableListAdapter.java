@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.themallbd.workspaceit.activity.ProductFromCategoryActivity;
 import com.themallbd.workspaceit.dataModel.Category;
 import com.themallbd.workspaceit.view.AnimatedExpandableListView;
+import com.themallbd.workspaceit.view.CustomFontTextView;
 import com.workspaceit.themall.R;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class NavigationCategoryExpandableListAdapter extends AnimatedExpandableL
 
     private class ViewHolder {
 
-        public TextView nameTextView;
+        public CustomFontTextView nameTextView;
         public TextView indicatorTextView;
     }
 
@@ -88,13 +89,9 @@ public class NavigationCategoryExpandableListAdapter extends AnimatedExpandableL
             convertView = layoutInflater.inflate(R.layout.nav_fragment_category_second_child_view, null);
             viewHolder = new ViewHolder();
 
-            viewHolder.nameTextView = (TextView) convertView
+            viewHolder.nameTextView = (CustomFontTextView) convertView
                     .findViewById(R.id.lblListItem);
             viewHolder.indicatorTextView=(TextView)convertView.findViewById(R.id.indicator_second_level);
-
-
-            Typeface face= Typeface.createFromAsset(activity.getAssets(), "fonts/Whitney-Book-Bas.otf");
-            viewHolder.nameTextView.setTypeface(face);
 
             convertView.setTag(viewHolder);
         }else {
@@ -129,9 +126,7 @@ public class NavigationCategoryExpandableListAdapter extends AnimatedExpandableL
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.nav_fragment_category_third_level_child, null);
             thirdLevelViewHolder=new ThirdLevelViewHolder();
-            thirdLevelViewHolder.thirdLevelTextView=(TextView) convertView.findViewById(R.id.child_of_child);
-            Typeface face= Typeface.createFromAsset(activity.getAssets(), "fonts/Whitney-Book-Bas.otf");
-            thirdLevelViewHolder.thirdLevelTextView.setTypeface(face);
+            thirdLevelViewHolder.thirdLevelTextView=(CustomFontTextView) convertView.findViewById(R.id.child_of_child);
             convertView.setTag(thirdLevelViewHolder);
         }else {
             thirdLevelViewHolder=(ThirdLevelViewHolder)convertView.getTag();
@@ -155,6 +150,6 @@ public class NavigationCategoryExpandableListAdapter extends AnimatedExpandableL
     }
 
     private class ThirdLevelViewHolder{
-        TextView thirdLevelTextView;
+        CustomFontTextView thirdLevelTextView;
     }
 }

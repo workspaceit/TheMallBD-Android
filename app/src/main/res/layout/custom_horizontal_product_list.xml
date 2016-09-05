@@ -3,16 +3,17 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:padding="16dp"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+   >
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content">
+        android:layout_width="200dp"
+        android:layout_height="260dp">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="220dp"
             android:id="@+id/iv_productImage_hl"
             android:contentDescription="@string/new_product"
             android:layout_gravity="center" />
@@ -55,5 +56,6 @@
         </LinearLayout>
 
     </LinearLayout>
+
 
 </RelativeLayout>

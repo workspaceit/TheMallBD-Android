@@ -7,7 +7,7 @@
     android:background="#F6F2F2"
     >
 
-    <TextView
+    <com.themallbd.workspaceit.view.CustomFontTextView
         android:id="@+id/lblListItem"
         android:layout_width="0dp"
         android:layout_height="55dp"

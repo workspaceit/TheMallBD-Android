@@ -175,8 +175,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.action_bar_gradient));
         }
 
-       initializeNavigationView();
-        initializeRightNavigationView();
+         initializeNavigationView();
+       // initializeRightNavigationView();
 
         //customization in header view of navigation drawer
             //customizationOfHeaderView();
@@ -258,6 +258,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessary or else your hamburger icon wont show up
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+        actionBarDrawerToggle.setHomeAsUpIndicator(R.drawable.hamburger_2);
+        actionBarDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    drawerLayout.openDrawer(GravityCompat.START);
+                }
+            }
+        });
         actionBarDrawerToggle.syncState();
     }
 

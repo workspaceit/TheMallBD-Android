@@ -3,7 +3,7 @@
     android:id="@+id/search_icon_btn"
     android:layout_width="70dp"
     android:layout_height="wrap_content"
-    android:src="@drawable/search_new_2"
+    android:src="@drawable/search_new_2_black"
     android:background="@android:color/transparent"
     android:textColor="@android:color/white"
     android:gravity="center"
