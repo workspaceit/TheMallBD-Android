@@ -9,11 +9,13 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -81,25 +83,16 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-       /* toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
 
-        toolBarTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent mainIntent=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(mainIntent);
-            }
-        });*/
 
         setSupportActionBar(toolbar);
-        //  getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setHomeButtonEnabled(true);
-        // getSupportActionBar().setIcon(R.drawable.logo);
+       getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.action_bar_gradient));
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.short_arrow_left);
+
         }
 
     }
@@ -126,17 +119,9 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
 
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-
             searchView.setOnQueryTextListener(this);
-
             searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-            searchAutoComplete.setTextColor(Color.parseColor("#000000"));
-            searchView.setBackgroundColor(Color.parseColor("#D5D6D9"));
-            searchAutoComplete.setHintTextColor(Color.parseColor("#4c4c4c"));
             searchAutoComplete.setThreshold(3);
-
-
 
         }
 

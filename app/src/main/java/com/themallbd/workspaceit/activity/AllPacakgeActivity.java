@@ -34,8 +34,7 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
         setContentView(R.layout.activity_all_pacakge);
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
-        toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
-        toolBarTitle.setText("Packages");
+
         allPackageListView =(ListView)findViewById(R.id.all_package_list_view);
         allPackageAdapter=new AllPackageAdapter(this);
         footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);

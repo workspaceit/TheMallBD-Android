@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="310dp"
-    android:layout_height="302dp"
-    android:paddingLeft="13dp"
+    android:layout_height="300dp"
+    android:paddingLeft="8dp"
     android:background="#D5D6D9"
 
     >
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="270dp"
-        android:layout_height="286dp"
+        android:layout_width="302dp"
+        android:layout_height="298dp"
         android:background="#FFFFFF"
         android:padding="16dp"
 

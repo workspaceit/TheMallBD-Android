@@ -38,6 +38,7 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer implements TabLa
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
         mViewPager = (ViewPager) findViewById(R.id.container);

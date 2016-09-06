@@ -36,8 +36,7 @@ public class AllNewProductActivity extends BaseActivityWithoutDrawer implements 
         setContentView(R.layout.activity_all_new_product);
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
-        toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
-        toolBarTitle.setText("New Products");
+
         allNewProductListView=(ListView)findViewById(R.id.all_new_product_list_view);
         anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.newProductsForHorizontalViewList);
 

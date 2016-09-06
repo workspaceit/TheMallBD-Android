@@ -34,8 +34,7 @@ public class PrevoiusOrderActivity extends BaseActivityWithoutDrawer implements 
         setContentView(R.layout.activity_prevoius_order);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolBarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        toolBarTitle.setText("Your Order History");
+
 
         orederHistoryListView = (ListView) findViewById(R.id.all_order_history_list_view);
         orderHistoryAdapter = new OrderHistoryAdapter(this);

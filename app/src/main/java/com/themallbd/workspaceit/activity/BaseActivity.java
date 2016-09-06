@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -168,11 +169,13 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         //getSupportActionBar().setIcon(R.drawable.logo);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.action_bar_gradient));
+
         }
 
          initializeNavigationView();
@@ -258,7 +261,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
         //calling sync state is necessary or else your hamburger icon wont show up
-        actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
+
+    /*    actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
         actionBarDrawerToggle.setHomeAsUpIndicator(R.drawable.hamburger_2);
         actionBarDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
@@ -269,7 +273,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                     drawerLayout.openDrawer(GravityCompat.START);
                 }
             }
-        });
+        });*/
         actionBarDrawerToggle.syncState();
     }
 

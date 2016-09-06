@@ -808,6 +808,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         MenuItemCompat.setActionView(item1, R.layout.toolbar_search_icon);
         MenuItemCompat.setActionView(item, R.layout.cart_update_count);
         View view = MenuItemCompat.getActionView(item);
+
         View searchView = MenuItemCompat.getActionView(item1);
 
 
@@ -910,6 +911,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
             startActivity(intent);
         } else if (v == searchButton) {
+
             if (mainScroll.getScrollY() == 0) {
                 homeSearcTextView.requestFocus();
                 InputMethodManager keyboard = (InputMethodManager)

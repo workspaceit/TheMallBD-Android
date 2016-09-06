@@ -29,8 +29,7 @@ public class OrderHistoryDetailsPage extends BaseActivityWithoutDrawer {
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolBarTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        toolBarTitle.setText("Order Details");
+
 
         subtotalTextView=(TextView)findViewById(R.id.subtotal_order_details_text_view);
         shipmentFeeTextView=(TextView)findViewById(R.id.shipment_fee_order_details_text_view);

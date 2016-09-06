@@ -34,8 +34,6 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
         setContentView(R.layout.activity_all_features_product);
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
-        toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
-        toolBarTitle.setText("Features Product");
         allFeatureProductListView=(ListView)findViewById(R.id.all_feature_product_list_view);
         anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.featuredProductsForHorizontalViewList);
 
