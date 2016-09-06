@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,13 +26,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.squareup.picasso.Picasso;
 import com.themallbd.workspaceit.adapter.DiscountProductRecyleViewAdapter;
 import com.themallbd.workspaceit.adapter.PackageInHorizontalListAdapter;
 import com.themallbd.workspaceit.asynctask.GetAllDeliveryMethodsAsyncTask;
@@ -43,9 +41,11 @@ import com.themallbd.workspaceit.asynctask.GetPackagesAsynTask;
 import com.themallbd.workspaceit.asynctask.GetSpecailDiscountProductAsynTask;
 import com.themallbd.workspaceit.dataModel.Banner;
 
+import com.themallbd.workspaceit.dataModel.Category;
 import com.themallbd.workspaceit.dataModel.MallBdPackage;
 import com.themallbd.workspaceit.fragment.NavaigationDrawerFragment;
 import com.themallbd.workspaceit.utility.CustomSliderView;
+import com.themallbd.workspaceit.preferences.LocalCategoryList;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.GridViewProductsInHomePageAdapter;
@@ -69,6 +69,7 @@ import com.themallbd.workspaceit.utility.Utility;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -141,6 +142,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public String[] countries;
     private boolean gridAllFlag = true;
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
+    private LocalCategoryList localCategoryList;
 
 
     @Override
@@ -161,8 +163,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         navaigationDrawerFragment=(NavaigationDrawerFragment)getFragmentManager().findFragmentById(R.id.nav_drawer_fragment);
 
-        this.initialize();
+
         this.getNecessaryData();
+        this.initialize();
+
         this.initilizeParentCategoryList();
 
 
@@ -189,7 +193,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void initialize() {
 
-
+        localCategoryList=new LocalCategoryList(this);
         this.gridViewProgressBar = (ProgressBar) findViewById(R.id.grid_view_progress_bar);
         newProductsForHorizontalViewList = new ArrayList<>();
         featuredProductsForHorizontalViewList = new ArrayList<>();
@@ -400,12 +404,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void initilizeParentCategoryList() {
 
-        if (Utility.parentsCategoryArraylist.size() < 1) {
+
+
+
+        if (localCategoryList.getCategoryFlag()){
+            Gson gson = new Gson();
+            String category = localCategoryList.getCategoryList();
+            Category[] categories = gson.fromJson(category, Category[].class);
+            Utility.parentsCategoryArraylist.clear();
+            Collections.addAll(Utility.parentsCategoryArraylist, categories);
+            this.initializeCategoryView(1);
+
+
+        }
+
+
 
             new CategoryInListViewAsyncTask(this).execute();
-        } else {
-            this.initializeCategoryView();
-        }
 
 
     }
@@ -556,9 +571,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
-    public void initializeCategoryView() {
-        navaigationDrawerFragment.notifyDataSet();
+    public void initializeCategoryView(int callFlag) {
+        if (callFlag==0) {
+            Gson gson = new Gson();
+            String category = gson.toJson(Utility.parentsCategoryArraylist);
 
+            localCategoryList.setCategoryList(category);
+            localCategoryList.setCategorySetFlag(true);
+        }
+        navaigationDrawerFragment.notifyDataSet();
 
         String icon = "category/banner/";
         int count = Utility.parentsCategoryArraylist.size();

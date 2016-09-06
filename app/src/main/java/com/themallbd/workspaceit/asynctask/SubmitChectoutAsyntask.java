@@ -14,9 +14,8 @@ import com.themallbd.workspaceit.fragment.PaymentFragment;
 import com.themallbd.workspaceit.service.SubmitCheckoutService;
 import com.themallbd.workspaceit.utility.CustomDialog;
 
-import com.themallbd.workspaceit.utility.LocalShoppintCart;
+import com.themallbd.workspaceit.preferences.LocalShoppintCart;
 
-import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.utility.Utility;
 
 /**

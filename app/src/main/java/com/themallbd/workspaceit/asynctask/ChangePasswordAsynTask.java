@@ -8,7 +8,7 @@ import com.themallbd.workspaceit.activity.LoginActivity;
 import com.themallbd.workspaceit.activity.MyAccountActivity;
 import com.themallbd.workspaceit.service.AuthenticationService;
 import com.themallbd.workspaceit.utility.MakeToast;
-import com.themallbd.workspaceit.utility.SessionManager;
+import com.themallbd.workspaceit.preferences.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
 
 /**

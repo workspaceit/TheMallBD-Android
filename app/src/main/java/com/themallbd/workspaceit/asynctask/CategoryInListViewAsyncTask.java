@@ -24,11 +24,6 @@ public class CategoryInListViewAsyncTask extends AsyncTask<String,String,ArrayLi
 
     @Override
     protected void onPreExecute() {
-        mProgressDialog = new ProgressDialog(mContext);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setMessage("Mall BD is loading. Please wait...");
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
         super.onPreExecute();
     }
 
@@ -43,9 +38,9 @@ public class CategoryInListViewAsyncTask extends AsyncTask<String,String,ArrayLi
     @Override
     protected void onPostExecute(ArrayList<Category> categories) {
         super.onPostExecute(categories);
-        mProgressDialog.dismiss();
+
         if (categories.size()>0) {
-            mContext.initializeCategoryView();
+            mContext.initializeCategoryView(0);
         }
         else {
             if (!Utility.responseStat.status) {

@@ -13,15 +13,11 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.themallbd.workspaceit.dataModel.MallBdPackage;
-import com.themallbd.workspaceit.dataModel.MallBdPackageCell;
 import com.themallbd.workspaceit.dataModel.ShoppingCart;
 import com.themallbd.workspaceit.fragment.CartFragment;
-import com.themallbd.workspaceit.utility.LocalShoppintCart;
+import com.themallbd.workspaceit.preferences.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
-
-import java.util.ArrayList;
 
 /**
  * Created by Tomal on 7/26/2016.

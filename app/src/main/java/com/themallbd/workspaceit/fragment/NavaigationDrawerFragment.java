@@ -1,7 +1,6 @@
 package com.themallbd.workspaceit.fragment;
 
 import android.app.Fragment;
-import android.app.ListFragment;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -9,36 +8,26 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.activity.ProductFromCategoryActivity;
 import com.themallbd.workspaceit.adapter.NavgationDrawerParentCategoryAdapter;
 import com.themallbd.workspaceit.adapter.NavigationCategoryExpandableListAdapter;
-import com.themallbd.workspaceit.utility.MakeToast;
+import com.themallbd.workspaceit.preferences.LocalCategoryList;
 import com.themallbd.workspaceit.utility.Utility;
 import com.themallbd.workspaceit.view.AnimatedExpandableListView;
 import com.workspaceit.themall.R;
 
-import java.util.ArrayList;
-
 /**
  * Created by Tomal on 9/1/2016.
  */
-public class NavaigationDrawerFragment extends Fragment implements AdapterView.OnItemClickListener,View.OnClickListener,
-        ExpandableListView.OnGroupClickListener,ExpandableListView.OnChildClickListener {
-
-
+public class NavaigationDrawerFragment extends Fragment implements AdapterView.OnItemClickListener, View.OnClickListener,
+        ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener {
 
 
     private ListView parentListView;
@@ -49,15 +38,12 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
 
     private ViewSwitcher simpleViewSwitcher;
     private NavgationDrawerParentCategoryAdapter navgationDrawerParentCategoryAdapter;
-
+    private LocalCategoryList localCategoryList;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
 
 
     }
@@ -66,24 +52,25 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view=inflater.inflate(R.layout.fragmnet_navigation_drawer, container, false);
-        simpleViewSwitcher=(ViewSwitcher)view.findViewById(R.id.simpleViewSwitcher);
-        parentListView=(ListView)view.findViewById(R.id.parent_categoey_list_view);
+        View view = inflater.inflate(R.layout.fragmnet_navigation_drawer, container, false);
+        simpleViewSwitcher = (ViewSwitcher) view.findViewById(R.id.simpleViewSwitcher);
+        parentListView = (ListView) view.findViewById(R.id.parent_categoey_list_view);
         parentListView.setOnItemClickListener(this);
-        backButton=(ImageButton)view.findViewById(R.id.back_button_nav_fragment);
-        expandableListView=(AnimatedExpandableListView)view.findViewById(R.id.expandable_list_view_nav_fragment);
+        backButton = (ImageButton) view.findViewById(R.id.back_button_nav_fragment);
+        expandableListView = (AnimatedExpandableListView) view.findViewById(R.id.expandable_list_view_nav_fragment);
         expandableListView.setOnGroupClickListener(this);
         expandableListView.setOnChildClickListener(this);
         backButton.setOnClickListener(this);
-        this.categoryTitle=(TextView)view.findViewById(R.id.nav_category_second_page_title);
-        Typeface face= Typeface.createFromAsset(getActivity().getAssets(), "fonts/Whitney-Semibold-Bas.otf");
+        this.categoryTitle = (TextView) view.findViewById(R.id.nav_category_second_page_title);
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Whitney-Semibold-Bas.otf");
         this.categoryTitle.setTypeface(face);
-
+        localCategoryList = new LocalCategoryList(getActivity());
+        navgationDrawerParentCategoryAdapter = new NavgationDrawerParentCategoryAdapter(getActivity());
+        parentListView.setAdapter(navgationDrawerParentCategoryAdapter);
 
 
         return view;
     }
-
 
 
     @Override
@@ -92,24 +79,23 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
 
     }
 
-    public void notifyDataSet(){
-        navgationDrawerParentCategoryAdapter=new NavgationDrawerParentCategoryAdapter(getActivity());
-        parentListView.setAdapter(navgationDrawerParentCategoryAdapter);
+    public void notifyDataSet() {
+
         navgationDrawerParentCategoryAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        if (parent==parentListView) {
+        if (parent == parentListView) {
             if (Utility.parentsCategoryArraylist.get(position).childrens.isEmpty()) {
                 Intent intent = new Intent(getActivity(), ProductFromCategoryActivity.class);
                 intent.putExtra("category_id", Utility.parentsCategoryArraylist.get(position).id);
                 getActivity().startActivity(intent);
             } else {
-                NavigationCategoryExpandableListAdapter navigationCategoryExpandableListAdapter=new
+                NavigationCategoryExpandableListAdapter navigationCategoryExpandableListAdapter = new
                         NavigationCategoryExpandableListAdapter(getActivity(), Utility.parentsCategoryArraylist.get(position).childrens);
-                this.categoryPosition=position;
+                this.categoryPosition = position;
                 expandableListView.setAdapter(navigationCategoryExpandableListAdapter);
                 navigationCategoryExpandableListAdapter.notifyDataSetChanged();
 
@@ -123,7 +109,7 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
 
     @Override
     public void onClick(View v) {
-        if (v==backButton){
+        if (v == backButton) {
             simpleViewSwitcher.setDisplayedChild(0);
 
         }
@@ -132,11 +118,11 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
     @Override
     public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 
-        if (Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).childrens.isEmpty()){
+        if (Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).childrens.isEmpty()) {
             Intent intent = new Intent(getActivity(), ProductFromCategoryActivity.class);
-            intent.putExtra("category_id",Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).id);
+            intent.putExtra("category_id", Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).id);
             getActivity().startActivity(intent);
-        }else {
+        } else {
             if (expandableListView.isGroupExpanded(groupPosition)) {
 
                 expandableListView.collapseGroupWithAnimation(groupPosition);
@@ -152,7 +138,7 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
         Intent intent = new Intent(getActivity(), ProductFromCategoryActivity.class);
-        intent.putExtra("category_id",Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).
+        intent.putExtra("category_id", Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).
                 childrens.get(childPosition).id);
         getActivity().startActivity(intent);
 
@@ -165,10 +151,6 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
         // Convert the dps to pixels, based on density scale
         return (int) (pixels * scale + 0.5f);
     }
-
-
-
-
 
 
 }

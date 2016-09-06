@@ -6,12 +6,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.dataModel.SelectedAttributes;
-import com.themallbd.workspaceit.utility.LocalShoppintCart;
+import com.themallbd.workspaceit.preferences.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.WishInListViewAdapter;

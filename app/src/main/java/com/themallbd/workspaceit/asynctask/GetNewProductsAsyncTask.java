@@ -1,5 +1,6 @@
 package com.themallbd.workspaceit.asynctask;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -30,10 +31,11 @@ public class GetNewProductsAsyncTask extends AsyncTask<String, String, ArrayList
     @Override
     protected void onPreExecute() {
 
-      /*  mProgressDialog = new ProgressDialog(mContext);
+/*        mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setMessage("Getting data...");
-        mProgressDialog.show();*/
+        mProgressDialog.setMessage("Loading Mall BD. Please Wait..");
+        mProgressDialog.show();
+        mProgressDialog.setCancelable(false);*/
         super.onPreExecute();
     }
 

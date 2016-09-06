@@ -1,5 +1,6 @@
 package com.themallbd.workspaceit.asynctask;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayList<Products>> {
 
     private Context mContext;
-
+    private ProgressDialog mProgressDialog;
 
     public GetFeaturedProductsAsyncTask(Context mContext) {
         this.mContext = mContext;
@@ -27,7 +28,11 @@ public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayL
 
     @Override
     protected void onPreExecute() {
-
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage("Loading Mall BD. Please Wait..");
+        mProgressDialog.show();
+        mProgressDialog.setCancelable(false);
         super.onPreExecute();
     }
 
@@ -43,7 +48,7 @@ public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayL
     @Override
     protected void onPostExecute(ArrayList<Products> productses) {
         super.onPostExecute(productses);
-
+        mProgressDialog.dismiss();
         if (Utility.responseStat.status) {
             if(mContext instanceof MainActivity){
                 if (mContext instanceof MainActivity) {

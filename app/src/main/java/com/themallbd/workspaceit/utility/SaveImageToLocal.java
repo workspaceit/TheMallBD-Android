@@ -4,6 +4,8 @@ import android.graphics.Bitmap;
 import android.os.Environment;
 import android.util.Log;
 
+import com.themallbd.workspaceit.preferences.SessionManager;
+
 import java.io.File;
 import java.io.FileOutputStream;
 

@@ -1,11 +1,8 @@
 package com.themallbd.workspaceit.activity;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -16,7 +13,7 @@ import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.asynctask.UpdateMyAccountAsynTask;
 import com.themallbd.workspaceit.utility.CheckOutInfoSession;
 import com.themallbd.workspaceit.utility.MakeToast;
-import com.themallbd.workspaceit.utility.SessionManager;
+import com.themallbd.workspaceit.preferences.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
 
 public class MyAccountActivity extends BaseActivityWithoutDrawer implements View.OnClickListener {

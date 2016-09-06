@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.themallbd.workspaceit.utility.SessionManager;
+import com.themallbd.workspaceit.preferences.SessionManager;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.asynctask.LoginAsyncTask;
 

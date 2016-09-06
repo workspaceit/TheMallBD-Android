@@ -19,9 +19,9 @@ import com.themallbd.workspaceit.dataModel.MallBdPackageCell;
 import com.themallbd.workspaceit.utility.CustomDialog;
 import com.themallbd.workspaceit.utility.CustomListView;
 import com.themallbd.workspaceit.utility.CustomSliderView;
-import com.themallbd.workspaceit.utility.LocalShoppintCart;
+import com.themallbd.workspaceit.preferences.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.MakeToast;
-import com.themallbd.workspaceit.utility.SessionManager;
+import com.themallbd.workspaceit.preferences.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 

@@ -8,11 +8,10 @@ import android.os.AsyncTask;
 
 import com.google.gson.Gson;
 import com.themallbd.workspaceit.activity.BKashPaymentActivity;
-import com.themallbd.workspaceit.activity.CheckoutActivity;
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.activity.PrevoiusOrderActivity;
 import com.themallbd.workspaceit.service.PaymentService;
-import com.themallbd.workspaceit.utility.LocalShoppintCart;
+import com.themallbd.workspaceit.preferences.LocalShoppintCart;
 import com.themallbd.workspaceit.utility.Utility;
 
 /**

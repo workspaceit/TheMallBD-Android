@@ -1,4 +1,4 @@
-package com.themallbd.workspaceit.utility;
+package com.themallbd.workspaceit.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
