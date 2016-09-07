@@ -58,7 +58,7 @@ import com.themallbd.workspaceit.asynctask.GetFeaturedProductsAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetNewProductsAsyncTask;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.service.InternetConnection;
-import com.themallbd.workspaceit.utility.AllProductGridView;
+import com.themallbd.workspaceit.view.CustomGridView;
 import com.themallbd.workspaceit.utility.AutoCompleteTextChangeLisnter;
 import com.themallbd.workspaceit.utility.CustomAutoCompleteTextView;
 import com.themallbd.workspaceit.utility.DividerItemDecoration;
@@ -98,7 +98,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     //recycler view variables for horizontal scrolling
     private RecyclerView newProductHorizontalListRV, featuredProductHorizontalListRV, packgeProductHorizontalListRV, specailDiscountProductHorizonatlRV;
-    private AllProductGridView gridViewForAllProducts;
+    private CustomGridView gridViewForAllProducts;
 
     public static ArrayList<Products> newProductsForHorizontalViewList;
     public static ArrayList<Products> featuredProductsForHorizontalViewList;
@@ -116,7 +116,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private int offsetForDiscountProduct = 0;
     private int offsetForPackage = 0;
 
-    int limit = 5;
+    private int limit = 5;
     int limitForProductsInGridView = 4;
 
     int pastVisiblesItems, visibleItemCount, totalItemCount;
@@ -164,8 +164,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         navaigationDrawerFragment=(NavaigationDrawerFragment)getFragmentManager().findFragmentById(R.id.nav_drawer_fragment);
 
 
-        this.getNecessaryData();
         this.initialize();
+        this.getNecessaryData();
+
 
         this.initilizeParentCategoryList();
 
@@ -212,6 +213,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         moreDiscountProduct = true;
 
         sliderShow = (SliderLayout) findViewById(R.id.slider);
+
+        initializePackageProductForHorizontalList();
+
         //initializing new product horizontal scrolling section
         initializeNewProductHorizontalSection();
 
@@ -223,7 +227,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         initializeDiscountProductForHorizontalSection();
 
-        initializePackageProductForHorizontalList();
+
 
 
         this.homeSearcTextView = (CustomAutoCompleteTextView) findViewById(R.id.search_in_home);
@@ -607,7 +611,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private void initializeGridViewForAllProductsSection() {
 
 
-        gridViewForAllProducts = (AllProductGridView) findViewById(R.id.gridView_all_Product);
+        gridViewForAllProducts = (CustomGridView) findViewById(R.id.gridView_all_Product);
 
 
         gridViewForAllProducts.setOnItemClickListener(this);
@@ -849,37 +853,45 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
-        if (mInternetConnection.checkInternet()) {
-            if (newProductsForHorizontalViewList.size() > 0) {
-                this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
-                this.offsetForNewProductsHorizontalScrolling = ((MainActivity.newProductsForHorizontalViewList.size() / 5) - 1);
 
+        try {
+
+
+            if (mInternetConnection.checkInternet()) {
+                if (newProductsForHorizontalViewList.size() > 0) {
+                    this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
+                    this.offsetForNewProductsHorizontalScrolling = ((MainActivity.newProductsForHorizontalViewList.size() / 5) - 1);
+
+                }
+
+                if (featuredProductsForHorizontalViewList.size() > 0) {
+                    this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
+                    this.offsetForFeaturedProductsHorizontalScrolling = ((MainActivity.featuredProductsForHorizontalViewList.size() / 5) - 1);
+
+                }
+
+                if (packgeProductForHorizontalList.size() > 0) {
+                    this.packageInHorizontalListAdapter.notifyDataSetChanged();
+                    this.offsetForPackage = ((MainActivity.packgeProductForHorizontalList.size() / 5) - 1);
+                }
+
+                if (discountProductForHorizontalList.size() > 0) {
+                    this.discountProductRecyleViewAdapter.notifyDataSetChanged();
+                    this.offsetForDiscountProduct = ((MainActivity.discountProductForHorizontalList.size() / 5) - 1);
+                }
+
+                if (allProductsForGridViewList.size() > 0) {
+                    this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
+                }
+
+            } else {
+                Intent intent = new Intent(this, NoInternetActiviy.class);
+                startActivity(intent);
+                this.finish();
             }
 
-            if (featuredProductsForHorizontalViewList.size() > 0) {
-                this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
-                this.offsetForFeaturedProductsHorizontalScrolling = ((MainActivity.featuredProductsForHorizontalViewList.size() / 5) - 1);
-
-            }
-
-            if (packgeProductForHorizontalList.size() > 0) {
-                this.packageInHorizontalListAdapter.notifyDataSetChanged();
-                this.offsetForPackage = ((MainActivity.packgeProductForHorizontalList.size() / 5) - 1);
-            }
-
-            if (discountProductForHorizontalList.size() > 0) {
-                this.discountProductRecyleViewAdapter.notifyDataSetChanged();
-                this.offsetForDiscountProduct = ((MainActivity.discountProductForHorizontalList.size() / 5) - 1);
-            }
-
-            if (allProductsForGridViewList.size() > 0) {
-                this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
-            }
-
-        } else {
-            Intent intent = new Intent(this, NoInternetActiviy.class);
-            startActivity(intent);
-            this.finish();
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
     }
 

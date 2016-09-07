@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
  * Created by Tomal on 7/21/2016.
  */
 public class LocalShoppintCart {
-    SharedPreferences pref;
+    private SharedPreferences pref;
 
     // Editor for Shared preferences
     SharedPreferences.Editor editor;

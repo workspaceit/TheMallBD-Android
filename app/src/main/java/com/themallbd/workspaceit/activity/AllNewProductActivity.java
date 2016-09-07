@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ public class AllNewProductActivity extends BaseActivityWithoutDrawer implements 
 
     private Toolbar toolbar;
     private TextView toolBarTitle;
-    private ListView allNewProductListView;
+    private GridView allNewProductGridView;
     private AnyProductListAdapter anyProductListAdapter;
     private int limit=5;
     private int offset=0;
@@ -37,12 +38,12 @@ public class AllNewProductActivity extends BaseActivityWithoutDrawer implements 
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
 
-        allNewProductListView=(ListView)findViewById(R.id.all_new_product_list_view);
+        allNewProductGridView =(GridView)findViewById(R.id.all_new_product_grid_view);
         anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.newProductsForHorizontalViewList);
 
         footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
-        allNewProductListView.addFooterView(footer);
-        allNewProductListView.setAdapter(anyProductListAdapter);
+
+        allNewProductGridView.setAdapter(anyProductListAdapter);
         this.footer.setVisibility(View.GONE);
         mInternetConnection=new InternetConnection(this);
         this.offset=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
@@ -50,8 +51,8 @@ public class AllNewProductActivity extends BaseActivityWithoutDrawer implements 
 
 
 
-        this.allNewProductListView.setOnScrollListener(this);
-        this.allNewProductListView.setOnItemClickListener(this);
+        this.allNewProductGridView.setOnScrollListener(this);
+        this.allNewProductGridView.setOnItemClickListener(this);
 
 
     }
@@ -98,10 +99,9 @@ public class AllNewProductActivity extends BaseActivityWithoutDrawer implements 
     }
 
     public void newProductError(){
-        this.allNewProductListView.removeFooterView(footer);
+
         loadProductFlag=false;
         MainActivity.moreItemNewProduct=false;
-        MakeToast.showToast(this,"No More New Product...");
     }
 
     @Override

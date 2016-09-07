@@ -98,6 +98,7 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
                 public void onClick(View v) {
                     Intent intent = new Intent(activity, ProductFromCategoryActivity.class);
                     intent.putExtra("category_id",category.id);
+                    intent.putExtra("category_name",category.title);
                     activity.startActivity(intent);
 
                 }
@@ -170,7 +171,7 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
         public View getGroupView(final int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
             TextView  text;
             if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.category_child_items_in_group, null);
                 text = (TextView) convertView.findViewById(R.id.lblListItem);
                 text.setText(childrens.title);
@@ -180,6 +181,7 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
                         public void onClick(View v) {
                             Intent intent = new Intent(activity, ProductFromCategoryActivity.class);
                             intent.putExtra("category_id",childrens.id);
+                            intent.putExtra("category_name",childrens.id);
                             activity.startActivity(intent);
 
                         }
@@ -216,6 +218,7 @@ public class CategoryInExpandableListViewAdapter extends BaseExpandableListAdapt
 
                         Intent intent = new Intent(activity, ProductFromCategoryActivity.class);
                         intent.putExtra("category_id",childrens.childrens.get(childPosition).id);
+                        intent.putExtra("category_name",childrens.childrens.get(childPosition).title);
                         activity.startActivity(intent);
                     }
                 });

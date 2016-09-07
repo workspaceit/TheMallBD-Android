@@ -77,6 +77,7 @@ public class AnyProductListAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder.productImage.setImageBitmap(null);
         }
         try {
             int size = this.productses.get(position).pictures.size();
@@ -128,6 +129,7 @@ public class AnyProductListAdapter extends BaseAdapter {
         }
         return convertView;
     }
+
 
 
     public class ViewHolder {

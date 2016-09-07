@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ import com.workspaceit.themall.R;
 public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implements AbsListView.OnScrollListener,AdapterView.OnItemClickListener {
     private Toolbar toolbar;
     private TextView toolBarTitle;
-    private ListView allFeatureProductListView;
+    private GridView allFeatureProductGridView;
     private AnyProductListAdapter anyProductListAdapter;
     private int limit=5;
     private int offset=0;
@@ -34,12 +35,12 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
         setContentView(R.layout.activity_all_features_product);
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
-        allFeatureProductListView=(ListView)findViewById(R.id.all_feature_product_list_view);
+        allFeatureProductGridView =(GridView)findViewById(R.id.all_feature_product_grid_view);
         anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.featuredProductsForHorizontalViewList);
 
         footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
-        allFeatureProductListView.addFooterView(footer);
-        allFeatureProductListView.setAdapter(anyProductListAdapter);
+
+        allFeatureProductGridView.setAdapter(anyProductListAdapter);
         this.footer.setVisibility(View.GONE);
         mInternetConnection=new InternetConnection(this);
         this.offset=((MainActivity.featuredProductsForHorizontalViewList.size()/5)-1);
@@ -47,8 +48,8 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
 
 
 
-        this.allFeatureProductListView.setOnScrollListener(this);
-        this.allFeatureProductListView.setOnItemClickListener(this);
+        this.allFeatureProductGridView.setOnScrollListener(this);
+        this.allFeatureProductGridView.setOnItemClickListener(this);
     }
 
     @Override
@@ -85,7 +86,7 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
 
     public void notifyDataSetChange() {
         this.footer.setVisibility(View.GONE);
-        this.allFeatureProductListView.removeFooterView(footer);
+
 
         this.anyProductListAdapter.updateProductArrayList(MainActivity.featuredProductsForHorizontalViewList);
         this.anyProductListAdapter.notifyDataSetChanged();
@@ -93,10 +94,9 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
     }
 
     public void featureProductError(){
-       this.allFeatureProductListView.removeFooterView(footer);
         loadProductFlag=false;
         MainActivity.moreItemFeatureProduct=false;
-        MakeToast.showToast(this,"No More Feauture Product...");
+
     }
 
     @Override

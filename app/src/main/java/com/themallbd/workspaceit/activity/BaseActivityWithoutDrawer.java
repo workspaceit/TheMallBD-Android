@@ -55,27 +55,35 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
 
     @Override
     protected void onResume() {
-        super.onResume();
-        if (toolbar != null)
-            invalidateOptionsMenu();
+        try {
+            super.onResume();
+            if (toolbar != null)
+                invalidateOptionsMenu();
 
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        try {
+            super.setContentView(layoutResID);
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
 
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-       getSupportActionBar().setDisplayShowTitleEnabled(false);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.action_bar_gradient));
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.action_bar_gradient));
 
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
 
     }
@@ -83,46 +91,47 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        MenuItem item = menu.findItem(R.id.action_cart);
-        MenuItemCompat.setActionView(item, R.layout.cart_update_count);
 
-        MenuItem drawerIcon=menu.findItem(R.id.action_openRight);
-        drawerIcon.setVisible(false);
+       try {
+           MenuInflater inflater = getMenuInflater();
+           inflater.inflate(R.menu.menu_main, menu);
+           MenuItem item = menu.findItem(R.id.action_cart);
+           MenuItemCompat.setActionView(item, R.layout.cart_update_count);
 
-
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
-        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+           MenuItem drawerIcon = menu.findItem(R.id.action_openRight);
+           drawerIcon.setVisible(false);
 
 
+           final SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_search));
+           SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+           searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
 
+           if (searchView != null) {
+               searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+               searchView.setOnQueryTextListener(this);
+               searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
+               searchAutoComplete.setThreshold(3);
 
-        if (searchView != null) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setOnQueryTextListener(this);
-            searchAutoComplete = (SearchView.SearchAutoComplete) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-            searchAutoComplete.setThreshold(3);
-
-        }
-
-
-        View view = MenuItemCompat.getActionView(item);
-        Button CARTCOUNT = (Button) view.findViewById(R.id.notif_count);
-        CARTCOUNT.setText(String.valueOf((Utility.shoppingCart.productCell.size() + Utility.shoppingCart.mallBdPackageCell.size())+""));
-
-        CARTCOUNT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
-                startActivity(intent);
-
-            }
-        });
+           }
 
 
+           View view = MenuItemCompat.getActionView(item);
+           Button CARTCOUNT = (Button) view.findViewById(R.id.notif_count);
+           CARTCOUNT.setText(String.valueOf((Utility.shoppingCart.productCell.size() + Utility.shoppingCart.mallBdPackageCell.size()) + ""));
+
+           CARTCOUNT.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+                   startActivity(intent);
+
+               }
+           });
+
+       }catch (Exception ex){
+           ex.printStackTrace();
+       }
         return true;
     }
 

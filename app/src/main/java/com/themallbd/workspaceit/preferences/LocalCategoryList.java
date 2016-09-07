@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
  */
 public class LocalCategoryList {
 
-    SharedPreferences pref;
+    private SharedPreferences pref;
 
     // Editor for Shared preferences
     SharedPreferences.Editor editor;

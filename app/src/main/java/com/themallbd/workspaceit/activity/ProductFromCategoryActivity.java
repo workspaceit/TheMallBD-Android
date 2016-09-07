@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.themallbd.workspaceit.asynctask.CategoryWiseProductsAsyncTask;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.service.InternetConnection;
+import com.themallbd.workspaceit.view.CustomFontTextView;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.CategoryWiseProductsAdapter;
 
@@ -17,14 +19,17 @@ import java.util.ArrayList;
 
 public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener {
 
-    private ListView productCategoryListView;
+    private GridView productCategoryGridView;
 
     private InternetConnection mInternetConnection;
 
     private CategoryWiseProductsAdapter categoryWiseProductsAdapter;
 
+    private CustomFontTextView titleText;
+
     public static ArrayList<Products> categoryWiseProductsArrayList;
     private int CATEGORY_ID=0;
+    private String CATEGORY_NAME="";
     private int offset = 0,limit = 7;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,7 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer imple
         setContentView(R.layout.activity_product_from_category);
 
         CATEGORY_ID = getIntent().getIntExtra("category_id",-1);
+        CATEGORY_NAME=getIntent().getStringExtra("category_name");
 
         mInternetConnection = new InternetConnection(this);
         categoryWiseProductsArrayList = new ArrayList<>();
@@ -41,10 +47,13 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer imple
 
     private void initialize() {
 
-        productCategoryListView = (ListView) findViewById(R.id.product_category_listView);
+        productCategoryGridView = (GridView) findViewById(R.id.gridView_product_from_category);
+        titleText=(CustomFontTextView)findViewById(R.id.category_title_text);
+
+        titleText.setText(CATEGORY_NAME);
 
         this.categoryWiseProductsAdapter = new CategoryWiseProductsAdapter(this);
-        productCategoryListView.setAdapter(categoryWiseProductsAdapter);
+        productCategoryGridView.setAdapter(categoryWiseProductsAdapter);
 
         if (mInternetConnection.checkInternet())
         {
@@ -55,7 +64,7 @@ public class ProductFromCategoryActivity extends BaseActivityWithoutDrawer imple
 
         }
 
-        productCategoryListView.setOnItemClickListener(this);
+        productCategoryGridView.setOnItemClickListener(this);
 
     }
 

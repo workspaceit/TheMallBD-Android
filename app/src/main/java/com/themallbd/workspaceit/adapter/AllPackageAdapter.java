@@ -64,6 +64,7 @@ public class AllPackageAdapter extends BaseAdapter {
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
+            viewHolder.productImage.setImageBitmap(null);
         }
         try {
             String image = MainActivity.packgeProductForHorizontalList.get(position).image;

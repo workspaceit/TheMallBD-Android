@@ -9,11 +9,30 @@
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/product_category_listView">
 
-    </ListView>
+    <com.themallbd.workspaceit.view.CustomFontTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#eee"
+        android:id="@+id/category_title_text"/>
+
+    <GridView
+        android:id="@+id/gridView_product_from_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEE"
+        android:columnWidth="170dp"
+        android:horizontalSpacing="2dp"
+        android:numColumns="2"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp" />
+
 
 </LinearLayout>

@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class SessionManager {
 
-    SharedPreferences pref;
+    private SharedPreferences pref;
 
     // Editor for Shared preferences
     Editor editor;

@@ -1,84 +1,75 @@
-<LinearLayout
-    android:layout_height="120dp"
-    android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="160dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="16dp"
+    >
+
+
+    <ImageView
+        android:layout_width="160dip"
+        android:layout_height="170dip"
+        android:id="@+id/product_category_imageview"
+        android:contentDescription="@string/new_product"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/material_text_caption"
+        android:id="@+id/product_category_name"
+        android:layout_gravity="center"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:text="hello"/>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/product_category_imageview"
-            android:layout_margin="5dp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/product_category_price"
+            android:textSize="@dimen/material_text_caption"
+            android:singleLine="true"
+            android:layout_weight=".5"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:textSize="@dimen/material_text_caption"
+            android:id="@+id/product_discount_price"
+            />
+
     </LinearLayout>
-
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dip"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:layout_margin="5dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".90"
+            android:text="by"
+            android:textSize="12sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight=".10"
             android:textSize="@dimen/material_text_body1"
-            android:text="Large Text"
-            android:id="@+id/product_category_name"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:textColor="#000000"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="1">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:textSize="@dimen/material_text_body1"
-                android:text="Large Text"
-                android:id="@+id/product_category_price" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:textSize="@dimen/material_text_body1"
-                android:text="Large Text"
-                android:id="@+id/product_discount_price" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="1">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".90"
-                android:text="by"
-                android:textSize="12sp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".10"
-                android:textSize="@dimen/material_text_body1"
-                android:text="1"
-                android:id="@+id/any_product_manufracturer_text_view"
-                android:textColor="#961C1E"/>
-
-
-        </LinearLayout>
+            android:text="1"
+            android:id="@+id/any_product_manufracturer_text_view"
+            android:textColor="#961C1E"/>
 
 
     </LinearLayout>
+
+
 </LinearLayout>

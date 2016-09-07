@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ import com.workspaceit.themall.R;
 public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implements AbsListView.OnScrollListener,AdapterView.OnItemClickListener {
     private Toolbar toolbar;
     private TextView toolBarTitle;
-    private ListView allDiscountProductListView;
+    private GridView allDiscountProductGridView;
     private AnyProductListAdapter anyProductListAdapter;
     private int limit=5;
     private int offset=0;
@@ -34,13 +35,12 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
 
         try {
             toolbar=(Toolbar)findViewById(R.id.toolbar);
-            //toolBarTitle=(TextView)toolbar.findViewById(R.id.toolbar_title);
-            toolBarTitle.setText("Special Discount Product");
-            allDiscountProductListView=(ListView)findViewById(R.id.all_discount_product_list_view);
+
+            allDiscountProductGridView =(GridView)findViewById(R.id.all_discount_product_grid_view);
             anyProductListAdapter=new AnyProductListAdapter(this,MainActivity.discountProductForHorizontalList);
             footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
-            this.allDiscountProductListView.addFooterView(footer);
-            allDiscountProductListView.setAdapter(anyProductListAdapter);
+
+            allDiscountProductGridView.setAdapter(anyProductListAdapter);
             this.footer.setVisibility(View.GONE);
             mInternetConnection=new InternetConnection(this);
             this.offset=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
@@ -48,8 +48,8 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
 
 
 
-            this.allDiscountProductListView.setOnScrollListener(this);
-            this.allDiscountProductListView.setOnItemClickListener(this);
+            this.allDiscountProductGridView.setOnScrollListener(this);
+            this.allDiscountProductGridView.setOnItemClickListener(this);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -116,9 +116,8 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
     }
 
     public void newProductError(){
-        this.allDiscountProductListView.removeFooterView(footer);
         loadProductFlag=false;
         MainActivity.moreDiscountProduct=false;
-        MakeToast.showToast(this, "No More Special discount product Product...");
+
     }
 }

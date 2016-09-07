@@ -140,6 +140,8 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
         Intent intent = new Intent(getActivity(), ProductFromCategoryActivity.class);
         intent.putExtra("category_id", Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).
                 childrens.get(childPosition).id);
+        intent.putExtra("category_name", Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition)
+                .childrens.get(childPosition).title);
         getActivity().startActivity(intent);
 
         return true;

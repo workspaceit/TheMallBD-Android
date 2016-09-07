@@ -28,11 +28,11 @@ public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayL
 
     @Override
     protected void onPreExecute() {
-        mProgressDialog = new ProgressDialog(mContext);
+/*        mProgressDialog = new ProgressDialog(mContext);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage("Loading Mall BD. Please Wait..");
         mProgressDialog.show();
-        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCancelable(false);*/
         super.onPreExecute();
     }
 
@@ -48,7 +48,7 @@ public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayL
     @Override
     protected void onPostExecute(ArrayList<Products> productses) {
         super.onPostExecute(productses);
-        mProgressDialog.dismiss();
+       // mProgressDialog.dismiss();
         if (Utility.responseStat.status) {
             if(mContext instanceof MainActivity){
                 if (mContext instanceof MainActivity) {

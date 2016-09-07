@@ -67,60 +67,65 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        sessionManager = new SessionManager(getApplicationContext());
-        sessionManager = new SessionManager(this);
-        accessToken = sessionManager.getAccessToken();
-        internetConnection=new InternetConnection(this);
+
+        try {
 
 
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            sessionManager = new SessionManager(getApplicationContext());
+            sessionManager = new SessionManager(this);
+            accessToken = sessionManager.getAccessToken();
+            internetConnection = new InternetConnection(this);
 
-        if(true) {
 
-            if(sessionManager.checkLogin() && internetConnection.checkInternet() ) {
-                System.out.println("calling " + accessToken);
-                new LoginByAccesTokenAsynTask().execute(accessToken);
+            if (true) {
+
+                if (sessionManager.checkLogin() && internetConnection.checkInternet()) {
+                    System.out.println("calling " + accessToken);
+                    new LoginByAccesTokenAsynTask().execute(accessToken);
+                }
+                LocalShoppintCart localShoppintCart = new LocalShoppintCart(this);
+                String oldProductCart = localShoppintCart.getProductCart();
+                String oldPackageCart = localShoppintCart.getPackageCart();
+                Gson gson = new Gson();
+                ProductCell[] productCells = gson.fromJson(oldProductCart, ProductCell[].class);
+                MallBdPackageCell[] mallBdPackageCells = gson.fromJson(oldPackageCart, MallBdPackageCell[].class);
+                Utility.shoppingCart.productCell.clear();
+                if (productCells != null) {
+                    Collections.addAll(Utility.shoppingCart.productCell, productCells);
+                }
+
+                Utility.shoppingCart.mallBdPackageCell.clear();
+                if (mallBdPackageCells != null) {
+                    Collections.addAll(Utility.shoppingCart.mallBdPackageCell, mallBdPackageCells);
+                }
+
+
+                DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                        .cacheInMemory(true)
+                        .resetViewBeforeLoading(true)
+                        .cacheOnDisk(true)
+                        .considerExifParams(true)
+                        .resetViewBeforeLoading(false)
+                        .bitmapConfig(Bitmap.Config.RGB_565)
+                        .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
+                        .build();
+
+
+                ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                        .defaultDisplayImageOptions(defaultOptions)
+                        .threadPoolSize(5)
+                        .memoryCache(new WeakMemoryCache())
+                        .threadPriority(Thread.MIN_PRIORITY + 3)
+                        .memoryCacheSize(2 * 1024 * 1024)
+                        .build();
+
+                ImageLoader.getInstance().init(config);
+                IMAGE_LOADER_FLAG = false;
             }
-            LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
-            String oldProductCart=localShoppintCart.getProductCart();
-            String oldPackageCart=localShoppintCart.getPackageCart();
-            Gson gson=new Gson();
-            ProductCell[] productCells=gson.fromJson(oldProductCart,ProductCell[].class);
-            MallBdPackageCell[]mallBdPackageCells=gson.fromJson(oldPackageCart,MallBdPackageCell[].class);
-            Utility.shoppingCart.productCell.clear();
-            if(productCells!=null) {
-                Collections.addAll(Utility.shoppingCart.productCell, productCells);
-            }
-
-            Utility.shoppingCart.mallBdPackageCell.clear();
-            if(mallBdPackageCells!=null){
-                Collections.addAll(Utility.shoppingCart.mallBdPackageCell,mallBdPackageCells);
-            }
-
-
-            DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                    .cacheInMemory(true)
-                    .resetViewBeforeLoading(true)
-                    .cacheOnDisk(true)
-                    .considerExifParams(true)
-                    .resetViewBeforeLoading(false)
-                    .bitmapConfig(Bitmap.Config.RGB_565)
-                    .imageScaleType(ImageScaleType.IN_SAMPLE_INT)
-                    .build();
-
-
-            ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-                    .defaultDisplayImageOptions(defaultOptions)
-                    .threadPoolSize(5)
-                    .memoryCache(new WeakMemoryCache())
-                    .threadPriority(Thread.MIN_PRIORITY + 3)
-                    .memoryCacheSize(2 * 1024 * 1024)
-                    .build();
-
-            ImageLoader.getInstance().init(config);
-            IMAGE_LOADER_FLAG=false;
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
-
     }
 
     @Override
@@ -131,7 +136,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             invalidateOptionsMenu();
         }
 
-        if (userNameTextView != null) {
+   /*     if (userNameTextView != null) {
             if (sessionManager.checkLogin()) {
                 userNameTextView.setText(sessionManager.getFullName());
 
@@ -153,7 +158,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(false);
                 userNameTextView.setText("Login");
             }
-        }
+        }*/
     }
 
 
@@ -474,33 +479,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-/*    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        MenuItem item = menu.findItem(R.id.action_cart);
-        MenuItem item1 = menu.findItem(R.id.action_search);
-
-        MenuItemCompat.setActionView(item1, R.layout.toolbar_search_icon);
-        MenuItemCompat.setActionView(item, R.layout.cart_update_count);
-        View view = MenuItemCompat.getActionView(item);
-        View searchView = MenuItemCompat.getActionView(item1);
-
-
-        CARTCOUNT = (Button) view.findViewById(R.id.notif_count);
-        CARTCOUNT.setText(String.valueOf(Utility.shoppingCart.shoppingCartCell.size() + ""));
-        CARTCOUNT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        return true;
-    }*/
 
 
     @Override

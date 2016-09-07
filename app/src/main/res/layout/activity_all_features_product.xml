@@ -4,19 +4,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.themallbd.workspaceit.activity.ProductFromCategoryActivity">
+    tools:context="com.themallbd.workspaceit.activity.AllFeaturesProductActivity">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
-
-
-    <ListView
+    <com.themallbd.workspaceit.view.CustomFontTextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/all_feature_product_list_view">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#eee"
+        android:id="@+id/category_title_text"
+        android:text="Feature Products"/>
 
-    </ListView>
+    <GridView
+        android:id="@+id/all_feature_product_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EEE"
+        android:columnWidth="170dp"
+        android:horizontalSpacing="2dp"
+        android:numColumns="2"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp" />
+
+
+
 
 
 </LinearLayout>

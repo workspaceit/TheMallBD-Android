@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,7 +21,7 @@ import com.workspaceit.themall.R;
 public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements AbsListView.OnScrollListener,AdapterView.OnItemClickListener{
     private Toolbar toolbar;
     private TextView toolBarTitle;
-    private ListView allPackageListView;
+    private GridView allPackageGridView;
     private AllPackageAdapter allPackageAdapter;
     private int limit=5;
     private int offset=0;
@@ -35,13 +36,12 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
 
         toolbar=(Toolbar)findViewById(R.id.toolbar);
 
-        allPackageListView =(ListView)findViewById(R.id.all_package_list_view);
+        allPackageGridView =(GridView)findViewById(R.id.all_package_grid_view);
         allPackageAdapter=new AllPackageAdapter(this);
         footer = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.page_list_view_loader, null, false);
-        allPackageListView.addFooterView(footer);
         footer.setVisibility(View.GONE);
 
-        allPackageListView.setAdapter(allPackageAdapter);
+        allPackageGridView.setAdapter(allPackageAdapter);
 
         mInternetConnection=new InternetConnection(this);
         this.offset=((MainActivity.packgeProductForHorizontalList.size()/5)-1);
@@ -49,8 +49,8 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
 
 
 
-        this.allPackageListView.setOnScrollListener(this);
-        this.allPackageListView.setOnItemClickListener(this);
+        this.allPackageGridView.setOnScrollListener(this);
+        this.allPackageGridView.setOnItemClickListener(this);
     }
 
     @Override
@@ -100,9 +100,8 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
     }
 
     public void newProductError(){
-        this.allPackageListView.removeFooterView(footer);
         loadProductFlag=false;
         MainActivity.morePackage=false;
-        MakeToast.showToast(this, "No More Package...");
+
     }
 }
