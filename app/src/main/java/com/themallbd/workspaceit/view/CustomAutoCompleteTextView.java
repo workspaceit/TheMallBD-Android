@@ -1,4 +1,4 @@
-package com.themallbd.workspaceit.utility;
+package com.themallbd.workspaceit.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

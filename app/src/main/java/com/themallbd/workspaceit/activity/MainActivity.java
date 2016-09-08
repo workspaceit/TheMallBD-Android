@@ -44,7 +44,8 @@ import com.themallbd.workspaceit.dataModel.Banner;
 import com.themallbd.workspaceit.dataModel.Category;
 import com.themallbd.workspaceit.dataModel.MallBdPackage;
 import com.themallbd.workspaceit.fragment.NavaigationDrawerFragment;
-import com.themallbd.workspaceit.utility.CustomSliderView;
+import com.themallbd.workspaceit.preferences.LocalBannerImage;
+import com.themallbd.workspaceit.view.CustomSliderView;
 import com.themallbd.workspaceit.preferences.LocalCategoryList;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.workspaceit.themall.R;
@@ -60,7 +61,7 @@ import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.service.InternetConnection;
 import com.themallbd.workspaceit.view.CustomGridView;
 import com.themallbd.workspaceit.utility.AutoCompleteTextChangeLisnter;
-import com.themallbd.workspaceit.utility.CustomAutoCompleteTextView;
+import com.themallbd.workspaceit.view.CustomAutoCompleteTextView;
 import com.themallbd.workspaceit.utility.DividerItemDecoration;
 
 import com.themallbd.workspaceit.utility.RecyclerItemClickListener;
@@ -78,6 +79,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private SliderLayout sliderShow;
     private NavaigationDrawerFragment navaigationDrawerFragment;
+    private LocalBannerImage localBannerImage;
 
     //  Adapters
     private HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter;
@@ -143,6 +145,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private boolean gridAllFlag = true;
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
     private LocalCategoryList localCategoryList;
+    private static boolean bannerLoadFlagForIntilGetRequest=true;
 
 
     @Override
@@ -152,6 +155,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
         mInternetConnection = new InternetConnection(this);
+        sliderShow = (SliderLayout) findViewById(R.id.slider);
+        setBannerImagesFromLocal();
 
         if (!mInternetConnection.checkInternet()) {
             Intent intent = new Intent(this, NoInternetActiviy.class);
@@ -164,23 +169,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         navaigationDrawerFragment=(NavaigationDrawerFragment)getFragmentManager().findFragmentById(R.id.nav_drawer_fragment);
 
 
+
         this.initialize();
         this.getNecessaryData();
-
-
         this.initilizeParentCategoryList();
 
 
+
+    }
+
+    private void setBannerImagesFromLocal() {
+        localBannerImage=new LocalBannerImage(this);
+        if (localBannerImage.getBannerFlag()){
+            Gson gson = new Gson();
+            String banner = localBannerImage.getBannerList();
+            Banner[] banners = gson.fromJson(banner, Banner[].class);
+            Utility.banners.clear();
+            Collections.addAll(Utility.banners, banners);
+
+
+            initializeSlider(false);
+        }
     }
 
 
     private void getNecessaryData() {
 
-        if (Utility.banners.size() < 1) {
+        if (bannerLoadFlagForIntilGetRequest) {
             new GetBannerImagesAsyncTask(this).execute();
+            bannerLoadFlagForIntilGetRequest=false;
         } else {
-            this.initializeSlider();
+            this.initializeSlider(false);
         }
+
+
 
         if (Utility.deliveryMethods.size() < 1) {
             new GetAllDeliveryMethodsAsyncTask().execute();
@@ -212,9 +234,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         morePackage = true;
         moreDiscountProduct = true;
 
-        sliderShow = (SliderLayout) findViewById(R.id.slider);
 
-        initializePackageProductForHorizontalList();
+
+
 
         //initializing new product horizontal scrolling section
         initializeNewProductHorizontalSection();
@@ -222,10 +244,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         //initializing feature product horizontal scrolling section
         initializeFeaturedProductHorizontalSection();
 
+
+        initializePackageProductForHorizontalList();
+
+        initializeDiscountProductForHorizontalSection();
         //initializing gridview for all products
         initializeGridViewForAllProductsSection();
 
-        initializeDiscountProductForHorizontalSection();
+
 
 
 
@@ -507,7 +533,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         if (mInternetConnection.checkInternet()) {
             MainActivity.featuredProductsForHorizontalViewList.clear();
-            new GetFeaturedProductsAsyncTask(this).execute(
+            new GetFeaturedProductsAsyncTask(this,true).execute(
                     String.valueOf(offsetForFeaturedProductsHorizontalScrolling),
                     String.valueOf(limit));
         }
@@ -568,7 +594,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         if (mInternetConnection.checkInternet()) {
             this.offsetForFeaturedProductsHorizontalScrolling += 1;
 
-            new GetFeaturedProductsAsyncTask(this).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
+            new GetFeaturedProductsAsyncTask(this,false).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
 
         }
 
@@ -646,9 +672,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
-    public void initializeSlider() {
+    public void initializeSlider(boolean saveToLoacalflag) {
 
 
+
+        if (saveToLoacalflag==true) {
+            Gson gson = new Gson();
+            String bannerString = gson.toJson(Utility.banners);
+            localBannerImage = new LocalBannerImage(this);
+            localBannerImage.setBannerList(bannerString);
+            localBannerImage.setBnnerFlag(true);
+        }
+
+
+        sliderShow.removeAllSliders();
         if (Utility.banners.size() >= 1) {
             for (Banner banner : Utility.banners) {
                 CustomSliderView textSliderView = new CustomSliderView(this);

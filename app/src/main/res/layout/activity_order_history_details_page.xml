@@ -234,12 +234,12 @@
             android:textSize="14dp"/>
 
 
-        <com.themallbd.workspaceit.utility.CustomListView
+        <com.themallbd.workspaceit.view.CustomListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/products_in_order_list_view"
             android:paddingBottom="20dp">
-        </com.themallbd.workspaceit.utility.CustomListView>
+        </com.themallbd.workspaceit.view.CustomListView>
 
 
     </LinearLayout>

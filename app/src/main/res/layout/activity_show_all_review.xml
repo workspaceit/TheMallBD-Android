@@ -35,7 +35,7 @@
                 />
 
 
-            <com.themallbd.workspaceit.utility.CustomListView
+            <com.themallbd.workspaceit.view.CustomListView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:dividerHeight="1dp"
@@ -43,7 +43,7 @@
 
                 >
 
-            </com.themallbd.workspaceit.utility.CustomListView>
+            </com.themallbd.workspaceit.view.CustomListView>
 
         </LinearLayout>
     </ScrollView>

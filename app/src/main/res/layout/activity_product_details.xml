@@ -326,13 +326,13 @@
                         android:id="@+id/related_product_normal_text_view"
                         />
 
-                    <com.themallbd.workspaceit.utility.CustomListView
+                    <com.themallbd.workspaceit.view.CustomListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/relatede_product_list__view"
                         android:dividerHeight="0dp"
                         android:divider="@null">
-                    </com.themallbd.workspaceit.utility.CustomListView>
+                    </com.themallbd.workspaceit.view.CustomListView>
 
                     <Button
                         android:layout_width="match_parent"
@@ -365,14 +365,14 @@
                         android:id="@+id/review_normal_text_view"
                         />
 
-                    <com.themallbd.workspaceit.utility.CustomListView
+                    <com.themallbd.workspaceit.view.CustomListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/review_list__view"
                         android:dividerHeight="0dp"
                         android:layout_marginBottom="10dp"
                         >
-                    </com.themallbd.workspaceit.utility.CustomListView>
+                    </com.themallbd.workspaceit.view.CustomListView>
 
                     <Button
                         android:layout_width="match_parent"

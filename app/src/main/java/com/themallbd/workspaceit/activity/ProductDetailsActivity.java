@@ -30,7 +30,7 @@ import com.themallbd.workspaceit.dataModel.ProductCell;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.dataModel.SelectedAttributes;
 import com.themallbd.workspaceit.utility.CustomDialog;
-import com.themallbd.workspaceit.utility.CustomSliderView;
+import com.themallbd.workspaceit.view.CustomSliderView;
 import com.themallbd.workspaceit.preferences.LocalShoppintCart;
 import com.themallbd.workspaceit.preferences.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
@@ -42,7 +42,7 @@ import com.themallbd.workspaceit.asynctask.GetReviewAsynTask;
 import com.themallbd.workspaceit.asynctask.GetReviewCountAsynTask;
 import com.themallbd.workspaceit.asynctask.WishListAsynTask;
 import com.themallbd.workspaceit.utility.MakeToast;
-import com.themallbd.workspaceit.utility.CustomListView;
+import com.themallbd.workspaceit.view.CustomListView;
 
 public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements BaseSliderView.OnSliderClickListener, View.OnClickListener, AdapterView.OnItemClickListener {
 

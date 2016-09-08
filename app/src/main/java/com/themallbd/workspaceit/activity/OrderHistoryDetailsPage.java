@@ -2,13 +2,10 @@ package com.themallbd.workspaceit.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.widget.TextView;
 import com.themallbd.workspaceit.adapter.ProducstInOrderAdapter;
 import com.themallbd.workspaceit.dataModel.Orders;
-import com.themallbd.workspaceit.utility.CustomListView;
+import com.themallbd.workspaceit.view.CustomListView;
 import com.workspaceit.themall.R;
 
 public class OrderHistoryDetailsPage extends BaseActivityWithoutDrawer {

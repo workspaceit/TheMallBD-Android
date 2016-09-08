@@ -8,13 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 
 import com.themallbd.workspaceit.activity.CheckoutActivity;
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.adapter.PackageProductCartAdapter;
-import com.themallbd.workspaceit.utility.CustomAutoCompleteTextView;
-import com.themallbd.workspaceit.utility.CustomListView;
+import com.themallbd.workspaceit.view.CustomListView;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.CartInListViewAdapter;

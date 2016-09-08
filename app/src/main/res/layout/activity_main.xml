@@ -53,7 +53,7 @@
                     android:paddingBottom="0dp"
                     >
 
-                    <com.themallbd.workspaceit.utility.CustomAutoCompleteTextView
+                    <com.themallbd.workspaceit.view.CustomAutoCompleteTextView
                         android:id="@+id/search_in_home"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

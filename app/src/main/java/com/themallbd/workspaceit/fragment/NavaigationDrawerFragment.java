@@ -9,16 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import com.themallbd.workspaceit.activity.ManufracturerActivity;
 import com.themallbd.workspaceit.activity.ProductFromCategoryActivity;
 import com.themallbd.workspaceit.adapter.NavgationDrawerParentCategoryAdapter;
 import com.themallbd.workspaceit.adapter.NavigationCategoryExpandableListAdapter;
-import com.themallbd.workspaceit.preferences.LocalCategoryList;
 import com.themallbd.workspaceit.utility.Utility;
 import com.themallbd.workspaceit.view.AnimatedExpandableListView;
 import com.workspaceit.themall.R;
@@ -35,10 +36,11 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
     private AnimatedExpandableListView expandableListView;
     private int categoryPosition;
     private TextView categoryTitle;
+    private Button manufracturerButton;
 
     private ViewSwitcher simpleViewSwitcher;
     private NavgationDrawerParentCategoryAdapter navgationDrawerParentCategoryAdapter;
-    private LocalCategoryList localCategoryList;
+
 
 
     @Override
@@ -64,11 +66,11 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
         this.categoryTitle = (TextView) view.findViewById(R.id.nav_category_second_page_title);
         Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Whitney-Semibold-Bas.otf");
         this.categoryTitle.setTypeface(face);
-        localCategoryList = new LocalCategoryList(getActivity());
         navgationDrawerParentCategoryAdapter = new NavgationDrawerParentCategoryAdapter(getActivity());
         parentListView.setAdapter(navgationDrawerParentCategoryAdapter);
-
-
+        manufracturerButton =(Button)view.findViewById(R.id.band_button);
+        manufracturerButton.setTypeface(face);
+        manufracturerButton.setOnClickListener(this);
         return view;
     }
 
@@ -91,6 +93,7 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
             if (Utility.parentsCategoryArraylist.get(position).childrens.isEmpty()) {
                 Intent intent = new Intent(getActivity(), ProductFromCategoryActivity.class);
                 intent.putExtra("category_id", Utility.parentsCategoryArraylist.get(position).id);
+                intent.putExtra("category_name", Utility.parentsCategoryArraylist.get(position).title);
                 getActivity().startActivity(intent);
             } else {
                 NavigationCategoryExpandableListAdapter navigationCategoryExpandableListAdapter = new
@@ -112,6 +115,9 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
         if (v == backButton) {
             simpleViewSwitcher.setDisplayedChild(0);
 
+        }else if(v== manufracturerButton){
+           Intent intent=new Intent(getActivity(), ManufracturerActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -121,6 +127,8 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
         if (Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).childrens.isEmpty()) {
             Intent intent = new Intent(getActivity(), ProductFromCategoryActivity.class);
             intent.putExtra("category_id", Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition).id);
+            intent.putExtra("category_name", Utility.parentsCategoryArraylist.get(this.categoryPosition).childrens.get(groupPosition)
+                    .title);
             getActivity().startActivity(intent);
         } else {
             if (expandableListView.isGroupExpanded(groupPosition)) {
@@ -147,12 +155,7 @@ public class NavaigationDrawerFragment extends Fragment implements AdapterView.O
         return true;
     }
 
-    public int GetPixelFromDips(float pixels) {
-        // Get the screen's density scale
-        final float scale = getResources().getDisplayMetrics().density;
-        // Convert the dps to pixels, based on density scale
-        return (int) (pixels * scale + 0.5f);
-    }
+
 
 
 }

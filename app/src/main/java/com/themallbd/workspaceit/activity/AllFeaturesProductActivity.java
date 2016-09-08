@@ -70,7 +70,7 @@ public class AllFeaturesProductActivity extends BaseActivityWithoutDrawer implem
 
                 System.out.println("before call : "+this.offset+" limit "+this.limit+" size "+MainActivity.packgeProductForHorizontalList.size());
 
-                new GetFeaturedProductsAsyncTask(this).execute(String.valueOf(this.offset), String.valueOf(limit));
+                new GetFeaturedProductsAsyncTask(this,false).execute(String.valueOf(this.offset), String.valueOf(limit));
 
 
 

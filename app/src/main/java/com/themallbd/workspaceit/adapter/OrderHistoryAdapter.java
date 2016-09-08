@@ -85,7 +85,7 @@ public class OrderHistoryAdapter extends BaseAdapter {
 
 
 
-    public class ViewHolder {
+    private class ViewHolder {
 
         public TextView counterTextView;
         public TextView invoiceNymberTextView;

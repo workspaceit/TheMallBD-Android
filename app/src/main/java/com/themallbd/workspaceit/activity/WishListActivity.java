@@ -18,8 +18,8 @@ import com.themallbd.workspaceit.asynctask.GetWishListProductAsynTask;
 
 public class WishListActivity extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener {
 
-    ListView wishListListView;
-    WishInListViewAdapter wishInListViewAdapter;
+    private ListView wishListListView;
+    private WishInListViewAdapter wishInListViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

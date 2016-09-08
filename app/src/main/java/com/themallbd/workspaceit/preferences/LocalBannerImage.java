@@ -41,4 +41,14 @@ public class LocalBannerImage {
     public String getBannerList(){
         return pref.getString(BANNER_IMAGES,"");
     }
+
+    public void setBnnerFlag(boolean flag){
+        editor.putBoolean(BANNER_FLAG,flag);
+        editor.commit();
+
+    }
+
+    public boolean getBannerFlag(){
+        return pref.getBoolean(BANNER_FLAG,false);
+    }
 }

@@ -23,7 +23,7 @@ public class BaseMallBDService {
 
     private String baseURL="http://188.166.214.41/mallbdweb_develop/public/"; //new URL
     //private String baseURL="http://188.166.214.41/mallbdweb/public/index.php/";//riyad vai new server
-    // private String baseURL = "http://163.53.151.2:9030/mallbdweb/public/index.php/";//rafi vai server
+    //private String baseURL = "http://163.53.151.2:5555/mallbdweb/public/index.php";//rafi vai server
     // private String baseURL = "http://192.168.1.11/mallbdweb/public/index.php/";//local
 
     public static int shop_id = 1;
@@ -32,7 +32,6 @@ public class BaseMallBDService {
     public String responseMsg;
     public boolean status;
     private static String sCookie;
-
 
 
     protected Map<String, String> getPostParams;
@@ -63,11 +62,11 @@ public class BaseMallBDService {
         try {
 
             if (method.endsWith("GET")) {
-                System.out.println(baseURL+this.controller);
-                URL url = new URL(baseURL+this.controller);
+                System.out.println(baseURL + this.controller);
+                URL url = new URL(baseURL + this.controller);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
-                if(sCookie!=null && sCookie.length()>0){
+                if (sCookie != null && sCookie.length() > 0) {
                     connection.setRequestProperty("Cookie", sCookie);
                 }
 
@@ -78,22 +77,21 @@ public class BaseMallBDService {
                 if (responseCode == HttpURLConnection.HTTP_OK) { // success
 
                     String cookie = connection.getHeaderField("set-cookie");
-                    if(cookie!=null && cookie.length()>0){
+                    if (cookie != null && cookie.length() > 0) {
                         sCookie = cookie;
                     }
                     return readStream(connection.getInputStream());
                 } else {
                     System.out.println("GET request not worked");
                 }
-            }
-            else if (method.equalsIgnoreCase("POST")) {
+            } else if (method.equalsIgnoreCase("POST")) {
 
 
-                System.out.println(baseURL+this.controller);
-                URL obj = new URL(baseURL+this.controller);
+                System.out.println(baseURL + this.controller);
+                URL obj = new URL(baseURL + this.controller);
 
                 HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
-                if(sCookie!=null && sCookie.length()>0){
+                if (sCookie != null && sCookie.length() > 0) {
                     connection.setRequestProperty("Cookie", sCookie);
                 }
                 connection.setRequestMethod(method);
@@ -109,7 +107,7 @@ public class BaseMallBDService {
                 System.out.println("POST Response Code :: " + responseCode);
                 if (responseCode == HttpURLConnection.HTTP_OK) { // success
                     String cookie = connection.getHeaderField("set-cookie");
-                    if(cookie!=null && cookie.length()>0){
+                    if (cookie != null && cookie.length() > 0) {
                         sCookie = cookie;
                     }
                     // print result
@@ -127,6 +125,7 @@ public class BaseMallBDService {
 
         return dataAsString;
     }
+
     private static String readStream(InputStream in) throws IOException {
 
         StringBuilder sb = new StringBuilder();
@@ -134,10 +133,10 @@ public class BaseMallBDService {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(in));
 
-            String nextLine = "";
-            while ((nextLine = reader.readLine()) != null) {
-                sb.append(nextLine);
-            }
+        String nextLine = "";
+        while ((nextLine = reader.readLine()) != null) {
+            sb.append(nextLine);
+        }
         reader.close();
 
         return sb.toString();
@@ -159,7 +158,6 @@ public class BaseMallBDService {
         }
         return sb.toString();
     }
-
 
 
 }

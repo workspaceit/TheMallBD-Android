@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <com.themallbd.workspaceit.utility.CustomListView
+    <com.themallbd.workspaceit.view.CustomListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cart_lv"
@@ -28,7 +28,7 @@
         >
 
 
-    </com.themallbd.workspaceit.utility.CustomListView>
+    </com.themallbd.workspaceit.view.CustomListView>
 
 
     <View
@@ -39,14 +39,14 @@
         android:layout_alignParentRight="true"
         />
 
-    <com.themallbd.workspaceit.utility.CustomListView
+    <com.themallbd.workspaceit.view.CustomListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/cart_package"
         android:layout_weight="1"
         >
 
-    </com.themallbd.workspaceit.utility.CustomListView>
+    </com.themallbd.workspaceit.view.CustomListView>
         </LinearLayout>
 
     </ScrollView>

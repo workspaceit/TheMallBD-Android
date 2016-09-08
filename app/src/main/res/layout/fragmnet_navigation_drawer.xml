@@ -32,9 +32,23 @@
                 android:id="@+id/parent_categoey_list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFFFFF"
+                android:drawSelectorOnTop="false"
                 android:divider="@null"
-                android:drawSelectorOnTop="false" />
+                android:background="#FFFFFF"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Brands"
+                android:background="@android:color/transparent"
+                android:gravity="start|center"
+                android:layout_marginLeft="15dp"
+                android:id="@+id/band_button"
+                android:textSize="15sp"
+                android:textColor="#7e7e7e"
+                android:textAllCaps="false"
+                />
+
 
         </LinearLayout>
 

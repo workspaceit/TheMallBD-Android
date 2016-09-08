@@ -14,14 +14,10 @@ import com.themallbd.workspaceit.utility.Utility;
  */
 public class GetBannerImagesAsyncTask extends AsyncTask<String, String, Boolean> {
     private MainActivity mainActivity;
-    private ProgressDialog mProgressDialog;
+
 
     public GetBannerImagesAsyncTask(MainActivity mainActivity) {
-        mProgressDialog = new ProgressDialog(mainActivity);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setMessage("Loading Mall BD. Please Wait..");
-        mProgressDialog.show();
-        mProgressDialog.setCancelable(false);
+
         this.mainActivity = mainActivity;
     }
 
@@ -39,9 +35,8 @@ public class GetBannerImagesAsyncTask extends AsyncTask<String, String, Boolean>
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        mProgressDialog.dismiss();
         if (aBoolean) {
-            mainActivity.initializeSlider();
+            mainActivity.initializeSlider(true);
 
         } else {
             MakeToast.showToast(mainActivity, Utility.responseStat.msg);

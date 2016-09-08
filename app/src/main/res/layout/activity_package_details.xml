@@ -223,7 +223,7 @@
                         android:textSize="@dimen/material_text_subhead"/>
 
 
-                    <com.themallbd.workspaceit.utility.CustomListView
+                    <com.themallbd.workspaceit.view.CustomListView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/package_product_list_view"
@@ -231,7 +231,7 @@
                         android:paddingBottom="20dp"
 
                         >
-                    </com.themallbd.workspaceit.utility.CustomListView>
+                    </com.themallbd.workspaceit.view.CustomListView>
 
 
 

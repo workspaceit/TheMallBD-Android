@@ -9,7 +9,7 @@ import com.themallbd.workspaceit.adapter.ReviewSingleRowAdapter;
 import com.themallbd.workspaceit.asynctask.GetReviewAsynTask;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
-import com.themallbd.workspaceit.utility.CustomListView;
+import com.themallbd.workspaceit.view.CustomListView;
 
 public class ShowAllReviewActivity extends BaseActivityWithoutDrawer {
 

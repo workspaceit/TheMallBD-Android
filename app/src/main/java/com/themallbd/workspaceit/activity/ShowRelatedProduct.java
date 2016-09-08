@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.adapter.RelatedProductAdapter;
 import com.themallbd.workspaceit.asynctask.GetRelatedProductAsynTask;
-import com.themallbd.workspaceit.utility.CustomListView;
+import com.themallbd.workspaceit.view.CustomListView;
 import com.themallbd.workspaceit.utility.Utility;
 
 public class ShowRelatedProduct extends BaseActivityWithoutDrawer implements AdapterView.OnItemClickListener {
