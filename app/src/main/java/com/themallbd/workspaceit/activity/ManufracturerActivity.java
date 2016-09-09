@@ -29,7 +29,7 @@ public class ManufracturerActivity extends BaseActivityWithoutDrawer implements 
         internetConnection = new InternetConnection(this);
         if (internetConnection.checkInternet()) {
             if (Utility.manufacturers.size() > 0) {
-
+                notifyDataSetForManufracturer();
             } else {
                 new GetManufracturerAsynTask(this).execute();
             }

@@ -82,8 +82,7 @@ public class AnyProductListAdapter extends BaseAdapter {
         try {
             int size = this.productses.get(position).pictures.size();
             if (size>=1) {
-                //    ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.mainActivity) .build();
-                //    ImageLoader.getInstance().init(config);
+
                 ImageLoader.getInstance().displayImage(
                         Utility.IMAGE_URL + productUrl +
                                 this.productses.get(position).pictures.get(0).name,

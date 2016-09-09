@@ -185,6 +185,8 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
                 products = MainActivity.discountProductForHorizontalList.get(position);
             } else if (arrayListIndicator == 10) {
                 products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
+            }else if (arrayListIndicator==11){
+                products=ProductByManufracturerActivity.productListByMenufracturer.get(position);
             }
 
 
