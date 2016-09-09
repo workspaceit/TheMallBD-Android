@@ -4,7 +4,11 @@
     <group
         android:id="@+id/group1"
         android:checkableBehavior="single">
-
+        <item
+            android:id="@+id/nav_login_id"
+            android:checked="false"
+            android:icon="@drawable/nd_my_mallbd"
+            android:title="Login" />
 
         <item
             android:id="@+id/nav_home_id"

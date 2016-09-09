@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.MainActivity">
 
+
+
     <item
         android:id="@+id/action_openRight"
         android:orderInCategory="100"

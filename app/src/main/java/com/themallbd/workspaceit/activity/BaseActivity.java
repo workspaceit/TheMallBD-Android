@@ -159,6 +159,14 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 userNameTextView.setText("Login");
             }
         }*/
+
+        if (Utility.isLoggedInFlag){
+            navigationView.getMenu().findItem(R.id.nav_login_id).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(true);
+        }else {
+            navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_login_id).setVisible(true);
+        }
     }
 
 
@@ -423,7 +431,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
                 return true;
 
-
+            case R.id.nav_login_id:
+                Intent loginIntent=new Intent(this,LoginActivity.class);
+                startActivity(loginIntent);
+                return true;
 
             case R.id.nav_my_mallbd_id:
                 if (Utility.isLoggedInFlag) {
