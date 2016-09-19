@@ -18,13 +18,15 @@ import java.util.Collections;
 public class ManufracturerService extends BaseMallBDService {
     private ResponseStat responseStat;
 
-    public boolean getAllManufracturer(){
+    public boolean getAllManufracturer(String limit,String offset){
 
         this.responseStat = new ResponseStat();
         this.setController("api/manufacturer/all");
+        this.setParams("limit",limit);
+        this.setParams("offset", offset);
 
 
-        String resp = this.getData("GET");
+        String resp = this.getData("POST");
         System.out.println(resp);
 
         try {
@@ -52,10 +54,12 @@ public class ManufracturerService extends BaseMallBDService {
         return false;
     }
 
-    public boolean getProductByManufracturerId(String manufracturerId){
+    public boolean getProductByManufracturerId(String manufracturerId,String limit,String offset){
         this.responseStat = new ResponseStat();
         this.setController("api/product/manufacturer/all");
-        this.setParams("manufacture_id",manufracturerId);
+        this.setParams("manufacture_id", manufracturerId);
+        this.setParams("limit",limit);
+        this.setParams("offset",offset);
 
 
         String resp = this.getData("POST");

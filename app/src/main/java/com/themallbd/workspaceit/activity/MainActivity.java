@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.GravityCompat;
@@ -12,11 +13,15 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
@@ -45,6 +50,7 @@ import com.themallbd.workspaceit.dataModel.Category;
 import com.themallbd.workspaceit.dataModel.MallBdPackage;
 import com.themallbd.workspaceit.fragment.NavaigationDrawerFragment;
 import com.themallbd.workspaceit.preferences.LocalBannerImage;
+import com.themallbd.workspaceit.preferences.WelcomeTrack;
 import com.themallbd.workspaceit.view.CustomSliderView;
 import com.themallbd.workspaceit.preferences.LocalCategoryList;
 import com.themallbd.workspaceit.utility.MakeToast;
@@ -80,6 +86,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private SliderLayout sliderShow;
     private NavaigationDrawerFragment navaigationDrawerFragment;
     private LocalBannerImage localBannerImage;
+    private WelcomeTrack welcomeTrack;
 
     //  Adapters
     private HorizontalRecyclerViewAdapter horizontalRecyclerViewAdapter;
@@ -95,7 +102,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     //Imageview
-    private CircleImageView  categoryBabyView;
+    private CircleImageView categoryBabyView;
     private ImageView categoryWomenView, categoryMenView, categoryAllView;
 
     //recycler view variables for horizontal scrolling
@@ -145,7 +152,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private boolean gridAllFlag = true;
     TextView firstCategoryText, secondCategoryText, thirdCategoryText;
     private LocalCategoryList localCategoryList;
-    private static boolean bannerLoadFlagForIntilGetRequest=true;
+    private static boolean bannerLoadFlagForIntilGetRequest = true;
+    private Button gotItButton;
+    private View oView;
 
 
     @Override
@@ -157,7 +166,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         mInternetConnection = new InternetConnection(this);
         sliderShow = (SliderLayout) findViewById(R.id.slider);
         setBannerImagesFromLocal();
-
+        welcomeTrack = new WelcomeTrack(this);
         if (!mInternetConnection.checkInternet()) {
             Intent intent = new Intent(this, NoInternetActiviy.class);
             startActivity(intent);
@@ -166,21 +175,40 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
-        navaigationDrawerFragment=(NavaigationDrawerFragment)getFragmentManager().findFragmentById(R.id.nav_drawer_fragment);
+        navaigationDrawerFragment = (NavaigationDrawerFragment) getFragmentManager().findFragmentById(R.id.nav_drawer_fragment);
 
 
+        if (welcomeTrack.getFirstTimeStatus()){
+            this.initialize();
+            this.getNecessaryData();
+            this.initilizeParentCategoryList();
+        }else {
+            showTutorailScreen();
+        }
 
-        this.initialize();
-        this.getNecessaryData();
-        this.initilizeParentCategoryList();
 
 
 
     }
 
+    private void showTutorailScreen() {
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        oView = layoutInflater.inflate(R.layout.activity_transparent, null);
+        gotItButton = (Button) oView.findViewById(R.id.got_it_button);
+        gotItButton.setOnClickListener(this);
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                0 | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+        drawerLayout.addView(oView, params);
+        Animation animation = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slide_up);
+        animation.setStartOffset(0);
+        oView.startAnimation(animation);
+    }
+
     private void setBannerImagesFromLocal() {
-        localBannerImage=new LocalBannerImage(this);
-        if (localBannerImage.getBannerFlag()){
+        localBannerImage = new LocalBannerImage(this);
+        if (localBannerImage.getBannerFlag()) {
             Gson gson = new Gson();
             String banner = localBannerImage.getBannerList();
             Banner[] banners = gson.fromJson(banner, Banner[].class);
@@ -197,11 +225,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         if (bannerLoadFlagForIntilGetRequest) {
             new GetBannerImagesAsyncTask(this).execute();
-            bannerLoadFlagForIntilGetRequest=false;
+            bannerLoadFlagForIntilGetRequest = false;
         } else {
             this.initializeSlider(false);
         }
-
 
 
         if (Utility.deliveryMethods.size() < 1) {
@@ -216,7 +243,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     private void initialize() {
 
-        localCategoryList=new LocalCategoryList(this);
+        localCategoryList = new LocalCategoryList(this);
         this.gridViewProgressBar = (ProgressBar) findViewById(R.id.grid_view_progress_bar);
         newProductsForHorizontalViewList = new ArrayList<>();
         featuredProductsForHorizontalViewList = new ArrayList<>();
@@ -235,9 +262,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         moreDiscountProduct = true;
 
 
-
-
-
         //initializing new product horizontal scrolling section
         initializeNewProductHorizontalSection();
 
@@ -250,10 +274,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initializeDiscountProductForHorizontalSection();
         //initializing gridview for all products
         initializeGridViewForAllProductsSection();
-
-
-
-
 
 
         this.homeSearcTextView = (CustomAutoCompleteTextView) findViewById(R.id.search_in_home);
@@ -435,9 +455,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private void initilizeParentCategoryList() {
 
 
-
-
-        if (localCategoryList.getCategoryFlag()){
+        if (localCategoryList.getCategoryFlag()) {
             Gson gson = new Gson();
             String category = localCategoryList.getCategoryList();
             Category[] categories = gson.fromJson(category, Category[].class);
@@ -449,8 +467,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
 
 
-
-            new CategoryInListViewAsyncTask(this).execute();
+        new CategoryInListViewAsyncTask(this).execute();
 
 
     }
@@ -533,7 +550,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
         if (mInternetConnection.checkInternet()) {
             MainActivity.featuredProductsForHorizontalViewList.clear();
-            new GetFeaturedProductsAsyncTask(this,true).execute(
+            new GetFeaturedProductsAsyncTask(this, true).execute(
                     String.valueOf(offsetForFeaturedProductsHorizontalScrolling),
                     String.valueOf(limit));
         }
@@ -594,7 +611,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         if (mInternetConnection.checkInternet()) {
             this.offsetForFeaturedProductsHorizontalScrolling += 1;
 
-            new GetFeaturedProductsAsyncTask(this,false).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
+            new GetFeaturedProductsAsyncTask(this, false).execute(String.valueOf(offsetForFeaturedProductsHorizontalScrolling), String.valueOf(limit));
 
         }
 
@@ -602,7 +619,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
     public void initializeCategoryView(int callFlag) {
-        if (callFlag==0) {
+        if (callFlag == 0) {
             Gson gson = new Gson();
             String category = gson.toJson(Utility.parentsCategoryArraylist);
 
@@ -675,8 +692,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     public void initializeSlider(boolean saveToLoacalflag) {
 
 
-
-        if (saveToLoacalflag==true) {
+        if (saveToLoacalflag == true) {
             Gson gson = new Gson();
             String bannerString = gson.toJson(Utility.banners);
             localBannerImage = new LocalBannerImage(this);
@@ -781,21 +797,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.discountProductRecyleViewAdapter.notifyItemRemoved(MainActivity.discountProductForHorizontalList.size() - 1);
         moreDiscountProduct = false;
         this.userScrollForDiscountProduct = false;
-        MakeToast.showToast(this, "No More Discount Product...");
+
     }
 
     public void setPackageListError() {
         this.packageInHorizontalListAdapter.notifyItemRemoved(MainActivity.packgeProductForHorizontalList.size() - 1);
         this.userScrollForPackge = false;
         morePackage = false;
-        MakeToast.showToast(this, "No More Package...");
+
     }
 
     public void setNewProductListError() {
         this.horizontalRecyclerViewAdapter.notifyItemRemoved(MainActivity.newProductsForHorizontalViewList.size() - 1);
         userScrolledForNewProduct = false;
         moreItemNewProduct = false;
-        MakeToast.showToast(this, "No More New Products...");
+
 
     }
 
@@ -810,7 +826,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         this.horizontalRVAFeaturedProductsAdapter.notifyItemRemoved(MainActivity.featuredProductsForHorizontalViewList.size() - 1);
         userScrollForFeatureProduct = false;
         moreItemFeatureProduct = false;
-        MakeToast.showToast(this, "No More Feature Products...");
+
 
     }
 
@@ -890,6 +906,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     @Override
     protected void onResume() {
         super.onResume();
+        if (!welcomeTrack.getFirstTimeStatus())
+            return;
 
         try {
 
@@ -927,7 +945,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 this.finish();
             }
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
@@ -1016,6 +1034,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
             realSmoothScrollAnimation.start();
 
+
+        } else if (v == gotItButton) {
+
+
+            welcomeTrack.setFirstTimeTrack(true);
+            Animation animation = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slide_down);
+            animation.setStartOffset(0);
+            oView.startAnimation(animation);
+            drawerLayout.removeView(oView);
+            this.initialize();
+            this.getNecessaryData();
+            this.initilizeParentCategoryList();
 
         }
 

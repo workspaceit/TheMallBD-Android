@@ -170,6 +170,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    public void hideNShowLoginButton(){
+        navigationView.getMenu().findItem(R.id.nav_login_id).setVisible(true);
+        navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(false);
+    }
+
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);

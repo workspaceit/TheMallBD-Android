@@ -23,11 +23,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     Button crossButton;
     public static ViewPager mViewPager;
+    private int pageIndicator=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        pageIndicator=getIntent().getIntExtra("page_indicator",0);
         crossButton = (Button) findViewById(R.id.cross_btn);
         crossButton.setOnClickListener(this);
 
@@ -45,6 +47,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         adapter.addFragment(new LoginFragment(), "Sign In");
         adapter.addFragment(new RegistrationFragment(), "Registration");
         mViewPager.setAdapter(adapter);
+        if (pageIndicator==1){
+            mViewPager.setCurrentItem(0);
+        }else if (pageIndicator==2){
+            mViewPager.setCurrentItem(1);
+        }
     }
 
     @Override

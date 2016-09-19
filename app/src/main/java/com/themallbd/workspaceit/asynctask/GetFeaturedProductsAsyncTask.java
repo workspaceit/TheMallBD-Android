@@ -52,9 +52,16 @@ public class GetFeaturedProductsAsyncTask extends AsyncTask<String,String,ArrayL
     @Override
     protected void onPostExecute(ArrayList<Products> productses) {
         super.onPostExecute(productses);
-        if (progressFlag) {
-            mProgressDialog.dismiss();
+        try {
+            if (progressFlag && mProgressDialog!=null && mProgressDialog.isShowing()) {
+                mProgressDialog.cancel();
+            }
+        }catch (IllegalArgumentException ex){
+            ex.printStackTrace();
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
+
         if (Utility.responseStat.status) {
             if(mContext instanceof MainActivity){
                 if (mContext instanceof MainActivity) {

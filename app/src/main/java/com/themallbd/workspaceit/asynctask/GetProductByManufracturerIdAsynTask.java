@@ -14,7 +14,7 @@ import com.themallbd.workspaceit.utility.Utility;
  */
 public class GetProductByManufracturerIdAsynTask extends AsyncTask<String,String,Boolean> {
     private Activity activity;
-    private ProgressDialog mProgressDialog;
+
 
     public GetProductByManufracturerIdAsynTask(Activity activity){
         this.activity=activity;
@@ -23,10 +23,7 @@ public class GetProductByManufracturerIdAsynTask extends AsyncTask<String,String
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mProgressDialog=new ProgressDialog(activity);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setMessage("Loading produts.. please wait...");
-        mProgressDialog.show();
+
     }
 
 
@@ -34,19 +31,23 @@ public class GetProductByManufracturerIdAsynTask extends AsyncTask<String,String
     @Override
     protected Boolean doInBackground(String... params) {
         String manufracturerId=params[0];
-        return new ManufracturerService().getProductByManufracturerId(manufracturerId);
+        String limit=params[1];
+        String offset=params[2];
+        return new ManufracturerService().getProductByManufracturerId(manufracturerId,limit,offset);
     }
 
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
-        mProgressDialog.dismiss();
+
         if (aBoolean){
             if (activity instanceof ProductByManufracturerActivity){
                 ((ProductByManufracturerActivity)activity).MakeAdapterWork();
             }
         }else {
-            MakeToast.showToast(activity, Utility.responseStat.msg);
+            if (activity instanceof ProductByManufracturerActivity){
+                ((ProductByManufracturerActivity)activity).setError();
+            }
         }
     }
 }

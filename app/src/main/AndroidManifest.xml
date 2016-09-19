@@ -20,15 +20,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.themallbd.workspaceit.activity.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name="com.themallbd.workspaceit.activity.MainActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.ProductDetailsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"
             android:label="@string/app_name" />
         <activity
             android:name="com.themallbd.workspaceit.activity.BaseActivity"
@@ -41,44 +39,76 @@
         <activity
             android:name="com.themallbd.workspaceit.activity.BaseActivityWithoutDrawer"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.themallbd.workspaceit.activity.CategoryActivity" />
-        <activity android:name="com.themallbd.workspaceit.activity.CategoryListViewActivity" />
-        <activity android:name="com.themallbd.workspaceit.activity.CategoryInExpandableListViewActivity" />
-        <activity android:name="com.themallbd.workspaceit.activity.ProductFromCategoryActivity" />
+        <activity
+            android:name="com.themallbd.workspaceit.activity.CategoryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" />
+        <activity
+            android:name="com.themallbd.workspaceit.activity.CategoryListViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" />
+        <activity
+            android:name="com.themallbd.workspaceit.activity.CategoryInExpandableListViewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" />
+        <activity
+            android:name="com.themallbd.workspaceit.activity.ProductFromCategoryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" />
         <activity
             android:name="com.themallbd.workspaceit.activity.CheckoutActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"
             android:label="@string/title_activity_checkout"
             android:theme="@style/AppTheme" />
-        <activity android:name="com.themallbd.workspaceit.activity.MyAccountActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.MyAccountActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.ContactUsActivity" >
         </activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.WishListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"
             android:label="@string/title_activity_wish_list"
             android:theme="@style/AppTheme" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.ShowRelatedProduct" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.ShowRelatedProduct"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.ShowAllReviewActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.ShowAllReviewActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.SearchProductListActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.SearchProductListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.NoInternetActiviy" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.PackageDetailsActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.PackageDetailsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.AllNewProductActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.AllNewProductActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.AllFeaturesProductActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.AllFeaturesProductActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.AllPacakgeActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.AllPacakgeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.AllDiscountProductActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.AllDiscountProductActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.PrevoiusOrderActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.PrevoiusOrderActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.OrderHistoryDetailsPage" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.OrderHistoryDetailsPage"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
         </activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.WalletMixPaymentWebViewActivity"
@@ -91,7 +121,16 @@
         </activity>
         <activity android:name="com.themallbd.workspaceit.activity.ManufracturerActivity" >
         </activity>
-        <activity android:name="com.themallbd.workspaceit.activity.ProductByManufracturerActivity" >
+        <activity
+            android:name="com.themallbd.workspaceit.activity.ProductByManufracturerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" >
+        </activity>
+        <activity android:name="com.themallbd.workspaceit.activity.WelcomeScreenActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

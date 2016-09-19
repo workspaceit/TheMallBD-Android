@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.themallbd.workspaceit.activity.BKashPaymentActivity;
+import com.themallbd.workspaceit.activity.BaseActivity;
 import com.themallbd.workspaceit.activity.CheckoutActivity;
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.activity.PaypalPaymentActivity;
@@ -43,7 +44,7 @@ public class CustomDialog {
                 .setPositiveButton("Got to Checkout", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
 
-                        Intent intent=new Intent(context, CheckoutActivity.class);
+                        Intent intent = new Intent(context, CheckoutActivity.class);
                         context.startActivity(intent);
 
                     }
@@ -217,9 +218,12 @@ public class CustomDialog {
                 .setPositiveButton("Confrim Logout", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         sessionManager.logoutUser();
-                        Utility.isLoggedInFlag=false;
-                        Utility.loggedInUser=null;
+                        Utility.isLoggedInFlag = false;
+                        Utility.loggedInUser = null;
                         MakeToast.showToast(context, "You are successfully logged out");
+                        if (context instanceof BaseActivity) {
+                            ((BaseActivity)context).hideNShowLoginButton();
+                        }
 
 
                     }

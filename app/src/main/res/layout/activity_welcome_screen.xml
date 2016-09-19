@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.themallbd.workspaceit.activity.WelcomeScreenActivity"
+    android:background="#FFFFFF"
+    android:id="@+id/root">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight=".9">
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/welcome_slider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/welcome_cross_image_button"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="27dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/cross_new"
+                />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight=".1"
+            android:weightSum="1"
+            android:layout_marginTop="5dp"
+            android:background="#FFFFFF">
+            <Button
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:text="LOG IN"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/custom_border"
+                android:layout_marginRight="4dp"
+                android:textColor="#00ff80"
+                android:id="@+id/welcome_login_button"/>
+
+            <Button
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:text="SIGN UP"
+                android:layout_weight=".5"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/custom_border"
+                android:layout_marginLeft="4dp"
+                android:textColor="#00ff80"
+                android:id="@+id/welcome_signup_button"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
