@@ -232,13 +232,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         }
 
 
-        if (Utility.deliveryMethods.size() < 1) {
-            new GetAllDeliveryMethodsAsyncTask().execute();
-        }
 
-        if (Utility.paymentMethodses.size() < 1) {
-            new GetAllPaymentMethodAsynTask().execute();
-        }
 
     }
 
@@ -255,6 +249,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         initializeDiscountProductForHorizontalSection();
         //initializing gridview for all products
         initializeGridViewForAllProductsSection();
+
+        if (Utility.deliveryMethods.size() < 1) {
+            new GetAllDeliveryMethodsAsyncTask().execute();
+        }
+
+        if (Utility.paymentMethodses.size() < 1) {
+            new GetAllPaymentMethodAsynTask().execute();
+        }
     }
 
     private void initialize() {
@@ -1050,13 +1052,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             animation.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
-                    MainActivity.this.initialize();
+
                 }
 
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     drawerLayout.removeView(oView);
                     MainActivity.this.getNecessaryData();
+                    MainActivity.this.initialize();
                     MainActivity.this.initilizeParentCategoryList();
                     MainActivity.this.initializeDiffrentDiffrentHomePageView();
 
