@@ -182,6 +182,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             this.initialize();
             this.getNecessaryData();
             this.initilizeParentCategoryList();
+            this.initializeDiffrentDiffrentHomePageView();
         }else {
             showTutorailScreen();
         }
@@ -241,6 +242,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     }
 
+    private void initializeDiffrentDiffrentHomePageView(){
+        //initializing new product horizontal scrolling section
+        initializeNewProductHorizontalSection();
+
+        //initializing feature product horizontal scrolling section
+        initializeFeaturedProductHorizontalSection();
+
+
+        initializePackageProductForHorizontalList();
+
+        initializeDiscountProductForHorizontalSection();
+        //initializing gridview for all products
+        initializeGridViewForAllProductsSection();
+    }
+
     private void initialize() {
 
         localCategoryList = new LocalCategoryList(this);
@@ -262,18 +278,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         moreDiscountProduct = true;
 
 
-        //initializing new product horizontal scrolling section
-        initializeNewProductHorizontalSection();
 
-        //initializing feature product horizontal scrolling section
-        initializeFeaturedProductHorizontalSection();
-
-
-        initializePackageProductForHorizontalList();
-
-        initializeDiscountProductForHorizontalSection();
-        //initializing gridview for all products
-        initializeGridViewForAllProductsSection();
 
 
         this.homeSearcTextView = (CustomAutoCompleteTextView) findViewById(R.id.search_in_home);
@@ -1042,10 +1047,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
             Animation animation = AnimationUtils.loadAnimation(getBaseContext(), R.anim.slide_down);
             animation.setStartOffset(0);
             oView.startAnimation(animation);
-            drawerLayout.removeView(oView);
-            this.initialize();
-            this.getNecessaryData();
-            this.initilizeParentCategoryList();
+            animation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    MainActivity.this.initialize();
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    drawerLayout.removeView(oView);
+                    MainActivity.this.getNecessaryData();
+                    MainActivity.this.initilizeParentCategoryList();
+                    MainActivity.this.initializeDiffrentDiffrentHomePageView();
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+
 
         }
 

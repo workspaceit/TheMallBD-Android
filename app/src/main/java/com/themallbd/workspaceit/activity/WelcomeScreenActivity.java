@@ -2,6 +2,8 @@ package com.themallbd.workspaceit.activity;
 
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,9 +17,12 @@ import android.widget.RelativeLayout;
 
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.themallbd.workspaceit.preferences.WelcomeTrack;
 import com.themallbd.workspaceit.view.CustomSliderView;
 import com.workspaceit.themall.R;
+
+import java.util.HashMap;
 
 public class WelcomeScreenActivity extends AppCompatActivity implements View.OnClickListener {
     private SliderLayout sliderLayout;
@@ -52,16 +57,32 @@ public class WelcomeScreenActivity extends AppCompatActivity implements View.OnC
 
     private void initializeSlider() {
 
-        int[] imageId = {R.drawable.style_1, R.drawable.style_2, R.drawable.style_3};
+        HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
+        file_maps.put("woman_fashion",R.drawable.woman_welcome);
+        file_maps.put("Man_fashion",R.drawable.man_wecome);
+        file_maps.put("woman_2",R.drawable.woman_2);
 
+        HashMap<String,String> url_maps = new HashMap<String, String>();
 
-        for (int i = 0; i < 3; i++) {
+        url_maps.put("Brands", "https://letstalkcosmetics.files.wordpress.com/2014/05/the_top_50_most_valuable_cosmetics_brands_2014.jpg");
+        url_maps.put("Man Style", "http://www.menstylefashion.com/wp-content/uploads/2016/02/Italian-Men-Fashion-Sense-Sunglasses-and-cup-of-Coffee.jpg");
+        url_maps.put("Woman's Style", "http://womenonthefence.com/wp-content/uploads/2013/05/2.jpg");
+        url_maps.put("Cosmetics", "http://images.wisegeek.com/group-of-cosmetics-items-against-white-background.jpg");
 
-            CustomSliderView customSliderView = new CustomSliderView(this);
-            customSliderView.image(imageId[i])
+        for(String name : url_maps.keySet()){
+            TextSliderView textSliderView = new TextSliderView(this);
+            textSliderView
+                    .description(name)
+                    .image(url_maps.get(name))
                     .setScaleType(BaseSliderView.ScaleType.Fit);
-            sliderLayout.addSlider(customSliderView);
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra",name);
+
+            sliderLayout.addSlider(textSliderView);
         }
+
+
 
     }
 

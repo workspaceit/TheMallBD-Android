@@ -57,7 +57,7 @@ public class ProductByManufracturerActivity extends BaseActivityWithoutDrawer im
 
     public void MakeAdapterWork() {
 
-
+        loadProductFlag=true;
         anyProductListAdapter.updateProductArrayList(productListByMenufracturer);
         anyProductListAdapter.notifyDataSetChanged();
     }
@@ -103,6 +103,5 @@ public class ProductByManufracturerActivity extends BaseActivityWithoutDrawer im
 
     public void setError() {
         moreProduct = false;
-        MakeToast.showToast(this, "No more");
     }
 }
