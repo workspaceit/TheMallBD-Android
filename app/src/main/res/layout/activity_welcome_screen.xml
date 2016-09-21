@@ -50,7 +50,7 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/custom_border"
                 android:layout_marginRight="4dp"
-                android:textColor="#00ff80"
+                android:textColor="#696969"
                 android:id="@+id/welcome_login_button"/>
 
             <Button
@@ -61,7 +61,7 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/custom_border"
                 android:layout_marginLeft="4dp"
-                android:textColor="#00ff80"
+                android:textColor="#696969"
                 android:id="@+id/welcome_signup_button"
                 />
         </LinearLayout>
