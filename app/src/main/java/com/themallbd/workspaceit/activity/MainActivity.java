@@ -80,6 +80,8 @@ import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+
+
 public class MainActivity extends BaseActivity implements View.OnClickListener,
         AdapterView.OnItemClickListener, Serializable {
 
@@ -157,11 +159,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private View oView;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        getWindow().setBackgroundDrawable(null);
 
         mInternetConnection = new InternetConnection(this);
         sliderShow = (SliderLayout) findViewById(R.id.slider);
@@ -178,14 +181,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         navaigationDrawerFragment = (NavaigationDrawerFragment) getFragmentManager().findFragmentById(R.id.nav_drawer_fragment);
 
 
+
         if (welcomeTrack.getFirstTimeStatus()){
-            this.initialize();
-            this.getNecessaryData();
-            this.initilizeParentCategoryList();
-            this.initializeDiffrentDiffrentHomePageView();
-        }else {
-            showTutorailScreen();
-        }
+                initialize();
+                this.getNecessaryData();
+                this.initilizeParentCategoryList();
+                this.initializeDiffrentDiffrentHomePageView();
+            }else {
+                showTutorailScreen();
+            }
+
+
+
 
 
 
@@ -916,10 +923,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         if (!welcomeTrack.getFirstTimeStatus())
             return;
 
+
+
         try {
+            System.out.println("ki hoilo baal");
 
-
-            if (mInternetConnection.checkInternet()) {
+            if (mInternetConnection.checkInternet() ) {
                 if (newProductsForHorizontalViewList.size() > 0) {
                     this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
                     this.offsetForNewProductsHorizontalScrolling = ((MainActivity.newProductsForHorizontalViewList.size() / 5) - 1);

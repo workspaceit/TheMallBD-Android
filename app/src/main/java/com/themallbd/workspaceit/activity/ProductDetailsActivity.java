@@ -424,6 +424,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
                     this.productsQuantity = Integer.parseInt(productQunatitySpinner.getSelectedItem().toString());
                 } catch (Exception e) {
                     MakeToast.showToast(this, "Invalid Quantity");
+                    return;
 
                 }
 
@@ -491,9 +492,59 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             } else if (v == addReviewButton) {
                 CustomDialog.addReviewCustomDailog(this, products.title, String.valueOf(products.id));
             }else if (v==buyNow){
+                try {
+                    this.productsQuantity = Integer.parseInt(productQunatitySpinner.getSelectedItem().toString());
+                } catch (Exception e) {
+                    MakeToast.showToast(this, "Invalid Quantity");
+                    return;
+
+                }
+
+                if (this.productsQuantity < 1) {
+                    MakeToast.showToast(this, "Quantity is not valid");
+                    return;
+                }
+
+                boolean flag=true;
+
+                for (int i = 0; i < Utility.shoppingCart.productCell.size(); i++) {
+                    if (Utility.shoppingCart.productCell.get(i).id == products.id) {
+                        flag=false;
+                        break;
+
+                    }
+
+                }
+
+                if (flag){
+                    ProductCell productCell = new ProductCell();
+
+                    if (products.attributes.size() < 0) {
+                        SelectedAttributes selectedAttributes = new SelectedAttributes();
+                        selectedAttributes.setId(products.attributes.get(0).id);
+                        selectedAttributes.setName(products.attributes.get(0).name);
+                        selectedAttributes.setValue(products.attributes.get(0).attributesValue.get(0).value);
+                        productCell.addToSelectedAttributes(selectedAttributes);
+                    }
+
+                    productCell.setId(products.id);
+                    productCell.setProduct(products);
+                    productCell.setQuantity(this.productsQuantity);
+
+
+                    Utility.shoppingCart.productCell.add(productCell);
+
+
+                    this.updateCart();
+                    invalidateOptionsMenu();
+
+                }
+
+
+
                 Intent intent=new Intent(this,CheckoutActivity.class);
                 startActivity(intent);
-                finish();
+                //finish();
             }
 
         }catch (Exception ex){

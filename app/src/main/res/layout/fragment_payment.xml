@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:layout_margin="10dp"
-        android:text="I confrim my order"
+        android:text="I confirm my order"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:background="#412E2E"
         android:textColor="#FFFFFF"

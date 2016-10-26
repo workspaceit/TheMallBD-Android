@@ -176,9 +176,49 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements
             CustomDialog.goToCheckOutDailog(this, "Checkout", "Package has been successfully added to the cart");
 
         }else if (v==buyNow){
+
+            try {
+                this.packageQuantity = Integer.parseInt(packageQunatitySpinner.getSelectedItem().toString());
+            } catch (Exception e) {
+                MakeToast.showToast(this, "Invalid Quantity");
+                return;
+
+            }
+
+            if (this.packageQuantity < 1) {
+                MakeToast.showToast(this, "Quantity is not valid");
+                return;
+            }
+
+
+            boolean flag=true;
+            for (int i = 0; i < Utility.shoppingCart.mallBdPackageCell.size(); i++) {
+                if (Utility.shoppingCart.mallBdPackageCell.get(i).mallBdPackage.id == mallBdPackage.id) {
+                   flag=false;
+                    break;
+                }
+
+            }
+
+            if (flag){
+                MallBdPackageCell mallBdPackageCell=new MallBdPackageCell();
+                mallBdPackageCell.setId(mallBdPackage.id);
+                mallBdPackageCell.setQuantity(this.packageQuantity);
+                mallBdPackageCell.setMallBdPackage(mallBdPackage);
+
+                Utility.shoppingCart.mallBdPackageCell.add(mallBdPackageCell);
+
+                this.updateCart();
+                invalidateOptionsMenu();
+            }
+
+
+
+
+
             Intent intent=new Intent(this,CheckoutActivity.class);
             startActivity(intent);
-            this.finish();
+
         }
 
     }

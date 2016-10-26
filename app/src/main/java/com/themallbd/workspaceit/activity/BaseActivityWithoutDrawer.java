@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.support.v7.widget.SearchView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.themallbd.workspaceit.adapter.SearchProductAdapter;
@@ -71,6 +72,16 @@ public class BaseActivityWithoutDrawer extends AppCompatActivity implements Sear
         try {
             super.setContentView(layoutResID);
             toolbar = (Toolbar) findViewById(R.id.toolbar);
+            ImageView imageView= (ImageView) toolbar.findViewById(R.id.toolbar_icon);
+           /* imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent=new Intent(BaseActivityWithoutDrawer.this,MainActivity.class);
+                    intent.putExtra("toolbar_click",true);
+                    startActivity(intent);
+                }
+            });*/
 
 
             setSupportActionBar(toolbar);

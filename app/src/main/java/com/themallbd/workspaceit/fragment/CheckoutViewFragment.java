@@ -422,7 +422,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             shipmentFeeTextView.setText(shipmentFee + " BDT");
             totalPaybleTextView.setText(total + " BDT");
 
-            Utility.shoppingCart.orderTotal = (float) total;
+            Utility.shoppingCart.orderTotal = (float) subTotal;
             Utility.shoppingCart.shippingCost = (float) shipmentFee;
             DELIVEY_METHOD = checkedId;
 
@@ -438,7 +438,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             total = (subTotal + shipmentFee) - (discount + voucherTotal);
             shipmentFeeTextView.setText(shipmentFee + " BDT");
             totalPaybleTextView.setText(total + " BDT");
-            Utility.shoppingCart.orderTotal = (float) total;
+            Utility.shoppingCart.orderTotal = (float) subTotal;
             Utility.shoppingCart.shippingCost = (float) shipmentFee;
             DELIVEY_METHOD = checkedId;
 

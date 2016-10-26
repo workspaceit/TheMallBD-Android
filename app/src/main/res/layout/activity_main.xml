@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".activity.MainActivity"
+    tools:context="com.themallbd.workspaceit.activity.MainActivity"
     tools:openDrawer="start"
     >
 
@@ -191,7 +191,7 @@
                             android:layout_height="60dp"
                             android:layout_gravity="center"
                             android:contentDescription="@string/all_category"
-                            android:src="@drawable/category_all" />
+                            android:src="@drawable/cat_black" />
 
                         <TextView
                             android:id="@+id/tv_home_all"
@@ -573,6 +573,13 @@
         </ScrollView>
     </RelativeLayout>
 
+
+    <fragment android:name="com.themallbd.workspaceit.fragment.NavaigationDrawerFragment"
+        android:layout_gravity="start"
+        android:id="@+id/nav_drawer_fragment"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        />
     <android.support.design.widget.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
@@ -580,10 +587,5 @@
         android:layout_gravity="end"
 
         app:menu="@menu/nav_drawer" />
-    <fragment android:name="com.themallbd.workspaceit.fragment.NavaigationDrawerFragment"
-        android:layout_gravity="start"
-        android:id="@+id/nav_drawer_fragment"
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        />
+
 </android.support.v4.widget.DrawerLayout>

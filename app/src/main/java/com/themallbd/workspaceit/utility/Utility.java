@@ -42,6 +42,7 @@ public class Utility {
     public static String CURRENCY_CODE ="BDT";
 
 
+
     public static void resetShoppingCart(){
         shoppingCart.mallBdPackageCell.clear();
         shoppingCart.productCell.clear();
