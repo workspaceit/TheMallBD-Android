@@ -257,9 +257,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         //initializing gridview for all products
         initializeGridViewForAllProductsSection();
 
-        if (Utility.deliveryMethods.size() < 1) {
-            new GetAllDeliveryMethodsAsyncTask().execute();
-        }
+
 
         if (Utility.paymentMethodses.size() < 1) {
             new GetAllPaymentMethodAsynTask().execute();

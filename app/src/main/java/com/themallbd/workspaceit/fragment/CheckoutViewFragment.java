@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.themallbd.workspaceit.asynctask.GetAllDeliveryMethodsAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetVoucherDiscountAsynTask;
 import com.themallbd.workspaceit.dataModel.Voucher;
 import com.themallbd.workspaceit.utility.Utility;
@@ -64,6 +65,10 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_checkout_view, container, false);
 
+        if (Utility.deliveryMethods.size() < 1) {
+            new GetAllDeliveryMethodsAsyncTask(this).execute();
+        }
+
         confrimPayemtBtn = (Button) view.findViewById(R.id.confrim_payemt_method);
         emailText = (EditText) view.findViewById(R.id.checkout_email);
         fnameText = (EditText) view.findViewById(R.id.checkout_fname);
@@ -89,7 +94,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
 
         expandNewCustomerInfoButton.setOnClickListener(this);
         cartInfoExpandButton.setOnClickListener(this);
-        DELIVEY_METHOD = Utility.deliveryMethods.get(0).id;
+
 
         imageDownArrow = R.drawable.arrow_down;
         imageUpArrow = R.drawable.arrow_up;
@@ -97,14 +102,14 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         cartInfoExpandButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, imageUpArrow, 0);
         expandNewCustomerInfoButton.setCompoundDrawablesWithIntrinsicBounds(0, 0, imageUpArrow, 0);
 
-        shipmentFee = Utility.deliveryMethods.get(0).deliveryPrice;
+
 
         confrimPayemtBtn.setOnClickListener(this);
         checkOutInfoSession = new CheckOutInfoSession(getActivity());
 
         this.initializeCheckoutInfo(view);
 
-        initializeRadioButton();
+
         return view;
 
 
@@ -129,7 +134,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
     @Override
     public void onResume() {
         super.onResume();
-        this.initializeValue();
+
     }
 
     @Override
@@ -166,6 +171,14 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
 
     }
 
+    public void setData(){
+        if (Utility.deliveryMethods.size()>0) {
+            DELIVEY_METHOD = Utility.deliveryMethods.get(0).id;
+            shipmentFee = Utility.deliveryMethods.get(0).deliveryPrice;
+            initializeRadioButton();
+            this.initializeValue();
+        }
+    }
 
     private void initializeValue() {
 
