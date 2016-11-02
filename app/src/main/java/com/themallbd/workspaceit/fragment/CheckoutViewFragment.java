@@ -65,9 +65,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_checkout_view, container, false);
 
-        if (Utility.deliveryMethods.size() < 1) {
-            new GetAllDeliveryMethodsAsyncTask(this).execute();
-        }
+
 
         confrimPayemtBtn = (Button) view.findViewById(R.id.confrim_payemt_method);
         emailText = (EditText) view.findViewById(R.id.checkout_email);
@@ -107,8 +105,15 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         confrimPayemtBtn.setOnClickListener(this);
         checkOutInfoSession = new CheckOutInfoSession(getActivity());
 
-        this.initializeCheckoutInfo(view);
 
+
+        this.initializeCheckoutInfo(view);
+        System.out.println("size "+ Utility.deliveryMethods.size());
+        if (Utility.deliveryMethods.size() < 1) {
+            new GetAllDeliveryMethodsAsyncTask(this).execute();
+        }else {
+            initializeRadioButton();
+        }
 
         return view;
 
@@ -140,8 +145,10 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser)
+        if (isVisibleToUser && Utility.deliveryMethods.size()>0) {
             this.initializeValue();
+
+        }
     }
 
     private void initializeCheckoutInfo(View view) {
@@ -319,7 +326,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         voucherArrayList.add(voucher);
 
         TextView textView=new TextView(getActivity());
-        textView.setText("Voucher: " + voucher.voucher_code + " Amout: " + voucher.discountAmount);
+        textView.setText("Voucher: " + voucher.voucher_code + " Amount: " + voucher.discountAmount);
         voucherLayout.addView(textView);
 
         float voucherSum=0;

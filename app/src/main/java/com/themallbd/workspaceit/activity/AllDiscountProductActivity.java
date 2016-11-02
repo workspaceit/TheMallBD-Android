@@ -44,7 +44,8 @@ public class AllDiscountProductActivity extends BaseActivityWithoutDrawer implem
             this.footer.setVisibility(View.GONE);
             mInternetConnection=new InternetConnection(this);
             this.offset=((MainActivity.newProductsForHorizontalViewList.size()/5)-1);
-
+            if (this.offset<0)
+                this.offset=0;
 
 
 

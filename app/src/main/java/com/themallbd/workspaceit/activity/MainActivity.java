@@ -39,7 +39,6 @@ import com.google.gson.Gson;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.themallbd.workspaceit.adapter.DiscountProductRecyleViewAdapter;
 import com.themallbd.workspaceit.adapter.PackageInHorizontalListAdapter;
-import com.themallbd.workspaceit.asynctask.GetAllDeliveryMethodsAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetAllPaymentMethodAsynTask;
 import com.themallbd.workspaceit.asynctask.GetBannerImagesAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetPackagesAsynTask;
@@ -259,9 +258,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
 
 
-        if (Utility.paymentMethodses.size() < 1) {
-            new GetAllPaymentMethodAsynTask().execute();
-        }
+
     }
 
     private void initialize() {
@@ -930,27 +927,35 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 if (newProductsForHorizontalViewList.size() > 0) {
                     this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
                     this.offsetForNewProductsHorizontalScrolling = ((MainActivity.newProductsForHorizontalViewList.size() / 5) - 1);
+                    if (this.offsetForNewProductsHorizontalScrolling<0)
+                        this.offsetForNewProductsHorizontalScrolling=0;
 
                 }
 
                 if (featuredProductsForHorizontalViewList.size() > 0) {
                     this.horizontalRecyclerViewAdapter.notifyDataSetChanged();
                     this.offsetForFeaturedProductsHorizontalScrolling = ((MainActivity.featuredProductsForHorizontalViewList.size() / 5) - 1);
-
+                    if (this.offsetForFeaturedProductsHorizontalScrolling<0)
+                        this.offsetForFeaturedProductsHorizontalScrolling=0;
                 }
 
                 if (packgeProductForHorizontalList.size() > 0) {
                     this.packageInHorizontalListAdapter.notifyDataSetChanged();
                     this.offsetForPackage = ((MainActivity.packgeProductForHorizontalList.size() / 5) - 1);
+                    if (this.offsetForPackage<0)
+                        this.offsetForPackage=0;
                 }
 
                 if (discountProductForHorizontalList.size() > 0) {
                     this.discountProductRecyleViewAdapter.notifyDataSetChanged();
                     this.offsetForDiscountProduct = ((MainActivity.discountProductForHorizontalList.size() / 5) - 1);
+                    if (this.offsetForDiscountProduct<0)
+                        this.offsetForDiscountProduct=0;
                 }
 
                 if (allProductsForGridViewList.size() > 0) {
                     this.gridViewProductsInHomePageAdapter.notifyDataSetChanged();
+
                 }
 
             } else {

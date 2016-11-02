@@ -46,7 +46,8 @@ public class AllPacakgeActivity extends BaseActivityWithoutDrawer implements Abs
         mInternetConnection=new InternetConnection(this);
         this.offset=((MainActivity.packgeProductForHorizontalList.size()/5)-1);
 
-
+        if (this.offset<0)
+            this.offset=0;
 
 
         this.allPackageGridView.setOnScrollListener(this);

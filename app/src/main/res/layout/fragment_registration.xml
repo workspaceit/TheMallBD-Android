@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:id="@+id/confrim_pass_reg"
-                android:hint="Confrim Password"
+                android:hint="Confirm Password"
                 android:paddingBottom="20dp"
                 android:textAlignment="center"
                 android:textColor="#7F7F7F"

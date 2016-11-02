@@ -40,7 +40,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="check_out_fragment_start">New Customer Account and Address</string>
     <string name="delivery_address">Delivery Address</string>
-    <string name="confirm_payment">Confrim Payment Method</string>
+    <string name="confirm_payment">Confirm Payment Method</string>
     <string name="back_to_cart_text">Edit Cart</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>

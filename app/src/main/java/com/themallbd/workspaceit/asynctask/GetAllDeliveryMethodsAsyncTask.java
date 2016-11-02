@@ -12,6 +12,7 @@ import com.themallbd.workspaceit.service.GetPaymentAndDeliveyMethods;
 public class GetAllDeliveryMethodsAsyncTask extends AsyncTask<String,String,Boolean> {
 
     private CheckoutViewFragment checkoutViewFragment;
+    private ProgressDialog mProgressDialog;
 
 
     public GetAllDeliveryMethodsAsyncTask(CheckoutViewFragment checkoutViewFragment){
@@ -22,6 +23,11 @@ public class GetAllDeliveryMethodsAsyncTask extends AsyncTask<String,String,Bool
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        mProgressDialog = new ProgressDialog(checkoutViewFragment.getActivity());
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage("Getting Delivery Method...");
+        mProgressDialog.show();
+
 
     }
 
@@ -33,6 +39,7 @@ public class GetAllDeliveryMethodsAsyncTask extends AsyncTask<String,String,Bool
     @Override
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
+            mProgressDialog.dismiss();
         if (aBoolean){
             checkoutViewFragment.setData();
         }

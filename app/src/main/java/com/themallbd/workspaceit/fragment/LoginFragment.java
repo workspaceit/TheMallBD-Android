@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 email = email_et.getText().toString();
                 password = password_et.getText().toString();
                 if (email.equals("") || password.equals("")) {
-                    Toast.makeText(getContext(), "email or password is required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Email or Password is required", Toast.LENGTH_SHORT).show();
                 } else {
                     new LoginAsyncTask(getActivity()).execute(email, password);
                 }

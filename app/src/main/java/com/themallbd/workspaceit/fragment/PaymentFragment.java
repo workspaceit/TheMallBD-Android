@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.themallbd.workspaceit.activity.BKashPaymentActivity;
 import com.themallbd.workspaceit.activity.MainActivity;
 import com.themallbd.workspaceit.activity.PrevoiusOrderActivity;
+import com.themallbd.workspaceit.asynctask.GetAllPaymentMethodAsynTask;
 import com.themallbd.workspaceit.asynctask.SubmitChectoutAsyntask;
 import com.themallbd.workspaceit.utility.CheckOutInfoSession;
 import com.themallbd.workspaceit.utility.MakeToast;
@@ -53,8 +54,12 @@ public class PaymentFragment extends Fragment implements View.OnClickListener,Ra
         radioPaymentGroup=(RadioGroup)view.findViewById(R.id.radio_payment_method_group);
         radioPaymentGroup.setOnCheckedChangeListener(this);
 
+        if (Utility.paymentMethodses.size() < 1) {
+            new GetAllPaymentMethodAsynTask(this).execute();
+        }else {
+            initializeRadioButton();
+        }
 
-        initializeRadioButton();
         return view;
     }
 
@@ -138,6 +143,9 @@ public class PaymentFragment extends Fragment implements View.OnClickListener,Ra
 
     }
 
+    public void setRadioButton(){
+        initializeRadioButton();
+    }
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
