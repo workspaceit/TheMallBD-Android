@@ -55,12 +55,10 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     private DrawerLayout drawerLayout;
     private SessionManager sessionManager;
     private String accessToken;
-    private CircleImageView profileImage;
 
-    private TextView userNameTextView;
-    private static final int SELECT_PICTURE = 1;
-    private static boolean IMAGE_LOADER_FLAG=true;
+
     private InternetConnection internetConnection;
+    private static boolean firstTimeAppAccess=true;
 
 
 
@@ -78,7 +76,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             internetConnection = new InternetConnection(this);
 
 
-            if (true) {
+            if (firstTimeAppAccess) {
 
                 if (sessionManager.checkLogin() && internetConnection.checkInternet()) {
                     System.out.println("calling " + accessToken);
@@ -121,7 +119,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                         .build();
 
                 ImageLoader.getInstance().init(config);
-                IMAGE_LOADER_FLAG = false;
+                firstTimeAppAccess=false;
+
             }
         }catch (Exception ex){
             ex.printStackTrace();
@@ -136,31 +135,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             invalidateOptionsMenu();
         }
 
-   /*     if (userNameTextView != null) {
-            if (sessionManager.checkLogin()) {
-                userNameTextView.setText(sessionManager.getFullName());
-
-
-                navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(true);
-
-                if (!sessionManager.getProfileImageUri().toString().equals("")) {
-                    String imagePath = sessionManager.getProfileImageUri();
-
-                    Uri imageUri = Uri.parse(imagePath);
-                    Uri dimageUri = Uri.fromFile(new File(imageUri.toString()));
-
-                    Picasso.with(this)
-                            .load(dimageUri)
-                            .fit()
-                            .into(profileImage);
-                }
-            } else {
-                navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(false);
-                userNameTextView.setText("Login");
-            }
-        }*/
-
-        if (Utility.isLoggedInFlag){
+        if (sessionManager.isLoggedIn()){
             navigationView.getMenu().findItem(R.id.nav_login_id).setVisible(false);
             navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(true);
         }else {
@@ -194,50 +169,17 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         }
 
          initializeNavigationView();
-       // initializeRightNavigationView();
-
-        //customization in header view of navigation drawer
-            //customizationOfHeaderView();
-
-    }
-
-    public void initializeRightNavigationView(){
-        NavigationView rightNavigationView = (NavigationView) findViewById(R.id.nav_right_view);
-        navigationView.setNavigationItemSelectedListener(this);
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,
-                drawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                // Code here will be triggered once the drawer closes as
-                // we dont want anything to happen so we leave this blank
-                super.onDrawerClosed(drawerView);
-            }
-
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                // Code here will be triggered once the drawer open as
-                // we dont want anything to happen so we leave this blank
-                customizationOfHeaderView();
-                super.onDrawerOpened(drawerView);
-            }
-
-            @Override
-            public void onDrawerSlide(View arg0, float arg1) {
-
-            }
-
-            @Override
-            public void onDrawerStateChanged(int arg0) {
-
-            }
-        };
-        //Setting the actionbarToggle to drawer layout
-        drawerLayout.setDrawerListener(actionBarDrawerToggle);
-
-        //calling sync state is necessary or else your hamburger icon wont show up
-        actionBarDrawerToggle.syncState();
+        if (Utility.isLoggedInFlag){
+            navigationView.getMenu().findItem(R.id.nav_login_id).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(true);
+        }else {
+            navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_login_id).setVisible(true);
+        }
 
     }
+
+
 
     public void initializeNavigationView() {
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -275,119 +217,19 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         //Setting the actionbarToggle to drawer layout
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-        //calling sync state is necessary or else your hamburger icon wont show up
 
-    /*    actionBarDrawerToggle.setDrawerIndicatorEnabled(false);
-        actionBarDrawerToggle.setHomeAsUpIndicator(R.drawable.hamburger_2);
-        actionBarDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                } else {
-                    drawerLayout.openDrawer(GravityCompat.START);
-                }
-            }
-        });*/
         actionBarDrawerToggle.syncState();
     }
 
-    public void customizationOfHeaderView() {
-
-        View header = navigationView.getHeaderView(0);
-        userNameTextView = (TextView) header.findViewById(R.id.username_in_navigation);
-        profileImage = (CircleImageView) header.findViewById(R.id.profile_image);
-
-        if (Utility.isLoggedInFlag) {
-            userNameTextView.setText(sessionManager.getFullName());
-            navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(true);
-
-        } else {
-            navigationView.getMenu().findItem(R.id.nav_logout_id).setVisible(false);
-            userNameTextView.setText("Login");
-        }
 
 
-        profileImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (sessionManager.checkLogin()) {
-
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    startActivityForResult(Intent.createChooser(intent,
-                            "Select Picture"), SELECT_PICTURE);
-                }
-
-            }
-        });
 
 
-        userNameTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (!sessionManager.checkLogin()) {
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                }
-
-            }
-        });
 
 
-        if (sessionManager.getProfileImageUri().toString().equals("") || !sessionManager.checkLogin()) {
-            Picasso.with(this)
-                    .load(R.drawable.icon_un)
-                    .into(profileImage);
-
-        } else {
-            String imagePath = sessionManager.getProfileImageUri();
-
-            Uri imageUri = Uri.parse(imagePath);
-            Uri dimageUri = Uri.fromFile(new File(imageUri.toString()));
-
-            Picasso.with(this)
-                    .load(dimageUri)
-                    .fit()
-                    .into(profileImage);
-        }
 
 
-    }
 
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Bitmap bitmap;
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_PICTURE) {
-
-                Uri selectedImageUri = data.getData();
-
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImageUri);
-                    new SaveImageToLocal().createDirectoryAndSaveFile(sessionManager, bitmap, Utility.loggedInUser.user.firstName);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-
-                Picasso.with(this)
-                        .load(selectedImageUri)
-                        .fit()
-                        .into(profileImage);
-
-
-            }
-        }
-    }
-
-
-    /**
-     * helper to retrieve the path of an image URI
-     */
 
 
     @Override
@@ -469,7 +311,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 if (Utility.isLoggedInFlag) {
 
 
-                    CustomDialog.logoutDailog(this, sessionManager, "Logout", "Confrim Logout?");
+                    CustomDialog.logoutDailog(this, sessionManager, "Logout", "Confirm Logout?");
 
                 } else {
                     CustomDialog.showDailog(this, "You need to login first", "You are not logged in");

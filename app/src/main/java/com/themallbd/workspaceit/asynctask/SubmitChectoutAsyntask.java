@@ -104,7 +104,7 @@ public class SubmitChectoutAsyntask extends AsyncTask<String, String, Boolean> {
 
 
             } else {
-                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context, android.R.style.Theme_Material_Light_Dialog_Alert);
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
                 alertDialogBuilder.setTitle("Order Place");
                 alertDialogBuilder
                         .setMessage(Utility.responseStat.msg)

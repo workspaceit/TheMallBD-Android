@@ -78,7 +78,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
     private TextView nomalPreviousPrice;
     private TextView saveNormalTextView;
     private boolean loadFlag;
-    private TextView quantityPlainTextView, outOfStockTextView;
+    private TextView quantityPlainTextView, outOfStockTextView,productBrandTextView;
 
 
     private static String productUrl = "/product/general/";
@@ -129,6 +129,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             buyNow.setOnClickListener(this);
             quantityPlainTextView=(TextView)findViewById(R.id.quantity_plain_textview);
             outOfStockTextView =(TextView)findViewById(R.id.out_of_stock_text_view);
+            productBrandTextView=(TextView)findViewById(R.id.product_brand_text_view);
 
 
             relatedProductListView = (CustomListView) findViewById(R.id.relatede_product_list__view);
@@ -187,6 +188,9 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
                 products = ProductFromCategoryActivity.categoryWiseProductsArrayList.get(position);
             }else if (arrayListIndicator==11){
                 products=ProductByManufracturerActivity.productListByMenufracturer.get(position);
+            }else if (arrayListIndicator==12){
+                int packageArrayPosition= getIntent().getIntExtra("packageArray", -1);
+                products=MainActivity.packgeProductForHorizontalList.get(packageArrayPosition).packageProduct.get(position).product;
             }
 
 
@@ -301,10 +305,12 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             quantityPlainTextView.setVisibility(View.GONE);
             productQunatitySpinner.setVisibility(View.GONE);
             addToCartBtn.setVisibility(View.GONE);
+            buyNow.setVisibility(View.GONE);
             outOfStockTextView.setVisibility(View.VISIBLE);
         }else {
             quantityPlainTextView.setVisibility(View.VISIBLE);
             productQunatitySpinner.setVisibility(View.VISIBLE);
+            buyNow.setVisibility(View.VISIBLE);
             addToCartBtn.setVisibility(View.VISIBLE);
             outOfStockTextView.setVisibility(View.GONE);
         }
@@ -320,6 +326,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
         adapter.notifyDataSetChanged();
 
         tvProductName.setText(products.title);
+        productBrandTextView.setText(products.manufacturer.name);
 
 
         tvProductDescription.setText(products.productDescriptionMobile);

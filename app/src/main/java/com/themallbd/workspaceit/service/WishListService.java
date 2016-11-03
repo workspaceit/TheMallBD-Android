@@ -19,6 +19,36 @@ import java.util.Collections;
 public class WishListService extends BaseMallBDService {
     private ResponseStat responseStat;
 
+
+    public boolean deleteProductFromWishList(String productId){
+        this.responseStat=new ResponseStat();
+        this.setController("api/wishlist/remove");
+
+        this.setParams("product_id",productId);
+        String resp=this.getData("POST");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"),responseStat.getClass());
+
+            if(this.responseStat.status){
+
+                return true;
+            }else {
+                Utility.responseStat = this.responseStat;
+                return false;
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
+        return false;
+    }
+
     public boolean addProductToWisgList(String customerId,String productId){
         this.responseStat=new ResponseStat();
         this.setController("api/customer/wishlist/add");

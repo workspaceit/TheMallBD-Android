@@ -5,4 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="black_overlay">#66000000</color>
+    <color name="mall_bd_theme_color">#961C1E</color>
+    <color name="color_black">#000000</color>
+    <color name="color_white">#FFFFFF</color>
 </resources>

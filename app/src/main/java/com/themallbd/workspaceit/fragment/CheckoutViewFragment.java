@@ -204,7 +204,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             double productPrie = Utility.shoppingCart.productCell.get(i).quantity * Utility.shoppingCart.productCell.get(i).product.prices.get(0).retailPrice;
             subTotal += productPrie;
             if (Utility.shoppingCart.productCell.get(i).product.discountActiveFlag) {
-                discount += Utility.shoppingCart.productCell.get(i).product.discountAmount;
+                discount += Utility.shoppingCart.productCell.get(i).product.discountAmount*Utility.shoppingCart.productCell.get(i).quantity;
             }
         }
 

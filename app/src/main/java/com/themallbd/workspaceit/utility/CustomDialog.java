@@ -36,7 +36,7 @@ import com.themallbd.workspaceit.asynctask.AddNewReviewAsynTask;
 public class CustomDialog {
 
     public static void goToCheckOutDailog(final Context context,String title,String body){
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
                 .setCancelable(true)
@@ -63,7 +63,7 @@ public class CustomDialog {
     }
 
     public static void BkashPaymentDialog(final Context context,String title,String body, final String transId){
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
                 .setCancelable(false)
@@ -87,7 +87,7 @@ public class CustomDialog {
 
 
     public static void paypalPayment(final Context context,String title, String body){
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
                 .setCancelable(false)
@@ -108,7 +108,7 @@ public class CustomDialog {
     }
 
     public static void walletMixPayment(final Context context,String title, String body, final int orderId){
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
                 .setCancelable(false)
@@ -130,7 +130,7 @@ public class CustomDialog {
     }
 
     public static void orderPlaceWithoutLogin(final Context context,String title,String body){
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
                 .setMessage(body)
@@ -150,7 +150,7 @@ public class CustomDialog {
 
     public static void orderPlaceDiolog(final Context context,String title,String body){
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(title);
         alertDialogBuilder
                 .setMessage(body)
@@ -215,7 +215,7 @@ public class CustomDialog {
         alertDialogBuilder
                 .setMessage(body)
                 .setCancelable(false)
-                .setPositiveButton("Confrim Logout", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Confirm Logout", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         sessionManager.logoutUser();
                         Utility.isLoggedInFlag = false;
@@ -257,7 +257,7 @@ public class CustomDialog {
                 .centerCrop()
                 .into(image);
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context,android.R.style.Theme_Material_Light_Dialog_Alert);
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
         alertDialogBuilder.setTitle(pTitle);
         alertDialogBuilder
                 .setCancelable(true)

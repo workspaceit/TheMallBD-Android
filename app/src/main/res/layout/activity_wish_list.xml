@@ -6,20 +6,21 @@
     android:layout_height="match_parent"
     tools:context="com.themallbd.workspaceit.activity.WishListActivity"
     android:orientation="vertical"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    android:id="@+id/activity_wish_list">
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
 
-    <ListView
+    <com.baoyz.swipemenulistview.SwipeMenuListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/wish_list_listview"
         android:layout_weight="1"
         android:dividerHeight="2dp"
         >
-        </ListView>
+        </com.baoyz.swipemenulistview.SwipeMenuListView>
 
 
 

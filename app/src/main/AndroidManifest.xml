@@ -34,78 +34,90 @@
             android:name="com.themallbd.workspaceit.activity.LoginActivity"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.themallbd.workspaceit.activity.BaseActivityWithoutDrawer"
             android:theme="@style/AppTheme" />
         <activity
             android:name="com.themallbd.workspaceit.activity.CategoryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.themallbd.workspaceit.activity.CategoryListViewActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.themallbd.workspaceit.activity.CategoryInExpandableListViewActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" />
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.themallbd.workspaceit.activity.ProductFromCategoryActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.themallbd.workspaceit.activity.CheckoutActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_checkout"
             android:theme="@style/AppTheme" />
         <activity
             android:name="com.themallbd.workspaceit.activity.MyAccountActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity android:name="com.themallbd.workspaceit.activity.ContactUsActivity"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.WishListActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_wish_list"
             android:theme="@style/AppTheme"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.ShowRelatedProduct"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.ShowAllReviewActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.SearchProductListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
-        <activity android:name="com.themallbd.workspaceit.activity.NoInternetActiviy"></activity>
+        <activity android:name="com.themallbd.workspaceit.activity.NoInternetActiviy"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.PackageDetailsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.AllNewProductActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.AllFeaturesProductActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.AllPacakgeActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.AllDiscountProductActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
+
+
         <activity
             android:name="com.themallbd.workspaceit.activity.PrevoiusOrderActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.OrderHistoryDetailsPage"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.themallbd.workspaceit.activity.WalletMixPaymentWebViewActivity"
             android:label="@string/title_activity_wallet_mix_payment_web_view"
-            android:theme="@style/AppTheme"></activity>
-        <activity android:name="com.themallbd.workspaceit.activity.PaypalPaymentActivity"></activity>
-        <activity android:name="com.themallbd.workspaceit.activity.BKashPaymentActivity"></activity>
-        <activity android:name="com.themallbd.workspaceit.activity.ManufracturerActivity"></activity>
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.themallbd.workspaceit.activity.PaypalPaymentActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.themallbd.workspaceit.activity.BKashPaymentActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name="com.themallbd.workspaceit.activity.ManufracturerActivity"
+            android:screenOrientation="portrait"></activity>
+
         <activity
             android:name="com.themallbd.workspaceit.activity.ProductByManufracturerActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize|uiMode|smallestScreenSize"></activity>
-        <activity android:name="com.themallbd.workspaceit.activity.WelcomeScreenActivity">
+           android:screenOrientation="portrait"></activity>
+
+        <activity android:name="com.themallbd.workspaceit.activity.WelcomeScreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

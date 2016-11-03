@@ -43,14 +43,16 @@ public class ShowRelatedProduct extends BaseActivityWithoutDrawer implements Ada
         Utility.relatedProductArryList.clear();
         relatedProductAdapter.notifyDataSetChanged();
 
+        new GetRelatedProductAsynTask(this, 2).execute(String.valueOf(6), String.valueOf(0), String.valueOf(productID),
+                String.valueOf(categoryId));
+
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        new GetRelatedProductAsynTask(this, 2).execute(String.valueOf(6), String.valueOf(0), String.valueOf(productID),
-                String.valueOf(categoryId));
+
     }
 
     @Override
@@ -65,7 +67,7 @@ public class ShowRelatedProduct extends BaseActivityWithoutDrawer implements Ada
         intent.putExtra("position", position);
         intent.putExtra("productArray", 6);
         startActivity(intent);
-        this.finish();
+
 
     }
 

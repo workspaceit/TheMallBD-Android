@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,7 +26,7 @@ import com.themallbd.workspaceit.preferences.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
-public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements View.OnClickListener {
+public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements View.OnClickListener, AdapterView.OnItemClickListener {
     private TextView tvPackageName, tvPackagePrice, tvPackageDescription, prevoiusPackagePrice,savePackagePrice;
     private Spinner packageQunatitySpinner;
     private Button addToCart,buyNow;
@@ -86,6 +87,7 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements
 
         productsInPackageAdapter=new ProductsInPackageAdapter(this,mallBdPackage.packageProduct);
         packageProductListView.setAdapter(productsInPackageAdapter);
+        packageProductListView.setOnItemClickListener(this);
         productsInPackageAdapter.notifyDataSetChanged();
 
     }
@@ -231,5 +233,14 @@ public class PackageDetailsActivity extends BaseActivityWithoutDrawer implements
         LocalShoppintCart localShoppintCart=new LocalShoppintCart(this);
         localShoppintCart.setPackageCart(cart);
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Intent intent = new Intent(this,ProductDetailsActivity.class);
+        intent.putExtra("position",position);
+        intent.putExtra("productArray",12);
+        intent.putExtra("packageArray",PackageDetailsActivity.position);
+        startActivity(intent);
     }
 }
