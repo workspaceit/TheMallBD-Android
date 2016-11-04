@@ -23,7 +23,7 @@ public class PackageService extends BaseMallBDService {
         this.responseStat = new ResponseStat();
         this.mallBdPackages=new ArrayList<>();
 
-        this.setController("api/package/all");
+        this.setController("api/package/all/mobile");
         this.setParams("offset", offset);
         this.setParams("limit",limit);
 

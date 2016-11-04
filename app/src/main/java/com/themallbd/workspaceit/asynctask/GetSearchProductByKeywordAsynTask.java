@@ -20,7 +20,7 @@ public class GetSearchProductByKeywordAsynTask extends AsyncTask<String,String,B
         activity=searchProductListActivity;
         mProgressDialog = new ProgressDialog(activity);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setMessage("Searching Products...");
+        mProgressDialog.setMessage("Getting Search Result...");
         mProgressDialog.show();
 
     }

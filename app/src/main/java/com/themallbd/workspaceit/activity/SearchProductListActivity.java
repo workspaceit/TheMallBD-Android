@@ -57,20 +57,9 @@ public class SearchProductListActivity extends BaseActivityWithoutDrawer impleme
         searchProductListView = (ListView) findViewById(R.id.product_search_listView);
         searchByKeywordProductAdapter=new SearchByKeywordProductAdapter(this);
         searchProductListView.setAdapter(searchByKeywordProductAdapter);
+
+
         searchProductListView.setOnScrollListener(this);
-
-
-
-
-        if (mInternetConnection.checkInternet())
-        {
-
-            new GetSearchProductByKeywordAsynTask(this).execute(keyword,String.valueOf(limit),String.valueOf(offset));
-
-
-        }else {
-            MakeToast.showToast(this,"No Internet Connection...");
-        }
 
         searchProductListView.setOnItemClickListener(this);
 
@@ -113,11 +102,13 @@ public class SearchProductListActivity extends BaseActivityWithoutDrawer impleme
             if (mInternetConnection.checkInternet())
             {
 
+
                 new GetSearchProductByKeywordAsynTask(this).execute(keyword,String.valueOf(limit),String.valueOf(offset));
 
 
             }else {
-                MakeToast.showToast(this,"No Internet Connection...");
+              Intent intent=new Intent(this,NoInternetActiviy.class);
+                startActivity(intent);
             }
 
         }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -53,6 +54,9 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
     private LinearLayout voucherLayout;
     private EditText voucherCodeTextView;
     private ArrayList<Voucher> voucherArrayList;
+    private CheckBox giftAddressCheckBox;
+    private LinearLayout giftChechoutAdddressLayout;
+    private EditText giftAddressFnameEditText,giftAddressLastNameEditText,giftAddressTelephoneEditText,gitAddressAddresEditText;
 
 
     public CheckoutViewFragment() {
@@ -89,6 +93,16 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         newCustomerInfoLayout = (LinearLayout) view.findViewById(R.id.new_customer_info_layout);
         addVoucherButton = (Button) view.findViewById(R.id.add_voucher_button);
         addVoucherButton.setOnClickListener(this);
+
+        giftAddressCheckBox=(CheckBox)view.findViewById(R.id.gift_address_check_box);
+        giftAddressCheckBox.setOnClickListener(this);
+
+        giftAddressFnameEditText=(EditText)view.findViewById(R.id.gift_checkout_fname);
+        giftAddressLastNameEditText=(EditText)view.findViewById(R.id.gift_checkout_lname);
+        giftAddressTelephoneEditText=(EditText)view.findViewById(R.id.gift_checkout_telephone);
+        gitAddressAddresEditText=(EditText)view.findViewById(R.id.gift_checkout_address);
+
+        giftChechoutAdddressLayout=(LinearLayout)view.findViewById(R.id.gift_address_layout);
 
         expandNewCustomerInfoButton.setOnClickListener(this);
         cartInfoExpandButton.setOnClickListener(this);
@@ -313,6 +327,12 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 new GetVoucherDiscountAsynTask(getActivity(),this).execute(voucherCode);
+            }
+        }else if (v==giftAddressCheckBox){
+            if (giftAddressCheckBox.isChecked()){
+                giftChechoutAdddressLayout.setVisibility(View.VISIBLE);
+            }else {
+                giftChechoutAdddressLayout.setVisibility(View.GONE);
             }
         }
     }

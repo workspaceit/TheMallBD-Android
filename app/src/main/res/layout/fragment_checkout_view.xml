@@ -39,7 +39,8 @@
                     android:text="@string/checkout_informatio"
                     android:textAllCaps="true"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    />
 
 
 
@@ -385,8 +386,8 @@
 
                     <Button
                         android:id="@+id/edit_cart_back_buttom"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
                         android:layout_marginBottom="10dp"
                         android:layout_weight="1"
                         android:background="#412E2E"
@@ -395,6 +396,7 @@
                         android:textColor="#FFFFFF"
                         android:layout_marginTop="10dp"
                         android:layout_gravity="center"
+                        android:textSize="10sp"
                         />
 
                 </LinearLayout>
@@ -520,7 +522,80 @@
 
                 </Spinner>
 
+<android.support.v7.widget.AppCompatCheckBox
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/gift_address"
+    android:id="@+id/gift_address_check_box"
+    />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/gift_address_layout"
+                    android:animateLayoutChanges="true"
+                    android:visibility="gone">
+
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:text="@string/delivery_address"
+                        android:textAllCaps="true"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/gift_checkout_fname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="First Name"
+                        android:inputType="text"
+                        android:textColor="#7F7F7F"
+                        android:textColorHint="#c2c2c2" />
+
+                    <EditText
+                        android:id="@+id/gift_checkout_lname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:hint="Last Name"
+                        android:inputType="text"
+                        android:textColor="#7F7F7F"
+                        android:textColorHint="#c2c2c2" />
+
+                    <EditText
+                        android:id="@+id/gift_checkout_telephone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:hint="Telephone No"
+                        android:inputType="phone"
+                        android:textColor="#7F7F7F"
+                        android:textColorHint="#c2c2c2" />
+
+
+
+                    <EditText
+                        android:id="@+id/gift_checkout_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_weight="1"
+                        android:hint="Address"
+                        android:inputType="textMultiLine"
+                        android:lines="4"
+                        android:textColor="#7F7F7F"
+                        android:textColorHint="#c2c2c2" />
+
+
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/confrim_payemt_method"
