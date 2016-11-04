@@ -21,7 +21,7 @@ public class MakeToast {
 
     }
 
-    public static void showSnackbar(View view,String msg){
+    public static void snackBarShow(View view, String msg){
         final Snackbar snackBar = Snackbar.make(view, msg, Snackbar.LENGTH_LONG);
 
         snackBar.setAction("Ok", new View.OnClickListener() {

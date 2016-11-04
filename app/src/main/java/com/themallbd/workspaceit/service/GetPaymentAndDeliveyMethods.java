@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.themallbd.workspaceit.activity.PackageDetailsActivity;
 import com.themallbd.workspaceit.dataModel.Banner;
+import com.themallbd.workspaceit.dataModel.CustomerPurchaseDiscount;
 import com.themallbd.workspaceit.dataModel.DeliveryMethod;
 import com.themallbd.workspaceit.dataModel.PaymentMethods;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
@@ -89,5 +90,36 @@ public class GetPaymentAndDeliveyMethods extends BaseMallBDService{
 
     }
 
+
+    public boolean getPurchaseDiscount(){
+        this.responseStat = new ResponseStat();
+        this.setController("api/getcustomerpurchasediscount");
+
+
+        String resp = this.getData("GET");
+        System.out.println(resp);
+
+        try {
+            JsonObject jsonObject = new JsonParser().parse(resp).getAsJsonObject();
+            Gson gson = new Gson();
+
+            this.responseStat = gson.fromJson(jsonObject.get("responseStat"), responseStat.getClass());
+
+            if (this.responseStat.status) {
+                Utility.customerPurchaseDiscount= gson.fromJson(jsonObject.get("responseData"), CustomerPurchaseDiscount.class);
+
+                return true;
+            } else {
+                Utility.responseStat = this.responseStat;
+                return false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return false;
+
+    }
 
 }

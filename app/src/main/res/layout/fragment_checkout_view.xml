@@ -515,7 +515,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:entries="@array/cities_array"
+                    android:entries="@array/city_array"
                     android:layout_marginBottom="10dp"
 
                     >
@@ -527,6 +527,7 @@
     android:layout_height="wrap_content"
     android:text="@string/gift_address"
     android:id="@+id/gift_address_check_box"
+    android:layout_marginTop="10dp"
     />
 
                 <LinearLayout
@@ -594,6 +595,19 @@
                         android:textColor="#7F7F7F"
                         android:textColorHint="#c2c2c2" />
 
+
+                    <Spinner
+                        android:id="@+id/gift_city_spinner"
+                        style="@style/Widget.AppCompat.Spinner.DropDown"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:entries="@array/city_array"
+                        android:layout_marginBottom="10dp"
+
+                        >
+
+                    </Spinner>
 
                 </LinearLayout>
 

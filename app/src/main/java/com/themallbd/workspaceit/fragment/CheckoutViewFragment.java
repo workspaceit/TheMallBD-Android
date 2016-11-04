@@ -38,7 +38,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
     private EditText emailText;
     private EditText fnameText;
     private EditText lnameText;
-    private Spinner citySpinner;
+    private Spinner citySpinner,giftCitySpinner;
     private EditText addressText;
     private EditText telephoneText;
     private Button cartInfoExpandButton, expandNewCustomerInfoButton, backToCart;
@@ -56,7 +56,9 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
     private ArrayList<Voucher> voucherArrayList;
     private CheckBox giftAddressCheckBox;
     private LinearLayout giftChechoutAdddressLayout;
-    private EditText giftAddressFnameEditText,giftAddressLastNameEditText,giftAddressTelephoneEditText,gitAddressAddresEditText;
+    private EditText giftAddressFnameEditText,giftAddressLastNameEditText,giftAddressTelephoneEditText, giftAddressAddresEditText;
+    public static String dicount_message;
+    public static boolean discount_flag_call;
 
 
     public CheckoutViewFragment() {
@@ -100,13 +102,15 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         giftAddressFnameEditText=(EditText)view.findViewById(R.id.gift_checkout_fname);
         giftAddressLastNameEditText=(EditText)view.findViewById(R.id.gift_checkout_lname);
         giftAddressTelephoneEditText=(EditText)view.findViewById(R.id.gift_checkout_telephone);
-        gitAddressAddresEditText=(EditText)view.findViewById(R.id.gift_checkout_address);
+        giftAddressAddresEditText =(EditText)view.findViewById(R.id.gift_checkout_address);
+
+
 
         giftChechoutAdddressLayout=(LinearLayout)view.findViewById(R.id.gift_address_layout);
 
         expandNewCustomerInfoButton.setOnClickListener(this);
         cartInfoExpandButton.setOnClickListener(this);
-
+        giftCitySpinner=(Spinner)view.findViewById(R.id.gift_city_spinner);
 
         imageDownArrow = R.drawable.arrow_down;
         imageUpArrow = R.drawable.arrow_up;
@@ -128,6 +132,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         }else {
             initializeRadioButton();
         }
+
 
         return view;
 
@@ -161,6 +166,11 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser && Utility.deliveryMethods.size()>0) {
             this.initializeValue();
+            if (giftAddressCheckBox.isChecked()){
+                checkoutInfoLayout.setVisibility(View.VISIBLE);
+            }else {
+                checkoutInfoLayout.setVisibility(View.VISIBLE);
+            }
 
         }
     }
@@ -176,13 +186,23 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
 
 
         if (Utility.isLoggedInFlag) {
+
+
             expandNewCustomerInfoButton.setText("Your Shipping Info");
             emailText.setText(Utility.loggedInUser.email);
             fnameText.setText(Utility.loggedInUser.user.firstName);
             lnameText.setText(Utility.loggedInUser.user.lastName);
-            citySpinner.setSelection(0);
+            if (checkOutInfoSession.checkIsset()) {
+                citySpinner.setSelection(checkOutInfoSession.getCityPosition());
+            }
             telephoneText.setText(Utility.loggedInUser.user.phone);
-            addressText.setText(Utility.loggedInUser.user.userDetails.shippingAddress.shippingAddress);
+            addressText.setText(Utility.loggedInUser.user.userDetails.address.address);
+
+            giftAddressFnameEditText.setText(Utility.loggedInUser.user.firstName);
+            giftAddressLastNameEditText.setText(Utility.loggedInUser.user.lastName);
+            giftAddressTelephoneEditText.setText(Utility.loggedInUser.user.phone);
+            giftAddressAddresEditText.setText(Utility.loggedInUser.user.userDetails.address.address);
+            giftCitySpinner.setSelection(checkOutInfoSession.getCityPosition());
 
 
         } else {
@@ -330,9 +350,13 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             }
         }else if (v==giftAddressCheckBox){
             if (giftAddressCheckBox.isChecked()){
-                giftChechoutAdddressLayout.setVisibility(View.VISIBLE);
+                if (giftChechoutAdddressLayout.getVisibility()==View.GONE) {
+                    giftChechoutAdddressLayout.setVisibility(View.VISIBLE);
+                }
             }else {
-                giftChechoutAdddressLayout.setVisibility(View.GONE);
+                if (giftChechoutAdddressLayout.getVisibility()==View.VISIBLE) {
+                    giftChechoutAdddressLayout.setVisibility(View.GONE);
+                }
             }
         }
     }
@@ -405,6 +429,15 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
                 lnameText.getText().toString(), citySpinner.getSelectedItem().toString(), citySpinner.getSelectedItemPosition(),
                 addressText.getText().toString(), telephoneText.getText().toString());
 
+        if (giftAddressCheckBox.isChecked()){
+            checkOutInfoSession.setGiftIsset(true);
+            checkOutInfoSession.setGiftAddress(giftAddressFnameEditText.getText().toString(),giftAddressLastNameEditText.getText().toString(),
+                    giftCitySpinner.getSelectedItem().toString(),giftAddressAddresEditText.getText().toString(),
+                    giftAddressTelephoneEditText.getText().toString());
+        }else {
+            checkOutInfoSession.setGiftIsset(false);
+        }
+
 
     }
 
@@ -437,12 +470,34 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             MakeToast.showToast(getActivity(), "Delivery Address is required");
             addressText.requestFocus();
             return false;
-        } else if (telephoneText.getText().toString().equals("")) {
-            MakeToast.showToast(getActivity(), "Telephone Number is required");
+        } else if (telephoneText.getText().toString().length()!=11) {
+            MakeToast.showToast(getActivity(), "Telephone Number is not valid");
             telephoneText.requestFocus();
             return false;
         }
 
+        if (giftAddressCheckBox.isChecked()){
+
+            if (giftAddressFnameEditText.getText().toString().equals("")){
+                MakeToast.showToast(getActivity(),"Gift/Invoice First Name is required");
+                giftAddressFnameEditText.requestFocus();
+                return false;
+            }else if(giftAddressLastNameEditText.getText().toString().equals("")){
+                MakeToast.showToast(getActivity(),"Gift/Invoice Last Name is required");
+                giftAddressLastNameEditText.requestFocus();
+                return false;
+            }else if (giftAddressTelephoneEditText.getText().toString().length()!=11 ){
+                MakeToast.showToast(getActivity(),"Gift/Invoice phone number is not valid");
+                giftAddressTelephoneEditText.requestFocus();
+                return false;
+
+            }else if (giftAddressAddresEditText.getText().toString().equals("")){
+                MakeToast.showToast(getActivity(),"Gift/Invoice Address is required");
+                giftAddressAddresEditText.requestFocus();
+                return false;
+            }
+
+        }
 
         return true;
     }

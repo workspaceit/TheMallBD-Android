@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -160,12 +159,12 @@ public class WishListActivity extends BaseActivityWithoutDrawer implements Adapt
 
     public void deleteProductNotify(boolean flag){
         if (flag){
-            MakeToast.showSnackbar(root,"Product Deleted Successfully from your Wishlist");
+            MakeToast.snackBarShow(root,"Product Deleted Successfully from your Wishlist");
             Utility.wishlistProductArrayList.remove(arrayPosition);
             wishInListViewAdapter.notifyDataSetChanged();
 
         }else {
-            MakeToast.showSnackbar(root,"Try Again Later...");
+            MakeToast.snackBarShow(root,"Try Again Later...");
         }
 
     }

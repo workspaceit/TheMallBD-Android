@@ -2,6 +2,7 @@ package com.themallbd.workspaceit.utility;
 
 
 import com.themallbd.workspaceit.dataModel.Banner;
+import com.themallbd.workspaceit.dataModel.CustomerPurchaseDiscount;
 import com.themallbd.workspaceit.dataModel.DeliveryMethod;
 import com.themallbd.workspaceit.dataModel.FinishOrderSummary;
 import com.themallbd.workspaceit.dataModel.Manufacturer;
@@ -34,6 +35,7 @@ public class Utility {
     public static ArrayList<Banner>banners=new ArrayList<>();
     public static FinishOrderSummary finishOrderSummary=new FinishOrderSummary();
     public static ArrayList<Manufacturer>manufacturers=new ArrayList<>();
+    public static CustomerPurchaseDiscount customerPurchaseDiscount=new CustomerPurchaseDiscount();
 
     public static boolean isLoggedInFlag=false;
 
