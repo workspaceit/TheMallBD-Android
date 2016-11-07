@@ -2,8 +2,7 @@
     android:id="@+id/checkout_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    >
+    android:fillViewport="true">
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,8 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/cart_info_expand_button"
@@ -39,60 +37,82 @@
                     android:text="@string/checkout_informatio"
                     android:textAllCaps="true"
                     android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    />
-
+                    android:textSize="14sp" />
 
 
                 <LinearLayout
                     android:id="@+id/checkout_info_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    android:orientation="vertical"
                     android:layout_margin="10dp"
-                    android:background="@drawable/custom_border">
+                    android:animateLayoutChanges="true"
+                    android:background="@drawable/custom_border"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/discount_active_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_margin="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:visibility="gone"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="20dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/discount_active_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="asdasd"
+
+                            android:textSize="15sp"
+                            android:textStyle="italic"
+                            android:textColor="#412E2E"/>
+
+                    </android.support.v7.widget.CardView>
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="1"
                         android:orientation="vertical"
-                        >
+                        android:weightSum="1">
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Choose Your Delivery Method"
                             android:background="#412E2E"
-                            android:textColor="#FFFFFF"
-                            android:paddingLeft="20dp"
                             android:padding="5dp"
-                            android:textSize="14dp"/>
+                            android:paddingLeft="20dp"
+                            android:text="Choose Your Delivery Method"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:background="@drawable/custom_border"
-                            android:weightSum="1"
                             android:layout_marginBottom="10dp"
-                            >
+                            android:background="@drawable/custom_border"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight=".68"
-                                android:layout_marginLeft="10dp"
                                 android:layout_marginBottom="10dp"
-                                android:layout_marginTop="7dp">
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="7dp"
+                                android:layout_weight=".68">
 
                                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:id="@+id/radio_delivery_method_group"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:id="@+id/radio_delivery_method_group">
+                                    android:orientation="vertical">
 
                                 </RadioGroup>
                             </LinearLayout>
@@ -105,29 +125,29 @@
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="7dp"
                                 android:layout_weight=".32"
-                                android:orientation="vertical"
-                                android:layout_marginTop="7dp">
+                                android:orientation="vertical">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="40 BDT"
                                     android:id="@+id/delivery_price_first"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_marginLeft="10dp"
-                                    android:textSize="16sp"
-                                    android:textColor="#4C4C4C"/>
-
-                                <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="70 BDT"
-                                    android:layout_marginTop="10dp"
                                     android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="40 BDT"
                                     android:textColor="#4C4C4C"
-                                    android:textSize="16sp"
-                                    android:id="@+id/dekivery_payment_second"/>
+                                    android:textSize="16sp" />
+
+                                <TextView
+                                    android:id="@+id/dekivery_payment_second"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:text="70 BDT"
+                                    android:textColor="#4C4C4C"
+                                    android:textSize="16sp" />
 
                             </LinearLayout>
 
@@ -135,7 +155,6 @@
                         </LinearLayout>
 
                     </LinearLayout>
-
 
 
                     <View
@@ -153,12 +172,12 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight=".7"
+                            android:gravity="right"
                             android:text="Subtotal:"
                             android:textSize="16sp"
-                            android:layout_weight=".7"
-                            android:layout_margin="5dp"
-                            android:gravity="right"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="1dp"
@@ -166,15 +185,14 @@
                             android:background="#c1c1c1"></View>
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_weight=".3"
-                            android:layout_height="wrap_content"
-                            android:text="1212 BDT"
-                            android:layout_margin="5dp"
-                            android:textSize="16sp"
                             android:id="@+id/subtotal_checkout_text_view"
-                            android:textStyle="bold"
-                            />
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight=".3"
+                            android:text="1212 BDT"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -183,18 +201,18 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="@drawable/custom_border"
+                        android:orientation="horizontal"
                         android:weightSum="1">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Products Discount:"
-                            android:textSize="16dp"
-                            android:layout_weight=".7"
                             android:layout_margin="5dp"
-                            android:gravity="right"/>
+                            android:layout_weight=".7"
+                            android:gravity="right"
+                            android:text="Products Discount:"
+                            android:textSize="16dp" />
 
                         <View
                             android:layout_width="1dp"
@@ -202,18 +220,16 @@
                             android:background="#c1c1c1"></View>
 
                         <TextView
+                            android:id="@+id/total_discount_text_view"
                             android:layout_width="0dp"
-                            android:layout_weight=".3"
                             android:layout_height="wrap_content"
-                            android:text="1212 BDT"
                             android:layout_margin="5dp"
-                            android:textSize="16sp"
-                            android:id="@+id/total_discount_text_view"/>
+                            android:layout_weight=".3"
+                            android:text="1212 BDT"
+                            android:textSize="16sp" />
 
 
                     </LinearLayout>
-
-
 
 
                     <LinearLayout
@@ -226,36 +242,34 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_weight=".7"
                             android:layout_margin="5dp"
-                            >
+                            android:layout_weight=".7"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:gravity="right"
                                 android:text="Voucher Discount:"
-                                android:textSize="16sp"
 
-                                android:gravity="right"/>
+                                android:textSize="16sp" />
 
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
                                 android:gravity="right"
-                                >
+                                android:orientation="horizontal">
 
                                 <EditText
+                                    android:id="@+id/voucher_code_text_view"
                                     android:layout_width="120dp"
                                     android:layout_height="40dp"
                                     android:hint="Voucher Code"
-                                    android:textSize="16sp"
-                                    android:textColorHint="#c1c1c1"
-                                    android:id="@+id/voucher_code_text_view"
                                     android:singleLine="true"
-                                    />
+                                    android:textColorHint="#c1c1c1"
+                                    android:textSize="16sp" />
+
                                 <Button
                                     android:id="@+id/add_voucher_button"
                                     android:layout_width="54dp"
@@ -273,18 +287,15 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/voucher_layout"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:id="@+id/voucher_layout">
+                                android:orientation="vertical">
 
 
                             </LinearLayout>
 
                         </LinearLayout>
-
-
-
 
 
                         <View
@@ -293,13 +304,13 @@
                             android:background="#c1c1c1"></View>
 
                         <TextView
+                            android:id="@+id/voucher_discount_text_view"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="1212 BDT"
                             android:layout_margin="5dp"
                             android:layout_weight=".3"
-                            android:textSize="16sp"
-                            android:id="@+id/voucher_discount_text_view"/>
+                            android:text="1212 BDT"
+                            android:textSize="16sp" />
 
 
                     </LinearLayout>
@@ -310,6 +321,7 @@
 
                         android:background="#c1c1c1"></View>
 
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -320,11 +332,11 @@
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Shipment Fee:"
-                            android:textSize="16sp"
-                            android:layout_weight=".7"
                             android:layout_margin="5dp"
-                            android:gravity="right"/>
+                            android:layout_weight=".7"
+                            android:gravity="right"
+                            android:text="Customer Discount:"
+                            android:textSize="16sp" />
 
                         <View
                             android:layout_width="1dp"
@@ -332,37 +344,74 @@
                             android:background="#c1c1c1"></View>
 
                         <TextView
+                            android:id="@+id/customer_discount_text_view"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="1212 BDT"
-                            android:layout_weight=".3"
                             android:layout_margin="5dp"
-                            android:textSize="16sp"
-                            android:id="@+id/shipment_fee_text_view"/>
+                            android:layout_weight=".3"
+                            android:text="1212 BDT"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+
+                        android:background="#c1c1c1"></View>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+
+                        android:weightSum="1">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight=".7"
+                            android:gravity="right"
+                            android:text="Shipment Fee:"
+                            android:textSize="16sp" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="#c1c1c1"></View>
+
+                        <TextView
+                            android:id="@+id/shipment_fee_text_view"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight=".3"
+                            android:text="1212 BDT"
+                            android:textSize="16sp" />
 
 
                     </LinearLayout>
 
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:background="@drawable/custom_border"
+                        android:orientation="horizontal"
 
                         android:weightSum="1">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="Total:"
-                            android:textSize="16sp"
-                            android:layout_weight=".7"
                             android:layout_margin="5dp"
+                            android:layout_weight=".7"
                             android:gravity="right"
+                            android:text="Total:"
                             android:textColor="#911414"
-                            android:textStyle="bold"/>
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="1dp"
@@ -370,15 +419,15 @@
                             android:background="#c1c1c1"></View>
 
                         <TextView
+                            android:id="@+id/total_payable_text_view"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="1212 BDT"
-                            android:layout_weight=".3"
                             android:layout_margin="5dp"
+                            android:layout_weight=".3"
+                            android:text="1212 BDT"
+                            android:textColor="#911414"
                             android:textSize="16sp"
-                            android:id="@+id/total_payable_text_view"
-                            android:textStyle="bold"
-                            android:textColor="#911414"/>
+                            android:textStyle="bold" />
 
 
                     </LinearLayout>
@@ -388,20 +437,17 @@
                         android:id="@+id/edit_cart_back_buttom"
                         android:layout_width="100dp"
                         android:layout_height="40dp"
+                        android:layout_gravity="center"
                         android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp"
                         android:layout_weight="1"
                         android:background="#412E2E"
                         android:text="@string/back_to_cart_text"
                         android:textAllCaps="true"
                         android:textColor="#FFFFFF"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center"
-                        android:textSize="10sp"
-                        />
+                        android:textSize="10sp" />
 
                 </LinearLayout>
-
-
 
 
             </LinearLayout>
@@ -491,7 +537,6 @@
                     android:textColorHint="#c2c2c2" />
 
 
-
                 <EditText
                     android:id="@+id/checkout_address"
                     android:layout_width="match_parent"
@@ -505,39 +550,33 @@
                     android:textColorHint="#c2c2c2" />
 
 
-
-
-
-
                 <Spinner
                     android:id="@+id/city_spinner"
                     style="@style/Widget.AppCompat.Spinner.DropDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="20dp"
                     android:entries="@array/city_array"
-                    android:layout_marginBottom="10dp"
 
                     >
 
                 </Spinner>
 
-<android.support.v7.widget.AppCompatCheckBox
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/gift_address"
-    android:id="@+id/gift_address_check_box"
-    android:layout_marginTop="10dp"
-    />
-
-                <LinearLayout
+                <android.support.v7.widget.AppCompatCheckBox
+                    android:id="@+id/gift_address_check_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:id="@+id/gift_address_layout"
-                    android:animateLayoutChanges="true"
-                    android:visibility="gone">
+                    android:layout_marginTop="10dp"
+                    android:text="@string/gift_address" />
 
+                <LinearLayout
+                    android:id="@+id/gift_address_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -582,7 +621,6 @@
                         android:textColorHint="#c2c2c2" />
 
 
-
                     <EditText
                         android:id="@+id/gift_checkout_address"
                         android:layout_width="match_parent"
@@ -601,9 +639,9 @@
                         style="@style/Widget.AppCompat.Spinner.DropDown"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="20dp"
                         android:entries="@array/city_array"
-                        android:layout_marginBottom="10dp"
 
                         >
 
@@ -616,12 +654,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="#412E2E"
                     android:text="@string/confirm_payment"
                     android:textAllCaps="true"
-                    android:textColor="#FFFFFF"
-                    android:layout_marginTop="10dp"/>
+                    android:textColor="#FFFFFF" />
 
             </LinearLayout>
 

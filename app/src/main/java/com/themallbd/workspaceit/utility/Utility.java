@@ -14,6 +14,8 @@ import com.themallbd.workspaceit.dataModel.AppCredential;
 import com.themallbd.workspaceit.dataModel.Category;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
+import com.themallbd.workspaceit.dataModel.Voucher;
+import com.themallbd.workspaceit.dataModel.VoucherDiscount;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,8 @@ public class Utility {
     public static FinishOrderSummary finishOrderSummary=new FinishOrderSummary();
     public static ArrayList<Manufacturer>manufacturers=new ArrayList<>();
     public static CustomerPurchaseDiscount customerPurchaseDiscount=new CustomerPurchaseDiscount();
+    public static ArrayList<VoucherDiscount>voucherDiscounts=new ArrayList<>();
+
 
     public static boolean isLoggedInFlag=false;
 

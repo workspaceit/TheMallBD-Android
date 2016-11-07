@@ -103,6 +103,7 @@ public class CheckoutActivity extends BaseActivityWithoutDrawer implements TabLa
     public void onBackPressed() {
         super.onBackPressed();
         tabFlag = 0;
+        Utility.voucherDiscounts.clear();
     }
 
     @Override

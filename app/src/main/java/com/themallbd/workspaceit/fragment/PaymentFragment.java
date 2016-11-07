@@ -31,6 +31,10 @@ public class PaymentFragment extends Fragment implements View.OnClickListener,Ra
     private Button confrimOrderButton;
     private Gson gson;
     public static int PAYMENT_ID;
+    private final String orderForm="ANDROID";
+    private TextView textView;
+
+
 
 
 
@@ -60,8 +64,11 @@ public class PaymentFragment extends Fragment implements View.OnClickListener,Ra
             initializeRadioButton();
         }
 
+        textView=(TextView)view.findViewById(R.id.debug);
         return view;
     }
+
+
 
     private void initializeRadioButton(){
 
@@ -112,11 +119,18 @@ public class PaymentFragment extends Fragment implements View.OnClickListener,Ra
                         .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
 
-                                new SubmitChectoutAsyntask(getActivity()).execute(checkOutInfoSession.getFname(),checkOutInfoSession.getLname(),
-                                        checkOutInfoSession.getEmail(),checkOutInfoSession.getTelephone(),checkOutInfoSession.getAddress(),
-                                        checkOutInfoSession.getCity(), "ANDROID",checkOutInfoSession.getAddress(),"Bangladesh", "",
-                                        checkOutInfoSession.getCity(),String.valueOf(CheckoutViewFragment.DELIVEY_METHOD),
-                                        String.valueOf(radioPaymentGroup.getCheckedRadioButtonId()),"1",gson.toJson(Utility.shoppingCart));
+                                SubmitChectoutAsyntask submitChectoutAsyntask=new SubmitChectoutAsyntask(PaymentFragment.this,getActivity(),
+                                        checkOutInfoSession.getFname(),checkOutInfoSession.getLname(),checkOutInfoSession.getEmail(),
+                                        checkOutInfoSession.getTelephone(),checkOutInfoSession.getAddress(),checkOutInfoSession.getCity(),
+                                        orderForm,String.valueOf(checkOutInfoSession.checkGiftIsset()),checkOutInfoSession.getGiftFname(),
+                                        checkOutInfoSession.getPrefGiftLastName(),checkOutInfoSession.getPrefGiftTelephone(),
+                                        checkOutInfoSession.getPrefGiftAddressIsset(),checkOutInfoSession.getPrefGiftCity(),
+                                        String.valueOf(CheckoutViewFragment.DELIVEY_METHOD),String.valueOf(radioPaymentGroup.getCheckedRadioButtonId()),
+                                        "1",gson.toJson(Utility.voucherDiscounts),
+                                        String.valueOf(CheckoutViewFragment.purchaseDiscountAmount),
+                                        gson.toJson(Utility.customerPurchaseDiscount),gson.toJson(Utility.shoppingCart));
+
+                                submitChectoutAsyntask.execute();
 
 
                             }

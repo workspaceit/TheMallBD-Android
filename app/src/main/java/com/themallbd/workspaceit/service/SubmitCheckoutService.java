@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.themallbd.workspaceit.dataModel.FinishOrderSummary;
 import com.themallbd.workspaceit.dataModel.Products;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
+import com.themallbd.workspaceit.fragment.PaymentFragment;
 import com.themallbd.workspaceit.utility.Utility;
 
 /**
@@ -14,27 +15,39 @@ import com.themallbd.workspaceit.utility.Utility;
 public class SubmitCheckoutService extends BaseMallBDService{
     private ResponseStat responseStat;
 
-    public boolean submitCheckout(String first_name,String last_name,String email,String phone, String address,String city,String order_from ,
-                                  String shipping_address,String shipping_country, String shipping_zipcode,String shipping_city,
-                                  String delivery_method_id,String payment_method_id,String currency_id,String shopping_cart){
+    public boolean submitCheckout(String firstName,String lastName,String email,String phone,String address,
+                                  String city,String orderFrom, String invoice_address,String shipping_firstname,String shipping_lastname,
+                                  String shipping_phone,String shipping_address,String shipping_city,String delivery_method_id,
+                                  String payment_method_id,String currency_id,String voucherDiscountDetails,String customerDiscount,
+                                  String customerDiscountDetails,String Shopping_cart){
 
         this.responseStat=new ResponseStat();
-        this.setController("api/checkout/submit");
-        this.setParams("first_name", first_name);
-        this.setParams("last_name",last_name);
+        this.setController("api/checkout/submitWeb");
+        this.setParams("first_name", firstName);
+        this.setParams("last_name",lastName);
         this.setParams("email",email);
         this.setParams("phone",phone);
         this.setParams("address",address);
         this.setParams("city",city);
-        this.setParams("order_from",order_from);
+
+
+        this.setParams("order_from",orderFrom);
+        this.setParams("invoice_address",invoice_address);
+        this.setParams("shipping_firstname",shipping_firstname);
+        this.setParams("shipping_lastname",shipping_lastname);
+        this.setParams("shipping_phone",shipping_phone);
         this.setParams("shipping_address",shipping_address);
-        this.setParams("shipping_country",shipping_country);
-        this.setParams("shipping_zipcode",shipping_zipcode);
         this.setParams("shipping_city",shipping_city);
+
         this.setParams("delivery_method_id",delivery_method_id);
         this.setParams("payment_method_id",payment_method_id);
         this.setParams("currency_id",currency_id);
-        this.setParams("shopping_cart", shopping_cart);
+
+        this.setParams("voucherDiscountDetails",voucherDiscountDetails);
+        this.setParams("customerDiscount",customerDiscount);
+        this.setParams("customerDiscountDetails",customerDiscountDetails);
+
+        this.setParams("shopping_cart", Shopping_cart);
 
 
 

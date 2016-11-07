@@ -195,11 +195,11 @@ public class CartInListViewAdapter extends BaseAdapter {
             }
 
             viewHolder.cartItemName.setText(this.shoppingCart.productCell.get(position).product.title);
-            viewHolder.cartItemPrice.setText("" + this.shoppingCart.productCell.get(position).product.prices.get(0).retailPrice+" BDT");
+            viewHolder.cartItemPrice.setText("" + this.shoppingCart.productCell.get(position).product.prices.get(0).retailPrice+" "+Utility.CURRENCY_CODE);
             int quantity=this.shoppingCart.productCell.get(position).quantity;
             double price= this.shoppingCart.productCell.get(position).product.prices.get(0).retailPrice;
             double subTotal=quantity*price;
-            viewHolder.singleSubTotal.setText(subTotal+" BDT");
+            viewHolder.singleSubTotal.setText(subTotal+" "+Utility.CURRENCY_CODE);
             viewHolder.quantityTextView.setText(String.valueOf(this.shoppingCart.productCell.get(position).quantity));
         }
         catch (Exception e)

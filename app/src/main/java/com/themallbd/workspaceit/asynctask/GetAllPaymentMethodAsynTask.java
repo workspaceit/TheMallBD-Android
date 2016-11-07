@@ -3,7 +3,7 @@ package com.themallbd.workspaceit.asynctask;
 import android.os.AsyncTask;
 
 import com.themallbd.workspaceit.fragment.PaymentFragment;
-import com.themallbd.workspaceit.service.GetPaymentAndDeliveyMethods;
+import com.themallbd.workspaceit.service.GetPaymentAndDeliveyMethodsService;
 
 /**
  * Created by Tomal on 8/1/2016.
@@ -18,7 +18,7 @@ private PaymentFragment paymentFragment;
 
     @Override
     protected Boolean doInBackground(String... params) {
-        return new GetPaymentAndDeliveyMethods().getPaymentMethods();
+        return new GetPaymentAndDeliveyMethodsService().getPaymentMethods();
     }
 
     @Override

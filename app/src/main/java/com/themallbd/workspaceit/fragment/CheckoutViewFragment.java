@@ -4,7 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 
 import com.themallbd.workspaceit.asynctask.GetAllDeliveryMethodsAsyncTask;
 import com.themallbd.workspaceit.asynctask.GetVoucherDiscountAsynTask;
+import com.themallbd.workspaceit.asynctask.PurchaseDiscountAsynTask;
 import com.themallbd.workspaceit.dataModel.Voucher;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
@@ -58,7 +61,15 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
     private LinearLayout giftChechoutAdddressLayout;
     private EditText giftAddressFnameEditText,giftAddressLastNameEditText,giftAddressTelephoneEditText, giftAddressAddresEditText;
     public static String dicount_message;
-    public static boolean discount_flag_call;
+
+    private View root;
+    public static boolean discountSuccesFlag;
+    private TextView discontActiveTextView,customerDiscoutTextView;
+    private CardView discountActiveCardCiew;
+    private final String fixedConstant="Fixed";
+    private final String percentageConstant="Percent";
+    public static double purchaseDiscountAmount;
+    
 
 
     public CheckoutViewFragment() {
@@ -70,6 +81,7 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_checkout_view, container, false);
+        discountSuccesFlag=false;
 
 
 
@@ -82,6 +94,10 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         telephoneText = (EditText) view.findViewById(R.id.checkout_telephone);
         voucherCodeTextView = (EditText) view.findViewById(R.id.voucher_code_text_view);
 
+        customerDiscoutTextView=(TextView)view.findViewById(R.id.customer_discount_text_view);
+        customerDiscoutTextView.setText(0.0+" "+Utility.CURRENCY_CODE);
+        discontActiveTextView=(TextView)view.findViewById(R.id.discount_active_text_view);
+        discountActiveCardCiew=(CardView)view.findViewById(R.id.discount_active_card_view);
         firstDeliveryPrice = (TextView) view.findViewById(R.id.delivery_price_first);
         seocndDeliveryPrice = (TextView) view.findViewById(R.id.dekivery_payment_second);
 
@@ -134,9 +150,27 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         }
 
 
+            new PurchaseDiscountAsynTask(this).execute();
+
+
+
+        root=view;
         return view;
 
 
+    }
+
+
+    public void discountCallFlag(boolean flag){
+        if (flag){
+            discountActiveCardCiew.setVisibility(View.VISIBLE);
+            discontActiveTextView.setText(dicount_message);
+            discountSuccesFlag=true;
+            setDataForPurchaseDiscount();
+
+        }else {
+            discountActiveCardCiew.setVisibility(View.GONE);
+        }
     }
 
     private void initializeRadioButton() {
@@ -172,7 +206,36 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
                 checkoutInfoLayout.setVisibility(View.VISIBLE);
             }
 
+
         }
+
+        if (isVisibleToUser){
+            if (discountSuccesFlag)
+                discountCallFlag(true);
+            setDataForPurchaseDiscount();
+        }
+
+    }
+
+    private void setDataForPurchaseDiscount(){
+        if (discountSuccesFlag){
+            if (Utility.customerPurchaseDiscount.getDiscount_type().equals(fixedConstant)) {
+                customerDiscoutTextView.setText(Utility.customerPurchaseDiscount.getDiscount_amount() + " " + Utility.CURRENCY_CODE);
+                double amountAfter = Utility.shoppingCart.totalPrice - Utility.customerPurchaseDiscount.getDiscount_amount();
+                totalPaybleTextView.setText(amountAfter + " " + Utility.CURRENCY_CODE);
+                purchaseDiscountAmount=Utility.customerPurchaseDiscount.getDiscount_amount();
+            }else if(Utility.customerPurchaseDiscount.getDiscount_type().equals(percentageConstant)){
+                double discountAmount=(Utility.shoppingCart.orderTotal*Utility.customerPurchaseDiscount.getDiscount_amount())/100;
+                customerDiscoutTextView.setText(discountAmount+" "+Utility.CURRENCY_CODE);
+
+                double amountAfter=Utility.shoppingCart.totalPrice-discountAmount;
+                purchaseDiscountAmount=discountAmount;
+                totalPaybleTextView.setText(amountAfter + " " + Utility.CURRENCY_CODE);
+            }
+        }else {
+            customerDiscoutTextView.setText(0.0+" "+Utility.CURRENCY_CODE);
+        }
+
     }
 
     private void initializeCheckoutInfo(View view) {
@@ -436,6 +499,8 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
                     giftAddressTelephoneEditText.getText().toString());
         }else {
             checkOutInfoSession.setGiftIsset(false);
+            checkOutInfoSession.setGiftAddress(fnameText.getText().toString(), lnameText.getText().toString(), citySpinner.getSelectedItem().toString(),
+                    addressText.getText().toString(),telephoneText.getText().toString());
         }
 
 
@@ -514,6 +579,10 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             }
 
             total = (subTotal + shipmentFee) - (discount + voucherTotal);
+            if (discountSuccesFlag){
+
+                total=total-purchaseDiscountAmount;
+            }
             shipmentFeeTextView.setText(shipmentFee + " BDT");
             totalPaybleTextView.setText(total + " BDT");
 
@@ -531,6 +600,9 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
             }
 
             total = (subTotal + shipmentFee) - (discount + voucherTotal);
+            if (discountSuccesFlag){
+                total=total-purchaseDiscountAmount;
+            }
             shipmentFeeTextView.setText(shipmentFee + " BDT");
             totalPaybleTextView.setText(total + " BDT");
             Utility.shoppingCart.orderTotal = (float) subTotal;

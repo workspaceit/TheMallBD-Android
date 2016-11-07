@@ -283,15 +283,15 @@
                             android:text="City"
                             android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/city_myacc_edittext"
+                        <Spinner
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginBottom="15dp"
-                            android:layout_marginLeft="20dp"
-                            android:background="@android:color/transparent"
-                            android:textColor="#000000"
-                            android:textSize="14sp"/>
+                            android:entries="@array/city_array"
+                            style="@style/Widget.AppCompat.Spinner.DropDown"
+                            android:id="@+id/city_myacc_spinner"/>
 
                         <View
                             android:layout_width="fill_parent"

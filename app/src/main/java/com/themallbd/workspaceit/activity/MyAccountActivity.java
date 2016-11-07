@@ -33,7 +33,7 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
 
 
     private Spinner counryMyaccSpinner;
-    private EditText cityMyaccEditText;
+    private Spinner cityMyaccSpinner;
 
     private ScrollView myaccScroll;
 
@@ -109,9 +109,18 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
         counryMyaccSpinner.setSelection(index);
 
 
-        cityMyaccEditText = (EditText) findViewById(R.id.city_myacc_edittext);
-        this.disableEditText(cityMyaccEditText);
-        cityMyaccEditText.setText(sessionManager.getCity());
+        cityMyaccSpinner = (Spinner) findViewById(R.id.city_myacc_spinner);
+        cityMyaccSpinner.setEnabled(false);
+        index=0;
+        String city=sessionManager.getCity();
+        for (int i=0; i<cityMyaccSpinner.getCount(); i++){
+            if (cityMyaccSpinner.getItemAtPosition(i).equals(city)){
+                index=i;
+                break;
+            }
+        }
+        cityMyaccSpinner.setSelection(index);
+
 
 
 
@@ -138,7 +147,7 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
                 phoneMyaccEditText.setEnabled(true);
                 addressAccountInfoEditext.setEnabled(true);
                 counryMyaccSpinner.setEnabled(true);
-                cityMyaccEditText.setEnabled(true);
+              cityMyaccSpinner.setEnabled(true);
                 zipCodeMyaccEditText.setEnabled(true);
                 editFab.setImageDrawable(getResources().getDrawable(R.drawable.save));
 
@@ -155,7 +164,7 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
                 if (this.checkInputValidity()) {
                     new UpdateMyAccountAsynTask(this).execute(fnameMyaccEditText.getText().toString(), lnameMyaccEditText.getText().toString(),
                             phoneMyaccEditText.getText().toString(), addressAccountInfoEditext.getText().toString(), counryMyaccSpinner.getSelectedItem().toString(),
-                            cityMyaccEditText.getText().toString(), zipCodeMyaccEditText.getText().toString());
+                            cityMyaccSpinner.getSelectedItem().toString(), zipCodeMyaccEditText.getText().toString());
 
                     editFab.setImageDrawable(getResources().getDrawable(R.drawable.pencil));
                 }
@@ -201,7 +210,7 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
         phoneMyaccEditText.setEnabled(false);
         addressAccountInfoEditext.setEnabled(false);
         counryMyaccSpinner.setEnabled(false);
-        cityMyaccEditText.setEnabled(false);
+        cityMyaccSpinner.setEnabled(false);
         zipCodeMyaccEditText.setEnabled(false);
 
         String country = counryMyaccSpinner.getSelectedItem().toString();
@@ -211,13 +220,13 @@ public class MyAccountActivity extends BaseActivityWithoutDrawer implements View
 
         sessionManager.updateUserInformation(fnameMyaccEditText.getText().toString(), lnameMyaccEditText.getText().toString(),
                 phoneMyaccEditText.getText().toString(), addressAccountInfoEditext.getText().toString(), country,
-                cityMyaccEditText.getText().toString(), zipCodeMyaccEditText.getText().toString());
+                cityMyaccSpinner.getSelectedItem().toString(), zipCodeMyaccEditText.getText().toString());
 
         fnameMyaccEditText.setText(Utility.loggedInUser.user.firstName);
         lnameMyaccEditText.setText(Utility.loggedInUser.user.lastName);
         phoneMyaccEditText.setText(Utility.loggedInUser.user.phone);
         addressAccountInfoEditext.setText(Utility.loggedInUser.user.userDetails.address.address);
-        cityMyaccEditText.setText(Utility.loggedInUser.user.userDetails.address.city);
+        //cityMyaccEditText.setText(Utility.loggedInUser.user.userDetails.address.city);
         zipCodeMyaccEditText.setText(Utility.loggedInUser.user.userDetails.address.zipCode);
 
 

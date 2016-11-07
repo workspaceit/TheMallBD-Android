@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
 import com.themallbd.workspaceit.dataModel.SearchResult;
 import com.themallbd.workspaceit.dataModel.Voucher;
+import com.themallbd.workspaceit.dataModel.VoucherDiscount;
 import com.themallbd.workspaceit.utility.Utility;
 
 import java.util.Collections;
@@ -35,6 +36,10 @@ public class GetVoucherCodeServie extends BaseMallBDService {
             if (this.responseStat.status) {
 
                 voucher = gson.fromJson(jsonObject.get("responseData"), Voucher.class);
+                VoucherDiscount voucherDiscount=new VoucherDiscount();
+                voucherDiscount.setVoucher_code(voucher.voucher_code);
+                voucherDiscount.setDiscount(voucher.discount);
+                Utility.voucherDiscounts.add(voucherDiscount);
 
 
 

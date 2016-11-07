@@ -79,10 +79,10 @@ public class ProducstInOrderAdapter extends BaseAdapter {
                 viewHolder.productTitel.setText(order.orderProducts.get(position).productitem.title);
                 viewHolder.quantityTextView.setText(order.orderProducts.get(position).productQuantity+"");
 
-                viewHolder.priceTextView.setText(order.orderProducts.get(position).price+" "+order.currencyCode);
+                viewHolder.priceTextView.setText(order.orderProducts.get(position).price+" "+Utility.CURRENCY_CODE);
                 viewHolder.typeTextView.setText("Product");
                 float subtotal= (float) (order.orderProducts.get(position).productQuantity*order.orderProducts.get(position).price);
-                viewHolder.subTotalTextView.setText(subtotal+" "+order.currencyCode);
+                viewHolder.subTotalTextView.setText(subtotal+" "+Utility.CURRENCY_CODE);
 
             }else {
 

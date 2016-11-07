@@ -5,6 +5,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import com.themallbd.workspaceit.adapter.ProducstInOrderAdapter;
 import com.themallbd.workspaceit.dataModel.Orders;
+import com.themallbd.workspaceit.utility.Utility;
 import com.themallbd.workspaceit.view.CustomListView;
 import com.workspaceit.themall.R;
 
@@ -48,16 +49,16 @@ public class OrderHistoryDetailsPage extends BaseActivityWithoutDrawer {
     }
 
     private void initializevalue(){
-        subtotalTextView.setText(order.orderTotal+" "+order.currencyCode);
-        shipmentFeeTextView.setText(order.shipping_cost+" "+order.currencyCode);
-        voucherDiscountTextview.setText(order.voucher_discount+" "+order.currencyCode);
-        productDiscountTextView.setText(order.discount_total+" "+order.currencyCode);
-        specailDiscountTextView.setText(order.special_discount+" "+order.currencyCode);
-        employeeDiscountTextView.setText(order.employee_discount+" "+order.currencyCode);
+        subtotalTextView.setText(order.orderTotal+" "+ Utility.CURRENCY_CODE);
+        shipmentFeeTextView.setText(order.shipping_cost+" "+Utility.CURRENCY_CODE);
+        voucherDiscountTextview.setText(order.voucher_discount+" "+Utility.CURRENCY_CODE);
+        productDiscountTextView.setText(order.discount_total+" "+Utility.CURRENCY_CODE);
+        specailDiscountTextView.setText(order.onpurchase_discount+" "+Utility.CURRENCY_CODE);
+        employeeDiscountTextView.setText(order.employee_discount+" "+Utility.CURRENCY_CODE);
 
         float total=0;
-        total=(order.orderTotal+order.shipping_cost)-(order.voucher_discount+order.discount_total+order.special_discount+order.employee_discount);
-        totalPriceTextView.setText(total+" "+order.currencyCode);
+        total=(order.orderTotal+order.shipping_cost)-(order.voucher_discount+order.discount_total+order.onpurchase_discount+order.employee_discount);
+        totalPriceTextView.setText(total+" "+Utility.CURRENCY_CODE);
 
         orderInProductListView.setAdapter(producstInOrderAdapter);
         producstInOrderAdapter.notifyDataSetChanged();

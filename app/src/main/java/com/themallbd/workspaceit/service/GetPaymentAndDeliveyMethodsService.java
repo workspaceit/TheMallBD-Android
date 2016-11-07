@@ -9,6 +9,7 @@ import com.themallbd.workspaceit.dataModel.CustomerPurchaseDiscount;
 import com.themallbd.workspaceit.dataModel.DeliveryMethod;
 import com.themallbd.workspaceit.dataModel.PaymentMethods;
 import com.themallbd.workspaceit.dataModel.ResponseStat;
+import com.themallbd.workspaceit.fragment.CheckoutViewFragment;
 import com.themallbd.workspaceit.utility.Utility;
 
 import java.util.Collections;
@@ -16,7 +17,7 @@ import java.util.Collections;
 /**
  * Created by Tomal on 8/1/2016.
  */
-public class GetPaymentAndDeliveyMethods extends BaseMallBDService{
+public class GetPaymentAndDeliveyMethodsService extends BaseMallBDService{
     private ResponseStat responseStat;
 
     public boolean getPaymentMethods(){
@@ -106,7 +107,10 @@ public class GetPaymentAndDeliveyMethods extends BaseMallBDService{
             this.responseStat = gson.fromJson(jsonObject.get("responseStat"), responseStat.getClass());
 
             if (this.responseStat.status) {
-                Utility.customerPurchaseDiscount= gson.fromJson(jsonObject.get("responseData"), CustomerPurchaseDiscount.class);
+                CustomerPurchaseDiscount[]customerPurchaseDiscounts= gson.fromJson(jsonObject.get("responseData"), CustomerPurchaseDiscount[].class);
+                CheckoutViewFragment.dicount_message=gson.fromJson(jsonObject.get("discountMessage"),String.class);
+                Utility.customerPurchaseDiscount=customerPurchaseDiscounts[0];
+
 
                 return true;
             } else {

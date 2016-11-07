@@ -21,6 +21,7 @@ public class Orders {
     public String orderDate;
     public float employee_discount;
     public float special_discount;
+    public float onpurchase_discount;
     public String packageSize;
     public String packageWeight;
     public String shippingAddress;
@@ -37,6 +38,7 @@ public class Orders {
     public Zone zone;
     public ArrayList<OrderProducts> orderProducts;
 
+
     public Orders() {
         this.id=0;
         this.shopId=0;
@@ -50,6 +52,7 @@ public class Orders {
         this.voucher_discount=0;
         this.discount_total=0;
         this.shipping_cost=0;
+        this.onpurchase_discount=0;
         this.employee_discount=0;
         this.special_discount=0;
         this.packageSize="";

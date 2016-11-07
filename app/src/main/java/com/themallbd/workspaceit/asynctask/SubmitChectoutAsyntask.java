@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.themallbd.workspaceit.activity.CheckoutActivity;
 
+import com.themallbd.workspaceit.fragment.CheckoutViewFragment;
 import com.themallbd.workspaceit.fragment.PaymentFragment;
 import com.themallbd.workspaceit.service.SubmitCheckoutService;
 import com.themallbd.workspaceit.utility.CustomDialog;
@@ -23,10 +24,63 @@ import com.themallbd.workspaceit.utility.Utility;
  */
 public class SubmitChectoutAsyntask extends AsyncTask<String, String, Boolean> {
     private Context context;
+    private PaymentFragment paymentFragment;
     private ProgressDialog mProgressDialog;
 
-    public SubmitChectoutAsyntask(Context context) {
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phone;
+    private String address;
+    private String city;
+
+    private String orderFrom;
+    private String invoice_address;
+
+    private String shipping_firstname;
+    private String shipping_lastname;
+    private String shipping_phone;
+    private String shipping_address;
+    private String shipping_city;
+
+    private String delivery_method_id;
+    private String payment_method_id;
+    private String currency_id;
+
+    private String voucherDiscountDetails;
+    private String customerDiscount;
+    private String customerDiscountDetails;
+
+    private String Shopping_cart;
+
+
+    public SubmitChectoutAsyntask(PaymentFragment paymentFragment,Context context,String firstName,String lastName,String email,String phone,String address,
+                                  String city,String orderFrom, String invoice_address,String shipping_firstname,String shipping_lastname,
+                                  String shipping_phone,String shipping_address,String shipping_city,String delivery_method_id,
+                                  String payment_method_id,String currency_id,String voucherDiscountDetails,String customerDiscount,
+                                  String customerDiscountDetails,String Shopping_cart) {
+        this.paymentFragment=paymentFragment;
         this.context = context;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        this.email=email;
+        this.phone=phone;
+        this.address=address;
+        this.city=city;
+        this.orderFrom=orderFrom;
+        this.invoice_address=invoice_address;
+        this.shipping_firstname=shipping_firstname;
+        this.shipping_lastname=shipping_lastname;
+        this.shipping_phone=shipping_phone;
+        this.shipping_address=shipping_address;
+        this.shipping_city=shipping_city;
+        this.delivery_method_id=delivery_method_id;
+        this.payment_method_id=payment_method_id;
+        this.currency_id=currency_id;
+        this.voucherDiscountDetails=voucherDiscountDetails;
+        this.customerDiscount=customerDiscount;
+        this.customerDiscountDetails=customerDiscountDetails;
+        this.Shopping_cart=Shopping_cart;
     }
 
     @Override
@@ -41,24 +95,13 @@ public class SubmitChectoutAsyntask extends AsyncTask<String, String, Boolean> {
 
     @Override
     protected Boolean doInBackground(String... params) {
-        String firstName = params[0];
-        String lastName = params[1];
-        String email = params[2];
-        String phone = params[3];
-        String address = params[4];
-        String city = params[5];
-        String orderFrom = params[6];
-        String shipping_address = params[7];
-        String shipping_country = params[8];
-        String shipping_zipcode = params[9];
-        String shipping_city = params[10];
-        String delivery_method_id = params[11];
-        String payment_method_id = params[12];
-        String currency_id = params[13];
-        String shopping_cart = params[14];
 
-        return new SubmitCheckoutService().submitCheckout(firstName, lastName, email, phone, address, city, orderFrom, shipping_address,
-                shipping_country, shipping_zipcode, shipping_city, delivery_method_id, payment_method_id, currency_id, shopping_cart);
+
+
+        return new SubmitCheckoutService().submitCheckout(this.firstName,this.lastName,this.email,this.phone,this.address,this.city,
+                this.orderFrom,this.invoice_address,this.shipping_firstname,this.shipping_lastname,this.shipping_phone,
+                this.shipping_address,this.shipping_city,this.delivery_method_id,this.payment_method_id,this.currency_id,
+                this.voucherDiscountDetails,this.customerDiscount,this.customerDiscountDetails,this.Shopping_cart);
 
     }
 
@@ -67,15 +110,15 @@ public class SubmitChectoutAsyntask extends AsyncTask<String, String, Boolean> {
     protected void onPostExecute(Boolean aBoolean) {
         super.onPostExecute(aBoolean);
         mProgressDialog.dismiss();
+
+
         try {
 
 
             if (aBoolean) {
 
 
-
-
-                if (PaymentFragment.PAYMENT_ID==1){
+                if (PaymentFragment.PAYMENT_ID == 1) {
                     Utility.resetShoppingCart();
                     Gson gson = new Gson();
                     String cartProdut = gson.toJson(Utility.shoppingCart.productCell);
@@ -83,21 +126,25 @@ public class SubmitChectoutAsyntask extends AsyncTask<String, String, Boolean> {
                     LocalShoppintCart localShoppintCart = new LocalShoppintCart(context);
                     localShoppintCart.setProductCart(cartProdut);
                     localShoppintCart.setPackageCart(cartPackage);
-                    CheckoutActivity.tabFlag=0;
+                    CheckoutActivity.tabFlag = 0;
+
+                    CheckoutViewFragment.dicount_message="";
+                    CheckoutViewFragment.discountSuccesFlag=false;
+
                     if (Utility.isLoggedInFlag) {
 
                         CustomDialog.orderPlaceDiolog(context, "Thanks for shopping with us", "Your order has been placed successfully");
-                    }else {
-                        CustomDialog.orderPlaceWithoutLogin(context,"Thanks for shopping with us","Your order has been placed successfully");
+                    } else {
+                        CustomDialog.orderPlaceWithoutLogin(context, "Thanks for shopping with us", "Your order has been placed successfully");
                     }
 
-                }else if (PaymentFragment.PAYMENT_ID==2){
-                    CustomDialog.BkashPaymentDialog(context,"Bkash","Go to Bkash Payment page",Utility.finishOrderSummary.unique_code);
-                }else if (PaymentFragment.PAYMENT_ID==3){
+                } else if (PaymentFragment.PAYMENT_ID == 2) {
+                    CustomDialog.BkashPaymentDialog(context, "Bkash", "Go to Bkash Payment page", Utility.finishOrderSummary.unique_code);
+                } else if (PaymentFragment.PAYMENT_ID == 3) {
                     CustomDialog.paypalPayment(context, "Paypal", "Go to paypal payment page");
 
-                }else if(PaymentFragment.PAYMENT_ID==4){
-                    CustomDialog.walletMixPayment(context,"Payment","Now You will redirect to payment gateway",Utility.finishOrderSummary.order_id);
+                } else if (PaymentFragment.PAYMENT_ID == 4) {
+                    CustomDialog.walletMixPayment(context, "Payment", "Now You will redirect to payment gateway", Utility.finishOrderSummary.order_id);
 
 
                 }

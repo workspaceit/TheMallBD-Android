@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.themallbd.workspaceit.activity.PrevoiusOrderActivity;
+import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 
 /**
@@ -65,8 +66,13 @@ public class OrderHistoryAdapter extends BaseAdapter {
 
            viewHolder.counterTextView.setText((position+1)+"");
             viewHolder.invoiceNymberTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).invoiceNo);
-            viewHolder.orderTotalTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).orderTotal+" "+
-                    PrevoiusOrderActivity.ordersArrayList.get(position).currencyCode);
+            double orderTotal=(PrevoiusOrderActivity.ordersArrayList.get(position).orderTotal+PrevoiusOrderActivity.ordersArrayList.get(position).shipping_cost)-
+                    (PrevoiusOrderActivity.ordersArrayList.get(position).voucher_discount+PrevoiusOrderActivity.ordersArrayList.get(position).onpurchase_discount+
+                            PrevoiusOrderActivity.ordersArrayList.get(position).employee_discount+PrevoiusOrderActivity.ordersArrayList.get(position).discount_total);
+
+
+
+            viewHolder.orderTotalTextView.setText(orderTotal+" "+ Utility.CURRENCY_CODE);
             viewHolder.shippingAdressTextView.setText(PrevoiusOrderActivity.ordersArrayList.get(position).shippingAddress);
             viewHolder.orderDate.setText(PrevoiusOrderActivity.ordersArrayList.get(position).orderDate);
 

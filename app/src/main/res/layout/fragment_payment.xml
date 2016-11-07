@@ -47,6 +47,7 @@
     </LinearLayout>
 
 
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -57,5 +58,10 @@
         android:background="#412E2E"
         android:textColor="#FFFFFF"
         android:id="@+id/confrim_final_order_button"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/debug"/>
 
 </LinearLayout>
