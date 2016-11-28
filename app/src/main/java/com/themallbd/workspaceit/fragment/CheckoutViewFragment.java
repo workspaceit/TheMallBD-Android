@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -27,7 +26,7 @@ import com.themallbd.workspaceit.dataModel.Voucher;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.activity.CheckoutActivity;
-import com.themallbd.workspaceit.utility.CheckOutInfoSession;
+import com.themallbd.workspaceit.preferences.CheckOutInfoSession;
 import com.themallbd.workspaceit.utility.MakeToast;
 
 import java.util.ArrayList;
@@ -150,7 +149,9 @@ public class CheckoutViewFragment extends Fragment implements View.OnClickListen
         }
 
 
+        if (Utility.isLoggedInFlag) {
             new PurchaseDiscountAsynTask(this).execute();
+        }
 
 
 

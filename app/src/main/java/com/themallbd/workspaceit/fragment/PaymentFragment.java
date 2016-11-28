@@ -1,26 +1,20 @@
 package com.themallbd.workspaceit.fragment;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
-import com.themallbd.workspaceit.activity.BKashPaymentActivity;
-import com.themallbd.workspaceit.activity.MainActivity;
-import com.themallbd.workspaceit.activity.PrevoiusOrderActivity;
 import com.themallbd.workspaceit.asynctask.GetAllPaymentMethodAsynTask;
 import com.themallbd.workspaceit.asynctask.SubmitChectoutAsyntask;
-import com.themallbd.workspaceit.utility.CheckOutInfoSession;
-import com.themallbd.workspaceit.utility.MakeToast;
+import com.themallbd.workspaceit.preferences.CheckOutInfoSession;
 import com.themallbd.workspaceit.utility.Utility;
 import com.workspaceit.themall.R;
 

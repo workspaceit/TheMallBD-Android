@@ -1,4 +1,4 @@
-package com.themallbd.workspaceit.utility;
+package com.themallbd.workspaceit.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,6 +13,7 @@ public class CheckOutInfoSession {
     Editor editor;
     Context _context;
     final int PRIVATE_MODE = 0;
+
 
 
     private static final String PREF_NAME = "checkOutInfo";

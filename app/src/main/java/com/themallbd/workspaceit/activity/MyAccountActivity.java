@@ -11,7 +11,7 @@ import android.widget.Spinner;
 import com.themallbd.workspaceit.utility.CustomDialog;
 import com.workspaceit.themall.R;
 import com.themallbd.workspaceit.asynctask.UpdateMyAccountAsynTask;
-import com.themallbd.workspaceit.utility.CheckOutInfoSession;
+import com.themallbd.workspaceit.preferences.CheckOutInfoSession;
 import com.themallbd.workspaceit.utility.MakeToast;
 import com.themallbd.workspaceit.preferences.SessionManager;
 import com.themallbd.workspaceit.utility.Utility;
