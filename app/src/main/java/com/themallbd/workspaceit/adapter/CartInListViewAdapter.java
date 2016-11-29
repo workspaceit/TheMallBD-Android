@@ -111,7 +111,7 @@ public class CartInListViewAdapter extends BaseAdapter {
                         localShoppintCart = new LocalShoppintCart(context);
                         localShoppintCart.setProductCart(cart);
                     }else {
-                        MakeToast.showToast(context,"This quantity is not available in the stock ");
+                        MakeToast.showToast(context,"Maximum available quantity of this product already added in your cart");
                     }
 
                 }
@@ -123,11 +123,12 @@ public class CartInListViewAdapter extends BaseAdapter {
                     int quantity=Utility.shoppingCart.productCell.get(position).quantity;
                     quantity--;
 
-                    if(quantity<1){
+                    if(quantity<Utility.shoppingCart.productCell.get(position).product.minimumOrderQuantity){
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                        alertDialogBuilder.setTitle("are u sure?");
+                        alertDialogBuilder.setTitle("Are u sure?");
                         alertDialogBuilder
-                                .setMessage("If you select 0 quantity, the product will be removed from the cart.")
+                                .setMessage("If you select quantity less than "+Utility.shoppingCart.productCell.get(position).product.minimumOrderQuantity
+                                        +", this product will be removed from the cart.")
                                 .setCancelable(false)
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {

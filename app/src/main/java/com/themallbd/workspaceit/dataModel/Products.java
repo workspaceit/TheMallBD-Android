@@ -44,6 +44,7 @@ public class Products {
     public ArrayList<Attributes> attributes;
     public Boolean isFeatured;
     public ArrayList<Quantity> productQuantity;
+    public int minimumOrderQuantity;
 
     public Products() {
         this.id = 0;
@@ -83,6 +84,7 @@ public class Products {
         this.pictures = new ArrayList<>();
         this.attributes = new ArrayList<>();
         this.productQuantity = new ArrayList<>();
+        this.minimumOrderQuantity=0;
 
     }
 }

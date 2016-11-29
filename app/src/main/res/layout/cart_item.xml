@@ -94,8 +94,11 @@
             android:layout_height="15dp"
             android:id="@+id/addButton"
             android:layout_gravity="center"
+            android:padding="30dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/an_arrow_upg"
-            android:layout_marginBottom="2dp"/>
+
+            />
 
         <TextView
             android:layout_width="40dp"

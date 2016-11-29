@@ -48,11 +48,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == login_btn)
         {
-            if (mSessionManager.checkLogin())
-            {
-                getActivity().finish();
-            }
-            else {
+
+
                 email = email_et.getText().toString();
                 password = password_et.getText().toString();
                 if (email.equals("") || password.equals("")) {
@@ -60,7 +57,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                 } else {
                     new LoginAsyncTask(getActivity()).execute(email, password);
                 }
-            }
+
         }
     }
 }

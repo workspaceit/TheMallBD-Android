@@ -315,9 +315,11 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
             outOfStockTextView.setVisibility(View.GONE);
         }
 
-        Integer[]qunatityArray=new Integer[products.quantity];
-        for (int i=0; i<products.quantity; i++){
-            qunatityArray[i]=i+1;
+        int q=products.quantity-products.minimumOrderQuantity;
+        Integer[]qunatityArray=new Integer[q+1];
+        System.out.println("totalQuantity: "+products.quantity+" minimum "+products.minimumOrderQuantity);
+        for (int i=products.minimumOrderQuantity,j=0; i<=products.quantity; i++,j++){
+            qunatityArray[j]=i;
         }
 
 
@@ -451,7 +453,7 @@ public class ProductDetailsActivity extends BaseActivityWithoutDrawer implements
                             CustomDialog.goToCheckOutDailog(this, "Checkout", "This Product already exist in your cart. Quantity Updated ");
 
                         }else {
-                            MakeToast.showToast(this,"This much quantity is not available in the stock");
+                            MakeToast.showToast(this,"Maximum available quantity of this product already added in your cart");
                         }
                         return;
                     }
