@@ -1,4 +1,4 @@
-package com.workspaceit.themall;
+package com.themallbd.workspaceit;
 
 import org.junit.Test;
 
