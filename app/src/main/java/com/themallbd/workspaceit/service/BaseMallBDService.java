@@ -22,7 +22,8 @@ public class BaseMallBDService {
 
 
    // private String baseURL="http://188.166.214.41/mallbdweb_develop/public/"; //new URL
-    private String baseURL="http://188.166.214.41/mallbdweb/public/";//riyad vai new server
+//    private String baseURL="http://188.166.214.41/mallbdweb/public/";//riyad vai new server
+    private String baseURL="http://52.34.34.82/";//riyad vai new server
     //private String baseURL = "http://163.53.151.2:5555/mallbdweb/public/index.php";//rafi vai server
     // private String baseURL = "http://192.168.1.11/mallbdweb/public/index.php/";//local
 
